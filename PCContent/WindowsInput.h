@@ -9,24 +9,30 @@ class WindowsKeyboard : public IKeyboard
 {
 public:
 	WindowsKeyboard(GLFWwindow& window);
-	bool GetKey(Key key) const override;
+	virtual bool GetKey(Key key) const;
 
 private:
-	GLFWwindow& window;
-};
+	GLFWwindow& m_window;
+	static void KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods);
+	Key GlfwKeyToEnumKey(int glfwKey);
+	KeyAction GlfwActionToEnumKeyAction(int glfwKeyAction);
 
+	// Inherited via IKeyboard
+	void SetKeyCallback(const KeyCallback& callback) override;
+	KeyCallback m_keyCallback;
+};
 
 class WindowsMouse : public IMouse
 {
 public:
 	WindowsMouse(GLFWwindow& window);
 
-	bool GetButtonDown(MouseButtons button) const override;
-	glm::vec2 GetPosition() const override;
-	float GetScrollDelta() const override;
+	virtual bool GetButtonDown(MouseButtons button) const;
+	virtual glm::vec2 GetPosition() const;
+	virtual float GetScrollDelta() const;
 private:
-	GLFWwindow& window;
+	GLFWwindow& m_window;
 
-	static float scrollDelta;
+	static float m_scrollDelta;
 	static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 };

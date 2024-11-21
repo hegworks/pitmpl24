@@ -1,77 +1,77 @@
 #include "RaspKeyboard.h"
 
+#include "IInput.h"
 #include <fstream>
-#include <sstream>
 #include <iostream>
 #include <linux/input.h>
-#include "IInput.h"
-RaspKeyboard::RaspKeyboard() : keyDown{new bool[256] {false}}
+#include <sstream>
+RaspKeyboard::RaspKeyboard() : m_keyDown{new bool[256] { false }}
 {
 	FindKeyboardLocation();
-	pthread_create(&keyboardThread, nullptr, &ProcessKeyboardThread, this);
+	pthread_create(&m_keyboardThread, nullptr, &ProcessKeyboardThread, this);
 }
 
 bool RaspKeyboard::GetKey(Key key) const
 {
 	switch(key)
 	{
-		case Key::A: return keyDown[KEY_A];
-		case Key::B: return keyDown[KEY_B];
-		case Key::C: return keyDown[KEY_C];
-		case Key::D: return keyDown[KEY_D];
-		case Key::E: return keyDown[KEY_E];
-		case Key::F: return keyDown[KEY_F];
-		case Key::G: return keyDown[KEY_G];
-		case Key::H: return keyDown[KEY_H];
-		case Key::I: return keyDown[KEY_I];
-		case Key::J: return keyDown[KEY_J];
-		case Key::K: return keyDown[KEY_K];
-		case Key::L: return keyDown[KEY_L];
-		case Key::M: return keyDown[KEY_M];
-		case Key::N: return keyDown[KEY_N];
-		case Key::O: return keyDown[KEY_O];
-		case Key::P: return keyDown[KEY_P];
-		case Key::Q: return keyDown[KEY_Q];
-		case Key::R: return keyDown[KEY_R];
-		case Key::S: return keyDown[KEY_S];
-		case Key::T: return keyDown[KEY_T];
-		case Key::U: return keyDown[KEY_U];
-		case Key::V: return keyDown[KEY_V];
-		case Key::W: return keyDown[KEY_W];
-		case Key::X: return keyDown[KEY_X];
-		case Key::Y: return keyDown[KEY_Y];
-		case Key::Z: return keyDown[KEY_Z];
-		case Key::NUM_0: return keyDown[KEY_0];
-		case Key::NUM_1: return keyDown[KEY_1];
-		case Key::NUM_2: return keyDown[KEY_2];
-		case Key::NUM_3: return keyDown[KEY_3];
-		case Key::NUM_4: return keyDown[KEY_4];
-		case Key::NUM_5: return keyDown[KEY_5];
-		case Key::NUM_6: return keyDown[KEY_6];
-		case Key::NUM_7: return keyDown[KEY_7];
-		case Key::NUM_8: return keyDown[KEY_8];
-		case Key::NUM_9: return keyDown[KEY_9];
-		case Key::TAB: return keyDown[KEY_TAB];
-		case Key::CAPS_LOCK: return keyDown[KEY_CAPSLOCK];
-		case Key::SHIFT_LEFT: return keyDown[KEY_LEFTSHIFT];
-		case Key::CTRL_LEFT: return keyDown[KEY_LEFTCTRL];
-		case Key::ALT_LEFT: return keyDown[KEY_LEFTALT];
-		case Key::ESCAPE: return keyDown[KEY_ESC] || keyDown[KEY_HOMEPAGE];
-		case Key::RIGHT_SHIFT: return keyDown[KEY_RIGHTSHIFT];
-		case Key::ENTER: return keyDown[KEY_ENTER];
-		case Key::ARROW_UP: return keyDown[KEY_UP];
-		case Key::ARROW_RIGHT: return keyDown[KEY_RIGHT];
-		case Key::ARROW_DOWN: return keyDown[KEY_DOWN];
-		case Key::ARROW_LEFT: return keyDown[KEY_LEFT];
-		case Key::SPACE: return keyDown[KEY_SPACE];
+		case Key::A: return m_keyDown[KEY_A];
+		case Key::B: return m_keyDown[KEY_B];
+		case Key::C: return m_keyDown[KEY_C];
+		case Key::D: return m_keyDown[KEY_D];
+		case Key::E: return m_keyDown[KEY_E];
+		case Key::F: return m_keyDown[KEY_F];
+		case Key::G: return m_keyDown[KEY_G];
+		case Key::H: return m_keyDown[KEY_H];
+		case Key::I: return m_keyDown[KEY_I];
+		case Key::J: return m_keyDown[KEY_J];
+		case Key::K: return m_keyDown[KEY_K];
+		case Key::L: return m_keyDown[KEY_L];
+		case Key::M: return m_keyDown[KEY_M];
+		case Key::N: return m_keyDown[KEY_N];
+		case Key::O: return m_keyDown[KEY_O];
+		case Key::P: return m_keyDown[KEY_P];
+		case Key::Q: return m_keyDown[KEY_Q];
+		case Key::R: return m_keyDown[KEY_R];
+		case Key::S: return m_keyDown[KEY_S];
+		case Key::T: return m_keyDown[KEY_T];
+		case Key::U: return m_keyDown[KEY_U];
+		case Key::V: return m_keyDown[KEY_V];
+		case Key::W: return m_keyDown[KEY_W];
+		case Key::X: return m_keyDown[KEY_X];
+		case Key::Y: return m_keyDown[KEY_Y];
+		case Key::Z: return m_keyDown[KEY_Z];
+		case Key::NUM_0: return m_keyDown[KEY_0];
+		case Key::NUM_1: return m_keyDown[KEY_1];
+		case Key::NUM_2: return m_keyDown[KEY_2];
+		case Key::NUM_3: return m_keyDown[KEY_3];
+		case Key::NUM_4: return m_keyDown[KEY_4];
+		case Key::NUM_5: return m_keyDown[KEY_5];
+		case Key::NUM_6: return m_keyDown[KEY_6];
+		case Key::NUM_7: return m_keyDown[KEY_7];
+		case Key::NUM_8: return m_keyDown[KEY_8];
+		case Key::NUM_9: return m_keyDown[KEY_9];
+		case Key::TAB: return m_keyDown[KEY_TAB];
+		case Key::CAPS_LOCK: return m_keyDown[KEY_CAPSLOCK];
+		case Key::SHIFT_LEFT: return m_keyDown[KEY_LEFTSHIFT];
+		case Key::CTRL_LEFT: return m_keyDown[KEY_LEFTCTRL];
+		case Key::ALT_LEFT: return m_keyDown[KEY_LEFTALT];
+		case Key::ESCAPE: return m_keyDown[KEY_ESC] || m_keyDown[KEY_HOMEPAGE];
+		case Key::RIGHT_SHIFT: return m_keyDown[KEY_RIGHTSHIFT];
+		case Key::ENTER: return m_keyDown[KEY_ENTER];
+		case Key::ARROW_UP: return m_keyDown[KEY_UP];
+		case Key::ARROW_RIGHT: return m_keyDown[KEY_RIGHT];
+		case Key::ARROW_DOWN: return m_keyDown[KEY_DOWN];
+		case Key::ARROW_LEFT: return m_keyDown[KEY_LEFT];
+		case Key::SPACE: return m_keyDown[KEY_SPACE];
 		default: std::cout << "ERROR::INPUT::Rasp Keycode not supported: " << static_cast<int>(key) << std::endl; return false;
 	}
 }
 
 void RaspKeyboard::FindKeyboardLocation()
 {
-	std::string ev{FindActiveKeyboardEv()};
-	keyboardLocation = "/dev/input/" + ev;
+	const std::string ev{FindActiveKeyboardEv()};
+	m_keyboardLocation = "/dev/input/" + ev;
 }
 
 std::string RaspKeyboard::FindActiveKeyboardEv()
@@ -152,7 +152,7 @@ void* RaspKeyboard::ProcessKeyboardThread(void* arg)
 	RaspKeyboard* input = static_cast<RaspKeyboard*>(arg);
 
 	FILE* fKeyboard;
-	fKeyboard = fopen(((RaspKeyboard*)arg)->keyboardLocation.c_str(), "r");
+	fKeyboard = fopen(((RaspKeyboard*)arg)->m_keyboardLocation.c_str(), "r");
 
 	if(fKeyboard == nullptr)
 	{
@@ -169,11 +169,10 @@ void* RaspKeyboard::ProcessKeyboardThread(void* arg)
 
 		if(event.type == (__u16)EV_KEY)
 		{
-			input->keyDown[event.code] = event.value > 0;
+			input->m_keyDown[event.code] = event.value > 0;
 		}
 	}
 
 	fclose(fKeyboard);
 	pthread_exit(nullptr);
 }
-

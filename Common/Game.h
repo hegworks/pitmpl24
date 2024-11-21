@@ -32,19 +32,19 @@ class Input;
 class Game
 {
 public:
-	Game(const Input* const input, IGraphics* graphics);
+	Game(Input* input, IGraphics* graphics);
 	virtual ~Game();
-	void Start(); 
+	void Start();
 	btDiscreteDynamicsWorld* World() const;
-	const Input& GetInput() const;
+	Input* GetInput() const;
 	void Quit();
 protected:
 	void ProcessInput();
 	virtual void Update(float /*gameDeltaTime*/) {}
 	virtual void Render() {}
 	virtual void PostRender() {}
-	
-	const Input* const input;
+
+	Input* input;
 	bool quitting{false};
 	float gameDeltaTime;
 

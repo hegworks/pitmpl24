@@ -7,14 +7,14 @@ class IKeyboard;
 class Input
 {
 public:
-	Input(const IKeyboard* const keyboard, const IMouse* const mouse);
+	Input(IKeyboard* keyboard, IMouse* const mouse);
 	~Input();
 
-	const IKeyboard& GetKeyboard() const;
-	const IMouse& GetMouse() const;
+	IKeyboard* GetKeyboard();
+	IMouse* GetMouse() const;
 
 private:
-	const IMouse* const mouse;
-	const IKeyboard* const keyboard;
+	IMouse* const mouse;
+	IKeyboard* keyboard;
 };
 

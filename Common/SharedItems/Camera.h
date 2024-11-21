@@ -31,11 +31,6 @@ private:
 	const float MOUSE_SENSITIVITY = 0.05f;
 	const float NEAR_PLANE = 0.1f;
 	const float FAR_PLANE = 100.0f;
-
-	// jump
-	const float JUMP_HEIGHT = 5.0f;
-	const float GRAVITY = -9.8f;
-	const int MULTI_JUMP_COUNT = 2;
 	//=====settings
 
 

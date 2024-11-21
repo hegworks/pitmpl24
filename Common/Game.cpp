@@ -20,7 +20,7 @@ std::vector<ObjectModel*> MyObjects; // on the basis that every object is derive
 std::vector<ObjectModel*> Cubes; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
 Graphics Graphics;
 
-Game::Game(const Input* const input, IGraphics* graphics) :
+Game::Game(Input* input, IGraphics* graphics) :
 	input(input),
 	graphics(graphics)
 
@@ -33,6 +33,32 @@ Game::~Game()
 
 }
 
+void KeyCallback(Key key, KeyAction action)
+{
+	// Implement your key callback logic here
+	if(action == KeyAction::DOWN)
+	{
+		switch(key)
+		{
+			case Key::W:
+				std::cout << "W down" << std::endl;
+				break;
+			case Key::S:
+				std::cout << "S down" << std::endl;
+				break;
+			case Key::A:
+				std::cout << "A down" << std::endl;
+				break;
+			case Key::D:
+				std::cout << "D down" << std::endl;
+				break;
+			case Key::ESCAPE:
+				break;
+			default:
+				break;
+		}
+	}
+}
 
 void Game::Start()
 {
@@ -114,6 +140,8 @@ void Game::Start()
 	float averageFPS{0};
 
 
+	input->GetKeyboard()->SetKeyCallback(KeyCallback);
+
 	while(!quitting)
 	{
 		ProcessInput();
@@ -171,9 +199,9 @@ btDiscreteDynamicsWorld* Game::World() const
 	return world;
 }
 
-const Input& Game::GetInput() const
+Input* Game::GetInput() const
 {
-	return *input;
+	return input;
 }
 
 void Game::Quit()
@@ -185,43 +213,35 @@ void Game::Quit()
 //example of using the key and mouse
 void Game::ProcessInput()
 {
-	const Input& input = GetInput();
-	const IMouse& mouse = GetInput().GetMouse();
+	Input* input = GetInput();
+	IMouse* mouse = input->GetMouse();
+	IKeyboard* keyboard = input->GetKeyboard();
+	if(keyboard->GetKey(Key::W))
 	{
-		if(input.GetKeyboard().GetKey(Key::W))
-		{
-			printf("we pressed W\n");
-		}
-		if(input.GetKeyboard().GetKey(Key::S))
-		{
-			printf("we pressed S\n");
-		}
-		if(input.GetKeyboard().GetKey(Key::A))
-		{
-			printf("we pressed A\n");
-		}
-		if(input.GetKeyboard().GetKey(Key::D))
-		{
-			printf("we pressed D\n");
-		}
-		if(input.GetKeyboard().GetKey(Key::ESCAPE))
-		{
-			Quit();
-		}
-
-		if(input.GetMouse().GetButtonDown(MouseButtons::LEFT))
-		{
-			printf("we pressed mouse left\n");
-		}
-
-
+		printf("we pressed W\n");
+	}
+	if(keyboard->GetKey(Key::S))
+	{
+		printf("we pressed S\n");
+	}
+	if(keyboard->GetKey(Key::A))
+	{
+		printf("we pressed A\n");
+	}
+	if(keyboard->GetKey(Key::D))
+	{
+		printf("we pressed D\n");
+	}
+	if(keyboard->GetKey(Key::ESCAPE))
+	{
+		Quit();
 	}
 
-
-
+	if(mouse->GetButtonDown(MouseButtons::LEFT))
+	{
+		printf("we pressed mouse left\n");
+	}
 }
-
-
 
 void Game::InitializeOpenGLES()
 {

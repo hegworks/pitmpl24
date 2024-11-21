@@ -1,20 +1,21 @@
 #pragma once
 // group these 2 togeter
 
+#include <functional> 
 #include <glm/vec2.hpp>
 #ifdef WINDOWS
 #include <GLFW/glfw3.h>
 #endif
 
-
 enum class MouseButtons
 {
-	LEFT,	
+	LEFT,
 	RIGHT,
 	MIDDLE
 };
 
-class IMouse {
+class IMouse
+{
 
 public:
 	virtual bool GetButtonDown(MouseButtons button) const = 0;
@@ -23,8 +24,6 @@ public:
 
 	virtual ~IMouse() = default;
 };
-
-
 
 enum class Key
 {
@@ -79,14 +78,18 @@ enum class Key
 	SPACE
 };
 
+enum class KeyAction
+{
+	UP,
+	DOWN
+};
+
 class IKeyboard
 {
 public:
 	virtual bool GetKey(Key key) const = 0;
 	virtual ~IKeyboard() = default;
+
+	using KeyCallback = std::function<void(Key key, KeyAction action)>;
+	virtual void SetKeyCallback(const KeyCallback& callback) = 0;
 };
-
-
-
-
-

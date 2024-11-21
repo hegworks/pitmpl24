@@ -1,7 +1,6 @@
 #include "XWindow.h"
 
 #include <cstring>
-#include <cstring>
 #include <EGL/egl.h>
 #include <EGL/eglplatform.h>
 #include <GLES3/gl31.h>

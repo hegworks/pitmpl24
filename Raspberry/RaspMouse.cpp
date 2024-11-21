@@ -26,7 +26,7 @@ bool RaspMouse::GetButtonDown(MouseButtons button) const
 		&win_y,
 		&mask_return);
 
-	switch (button) 
+	switch(button)
 	{
 		case MouseButtons::LEFT:
 		{

@@ -2,7 +2,7 @@
 
 #include "IInput.h"
 
-Input::Input(const IKeyboard* const keyboard, const IMouse* const mouse) :
+Input::Input(IKeyboard* keyboard, IMouse* const mouse) :
 	mouse(mouse),
 	keyboard(keyboard)
 {
@@ -15,12 +15,12 @@ Input::~Input()
 }
 
 
-const IKeyboard& Input::GetKeyboard() const
+IKeyboard* Input::GetKeyboard()
 {
-	return *keyboard;
+	return keyboard;
 }
 
-const IMouse& Input::GetMouse() const
+IMouse* Input::GetMouse() const
 {
-	return *mouse;
+	return mouse;
 }

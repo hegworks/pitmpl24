@@ -6,16 +6,15 @@ class RaspKeyboard : public IKeyboard
 {
 public:
 	RaspKeyboard();
-	bool GetKey(Key key) const override;
+	virtual bool GetKey(Key key) const;
 
 private:
-	pthread_t keyboardThread;
-	bool* keyDown;
-	std::string keyboardLocation;
+	pthread_t m_keyboardThread;
+	bool* m_keyDown;
+	std::string m_keyboardLocation;
 
 	void FindKeyboardLocation();
 	std::string FindActiveKeyboardEv();
 
 	static void* ProcessKeyboardThread(void* arg);
 };
-
