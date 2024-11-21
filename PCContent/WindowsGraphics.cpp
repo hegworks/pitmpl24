@@ -1,8 +1,8 @@
-#include "WindowsGraphics.h"
 #include "Game.h"
-#include <iostream>
-#include <glad/glad.h>
+#include "WindowsGraphics.h"
 #include "WindowsInput.h"
+#include <glad/glad.h>
+#include <iostream>
 
 
 void WindowsGraphics::SwapBuffer()
@@ -27,7 +27,7 @@ WindowsGraphics::WindowsGraphics()
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 //	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 	// Creates the window.
-	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "PC Based OpenGLES", NULL, NULL);
+	window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
 
 	// Error handling for if window creation failed.
 	if (window == NULL)

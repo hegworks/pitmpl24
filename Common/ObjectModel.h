@@ -48,6 +48,7 @@ THE SOFTWARE.
 #define DEG2RAD(x) (x*PI)/180
 #define RAD2DEG(x) x*(180/PI)
 
+class Camera;
 class Graphics;
 
 inline float Rand(float a_Range) { return ((float)rand() / RAND_MAX) * a_Range; }
@@ -96,10 +97,8 @@ public:
 	~ObjectModel();
 
 	// by making these pure virtual (= 0) we MUST ensure that the derived class provides these funcitons
-	virtual bool Update() = 0;  // we need to have an Update to move and create the ModelView
+	virtual bool Update(Camera* camera) = 0;  // we need to have an Update to move and create the ModelView
 	virtual bool Draw() = 0;  // and we need to draw from the vertices
-
-
 
 
 

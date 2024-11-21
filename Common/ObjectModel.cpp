@@ -32,11 +32,11 @@ ObjectModel::ObjectModel(char* FileName, MyFiles* FH)
 {
 	bool ret = LoadandConvert(&gdrawObjects, materials, textures, FileName, FH);
 
-	if (ret == false) printf("This load for %s failed, check file name and try again!\n", FileName);
+	if(ret == false) printf("This load for %s failed, check file name and try again!\n", FileName);
 }
 
 // this loads a standard OBJ file, since many types of object are likely to use OBJ's we allow the base model class (ObjectModel) to be able to load and store a standard OBJ model
-bool  ObjectModel::LoadandConvert(
+bool ObjectModel::LoadandConvert(
 	std::vector<DrawObject>* drawObjects,
 	std::vector<tinyobj::material_t>& materials,
 	std::map<std::string,
@@ -53,13 +53,13 @@ bool  ObjectModel::LoadandConvert(
 
 	bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &err, filename, "../Common/Assets/Models/");
 
-	if (!err.empty())
+	if(!err.empty())
 	{
 		char* cstr = &err[0u];   // printf needs chars
 		printf("oh Bugger can't load this obj file %s file returns error %s \n", filename, cstr);
 	}
 
-	if (!ret)
+	if(!ret)
 	{
 		printf("The %s.obj seems to be corrupt or incorrectly formated\n", filename);
 		return false;
@@ -83,12 +83,15 @@ bool  ObjectModel::LoadandConvert(
 	// Parse the materials and Load and create textures
 	{
 
-		for (size_t m = 0; m < materials.size(); m++) {
+		for(size_t m = 0; m < materials.size(); m++)
+		{
 			tinyobj::material_t* mp = &materials[m];
 
-			if (mp->diffuse_texname.length() > 0) {
+			if(mp->diffuse_texname.length() > 0)
+			{
 				// Only load the texture if it is not already loaded
-				if (textures.find(mp->diffuse_texname) == textures.end()) {
+				if(textures.find(mp->diffuse_texname) == textures.end())
+				{
 					GLuint texture_id;
 					int w, h;
 
@@ -99,7 +102,8 @@ bool  ObjectModel::LoadandConvert(
 
 					char* image = FH->Load(cstr, &w, &h);
 
-					if (!image) {
+					if(!image)
+					{
 						printf("Unable to load texture:%s \n", cstr);
 						exit(1);
 					}
@@ -124,18 +128,18 @@ bool  ObjectModel::LoadandConvert(
 
 
 
-					if (FH->comp == 4)	// check if we had an alpha texture or a plane (strictly speaking any value not 3 is wrong)	
+					if(FH->comp == 4)	// check if we had an alpha texture or a plane (strictly speaking any value not 3 is wrong)	
 					{
 						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 					}
 					else
 					{
-						if (FH->comp != 3) printf("Made a default non alpha texture, comp was :%d\n", FH->comp);
+						if(FH->comp != 3) printf("Made a default non alpha texture, comp was :%d\n", FH->comp);
 						/* Note, this was set to RGB, but caused issues in cross platform project, need to investigate why, but this fixes it*/
 						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 					}
 
-					if (glGetError() != GL_NO_ERROR)
+					if(glGetError() != GL_NO_ERROR)
 					{
 						printf("Oh bugger:- Model texture creation error, but attempting to carry on.\n");
 
@@ -143,7 +147,7 @@ bool  ObjectModel::LoadandConvert(
 
 					glBindTexture(GL_TEXTURE_2D, 0);
 					free(image);    // release the cpu memory once its been put in the GPU
-// store the resulting texture ID in a map, associated with its filename
+					// store the resulting texture ID in a map, associated with its filename
 					textures.insert(std::make_pair(mp->diffuse_texname, texture_id));
 				}
 			}
@@ -153,27 +157,32 @@ bool  ObjectModel::LoadandConvert(
 
 	{
 		// now lets put lots of data out of the vertext list, 	
-		for (size_t s = 0; s < shapes.size(); s++) {
+		for(size_t s = 0; s < shapes.size(); s++)
+		{
 			DrawObject o;
 			std::vector<float> vb;     // pos(3float), normal(3float), color(3float)
-			for (size_t f = 0; f < shapes[s].mesh.indices.size() / 3; f++) {
+			for(size_t f = 0; f < shapes[s].mesh.indices.size() / 3; f++)
+			{
 				tinyobj::index_t idx0 = shapes[s].mesh.indices[3 * f + 0];
 				tinyobj::index_t idx1 = shapes[s].mesh.indices[3 * f + 1];
 				tinyobj::index_t idx2 = shapes[s].mesh.indices[3 * f + 2];
 
 				int current_material_id = shapes[s].mesh.material_ids[f];
 
-				if ((current_material_id < 0) || (current_material_id >= static_cast<int>(materials.size()))) {
+				if((current_material_id < 0) || (current_material_id >= static_cast<int>(materials.size())))
+				{
 					// Invaid material ID. Use default material.
 					current_material_id = (int)(materials.size() - 1);    // Default material is added to the last item in `materials`.
 				}
 
 				float diffuse[3];
-				for (size_t i = 0; i < 3; i++) {
+				for(size_t i = 0; i < 3; i++)
+				{
 					diffuse[i] = materials[current_material_id].diffuse[i];
 				}
 				float tc[3][2];
-				if (attrib.texcoords.size() > 0) {
+				if(attrib.texcoords.size() > 0)
+				{
 					assert(attrib.texcoords.size() > 2 * idx0.texcoord_index + 1);
 					assert(attrib.texcoords.size() > 2 * idx1.texcoord_index + 1);
 					assert(attrib.texcoords.size() > 2 * idx2.texcoord_index + 1);
@@ -184,7 +193,8 @@ bool  ObjectModel::LoadandConvert(
 					tc[2][0] = attrib.texcoords[2 * idx2.texcoord_index];
 					tc[2][1] = 1.0f - attrib.texcoords[2 * idx2.texcoord_index + 1];
 				}
-				else {
+				else
+				{
 					tc[0][0] = 0.0f;
 					tc[0][1] = 0.0f;
 					tc[1][0] = 0.0f;
@@ -194,7 +204,8 @@ bool  ObjectModel::LoadandConvert(
 				}
 
 				float v[3][3];
-				for (int k = 0; k < 3; k++) {
+				for(int k = 0; k < 3; k++)
+				{
 					int f0 = idx0.vertex_index;
 					int f1 = idx1.vertex_index;
 					int f2 = idx2.vertex_index;
@@ -216,20 +227,23 @@ bool  ObjectModel::LoadandConvert(
 				}
 
 				float n[3][3];
-				if (attrib.normals.size() > 0) {
+				if(attrib.normals.size() > 0)
+				{
 					int f0 = idx0.normal_index;
 					int f1 = idx1.normal_index;
 					int f2 = idx2.normal_index;
 					assert(f0 >= 0);
 					assert(f1 >= 0);
 					assert(f2 >= 0);
-					for (int k = 0; k < 3; k++) {
+					for(int k = 0; k < 3; k++)
+					{
 						n[0][k] = attrib.normals[3 * f0 + k];
 						n[1][k] = attrib.normals[3 * f1 + k];
 						n[2][k] = attrib.normals[3 * f2 + k];
 					}
 				}
-				else {
+				else
+				{
 					// compute geometric normal
 					CalcNormal(n[0], v[0], v[1], v[2]);
 					n[1][0] = n[0][0];
@@ -240,7 +254,8 @@ bool  ObjectModel::LoadandConvert(
 					n[2][2] = n[0][2];
 				}
 
-				for (int k = 0; k < 3; k++) {
+				for(int k = 0; k < 3; k++)
+				{
 					vb.push_back(v[k][0]);
 					vb.push_back(v[k][1]);
 					vb.push_back(v[k][2]);
@@ -259,7 +274,8 @@ bool  ObjectModel::LoadandConvert(
 						n[k][2] * normal_factor + diffuse[2] * diffuse_factor
 					};
 					float len2 = c[0] * c[0] + c[1] * c[1] + c[2] * c[2];
-					if (len2 > 0.0f) {
+					if(len2 > 0.0f)
+					{
 						float len = sqrtf(len2);
 
 						c[0] /= len;
@@ -279,7 +295,7 @@ bool  ObjectModel::LoadandConvert(
 			o.numTriangles = 0;
 
 
-			if (shapes[s].mesh.material_ids.size() > 0 && shapes[s].mesh.material_ids.size() > s)
+			if(shapes[s].mesh.material_ids.size() > 0 && shapes[s].mesh.material_ids.size() > s)
 			{
 				// Base case
 				o.material_id = shapes[s].mesh.material_ids[s];
@@ -290,20 +306,20 @@ bool  ObjectModel::LoadandConvert(
 			}
 
 
-			if (vb.size() > 0)
+			if(vb.size() > 0)
 			{
 				glGenBuffers(1, &o.vb);
 				glBindBuffer(GL_ARRAY_BUFFER, o.vb);
 				glBufferData(GL_ARRAY_BUFFER,
-					vb.size() * sizeof(float),
-					&vb.at(0),
-					GL_STATIC_DRAW);
+							 vb.size() * sizeof(float),
+							 &vb.at(0),
+							 GL_STATIC_DRAW);
 
 				o.numTriangles = (int)(vb.size() / (3 + 3 + 3 + 2));    // note we have vertices, normals, colour, and uv, we proably won't use normals and colour yet
 
 				printf("shape[%d] # of triangles = %d\n",
-					static_cast<int>(s),
-					o.numTriangles);
+					   static_cast<int>(s),
+					   o.numTriangles);
 
 				GLsizei size;
 				glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
@@ -318,14 +334,14 @@ bool  ObjectModel::LoadandConvert(
 
 
 // set up an already established set of vertices
-bool	ObjectModel::LoadModel(GLvoid* a_Vertices)
+bool ObjectModel::LoadModel(GLvoid* a_Vertices)
 {
 	this->Vertices = a_Vertices;
 	return true;
 }
 
 // create the model by load the rotations/positions/scale matrices
-void		ObjectModel::SetModelMatrix()
+void ObjectModel::SetModelMatrix()
 {
 	//set the matrices we use to I	
 	mTranslationMatrix = glm::mat4(1.0f);
@@ -388,49 +404,49 @@ void ObjectModel::MakeModelMatrix()
 
 
 // return the position info from worldposition
-glm::vec3	ObjectModel::GetPositon()
+glm::vec3 ObjectModel::GetPositon()
 {
 	return WorldPosition;
 }
 
 //set the word position
-void		ObjectModel::SetPosition(glm::vec3* a_Pos)
+void ObjectModel::SetPosition(glm::vec3* a_Pos)
 {
 	WorldPosition.x = a_Pos->x;
 	WorldPosition.y = a_Pos->y;
 	WorldPosition.z = a_Pos->z;
 }
 //set the world position
-void		ObjectModel::SetPosition(glm::vec3 a_Pos)
+void ObjectModel::SetPosition(glm::vec3 a_Pos)
 {
 	WorldPosition = a_Pos;
 }
 
-glm::vec3	ObjectModel::GetRotations()
+glm::vec3 ObjectModel::GetRotations()
 {
 	return vec3(0); // holding
 }
-void		ObjectModel::SetRotations(glm::vec3* a_Rots)
+void ObjectModel::SetRotations(glm::vec3* a_Rots)
 {
 	Rotations.x = a_Rots->x;
 	Rotations.y = a_Rots->y;
 	Rotations.z = a_Rots->z;
 }
 
-void		ObjectModel::SetRotations(glm::vec3 a_Rots)
+void ObjectModel::SetRotations(glm::vec3 a_Rots)
 {
 	Rotations = a_Rots;
 }
 
-void		ObjectModel::SetXRotation(float a_x)
+void ObjectModel::SetXRotation(float a_x)
 {
 	Rotations.x = a_x;
 }
-void		ObjectModel::SetYRotation(float a_y)
+void ObjectModel::SetYRotation(float a_y)
 {
 	Rotations.y = a_y;
 }
-void		ObjectModel::SetZRotation(float a_z)
+void ObjectModel::SetZRotation(float a_z)
 {
 	Rotations.z = a_z;
 }

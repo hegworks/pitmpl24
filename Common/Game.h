@@ -2,6 +2,8 @@
 #include <glm/vec2.hpp>
 #include <vector>
 
+#include "Camera.h"
+
 #ifdef WINDOWS_BUILD
 #include <GLFW/glfw3.h>
 
@@ -26,10 +28,6 @@ struct ImFont;
 class GameObject;
 class IGraphics;
 class Input;
-
-constexpr unsigned int WINDOW_WIDTH = 1024;
-constexpr unsigned int WINDOW_HEIGHT = 768;
-constexpr float ASPECT_RATIO = 1024.0f / 768.0f;
 
 class Game
 {
@@ -56,6 +54,7 @@ protected:
 	btSequentialImpulseConstraintSolver* constraintSolver;
 	btDiscreteDynamicsWorld* world;
 	IGraphics* graphics;
+	Camera* camera = nullptr;
 
 
 private:

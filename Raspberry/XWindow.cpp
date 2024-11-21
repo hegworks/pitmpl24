@@ -1,13 +1,13 @@
 #include "XWindow.h"
 
 #include <cstring>
-#include <EGL/eglplatform.h>
-#include <EGL/egl.h>
-#include <X11/Xutil.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
 #include <cstring>
+#include <EGL/egl.h>
+#include <EGL/eglplatform.h>
 #include <GLES3/gl31.h>
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 
 #include "Game.h"
 
@@ -40,8 +40,8 @@ void XWindow::CreateWindow()
 		root,
 		0,		// puts it at the top left of the screen?
 		0,
-		WINDOW_WIDTH,	//set size  
-		WINDOW_HEIGHT,
+		SCRWIDTH,	//set size  
+		SCRHEIGHT,
 		0,
 		CopyFromParent,
 		InputOutput,
@@ -56,7 +56,7 @@ void XWindow::CreateWindow()
 	hints.input = true;
 	hints.flags = InputHint;
 	XSetWMHints(display, window, &hints);
-	
+
 	// make the window visible on the screen
 	XMapWindow(display, window);
 	XStoreName(display, window, "Pi Project 3D");
@@ -84,7 +84,7 @@ void XWindow::CreateWindow()
 		false,
 		SubstructureNotifyMask,
 		&xev);*/
-	
+
 	state.display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	eglInitialize(state.display, &majorVersion, &minorVersion);
 	eglGetConfigs(state.display, nullptr, 0, &numConfigs);

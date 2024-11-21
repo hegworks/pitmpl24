@@ -13,7 +13,7 @@ public:
 
 	~GeneralOBJ();
 		
-	bool Update();  // we supply an update
+	bool Update(Camera* camera);  // we supply an update
 	bool Draw();  // and a draw 
 	
 

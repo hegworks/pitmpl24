@@ -1,23 +1,23 @@
 #include "Game.h"
 
-
-
 #include "stb_image.h"
 
+#include "Camera.h"
+#include "CubeModel.h"
+#include "GeneralOBJ.h"
+#include "Graphics.h" // more of a generic system of graphics
+#include "IGraphics.h"
+#include "IInput.h"
 #include "Input.h"
+#include "ObjectModel.h"
 #include <chrono>
 #include <ctime>
 #include <iomanip>
-#include <sstream>
 #include <iostream>
-#include "ObjectModel.h"
-#include "GeneralOBJ.h"
-#include "CubeModel.h"
-#include "IGraphics.h"
-#include "Graphics.h" // more of a generic system of graphics
-#include "IInput.h"
+#include <sstream>
 // keeping some things in global space...because....Brian does it this way :D you should consider better ways....AKA, you should consider better ways...do I have to spell it out?
 std::vector<ObjectModel*> MyObjects; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
+std::vector<ObjectModel*> Cubes; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
 Graphics Graphics;
 
 Game::Game(const Input* const input, IGraphics* graphics) :
@@ -38,62 +38,81 @@ void Game::Start()
 {
 	InitializeOpenGLES();
 
+	camera = new Camera();
 
 	MyFiles* Handler = new MyFiles();
 	ObjectModel* T2;   // so both types even though quite different use the same base to create them
 
-	T2 = new CubeModel(Handler); // make a new cube
-	glm::vec3 Pos = glm::vec3(-10.0f, 0.0f, 0.0f); // set a position
-	T2->Scales = glm::vec3(0.2f, 0.2f, 0.2f);		 // a cube is actually quite large (screen size) so shrink it down
+	glm::vec3 Pos = glm::vec3(1.0); // set a position
+
+	for(int i = -5; i < 5; i++)
+	{
+		for(int j = -5; j < 5; j++)
+		{
+			T2 = new CubeModel(Handler); // make a new cube
+			Pos = glm::vec3(i * 4.0, 0.0f, j * 4.0); // set a position
+			T2->Scales = glm::vec3(0.2f, 0.2f, 0.2f);		 // a cube is actually quite large (screen size) so shrink it down
+			T2->SetPosition(Pos);
+
+			Cubes.push_back(T2); // store in the vector ready for the game loop to process
+			T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+			Graphics.Init(T2); // set it up
+		}
+	}
+
+	//reuse T2
+	//T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_01.obj", Handler); // make a new OBJ
+	//Pos = glm::vec3(5.0f, 10.0f, 0.0f); // set a position
+	//T2->SetPosition(Pos);
+	//T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	//
+	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
+	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//Graphics.Init(T2); // set it up
+
+	//reuse T2
+	T2 = new GeneralOBJ((char*)"../Common/Assets/Models/Naked_Snake.obj", Handler); // make a new OBJ
+	Pos = glm::vec3(0.0f, 3.0f, 0.0f); // set a position
 	T2->SetPosition(Pos);
+	T2->Scales = glm::vec3(0.4);
 
 	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
 	T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
 	Graphics.Init(T2); // set it up
-//reuse T2
-	T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_01.obj", Handler); // make a new OBJ
-	Pos = glm::vec3(5.0f, 10.0f, 0.0f); // set a position
-	T2->SetPosition(Pos);
-	T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
 
-	
-	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	Graphics.Init(T2); // set it up
+
+	//reuse T2
+	//T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_02.obj", Handler); // make a new OBJ
+	//Pos = glm::vec3(5.0f, -10.0f, 0.0f); // set a position
+	//T2->SetPosition(Pos);
+	//T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
+	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
+	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//Graphics.Init(T2); // set it up
 
 
 
 	//reuse T2
-	T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_02.obj", Handler); // make a new OBJ
-	Pos = glm::vec3(5.0f, -10.0f, 0.0f); // set a position
-	T2->SetPosition(Pos);
-	T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
+	//T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_03.obj", Handler); // make a new OBJ
+	//Pos = glm::vec3(-5.0f, 10.0f, 0.0f); // set a position
+	//T2->SetPosition(Pos);
+	//T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
-	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	Graphics.Init(T2); // set it up
-
-
-
-	//reuse T2
-	T2 = new GeneralOBJ((char*)"../Common/Assets/Models/brian_03.obj", Handler); // make a new OBJ
-	Pos = glm::vec3(-5.0f, 10.0f, 0.0f); // set a position
-	T2->SetPosition(Pos);
-	T2->Scales = glm::vec3(1.0f, 1.0f, 1.0f);
-
-
-	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	Graphics.Init(T2); // set it up
+	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
+	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//Graphics.Init(T2); // set it up
 
 
 	// Timing
 	auto startTime = std::chrono::system_clock::now();
 	auto lastTime = startTime;
 
-	float averageFPS{ 0 };
-	
+	float averageFPS{0};
+
 
 	while(!quitting)
 	{
@@ -102,6 +121,8 @@ void Game::Start()
 		std::chrono::duration<float> delta = time - lastTime;
 
 		gameDeltaTime = delta.count();
+
+		camera->Update(gameDeltaTime);
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(elapsed.count() > 0.25f && frameCount > 10)
@@ -112,18 +133,26 @@ void Game::Start()
 		}
 		// Setup the viewport
 		ClearScreen();
-		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
 
-		
 
 
-		for (size_t i = 0; i < MyObjects.size(); i++)
+
+		for(size_t i = 0; i < MyObjects.size(); i++)
 		{
 			//update the object, in this demo, we just up its position and transform data but you should consider logic
-			MyObjects[i]->Update();
+			MyObjects[i]->Update(camera);
 			// the draw routine is the responsbility of the object itself, thats not an ideal system, consider how to improve
 			MyObjects[i]->Draw();
+		}
+
+		for(size_t i = 0; i < Cubes.size(); i++)
+		{
+			//update the object, in this demo, we just up its position and transform data but you should consider logic
+			Cubes[i]->Update(camera);
+			// the draw routine is the responsbility of the object itself, thats not an ideal system, consider how to improve
+			Cubes[i]->Draw();
 		}
 
 
@@ -159,29 +188,33 @@ void Game::ProcessInput()
 	const Input& input = GetInput();
 	const IMouse& mouse = GetInput().GetMouse();
 	{
-		if (input.GetKeyboard().GetKey(Key::W))
+		if(input.GetKeyboard().GetKey(Key::W))
 		{
 			printf("we pressed W\n");
 		}
-		if (input.GetKeyboard().GetKey(Key::S))
+		if(input.GetKeyboard().GetKey(Key::S))
 		{
 			printf("we pressed S\n");
 		}
-		if (input.GetKeyboard().GetKey(Key::A))
+		if(input.GetKeyboard().GetKey(Key::A))
 		{
 			printf("we pressed A\n");
 		}
-		if (input.GetKeyboard().GetKey(Key::D))
+		if(input.GetKeyboard().GetKey(Key::D))
 		{
 			printf("we pressed D\n");
 		}
+		if(input.GetKeyboard().GetKey(Key::ESCAPE))
+		{
+			Quit();
+		}
 
-		if (input.GetMouse().GetButtonDown(MouseButtons::LEFT))
+		if(input.GetMouse().GetButtonDown(MouseButtons::LEFT))
 		{
 			printf("we pressed mouse left\n");
 		}
 
-	
+
 	}
 
 
@@ -204,7 +237,7 @@ void Game::InitializeOpenGLES()
 	glBlendEquation(GL_FUNC_ADD);
 
 	glCullFace(GL_BACK);
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 }
 
 void Game::ClearScreen()
