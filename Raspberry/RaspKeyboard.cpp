@@ -64,7 +64,7 @@ bool RaspKeyboard::GetKey(Key key) const
 		case Key::ARROW_DOWN: return m_keyDown[KEY_DOWN];
 		case Key::ARROW_LEFT: return m_keyDown[KEY_LEFT];
 		case Key::SPACE: return m_keyDown[KEY_SPACE];
-		default: std::cout << "ERROR::INPUT::Rasp Keycode not supported: " << static_cast<int>(key) << std::endl; return false;
+		default: throw std::runtime_error("Keycode not supported: " + std::to_string(static_cast<int>(key)));
 	}
 }
 
@@ -140,7 +140,6 @@ std::string RaspKeyboard::FindActiveKeyboardEv()
 			continue;
 		}
 
-
 		newLinePos = devices.find('\n', newLinePos + 1);
 	} while(newLinePos != std::string::npos);
 
@@ -169,10 +168,97 @@ void* RaspKeyboard::ProcessKeyboardThread(void* arg)
 
 		if(event.type == (__u16)EV_KEY)
 		{
-			input->m_keyDown[event.code] = event.value > 0;
+			bool isPressed = event.value > 0;
+			int key = event.code;
+
+			auto it = input->m_keyStates.find(key);
+
+			if(isPressed)
+			{
+				// If key is pressed but not already tracked
+				if(it == input->m_keyStates.end())
+				{
+					input->m_keyStates[key] = true; // Track key
+					if(input->m_keyCallback)
+						input->m_keyCallback(CodeToKey(key), KeyAction::DOWN);
+				}
+			}
+			else
+			{
+				// If key is released and was tracked
+				if(it != input->m_keyStates.end())
+				{
+					input->m_keyStates.erase(it); // Remove key
+					if(input->m_keyCallback)
+						input->m_keyCallback(CodeToKey(key), KeyAction::UP);
+				}
+			}
 		}
 	}
 
 	fclose(fKeyboard);
 	pthread_exit(nullptr);
+}
+
+void RaspKeyboard::SetKeyCallback(const KeyCallback& callback)
+{
+	m_keyCallback = callback;
+}
+
+Key RaspKeyboard::CodeToKey(int code)
+{
+	switch(code)
+	{
+		case KEY_A: return Key::A;
+		case KEY_B: return Key::B;
+		case KEY_C: return Key::C;
+		case KEY_D: return Key::D;
+		case KEY_E: return Key::E;
+		case KEY_F: return Key::F;
+		case KEY_G: return Key::G;
+		case KEY_H: return Key::H;
+		case KEY_I: return Key::I;
+		case KEY_J: return Key::J;
+		case KEY_K: return Key::K;
+		case KEY_L: return Key::L;
+		case KEY_M: return Key::M;
+		case KEY_N: return Key::N;
+		case KEY_O: return Key::O;
+		case KEY_P: return Key::P;
+		case KEY_Q: return Key::Q;
+		case KEY_R: return Key::R;
+		case KEY_S: return Key::S;
+		case KEY_T: return Key::T;
+		case KEY_U: return Key::U;
+		case KEY_V: return Key::V;
+		case KEY_W: return Key::W;
+		case KEY_X: return Key::X;
+		case KEY_Y: return Key::Y;
+		case KEY_Z: return Key::Z;
+		case KEY_0: return Key::NUM_0;
+		case KEY_1: return Key::NUM_1;
+		case KEY_2: return Key::NUM_2;
+		case KEY_3: return Key::NUM_3;
+		case KEY_4: return Key::NUM_4;
+		case KEY_5: return Key::NUM_5;
+		case KEY_6: return Key::NUM_6;
+		case KEY_7: return Key::NUM_7;
+		case KEY_8: return Key::NUM_8;
+		case KEY_9: return Key::NUM_9;
+		case KEY_TAB: return Key::TAB;
+		case KEY_CAPSLOCK: return Key::CAPS_LOCK;
+		case KEY_LEFTSHIFT: return Key::SHIFT_LEFT;
+		case KEY_LEFTCTRL: return Key::CTRL_LEFT;
+		case KEY_LEFTALT: return Key::ALT_LEFT;
+		case KEY_ESC: return Key::ESCAPE;
+		case KEY_HOMEPAGE: return Key::ESCAPE;
+		case KEY_RIGHTSHIFT: return Key::RIGHT_SHIFT;
+		case KEY_ENTER: return Key::ENTER;
+		case KEY_UP: return Key::ARROW_UP;
+		case KEY_RIGHT: return Key::ARROW_RIGHT;
+		case KEY_DOWN: return Key::ARROW_DOWN;
+		case KEY_LEFT: return Key::ARROW_LEFT;
+		case KEY_SPACE: return Key::SPACE;
+		default: throw std::runtime_error("Keycode not supported: " + std::to_string(code));
+	}
 }
