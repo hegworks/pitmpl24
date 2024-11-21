@@ -17,7 +17,6 @@ private:
 	Key GlfwKeyToEnumKey(int glfwKey);
 	KeyAction GlfwActionToEnumKeyAction(int glfwKeyAction);
 
-	// Inherited via IKeyboard
 	void SetKeyCallback(const KeyCallback& callback) override;
 	KeyCallback m_keyCallback;
 };

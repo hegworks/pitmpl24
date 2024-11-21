@@ -14,7 +14,6 @@ Input::~Input()
 	delete(keyboard);
 }
 
-
 IKeyboard* Input::GetKeyboard()
 {
 	return keyboard;
