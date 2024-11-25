@@ -56,7 +56,7 @@ bool RaspKeyboard::GetKey(Key key) const
 		case Key::SHIFT_LEFT: return m_keyDown[KEY_LEFTSHIFT];
 		case Key::CTRL_LEFT: return m_keyDown[KEY_LEFTCTRL];
 		case Key::ALT_LEFT: return m_keyDown[KEY_LEFTALT];
-		case Key::ESCAPE: return m_keyDown[KEY_ESC] || m_keyDown[KEY_HOMEPAGE] ||  m_keyDown[KEY_HOME];
+		case Key::ESCAPE: return m_keyDown[KEY_ESC] || m_keyDown[KEY_HOMEPAGE] || m_keyDown[KEY_HOME];
 		case Key::RIGHT_SHIFT: return m_keyDown[KEY_RIGHTSHIFT];
 		case Key::ENTER: return m_keyDown[KEY_ENTER];
 		case Key::ARROW_UP: return m_keyDown[KEY_UP];
@@ -64,7 +64,9 @@ bool RaspKeyboard::GetKey(Key key) const
 		case Key::ARROW_DOWN: return m_keyDown[KEY_DOWN];
 		case Key::ARROW_LEFT: return m_keyDown[KEY_LEFT];
 		case Key::SPACE: return m_keyDown[KEY_SPACE];
-		default: throw std::runtime_error("Keycode not supported: " + std::to_string(static_cast<int>(key)));
+		default:
+			std::cout << "WARNING::INPUT::RASP Key not supported: " << static_cast<int>(key) << std::endl;
+			return false;
 	}
 }
 
@@ -260,6 +262,8 @@ Key RaspKeyboard::CodeToKey(int code)
 		case KEY_DOWN: return Key::ARROW_DOWN;
 		case KEY_LEFT: return Key::ARROW_LEFT;
 		case KEY_SPACE: return Key::SPACE;
-		default: throw std::runtime_error("Keycode not supported: " + std::to_string(code));
+		default:
+			std::cout << "WARNING::INPUT::RASP Key not supported: " << code << std::endl;
+			return Key::UNKOWN;
 	}
 }
