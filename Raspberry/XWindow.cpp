@@ -96,7 +96,7 @@ void XWindow::CreateWindow()
 	eglMakeCurrent(state.display, state.surface, state.surface, state.context);
 
 	eglSurfaceAttrib(display, state.surface, EGL_SWAP_BEHAVIOR, EGL_BUFFER_PRESERVED);
-	eglSwapInterval(state.display, 1);
+	eglSwapInterval(state.display, 0);
 
 
 	// HIDE CURSOR.
