@@ -75,13 +75,15 @@ enum class Key
 	ARROW_RIGHT,
 	ARROW_DOWN,
 	ARROW_LEFT,
-	SPACE
+	SPACE,
+	UNKOWN,
 };
 
 enum class KeyAction
 {
 	UP,
-	DOWN
+	DOWN,
+	UNKNOWN,
 };
 
 class IKeyboard

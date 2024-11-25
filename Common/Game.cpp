@@ -33,7 +33,7 @@ Game::~Game()
 
 }
 
-void KeyCallback(Key key, KeyAction action)
+void Game::KeyCallback(Key key, KeyAction action)
 {
 	// Implement your key callback logic here
 	if(action == KeyAction::DOWN)
@@ -53,12 +53,15 @@ void KeyCallback(Key key, KeyAction action)
 				std::cout << "D down" << std::endl;
 				break;
 			case Key::ESCAPE:
+				std::cout << "ESCAPE down" << std::endl;
+				Quit();
 				break;
 			default:
 				break;
 		}
 	}
 }
+
 
 void Game::Start()
 {
@@ -140,7 +143,9 @@ void Game::Start()
 	float averageFPS{0};
 
 
-	input->GetKeyboard()->SetKeyCallback(KeyCallback);
+	input->GetKeyboard()->SetKeyCallback(
+		[this](Key key, KeyAction action) { KeyCallback(key, action); }
+	);
 
 	while(!quitting)
 	{
@@ -209,7 +214,6 @@ void Game::Quit()
 	quitting = true;
 }
 
-
 //example of using the key and mouse
 void Game::ProcessInput()
 {
@@ -234,7 +238,7 @@ void Game::ProcessInput()
 	}
 	if(keyboard->GetKey(Key::ESCAPE))
 	{
-		Quit();
+		printf("we pressed ESCAPE\n");
 	}
 
 	if(mouse->GetButtonDown(MouseButtons::LEFT))

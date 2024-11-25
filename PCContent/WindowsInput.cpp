@@ -18,7 +18,9 @@ bool WindowsMouse::GetButtonDown(MouseButtons button) const
 		case MouseButtons::LEFT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_LEFT);
 		case MouseButtons::RIGHT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_RIGHT);
 		case MouseButtons::MIDDLE: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_MIDDLE);
-		default:std::cout << "ERROR::INPUT::WINDOWS Mouse button not supported: " << static_cast<int>(button) << std::endl; return false;
+		default:
+			std::cout << "WARNING::INPUT::WINDOWS Mouse button not supported: " << static_cast<int>(button) << std::endl;
+			return false;
 	}
 }
 
@@ -115,7 +117,9 @@ Key WindowsKeyboard::GlfwKeyToEnumKey(int glfwKey)
 		case GLFW_KEY_DOWN: return Key::ARROW_DOWN;
 		case GLFW_KEY_LEFT: return Key::ARROW_LEFT;
 		case GLFW_KEY_SPACE: return Key::SPACE;
-		default: throw std::runtime_error("Key not supported");
+		default:
+			std::cout << "WARNING::INPUT::WINDOWS Key not supported: " << glfwKey << std::endl;
+			return Key::UNKOWN;
 	}
 }
 
@@ -125,7 +129,9 @@ KeyAction WindowsKeyboard::GlfwActionToEnumKeyAction(int glfwKeyAction)
 	{
 		case GLFW_PRESS: return KeyAction::DOWN;
 		case GLFW_RELEASE: return KeyAction::UP;
-		default: throw std::runtime_error("Key action not supported");
+		default:
+			std::cout << "WARNING::INPUT::WINDOWS Key action not supported: " << glfwKeyAction << std::endl;
+			return KeyAction::UNKNOWN;
 	}
 }
 
@@ -182,6 +188,8 @@ bool WindowsKeyboard::GetKey(Key key) const
 		case Key::ARROW_DOWN: return glfwGetKey(&m_window, GLFW_KEY_DOWN);
 		case Key::ARROW_LEFT: return glfwGetKey(&m_window, GLFW_KEY_LEFT);
 		case Key::SPACE: return glfwGetKey(&m_window, GLFW_KEY_SPACE);
-		default: throw std::runtime_error("Key not supported");
+		default:
+			std::cout << "WARNING::INPUT::WINDOWS Key not supported: " << static_cast<int>(key) << std::endl;
+			return false;
 	}
 }

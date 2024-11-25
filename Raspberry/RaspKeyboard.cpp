@@ -56,7 +56,7 @@ bool RaspKeyboard::GetKey(Key key) const
 		case Key::SHIFT_LEFT: return m_keyDown[KEY_LEFTSHIFT];
 		case Key::CTRL_LEFT: return m_keyDown[KEY_LEFTCTRL];
 		case Key::ALT_LEFT: return m_keyDown[KEY_LEFTALT];
-		case Key::ESCAPE: return m_keyDown[KEY_ESC] || m_keyDown[KEY_HOMEPAGE];
+		case Key::ESCAPE: return m_keyDown[KEY_ESC] || m_keyDown[KEY_HOMEPAGE] ||  m_keyDown[KEY_HOME];
 		case Key::RIGHT_SHIFT: return m_keyDown[KEY_RIGHTSHIFT];
 		case Key::ENTER: return m_keyDown[KEY_ENTER];
 		case Key::ARROW_UP: return m_keyDown[KEY_UP];
@@ -252,6 +252,7 @@ Key RaspKeyboard::CodeToKey(int code)
 		case KEY_LEFTALT: return Key::ALT_LEFT;
 		case KEY_ESC: return Key::ESCAPE;
 		case KEY_HOMEPAGE: return Key::ESCAPE;
+		case KEY_HOME: return Key::ESCAPE;
 		case KEY_RIGHTSHIFT: return Key::RIGHT_SHIFT;
 		case KEY_ENTER: return Key::ENTER;
 		case KEY_UP: return Key::ARROW_UP;

@@ -22,6 +22,7 @@ struct ImFont;
 #ifdef WINDOWS_BUILD
 #include "glad/glad.h"
 #endif
+#include "IInput.h"
 
 
 
@@ -38,6 +39,7 @@ public:
 	btDiscreteDynamicsWorld* World() const;
 	Input* GetInput() const;
 	void Quit();
+
 protected:
 	void ProcessInput();
 	virtual void Update(float /*gameDeltaTime*/) {}
@@ -60,6 +62,7 @@ protected:
 private:
 	void InitializeOpenGLES();
 	void ClearScreen();
+	void KeyCallback(Key key, KeyAction action);
 
 	int frameCount{0};
 };
