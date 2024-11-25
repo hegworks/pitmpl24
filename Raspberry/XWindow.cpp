@@ -100,7 +100,7 @@ void XWindow::CreateWindow()
 
 
 	// HIDE CURSOR.
-	/*Cursor invisibleCursor;
+	Cursor invisibleCursor;
 	Pixmap bitmapNoData;
 	XColor black;
 	static char noData[] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -109,7 +109,9 @@ void XWindow::CreateWindow()
 	invisibleCursor = XCreatePixmapCursor(display, bitmapNoData, bitmapNoData, &black, &black, 0, 0);
 	XDefineCursor(display, window, invisibleCursor);
 	XFreeCursor(display, invisibleCursor);
-	XFreePixmap(display, bitmapNoData);*/
+	XFreePixmap(display, bitmapNoData);
+
+	XGrabPointer(display, window, True, 0, GrabModeAsync, GrabModeAsync, window, None, CurrentTime);
 }
 
 const EGLState& XWindow::GetState() const

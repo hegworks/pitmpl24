@@ -19,7 +19,7 @@ class IMouse
 
 public:
 	virtual bool GetButtonDown(MouseButtons button) const = 0;
-	virtual glm::vec2 GetPosition() const = 0;
+	virtual glm::vec2 GetPosition() = 0;
 	virtual float GetScrollDelta() const = 0;
 
 	virtual ~IMouse() = default;

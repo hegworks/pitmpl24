@@ -245,6 +245,8 @@ void Game::ProcessInput()
 	{
 		printf("we pressed mouse left\n");
 	}
+
+	camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
 }
 
 void Game::InitializeOpenGLES()
