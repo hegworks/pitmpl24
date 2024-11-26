@@ -3,8 +3,8 @@
 #include <iostream>
 
 RaspMouse::RaspMouse(Display& display, Window& window) :
-	display(display),
-	window(window)
+	m_display(display),
+	m_window(window)
 {
 	XWarpPointer(&display, None, window, 0, 0, 0, 0, SCRWIDTH / 2.0, SCRHEIGHT / 2.0);
 	XFlush(&display); // Ensure the command is sent immediately
@@ -19,8 +19,8 @@ bool RaspMouse::GetButtonDown(MouseButtons button) const
 	uint mask_return;
 	Window window_returned;
 	XQueryPointer(
-		&display,
-		window,
+		&m_display,
+		m_window,
 		&window_returned,
 		&window_returned,
 
@@ -60,8 +60,8 @@ glm::vec2 RaspMouse::GetPosition()
 	uint mask_return;
 	Window window_returned;
 	XQueryPointer(
-		&display,
-		window,
+		&m_display,
+		m_window,
 		&window_returned,
 		&window_returned,
 
@@ -80,8 +80,8 @@ glm::vec2 RaspMouse::GetPosition()
 		glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
 
 		// Warp pointer back to the center
-		XWarpPointer(&display, None, window, 0, 0, 0, 0, center.x, center.y);
-		XFlush(&display); // Ensure the warp is sent immediately
+		XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, center.x, center.y);
+		XFlush(&m_display); // Ensure the warp is sent immediately
 
 		// Update the offset to account for the warp
 		m_resettedPosOffset += posBeforeReset - center;

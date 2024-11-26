@@ -4,23 +4,23 @@
 #include "RaspMouse.h"
 #include "XWindow.h"
 
-RaspGraphics::RaspGraphics() : window(new XWindow())
+RaspGraphics::RaspGraphics() : m_window(new XWindow())
 {
-	window->CreateWindow();
+	m_window->CreateWindow();
 }
 
 void RaspGraphics::Quit()
 {
-	XDestroyWindow(&window->GetDisplay(), window->GetWindow());
+	XDestroyWindow(&m_window->GetDisplay(), m_window->GetWindow());
 }
 
 void RaspGraphics::SwapBuffer()
 {
-	EGLState state = window->GetState();
+	EGLState state = m_window->GetState();
 	eglSwapBuffers(state.display, state.surface);
 }
 
 XWindow& RaspGraphics::Window() const
 {
-	return *window;
+	return *m_window;
 }

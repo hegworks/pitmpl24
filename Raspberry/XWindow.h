@@ -17,10 +17,10 @@ public:
 	Window& GetWindow();
 
 private:
-	Display* display;
-	Window root;
-	Window window;
-	EGLState state;
+	Display* m_display = nullptr;
+	Window m_root;
+	Window m_window;
+	EGLState m_state;
 };
 
 static const EGLint context_attributes[] =

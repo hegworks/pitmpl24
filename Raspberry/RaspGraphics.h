@@ -10,10 +10,10 @@ public:
 	RaspGraphics();
 	~RaspGraphics() {};
 
-	void Quit() override;
-	void SwapBuffer() override;
+	virtual void Quit();
+	virtual void SwapBuffer();
 	XWindow& Window() const;
 
 private:
-	XWindow* window;
+	XWindow* m_window = nullptr;
 };

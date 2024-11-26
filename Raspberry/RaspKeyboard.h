@@ -1,5 +1,6 @@
 #pragma once
 #include <IInput.h>
+
 #include <string>
 #include <unordered_map>
 
@@ -11,7 +12,7 @@ public:
 
 private:
 	pthread_t m_keyboardThread;
-	bool* m_keyDown;
+	bool* m_keyDown = nullptr;
 	std::string m_keyboardLocation;
 
 	void FindKeyboardLocation();
