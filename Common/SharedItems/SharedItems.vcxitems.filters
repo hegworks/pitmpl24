@@ -39,26 +39,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\CubeModel.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\ObjectModel.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IGraphics.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IInput.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\MyFiles.h">
-      <Filter>Engine\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h">
-      <Filter>Engine\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
       <Filter>Engine\Headers</Filter>
@@ -96,25 +81,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h">
       <Filter>Engine\ThirdParty\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h">
+      <Filter>Engine\PlatformSpecificHeaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">
       <Filter>Game\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp">
-      <Filter>Game\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp">
-      <Filter>Game\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.cpp">
-      <Filter>Game\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp">
-      <Filter>Engine\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp">
-      <Filter>Engine\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedInput.cpp">
       <Filter>Engine\Source</Filter>

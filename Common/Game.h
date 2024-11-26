@@ -1,8 +1,4 @@
 #pragma once
-#include <glm/vec2.hpp>
-#include <vector>
-
-#include "Camera.h"
 
 #ifdef WINDOWS_BUILD
 #include <GLFW/glfw3.h>
@@ -22,13 +18,14 @@ struct ImFont;
 #ifdef WINDOWS_BUILD
 #include "glad/glad.h"
 #endif
-#include "IInput.h"
 
 
+#include "IInputKey.h"
 
 class GameObject;
 class IGraphics;
 class SharedInput;
+class Camera;
 
 class Game
 {

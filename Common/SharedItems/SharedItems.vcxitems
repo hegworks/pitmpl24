@@ -14,9 +14,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\CubeModel.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\SharedInput.h" />
@@ -28,17 +26,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\MyFiles.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\ObjectModel.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Common.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp" />
@@ -46,10 +40,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_draw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_tables.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.mtl">
