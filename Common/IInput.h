@@ -3,9 +3,6 @@
 
 #include <functional> 
 #include <glm/vec2.hpp>
-#ifdef WINDOWS
-#include <GLFW/glfw3.h>
-#endif
 
 #include "IInputKey.h"
 

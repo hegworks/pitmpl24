@@ -1,6 +1,5 @@
 #pragma once
 #include "IInput.h"
-
 #include <X11/Xlib.h>
 
 class RaspMouse : public IMouse
@@ -18,4 +17,3 @@ private:
 	Display& display;
 	Window& window;
 };
-

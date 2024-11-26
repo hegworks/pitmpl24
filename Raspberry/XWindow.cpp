@@ -1,14 +1,11 @@
+#include "Common.h"
 #include "XWindow.h"
 
-#include <cstring>
 #include <EGL/egl.h>
 #include <EGL/eglplatform.h>
-#include <GLES3/gl31.h>
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
-#include "Game.h"
 
 XWindow::XWindow()
 {

@@ -5,23 +5,29 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Libs&amp;Interfaces">
-      <UniqueIdentifier>{93aa8f34-3836-40e2-9712-21d8c2f675ca}</UniqueIdentifier>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{6944181f-62b7-43dc-9c79-eb85e75ef2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\stb">
+      <UniqueIdentifier>{cecf1075-85d8-4185-bff1-692acbf1272c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\imgui">
+      <UniqueIdentifier>{37ea8762-8004-4f43-9246-afaff1f13b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\glad">
+      <UniqueIdentifier>{141726c0-0e65-445c-a02f-638db11df2d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossPiProject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PCContent\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PCContent\WindowsGraphics.cpp">
@@ -31,21 +37,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Common\ImGui-master\backends\imgui_impl_glfw.cpp">
-      <Filter>Libs&amp;Interfaces</Filter>
+      <Filter>ThirdParty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="PCContent\glad.c">
+      <Filter>ThirdParty\glad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCContent\WindowsInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PCContent\stb_image.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="PCContent\WindowsGraphics.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PCContent\stb_image.h">
+      <Filter>ThirdParty\stb</Filter>
     </ClInclude>
     <ClInclude Include="Common\ImGui-master\backends\imgui_impl_glfw.h">
-      <Filter>Libs&amp;Interfaces</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

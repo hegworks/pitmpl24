@@ -7,7 +7,16 @@
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
 #include "SharedInput.h"
+
 #include <chrono>
+
+#ifdef Raspberry_BUILD
+#include <GLES3/gl3.h>
+#endif
+
+#ifdef WINDOWS_BUILD
+#include "glad/glad.h"
+#endif
 
 Game::Game(SharedInput* input, IGraphics* graphics) :
 	input(input),

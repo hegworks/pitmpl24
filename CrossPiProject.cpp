@@ -1,13 +1,10 @@
 // CrossPiProject.cpp : This file contains the PC 'main' function. Program execution begins and ends there.
-//
 #include "Game.h"
 #include "SharedInput.h"
 #include "WindowsGraphics.h"
 #include "WindowsInput.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/common.hpp>
-#include <iostream>
 
 #ifdef WINDOWS_BUILD
 // in case of a laptop with poor on board GPU, lets make sure we switch on any power gpu's we have to get max compatability
@@ -23,7 +20,6 @@ extern "C"
 #endif
 
 
-//
 WindowsGraphics* WinGraphics;
 SharedInput* sharedInput;
 Game* game;

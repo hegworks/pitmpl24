@@ -7,20 +7,11 @@
 #include <GLES2/gl2.h>
 
 #endif
-struct ImFont;
 #include "btBulletDynamicsCommon.h"
 
-
-#ifdef Raspberry_BUILD
-#include <GLES3/gl3.h>
-#endif
-
-#ifdef WINDOWS_BUILD
-#include "glad/glad.h"
-#endif
-
-
 #include "IInputKey.h"
+
+struct ImFont;
 
 class GameObject;
 class IGraphics;
@@ -63,4 +54,3 @@ private:
 
 	int frameCount{0};
 };
-

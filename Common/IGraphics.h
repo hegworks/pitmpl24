@@ -7,4 +7,3 @@ public:
 	virtual void SwapBuffer() = 0;
 	virtual void Quit() = 0;
 };
-

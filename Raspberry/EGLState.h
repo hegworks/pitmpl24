@@ -8,7 +8,5 @@ struct EGLState
 	EGLSurface surface;
 	EGLContext context;
 	EGLConfig config;
-
-	EGLNativeWindowType  nativeWindow;
-
+	EGLNativeWindowType nativeWindow;
 };

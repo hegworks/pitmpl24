@@ -31,7 +31,7 @@
     <Filter Include="Engine\ThirdParty\TinyObj">
       <UniqueIdentifier>{2aeede92-a1e3-4f09-965a-c2834794e06c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ThirdParty\ImGui">
+    <Filter Include="Engine\ThirdParty\imgui">
       <UniqueIdentifier>{3ec76581-e5a8-4f26-b737-443be7533cbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -58,28 +58,28 @@
       <Filter>Engine\ThirdParty\TinyObj</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imconfig.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3_loader.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_internal.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
@@ -96,22 +96,22 @@
       <Filter>Engine\ThirdParty\TinyObj</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_demo.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_draw.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_tables.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp">
-      <Filter>Engine\ThirdParty\ImGui</Filter>
+      <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

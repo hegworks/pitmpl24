@@ -1,6 +1,6 @@
+#include "Common.h"
 #include "Game.h"
 #include "WindowsGraphics.h"
-#include "WindowsInput.h"
 #include <glad/glad.h>
 #include <iostream>
 

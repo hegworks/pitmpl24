@@ -3,10 +3,8 @@
  *
  **/
 
-#include <GLFW/glfw3.h>
-
 #include "IGraphics.h"
-#include "IInput.h"
+#include <GLFW/glfw3.h>
 
 class WindowsGraphics : public IGraphics
 {
@@ -20,4 +18,3 @@ public:
 private:
 	GLFWwindow* window;
 };
-

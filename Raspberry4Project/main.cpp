@@ -2,14 +2,11 @@
 #include "SharedInput.h"
 
 #include "Game.h"
-#include "IInput.h"
 #include "RaspGraphics.h"
 #include "RaspKeyboard.h"
 #include "RaspMouse.h"
-#include "ShaderManager.h"
 #include "XWindow.h"
 #include <GLES2/gl2ext.h>
-#include <GLES3/gl3.h>
 #include <iostream>
 
 float lastTime{};
@@ -20,6 +17,7 @@ int currentFrame = 0;
 RaspGraphics* graphics;
 SharedInput* sharedInput;
 Game* game;
+
 int main()
 {
 	graphics = new RaspGraphics();

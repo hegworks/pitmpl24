@@ -3,8 +3,6 @@
 #include "IInput.h"
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-
 class WindowsKeyboard : public IKeyboard
 {
 public:

@@ -2,9 +2,9 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
-#include <EGL/eglplatform.h>
 #include "EGLState.h"
 #include <EGL/eglext.h>
+#include <EGL/eglplatform.h>
 
 class XWindow
 {
@@ -13,7 +13,6 @@ public:
 
 	void CreateWindow();
 	const EGLState& GetState() const;
-
 	Display& GetDisplay();
 	Window& GetWindow();
 
@@ -45,9 +44,9 @@ const EGLint attribute_list[] =
 	EGL_ALPHA_SIZE,
 	8,
 	EGL_DEPTH_SIZE,
-	16,	
-//	EGL_SAMPLE_BUFFERS,1, // these tend to kill performance on a Pi
-//	EGL_SAMPLES,4,
+	16,
+	//	EGL_SAMPLE_BUFFERS,1, // these tend to kill performance on a Pi
+	//	EGL_SAMPLES,4,
 	EGL_SURFACE_TYPE,
 	EGL_WINDOW_BIT,
 #ifdef GLES3	
