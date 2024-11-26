@@ -28,16 +28,16 @@ struct ImFont;
 
 class GameObject;
 class IGraphics;
-class Input;
+class SharedInput;
 
 class Game
 {
 public:
-	Game(Input* input, IGraphics* graphics);
+	Game(SharedInput* input, IGraphics* graphics);
 	virtual ~Game();
 	void Start();
 	btDiscreteDynamicsWorld* World() const;
-	Input* GetInput() const;
+	SharedInput* GetInput() const;
 	void Quit();
 
 protected:
@@ -46,7 +46,7 @@ protected:
 	virtual void Render() {}
 	virtual void PostRender() {}
 
-	Input* input;
+	SharedInput* input;
 	bool quitting{false};
 	float gameDeltaTime;
 

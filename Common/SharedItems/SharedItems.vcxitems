@@ -19,7 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IInput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\SharedrInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\MyFiles.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ObjectModel.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h" />
@@ -31,7 +31,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Input.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedrInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp" />

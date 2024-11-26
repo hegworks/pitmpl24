@@ -20,7 +20,7 @@ std::vector<ObjectModel*> MyObjects; // on the basis that every object is derive
 std::vector<ObjectModel*> Cubes; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
 ShaderManager ShaderManager;
 
-Game::Game(Input* input, IGraphics* graphics) :
+Game::Game(SharedInput* input, IGraphics* graphics) :
 	input(input),
 	graphics(graphics)
 
@@ -203,7 +203,7 @@ btDiscreteDynamicsWorld* Game::World() const
 	return world;
 }
 
-Input* Game::GetInput() const
+SharedInput* Game::GetInput() const
 {
 	return input;
 }
@@ -216,7 +216,7 @@ void Game::Quit()
 //example of using the key and mouse
 void Game::ProcessInput()
 {
-	Input* input = GetInput();
+	SharedInput* input = GetInput();
 	IMouse* mouse = input->GetMouse();
 	IKeyboard* keyboard = input->GetKeyboard();
 	if(keyboard->GetKey(Key::W))

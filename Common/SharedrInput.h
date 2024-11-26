@@ -1,14 +1,12 @@
 #pragma once
-
-
 class IMouse;
 class IKeyboard;
 
-class Input
+class SharedInput
 {
 public:
-	Input(IKeyboard* keyboard, IMouse* const mouse);
-	~Input();
+	SharedInput(IKeyboard* keyboard, IMouse* const mouse);
+	~SharedInput();
 
 	IKeyboard* GetKeyboard();
 	IMouse* GetMouse() const;
@@ -17,4 +15,3 @@ private:
 	IMouse* const mouse;
 	IKeyboard* keyboard;
 };
-

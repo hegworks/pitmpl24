@@ -39,7 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Input.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\SharedrInput.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h">
@@ -77,7 +77,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Input.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedrInput.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
