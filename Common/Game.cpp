@@ -82,7 +82,7 @@ void Game::Start()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init(glsl_version);
 	ImGuiIO& io = ImGui::GetIO();
-	io.DisplaySize = ImVec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+	io.DisplaySize = ImVec2(SCRWIDTH, SCRHEIGHT);
 
 	camera = new Camera();
 
