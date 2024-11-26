@@ -9,18 +9,9 @@
 #include <GLES2/gl2ext.h>
 #include <iostream>
 
-float lastTime{};
-float deltaTime{0.2f};
-
-int currentFrame = 0;
-
-RaspGraphics* graphics;
-SharedInput* sharedInput;
-Game* game;
-
 int main()
 {
-	graphics = new RaspGraphics();
+	RaspGraphics* graphics = new RaspGraphics();
 
 	PFNGLDEBUGMESSAGECALLBACKKHRPROC peglDebugMessageControlKHR = reinterpret_cast<PFNGLDEBUGMESSAGECALLBACKKHRPROC>(eglGetProcAddress("glDebugMessageCallback"));
 	if(!(peglDebugMessageControlKHR != 0))
@@ -51,10 +42,10 @@ int main()
 	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
 	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	sharedInput = new SharedInput(new RaspKeyboard(), new RaspMouse(graphics->Window().GetDisplay(), graphics->Window().GetWindow()));
+	SharedInput* sharedInput = new SharedInput(new RaspKeyboard(), new RaspMouse(graphics->Window().GetDisplay(), graphics->Window().GetWindow()));
 
 	// now we fire up our game giving it access to the input systems and graphics which are different on each platform but abstracted away   
-	game = new Game(sharedInput, graphics);
+	Game* game = new Game(sharedInput, graphics);
 	game->Start();
 
 	return 0;
