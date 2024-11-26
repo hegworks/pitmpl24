@@ -7,13 +7,13 @@
 void WindowsGraphics::SwapBuffer()
 {
 	glFlush();
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(m_window);
 	glfwPollEvents();
 }
 
 GLFWwindow& WindowsGraphics::Window() const
 {
-	return *window;
+	return *m_window;
 }
 
 WindowsGraphics::WindowsGraphics()
@@ -28,18 +28,18 @@ WindowsGraphics::WindowsGraphics()
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 	// Creates the window.
-	window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
+	m_window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
 
 	// Error handling for if window creation failed.
-	if(window == NULL)
+	if(m_window == NULL)
 	{
 		std::cout << "Failed to create GLFW window!" << std::endl;
 		glfwTerminate();
 	}
 
 	// Set the window to be the current context.
-	glfwMakeContextCurrent(window);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwMakeContextCurrent(m_window);
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Error handling for if GLAD failed to initialize.
 	if(!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress))
@@ -50,5 +50,5 @@ WindowsGraphics::WindowsGraphics()
 
 void WindowsGraphics::Quit()
 {
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(m_window);
 }
