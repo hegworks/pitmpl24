@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Libs&amp;Interfaces">
+      <UniqueIdentifier>{93aa8f34-3836-40e2-9712-21d8c2f675ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrossPiProject.cpp">
@@ -27,6 +30,9 @@
     <ClCompile Include="PCContent\WindowsInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ImGui-master\backends\imgui_impl_glfw.cpp">
+      <Filter>Libs&amp;Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCContent\WindowsInput.h">
@@ -37,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="PCContent\WindowsGraphics.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ImGui-master\backends\imgui_impl_glfw.h">
+      <Filter>Libs&amp;Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,6 +20,8 @@ WindowsGraphics::WindowsGraphics()
 {
 	// Initialize GLFW and set window properties.
 	glfwInit();
+	glfwWindowHint(GL_DEPTH_BUFFER_BIT, 16);
+	glfwWindowHint(GL_DEPTH_BITS, 16);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1); // we need a base OpenGL 3.3 to emulate ES, otherwise use 3.1 for ES
 	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // for normal opengl

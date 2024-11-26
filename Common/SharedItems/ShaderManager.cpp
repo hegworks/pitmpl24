@@ -5,6 +5,12 @@
 #include <cstring>
 using namespace glm;
 
+#include "ImGui-master/imgui.h"
+#if defined(WINDOWS_BUILD)
+#include "ImGui-master/backends/imgui_impl_glfw.h"
+#else 
+#include "ImGui-master/backends/imgui_impl_opengl3.h"
+#endif
 
 ShaderManager::ShaderManager()
 {
@@ -28,7 +34,7 @@ int ShaderManager::AttachShader(ObjectModel* TheModel) // this gives every model
 
 	GLbyte vShaderStr[] =
 		"#version 100 \n"
-		"precision mediump float;     \n"
+		"precision highp float;     \n"
 		"attribute vec3 a_position;   \n"
 		"attribute vec2 a_texCoord;   \n"
 		"uniform mat4 MVP;            \n"
@@ -41,7 +47,7 @@ int ShaderManager::AttachShader(ObjectModel* TheModel) // this gives every model
 
 	GLbyte fShaderStr[] =
 		"#version 100 \n"
-		"precision mediump float;                            \n"
+		"precision highp float;                            \n"
 		"varying vec2 v_texCoord;                            \n"
 		"uniform sampler2D s_texture;                        \n"
 		"uniform vec4  Ambient;\n"
