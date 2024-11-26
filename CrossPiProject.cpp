@@ -19,28 +19,20 @@ extern "C"
 }
 #endif
 
-
-WindowsGraphics* WinGraphics;
-SharedInput* sharedInput;
-Game* game;
-
 // Mains only purpose is to set up OGL and then jump to general game code
 int main()
 {
-	WinGraphics = new WindowsGraphics();
+	WindowsGraphics* WinGraphics = new WindowsGraphics();
 	glfwSwapInterval(1); // stop the windows build updating without vblank so its the same speed as pi
 
-
-
-	sharedInput = new SharedInput(new WindowsKeyboard(WinGraphics->Window()), new WindowsMouse(WinGraphics->Window()));
+	SharedInput* sharedInput = new SharedInput(new WindowsKeyboard(WinGraphics->Window()), new WindowsMouse(WinGraphics->Window()));
 	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
 	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
 	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
 	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
 	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-	game = new Game(sharedInput, WinGraphics);
-
+	Game* game = new Game(sharedInput, WinGraphics);
 	game->Start();
 
 	return 0;
