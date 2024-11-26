@@ -56,8 +56,8 @@ protected:
 	btSequentialImpulseConstraintSolver* constraintSolver;
 	btDiscreteDynamicsWorld* world;
 	IGraphics* graphics;
-	Camera* camera = nullptr;
 
+	Camera* m_camera = nullptr;
 
 private:
 	void InitializeOpenGLES();

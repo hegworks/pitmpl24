@@ -7,11 +7,11 @@
 #include "GeneralOBJ.h"
 #include "IGraphics.h"
 #include "IInput.h"
+#include "ImGui-master/backends/imgui_impl_opengl3.h"
+#include "ImGui-master/imgui.h"
 #include "ObjectModel.h"
 #include "ShaderManager.h" // more of a generic system of graphics
 #include "SharedInput.h"
-#include "ImGui-master/imgui.h"
-#include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include <chrono>
 #include <ctime>
 #include <iomanip>
@@ -20,7 +20,7 @@
 // keeping some things in global space...because....Brian does it this way :D you should consider better ways....AKA, you should consider better ways...do I have to spell it out?
 std::vector<ObjectModel*> MyObjects; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
 std::vector<ObjectModel*> Cubes; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
-ShaderManager ShaderManager;
+ShaderManager shaderManager;
 
 Game::Game(SharedInput* input, IGraphics* graphics) :
 	input(input),
@@ -42,20 +42,7 @@ void Game::KeyCallback(Key key, KeyAction action)
 	{
 		switch(key)
 		{
-			case Key::W:
-				std::cout << "W down" << std::endl;
-				break;
-			case Key::S:
-				std::cout << "S down" << std::endl;
-				break;
-			case Key::A:
-				std::cout << "A down" << std::endl;
-				break;
-			case Key::D:
-				std::cout << "D down" << std::endl;
-				break;
 			case Key::ESCAPE:
-				std::cout << "ESCAPE down" << std::endl;
 				Quit();
 				break;
 			default:
@@ -84,7 +71,7 @@ void Game::Start()
 	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(SCRWIDTH, SCRHEIGHT);
 
-	camera = new Camera();
+	m_camera = new Camera();
 
 	FileLoader* Handler = new FileLoader();
 	ObjectModel* T2;   // so both types even though quite different use the same base to create them
@@ -100,8 +87,8 @@ void Game::Start()
 			T2->Scales = glm::vec3(4);		 // a cube is actually quite large (screen size) so shrink it down
 			T2->SetPosition(Pos);
 			Cubes.push_back(T2); // store in the vector ready for the game loop to process
-			T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-			ShaderManager.AttachShader(T2); // set it up
+			T2->StoreGraphicClass(&shaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+			shaderManager.AttachShader(T2); // set it up
 		}
 	}
 
@@ -123,8 +110,8 @@ void Game::Start()
 	T2->Scales = glm::vec3(0.4);
 
 	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	ShaderManager.AttachShader(T2); // set it up
+	T2->StoreGraphicClass(&shaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	shaderManager.AttachShader(T2); // set it up
 
 
 	//reuse T2
@@ -171,7 +158,7 @@ void Game::Start()
 
 		gameDeltaTime = delta.count();
 
-		camera->Update(gameDeltaTime);
+		m_camera->Update(gameDeltaTime);
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(elapsed.count() > 0.25f && frameCount > 10)
@@ -191,17 +178,17 @@ void Game::Start()
 		for(size_t i = 0; i < MyObjects.size(); i++)
 		{
 			//update the object, in this demo, we just up its position and transform data but you should consider logic
-			MyObjects[i]->Update(camera);
+			//MyObjects[i]->Update();
 			// the draw routine is the responsbility of the object itself, thats not an ideal system, consider how to improve
-			MyObjects[i]->Draw();
+			//MyObjects[i]->Draw();
 		}
 
 		for(size_t i = 0; i < Cubes.size(); i++)
 		{
 			//update the object, in this demo, we just up its position and transform data but you should consider logic
-			Cubes[i]->Update(camera);
+			//Cubes[i]->Update();
 			// the draw routine is the responsbility of the object itself, thats not an ideal system, consider how to improve
-			Cubes[i]->Draw();
+			//Cubes[i]->Draw();
 		}
 
 
@@ -264,33 +251,17 @@ void Game::ProcessInput()
 	SharedInput* input = GetInput();
 	IMouse* mouse = input->GetMouse();
 	IKeyboard* keyboard = input->GetKeyboard();
-	if(keyboard->GetKey(Key::W))
-	{
-		printf("we pressed W\n");
-	}
-	if(keyboard->GetKey(Key::S))
-	{
-		printf("we pressed S\n");
-	}
-	if(keyboard->GetKey(Key::A))
-	{
-		printf("we pressed A\n");
-	}
-	if(keyboard->GetKey(Key::D))
-	{
-		printf("we pressed D\n");
-	}
-	if(keyboard->GetKey(Key::ESCAPE))
-	{
-		printf("we pressed ESCAPE\n");
-	}
+	//if(keyboard->GetKey(Key::W))
+	//{
+	//	printf("we pressed W\n");
+	//}
 
-	if(mouse->GetButtonDown(MouseButtons::LEFT))
-	{
-		printf("we pressed mouse left\n");
-	}
+	//if(mouse->GetButtonDown(MouseButtons::LEFT))
+	//{
+	//	printf("we pressed mouse left\n");
+	//}
 
-	camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
+	m_camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
 }
 
 void Game::InitializeOpenGLES()
