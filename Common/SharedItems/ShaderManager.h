@@ -1,20 +1,16 @@
 #pragma once
 
-
-
-// Graphics class primary responsibility is to set up OpenGLES for render and to hold info on window
-#include <stdio.h>
+// ShaderManager class primary responsibility is to set up OpenGLES for render and to hold info on window
 #include <assert.h>
-#include <string>
 #include <math.h>
-
+#include <stdio.h>
+#include <string>
 
 #ifdef WINDOWS_BUILD
 #include <glad.h>
 #include <GLFW/glfw3.h>
 #else
 #include <GLES2/gl2.h>
-
 #endif
 
 // Include GLM
@@ -24,14 +20,10 @@
 #include "ObjectModel.h"
 #include "Input.h"
 
-
-
 // these defines are used often (and Pi is a joke :D) 
 #define PI	3.14159265358979323846264338327950288419716939937510582097494459072381640628620899862803482534211706798f
 #define DEG2RAD(x) (x*PI)/180
 #define RAD2DEG(x) x*(180/PI)
-
-
 
 
 //most standard OGL demos use int versions of TRUE and FALSE (careful not to mix up with bool true and false)
@@ -53,19 +45,16 @@
 //} ObjectData;
 
 
-class Graphics
+class ShaderManager
 {
 public:
-	Graphics();
-	~Graphics();
+	ShaderManager();
+	~ShaderManager();
 
 	// this is really for the shader (edit later)
-	int Init(ObjectModel*);
+	int AttachShader(ObjectModel*);
 	// we provide a simple Texture loader/store syste	
 	GLuint CreateSimpleTexture2D(int width, int height, char* TheData); // oh you lucky people
 
-GLuint LoadShader(GLenum type, const char* shaderSrc);
+	GLuint LoadShader(GLenum type, const char* shaderSrc);
 };
-
-
-

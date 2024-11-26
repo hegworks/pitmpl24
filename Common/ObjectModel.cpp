@@ -452,8 +452,8 @@ void ObjectModel::SetZRotation(float a_z)
 }
 
 
-void ObjectModel::StoreGraphicClass(Graphics* Graphics)
+void ObjectModel::StoreGraphicClass(ShaderManager* ShaderManager)
 {
-	TheGraphics = Graphics;
+	TheGraphics = ShaderManager;
 }
 

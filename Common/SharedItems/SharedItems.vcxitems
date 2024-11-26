@@ -25,7 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Common.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Graphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp" />
@@ -35,7 +35,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Graphics.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.mtl">

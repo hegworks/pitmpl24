@@ -49,7 +49,7 @@ THE SOFTWARE.
 #define RAD2DEG(x) x*(180/PI)
 
 class Camera;
-class Graphics;
+class ShaderManager;
 
 inline float Rand(float a_Range) { return ((float)rand() / RAND_MAX) * a_Range; }
 
@@ -157,7 +157,7 @@ public:
 	void	 	MakeModelMatrix();  // makes and returns the model matrix
 	void		MakeRotations();
 	void		MakeTranslationMatrix();
-	void		StoreGraphicClass(Graphics* Graphics);
+	void		StoreGraphicClass(ShaderManager* ShaderManager);
 
 
 	GLuint texture1;  // a handle
@@ -187,7 +187,7 @@ public:
 	GLint	samplerLoc;
 	GLint	MatrixID;
 	GLint AmbID;
-	Graphics* TheGraphics;  // anything that uses a shader will need access to the graphic class set up in the game app. Make sure this is supplied
+	ShaderManager* TheGraphics;  // anything that uses a shader will need access to the graphic class set up in the game app. Make sure this is supplied
 
 	GLvoid* Vertices;  // a pointer to our attribute array, which should contain vertices and texture coords
 	GLuint	vbo; 	// handle to our vbo value which should contain the GPU based verison of Vertices

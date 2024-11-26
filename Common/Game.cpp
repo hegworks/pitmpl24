@@ -5,11 +5,11 @@
 #include "Camera.h"
 #include "CubeModel.h"
 #include "GeneralOBJ.h"
-#include "Graphics.h" // more of a generic system of graphics
 #include "IGraphics.h"
 #include "IInput.h"
 #include "Input.h"
 #include "ObjectModel.h"
+#include "ShaderManager.h" // more of a generic system of graphics
 #include <chrono>
 #include <ctime>
 #include <iomanip>
@@ -18,7 +18,7 @@
 // keeping some things in global space...because....Brian does it this way :D you should consider better ways....AKA, you should consider better ways...do I have to spell it out?
 std::vector<ObjectModel*> MyObjects; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
 std::vector<ObjectModel*> Cubes; // on the basis that every object is derived from ObjectModel, we keep a list of things to draw.
-Graphics Graphics;
+ShaderManager ShaderManager;
 
 Game::Game(Input* input, IGraphics* graphics) :
 	input(input),
@@ -83,8 +83,8 @@ void Game::Start()
 			T2->Scales = glm::vec3(4);		 // a cube is actually quite large (screen size) so shrink it down
 			T2->SetPosition(Pos);
 			Cubes.push_back(T2); // store in the vector ready for the game loop to process
-			T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-			Graphics.Init(T2); // set it up
+			T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+			ShaderManager.AttachShader(T2); // set it up
 		}
 	}
 
@@ -96,8 +96,8 @@ void Game::Start()
 
 	//
 	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	//Graphics.Init(T2); // set it up
+	//T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//ShaderManager.AttachShader(T2); // set it up
 
 	//reuse T2
 	T2 = new GeneralOBJ((char*)"../Common/Assets/Models/Naked_Snake.obj", Handler); // make a new OBJ
@@ -106,8 +106,8 @@ void Game::Start()
 	T2->Scales = glm::vec3(0.4);
 
 	MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	Graphics.Init(T2); // set it up
+	T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	ShaderManager.AttachShader(T2); // set it up
 
 
 	//reuse T2
@@ -118,8 +118,8 @@ void Game::Start()
 
 
 	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	//Graphics.Init(T2); // set it up
+	//T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//ShaderManager.AttachShader(T2); // set it up
 
 
 
@@ -131,8 +131,8 @@ void Game::Start()
 
 
 	//MyObjects.push_back(T2); // store in the vector ready for the game loop to process
-	//T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
-	//Graphics.Init(T2); // set it up
+	//T2->StoreGraphicClass(&ShaderManager); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
+	//ShaderManager.AttachShader(T2); // set it up
 
 
 	// Timing

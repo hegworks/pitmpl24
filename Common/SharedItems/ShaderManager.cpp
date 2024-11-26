@@ -1,16 +1,16 @@
-#include "Graphics.h"
+#include "ShaderManager.h"
 
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 using namespace glm;
 
 
-Graphics::Graphics()
+ShaderManager::ShaderManager()
 {
 	// don't really want to do anything here but could move init here
 }
-Graphics::~Graphics()
+ShaderManager::~ShaderManager()
 {
 
 }
@@ -20,7 +20,7 @@ Initialise an object so that it uses the correct shader to display
 return int TRUE if all good.
 */
 
-int Graphics::Init(ObjectModel* TheModel) // this gives every model a BASIC shader, not really meant to always be used
+int ShaderManager::AttachShader(ObjectModel* TheModel) // this gives every model a BASIC shader, not really meant to always be used
 {
 
 	glGetError(); // clear any old set up errors
@@ -108,7 +108,7 @@ int Graphics::Init(ObjectModel* TheModel) // this gives every model a BASIC shad
 ///
 // Create a simple width x height texture image with RGBA format
 //
-GLuint Graphics::CreateSimpleTexture2D(int width, int height, char* TheData)
+GLuint ShaderManager::CreateSimpleTexture2D(int width, int height, char* TheData)
 {
 	// Texture object handle
 	GLuint textureId;
@@ -153,7 +153,7 @@ GLuint Graphics::CreateSimpleTexture2D(int width, int height, char* TheData)
  Now we have be able to create a shader object, pass the shader source
  and them compile the shader.
 */
-GLuint Graphics::LoadShader(GLenum type, const char* shaderSrc)
+GLuint ShaderManager::LoadShader(GLenum type, const char* shaderSrc)
 {
 	// 1st create the shader object
 	GLuint TheShader = glCreateShader(type);
