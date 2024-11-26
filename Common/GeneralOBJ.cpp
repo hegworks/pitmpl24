@@ -20,7 +20,7 @@ GeneralOBJ::GeneralOBJ()
 }
 
 // this is a handler to cope with OBJ files
-GeneralOBJ::GeneralOBJ(char* FileName, MyFiles* FH) :GeneralOBJ()
+GeneralOBJ::GeneralOBJ(char* FileName, FileLoader* FH) :GeneralOBJ()
 { // because we decided to have an OBJ LoadandConvert method in the base ObjectModel class, we can use that base class method to do our work for us
  // keeping this derived class simple
 	bool ret = ObjectModel::LoadandConvert(&gdrawObjects, materials, textures, FileName, FH);

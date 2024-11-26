@@ -23,7 +23,7 @@ int main()
 
 
 	input = new Input(new WindowsKeyboard(WinGraphics->Window()), new WindowsMouse(WinGraphics->Window()));
-	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n"); 
+	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
 	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
 	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
 	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));

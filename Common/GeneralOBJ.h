@@ -9,7 +9,7 @@ class GeneralOBJ : public ObjectModel
 {
 public:
 	GeneralOBJ();
-	GeneralOBJ(char* FileName, MyFiles*);
+	GeneralOBJ(char* FileName, FileLoader*);
 
 	~GeneralOBJ();
 		

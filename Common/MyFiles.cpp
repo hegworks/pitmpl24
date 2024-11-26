@@ -2,37 +2,33 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-
-MyFiles::MyFiles()
+FileLoader::FileLoader()
 {
 }
 
-MyFiles::~MyFiles()
+FileLoader::~FileLoader()
 {
 }
 
+char* FileLoader::StbiLoad(char const* filename, int* width, int* height)
+{
 
-char* MyFiles::Load(char const *filename, int* width, int* height)
-{ 
-
-	unsigned char *data = stbi_load(filename, width, height, &comp, 4); // ask it to load 4 componants since its rgba
-	return (char*) data;
+	unsigned char* data = stbi_load(filename, width, height, &comp, 4); // ask it to load 4 componants since its rgba
+	return (char*)data;
 }
-
 
 // will load a standard style text file
-const char* MyFiles::LoadText(char const *filename)
+const char* FileLoader::LoadText(char const* filename)
 {
 	static string line; //<<note the fix for losing chars?
-	
+
 	ifstream myfile(filename);
-	
-	if (myfile.is_open())
+
+	if(myfile.is_open())
 	{
-		getline(myfile, line, (char) myfile.eof()); // *this.eof isn't ideal but it works
+		getline(myfile, line, (char)myfile.eof()); // *this.eof isn't ideal but it works
 		myfile.close();
 	}
-	
+
 	return line.c_str();
-	
 }

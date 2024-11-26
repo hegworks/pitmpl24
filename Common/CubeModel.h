@@ -15,7 +15,7 @@ class CubeModel : public ObjectModel
 {
 public:
 	CubeModel();
-	CubeModel(MyFiles*);
+	CubeModel(FileLoader*);
 	
 	~CubeModel();
 		

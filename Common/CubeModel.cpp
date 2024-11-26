@@ -219,14 +219,14 @@ CubeModel::CubeModel()
 
 
 // this is a rather pointless system, hard coding the file here?
-CubeModel::CubeModel(MyFiles* FH)
+CubeModel::CubeModel(FileLoader* FH)
 	: CubeModel()
 {
 
 	// Load, create texture and generate mipmaps
 	int width, height;
 
-	char* image = FH->Load((char*)"../Common/Assets/Textures/container.jpg", &width, &height);
+	char* image = FH->StbiLoad((char*)"../Common/Assets/Textures/container.jpg", &width, &height);
 
 	glGenTextures(1, &texture1);  // create our 1st texture and store the handle in texture
 	glBindTexture(GL_TEXTURE_2D, texture1);  // bind it, so it now is what we are looking at

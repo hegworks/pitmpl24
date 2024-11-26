@@ -62,13 +62,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.cpp">
@@ -78,6 +72,12 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedrInput.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>

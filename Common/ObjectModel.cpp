@@ -27,7 +27,7 @@ ObjectModel::~ObjectModel()
 
 // many types of derived object will want to use OBJ's as their model format of choice, so its good to have the loading systems here
 // some model types may not use OBJ though, and it might happen your game never uses OBJ's, in which case you can choose to leave it in or remove it.
-ObjectModel::ObjectModel(char* FileName, MyFiles* FH)
+ObjectModel::ObjectModel(char* FileName, FileLoader* FH)
 
 {
 	bool ret = LoadandConvert(&gdrawObjects, materials, textures, FileName, FH);
@@ -42,7 +42,7 @@ bool ObjectModel::LoadandConvert(
 	std::map<std::string,
 	GLuint>& textures,
 	const char* filename,
-	MyFiles* FH) {
+	FileLoader* FH) {
 
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
@@ -100,7 +100,7 @@ bool ObjectModel::LoadandConvert(
 
 					char* cstr = &texture_filename[0u];    // embarrasing side effect of the decision to use char.....
 
-					char* image = FH->Load(cstr, &w, &h);
+					char* image = FH->StbiLoad(cstr, &w, &h);
 
 					if(!image)
 					{

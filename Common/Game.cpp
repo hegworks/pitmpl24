@@ -69,7 +69,7 @@ void Game::Start()
 
 	camera = new Camera();
 
-	MyFiles* Handler = new MyFiles();
+	FileLoader* Handler = new FileLoader();
 	ObjectModel* T2;   // so both types even though quite different use the same base to create them
 
 	glm::vec3 Pos = glm::vec3(1.0); // set a position

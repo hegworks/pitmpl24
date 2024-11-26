@@ -79,7 +79,7 @@ public:
 
 
 	ObjectModel();
-	ObjectModel(char* FileName, MyFiles*); /* this is a new constructor which can load an obj file, though this is probably temporary
+	ObjectModel(char* FileName, FileLoader*); /* this is a new constructor which can load an obj file, though this is probably temporary
 											since there are many other kinds of model loader we will eventually depricate this
 											and move the functionality to the classes that specifically need to load obj's
 											in this project example we have a type of model called a ShipModel which is going to excusively use OBJ's
@@ -91,7 +91,7 @@ public:
 		std::map<std::string,
 		GLuint>& textures,
 		const char* filename,
-		MyFiles* FH);
+		FileLoader* FH);
 
 
 	~ObjectModel();
