@@ -129,6 +129,7 @@ KeyAction WindowsKeyboard::GlfwActionToEnumKeyAction(int glfwKeyAction)
 	{
 		case GLFW_PRESS: return KeyAction::DOWN;
 		case GLFW_RELEASE: return KeyAction::UP;
+		case GLFW_REPEAT: return KeyAction::UNKNOWN;
 		default:
 			std::cout << "WARNING::INPUT::WINDOWS Key action not supported: " << glfwKeyAction << std::endl;
 			return KeyAction::UNKNOWN;
