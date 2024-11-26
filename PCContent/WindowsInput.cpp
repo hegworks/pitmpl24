@@ -24,7 +24,7 @@ bool WindowsMouse::GetButtonDown(MouseButtons button) const
 	}
 }
 
-glm::vec2 WindowsMouse::GetPosition() const
+glm::vec2 WindowsMouse::GetPosition()
 {
 	double xPosition, yPosition;
 	glfwGetCursorPos(&m_window, &xPosition, &yPosition);

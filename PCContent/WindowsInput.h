@@ -27,7 +27,7 @@ public:
 	WindowsMouse(GLFWwindow& window);
 
 	virtual bool GetButtonDown(MouseButtons button) const;
-	virtual glm::vec2 GetPosition() const;
+	virtual glm::vec2 GetPosition();
 	virtual float GetScrollDelta() const;
 private:
 	GLFWwindow& m_window;
