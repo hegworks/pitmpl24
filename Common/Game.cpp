@@ -7,9 +7,9 @@
 #include "GeneralOBJ.h"
 #include "IGraphics.h"
 #include "IInput.h"
-#include "Input.h"
 #include "ObjectModel.h"
 #include "ShaderManager.h" // more of a generic system of graphics
+#include "SharedInput.h"
 #include <chrono>
 #include <ctime>
 #include <iomanip>

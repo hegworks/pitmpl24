@@ -1,6 +1,6 @@
 #pragma once
 #include "IInput.h"
-#include "Input.h"
+#include "SharedInput.h"
 #include "WindowsInput.h"
 #include <GLFW/glfw3.h>
 #include <iostream>

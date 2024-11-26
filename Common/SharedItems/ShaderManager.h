@@ -18,7 +18,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "ObjectModel.h"
-#include "Input.h"
+#include "SharedInput.h"
 
 // these defines are used often (and Pi is a joke :D) 
 #define PI	3.14159265358979323846264338327950288419716939937510582097494459072381640628620899862803482534211706798f

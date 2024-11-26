@@ -1,5 +1,5 @@
 #include "IInput.h"
-#include "SharedrInput.h"
+#include "SharedInput.h"
 
 SharedInput::SharedInput(IKeyboard* keyboard, IMouse* const mouse) :
 	mouse(mouse),
