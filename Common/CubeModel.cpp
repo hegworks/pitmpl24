@@ -196,7 +196,7 @@ CubeModel::CubeModel()
 	mRotationMatrix = glm::mat4(1.0f);
 	mScaleMatrix = glm::mat4(1.0f);
 	Model = glm::mat4(1.0f);  // give the model I as an initialisation
-	glm::vec3 Pos = glm::vec3(11.0f, 0.0f, 0.4f);
+	glm::vec3 Pos = glm::vec3(1);
 	this->SetPosition(Pos);
 
 	Scales = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -256,7 +256,6 @@ bool CubeModel::Update(Camera* camera)
 
 	Rotations = glm::vec3(0.0);
 	mScaleMatrix = glm::mat4(1.0f);
-	Scales = glm::vec3(4.10f, 4.10f, 4.10f);
 	mScaleMatrix = glm::scale(mScaleMatrix, Scales);
 	MakeRotationMatrix();
 	MakeTranslationMatrix();

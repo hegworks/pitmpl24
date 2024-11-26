@@ -79,10 +79,9 @@ void Game::Start()
 		for(int j = -5; j < 5; j++)
 		{
 			T2 = new CubeModel(Handler); // make a new cube
-			Pos = glm::vec3(i * 4.0, 0.0f, j * 4.0); // set a position
-			T2->Scales = glm::vec3(0.2f, 0.2f, 0.2f);		 // a cube is actually quite large (screen size) so shrink it down
+			Pos = glm::vec3(i * 4.1, 0.0f, j * 4.1); // set a position
+			T2->Scales = glm::vec3(4);		 // a cube is actually quite large (screen size) so shrink it down
 			T2->SetPosition(Pos);
-
 			Cubes.push_back(T2); // store in the vector ready for the game loop to process
 			T2->StoreGraphicClass(&Graphics); // make sure it knows the where the graphics data is, (for now it contains our attribute/uniform info)
 			Graphics.Init(T2); // set it up
