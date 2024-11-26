@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{d598ad22-2b74-4cd5-a66f-50dfb3287906}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{399159b8-1955-4166-ab49-9e6fae1e3222}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{1db9b687-8c5c-413d-8ef1-1aaecba420e9}</UniqueIdentifier>
     </Filter>
@@ -16,37 +10,34 @@
     <Filter Include="Engine\PlatformSpecificHeaders">
       <UniqueIdentifier>{b7d7f619-ce43-40c2-b871-0c455bede154}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{38d24b9d-d2e0-4538-b002-022fd033a9b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Headers">
+      <UniqueIdentifier>{77ad7d4f-4f33-49b8-a055-1d2c6dc3d0cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Source">
+      <UniqueIdentifier>{906e2185-51d8-4c41-aa8a-e31b6cd88f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Headers">
+      <UniqueIdentifier>{d598ad22-2b74-4cd5-a66f-50dfb3287906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Source">
+      <UniqueIdentifier>{399159b8-1955-4166-ab49-9e6fae1e3222}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h">
-      <Filter>Headers</Filter>
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\CubeModel.h">
-      <Filter>Headers</Filter>
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ObjectModel.h">
-      <Filter>Headers</Filter>
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Common.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\SharedrInput.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\MyFiles.h">
-      <Filter>Engine</Filter>
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IGraphics.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
@@ -54,31 +45,49 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IInput.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\MyFiles.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderManager.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Common.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\SharedInput.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">
-      <Filter>Source</Filter>
+      <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CubeModel.cpp">
-      <Filter>Source</Filter>
+      <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjectModel.cpp">
-      <Filter>Source</Filter>
+      <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\GeneralOBJ.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedrInput.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\MyFiles.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ShaderManager.cpp">
+      <Filter>Engine\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\TinyObjectLoader.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SharedInput.cpp">
+      <Filter>Engine\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
