@@ -1,10 +1,8 @@
 #pragma once
 #include "IInput.h"
-#include "SharedInput.h"
 #include "WindowsInput.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <stdexcept>
 
 WindowsMouse::WindowsMouse(GLFWwindow& window) : m_window(window)
 {
