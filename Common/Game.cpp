@@ -3,7 +3,8 @@
 
 
 #include "stb_image.h"
-
+#include "ImGui-master/imgui.h"
+#include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "Input.h"
 #include <chrono>
 #include <ctime>
@@ -37,6 +38,21 @@ Game::~Game()
 void Game::Start()
 {
 	InitializeOpenGLES();
+	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
+	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
+	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
+	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
+	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+
+
+	// imgui setup setup for ES3.x, use #verion 100 for GLES2.0 
+	const char* glsl_version = "#version 100";  //310/320es not available
+	ImGui::CreateContext();
+	ImGui::StyleColorsDark();
+	ImGui_ImplOpenGL3_Init(glsl_version);
+	ImGuiIO& io = ImGui::GetIO();
+	io.DisplaySize = ImVec2(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 
 	MyFiles* Handler = new MyFiles();
@@ -125,6 +141,34 @@ void Game::Start()
 			// the draw routine is the responsbility of the object itself, thats not an ideal system, consider how to improve
 			MyObjects[i]->Draw();
 		}
+
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui::NewFrame();
+
+		ImGui::SetNextWindowBgAlpha(0.2f);
+		ImGui::SetNextWindowPos(ImVec2(10, 100));
+
+		ImGuiWindowFlags window_flags = /*ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar  | */ ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoScrollbar;
+		static bool open = true;
+
+		// open a new window
+
+		ImGui::Begin("helpinfo ", &open, window_flags);
+		ImGui::SetWindowFontScale(1.6f);
+
+		// this can be anything
+		ImGui::Text("Hi there");
+		ImGui::Text("Hi to you too");
+
+		ImGui::End();
+
+
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		//		ImGui::EndFrame(); // actuall this is closed by the render
 
 
 		glFlush();

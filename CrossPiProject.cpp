@@ -9,6 +9,20 @@
 #include "WindowsGraphics.h"
 #include "WindowsInput.h"
 
+#ifdef WINDOWS_BUILD
+// in case of a laptop with poor on board GPU, lets make sure we switch on any power gpu's we have to get max compatability
+extern "C"
+{
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+}
+
+extern "C"
+{
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif
+
+
 //
 WindowsGraphics* WinGraphics;
 Input* input;
@@ -23,11 +37,6 @@ int main()
 
 
 	input = new Input(new WindowsKeyboard(WinGraphics->Window()), new WindowsMouse(WinGraphics->Window()));
-	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n"); 
-	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
-	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
-	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
-	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	game = new Game(input, WinGraphics);
 
