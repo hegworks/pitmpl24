@@ -8,6 +8,8 @@
 #include "ImGui-master/imgui.h"
 #include "SharedInput.h"
 
+#include <ShaderProgram.h>
+
 #include <chrono>
 
 #ifdef Raspberry_BUILD
@@ -56,6 +58,10 @@ void Game::Start()
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
+
+	ShaderProgram* shaderProgram = new ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+
+
 #pragma endregion Other Initializations
 
 #pragma region Timing

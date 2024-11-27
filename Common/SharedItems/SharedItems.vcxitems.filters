@@ -34,6 +34,9 @@
     <Filter Include="Engine\ThirdParty\imgui">
       <UniqueIdentifier>{3ec76581-e5a8-4f26-b737-443be7533cbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Shaders">
+      <UniqueIdentifier>{a03451ab-95d2-472e-bd4a-ee1dcf6e6f08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h">
@@ -84,6 +87,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">
@@ -126,6 +132,12 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Naked_Snake.mtl">
       <Filter>Assets</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Vertex.glsl">
+      <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
