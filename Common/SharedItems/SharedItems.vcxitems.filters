@@ -105,6 +105,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
       <Filter>Engine\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FreeFlyCamera.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">

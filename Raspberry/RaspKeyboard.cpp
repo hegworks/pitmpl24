@@ -5,6 +5,7 @@
 #include <iostream>
 #include <linux/input.h>
 #include <sstream>
+
 RaspKeyboard::RaspKeyboard() : m_keyDown{new bool[256] { false }}
 {
 	FindKeyboardLocation();
@@ -148,6 +149,7 @@ std::string RaspKeyboard::FindActiveKeyboardEv()
 	return ev;
 }
 
+
 void* RaspKeyboard::ProcessKeyboardThread(void* arg)
 {
 	RaspKeyboard* input = static_cast<RaspKeyboard*>(arg);
@@ -170,6 +172,8 @@ void* RaspKeyboard::ProcessKeyboardThread(void* arg)
 
 		if(event.type == (__u16)EV_KEY)
 		{
+			input->m_keyDown[event.code] = event.value > 0;
+
 			bool isPressed = event.value > 0;
 			int key = event.code;
 

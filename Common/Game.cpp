@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Common.h"
+#include "FreeFlyCamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
 #include "SharedInput.h"
@@ -58,7 +59,9 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_camera = new Camera();
+	stbi_set_flip_vertically_on_load(true);
+
+	m_camera = new FreeFlyCamera();
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
@@ -166,6 +169,7 @@ void Game::ProcessInput()
 	//}
 
 	m_camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
+	m_camera->ProcessInput(keyboard);
 }
 
 void Game::KeyCallback(Key key, KeyAction action)
@@ -181,6 +185,9 @@ void Game::KeyCallback(Key key, KeyAction action)
 			default:
 				break;
 		}
+	}
+	else
+	{
 	}
 }
 #pragma endregion Input

@@ -29,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\tiny_obj_loader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Common.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FreeFlyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
