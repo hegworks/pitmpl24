@@ -31,32 +31,17 @@ Game::~Game()
 
 }
 
-void Game::KeyCallback(Key key, KeyAction action)
-{
-	// Implement your key callback logic here
-	if(action == KeyAction::DOWN)
-	{
-		switch(key)
-		{
-			case Key::ESCAPE:
-				Quit();
-				break;
-			default:
-				break;
-		}
-	}
-}
-
-
 void Game::Start()
 {
 	InitializeOpenGLES();
+
 	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
 	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
 	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
 	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
 	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
+#pragma region imgui
 	// imgui setup setup for ES3.x, use #verion 100 for GLES2.0 
 	const char* glsl_version = "#version 100";  //310/320es not available
 	ImGui::CreateContext();
@@ -64,29 +49,27 @@ void Game::Start()
 	ImGui_ImplOpenGL3_Init(glsl_version);
 	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize = ImVec2(SCRWIDTH, SCRHEIGHT);
+#pragma endregion imgui
 
+#pragma region Other Initializations
 	m_camera = new Camera();
-
-	// Timing
-	auto startTime = std::chrono::system_clock::now();
-	auto lastTime = startTime;
-
-	float averageFPS{0};
-
-
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
+#pragma endregion Other Initializations
+
+#pragma region Timing
+	auto startTime = std::chrono::system_clock::now();
+	auto lastTime = startTime;
+	float averageFPS{0};
+#pragma endregion Timing
 
 	while(!quitting)
 	{
-		ProcessInput();
+#pragma region Timing
 		auto time = std::chrono::system_clock::now();
 		std::chrono::duration<float> delta = time - lastTime;
-
 		gameDeltaTime = delta.count();
-
-		m_camera->Update(gameDeltaTime);
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(elapsed.count() > 0.25f && frameCount > 10)
@@ -95,22 +78,25 @@ void Game::Start()
 			startTime = time;
 			frameCount = 0;
 		}
+#pragma endregion Timing
+
+		ProcessInput();
+
+		m_camera->Update(gameDeltaTime);
+
 		// Setup the viewport
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
-
+#pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
-
 		ImGui::SetNextWindowBgAlpha(0.2f);
 		ImGui::SetNextWindowPos(ImVec2(10, 100));
-
 		ImGuiWindowFlags window_flags = /*ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar  | */ ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoScrollbar;
+
 		static bool open = true;
-
 		// open a new window
-
 		ImGui::Begin("helpinfo ", &open, window_flags);
 		ImGui::SetWindowFontScale(1.6f);
 
@@ -120,11 +106,10 @@ void Game::Start()
 
 		ImGui::End();
 
-
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		//		ImGui::EndFrame(); // actuall this is closed by the render
-
+		// ImGui::EndFrame(); // actuall this is closed by the render
+#pragma endregion imgui
 
 		glFlush();
 		m_iGraphics->SwapBuffer();
@@ -135,20 +120,10 @@ void Game::Start()
 	m_iGraphics->Quit();
 }
 
-
-btDiscreteDynamicsWorld* Game::World() const
-{
-	return world;
-}
-
+#pragma region Input
 SharedInput* Game::GetInput() const
 {
 	return m_sharedInput;
-}
-
-void Game::Quit()
-{
-	quitting = true;
 }
 
 void Game::ProcessInput()
@@ -170,6 +145,23 @@ void Game::ProcessInput()
 	m_camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
 }
 
+void Game::KeyCallback(Key key, KeyAction action)
+{
+	// Implement your key callback logic here
+	if(action == KeyAction::DOWN)
+	{
+		switch(key)
+		{
+			case Key::ESCAPE:
+				Quit();
+				break;
+			default:
+				break;
+		}
+	}
+}
+#pragma endregion Input
+
 void Game::InitializeOpenGLES()
 {
 	glEnable(GL_DEPTH_TEST);
@@ -188,6 +180,16 @@ void Game::InitializeOpenGLES()
 
 void Game::ClearScreen()
 {
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+btDiscreteDynamicsWorld* Game::World() const
+{
+	return world;
+}
+
+void Game::Quit()
+{
+	quitting = true;
 }
