@@ -23,10 +23,12 @@ class Game
 public:
 	Game(SharedInput* input, IGraphics* graphics);
 	virtual ~Game();
+
 	void Start();
+	void Quit();
+
 	btDiscreteDynamicsWorld* World() const;
 	SharedInput* GetInput() const;
-	void Quit();
 
 protected:
 	void ProcessInput();
@@ -34,18 +36,18 @@ protected:
 	virtual void Render() {}
 	virtual void PostRender() {}
 
-	SharedInput* input;
+	IGraphics* m_iGraphics = nullptr;
+	SharedInput* m_sharedInput = nullptr;
+	Camera* m_camera = nullptr;
+
+	btDefaultCollisionConfiguration* configuration = nullptr;
+	btDbvtBroadphase* pairCache = nullptr;
+	btCollisionDispatcher* dispatcher = nullptr;
+	btSequentialImpulseConstraintSolver* constraintSolver = nullptr;
+	btDiscreteDynamicsWorld* world = nullptr;
+
 	bool quitting{false};
 	float gameDeltaTime;
-
-	btDefaultCollisionConfiguration* configuration;
-	btDbvtBroadphase* pairCache;
-	btCollisionDispatcher* dispatcher;
-	btSequentialImpulseConstraintSolver* constraintSolver;
-	btDiscreteDynamicsWorld* world;
-	IGraphics* graphics;
-
-	Camera* m_camera = nullptr;
 
 private:
 	void InitializeOpenGLES();

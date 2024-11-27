@@ -2,23 +2,23 @@
 #include "SharedInput.h"
 
 SharedInput::SharedInput(IKeyboard* keyboard, IMouse* const mouse) :
-	mouse(mouse),
-	keyboard(keyboard)
+	m_iMouse(mouse),
+	m_iKeyboard(keyboard)
 {
 }
 
 SharedInput::~SharedInput()
 {
-	delete(mouse);
-	delete(keyboard);
+	delete(m_iMouse);
+	delete(m_iKeyboard);
 }
 
 IKeyboard* SharedInput::GetKeyboard()
 {
-	return keyboard;
+	return m_iKeyboard;
 }
 
 IMouse* SharedInput::GetMouse() const
 {
-	return mouse;
+	return m_iMouse;
 }

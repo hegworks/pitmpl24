@@ -18,9 +18,9 @@
 #include "glad/glad.h"
 #endif
 
-Game::Game(SharedInput* input, IGraphics* graphics) :
-	input(input),
-	graphics(graphics)
+Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
+	m_sharedInput(sharedInput),
+	m_iGraphics(iGraphics)
 
 {
 
@@ -74,7 +74,7 @@ void Game::Start()
 	float averageFPS{0};
 
 
-	input->GetKeyboard()->SetKeyCallback(
+	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
@@ -127,12 +127,12 @@ void Game::Start()
 
 
 		glFlush();
-		graphics->SwapBuffer();
+		m_iGraphics->SwapBuffer();
 		lastTime = time;
 		++frameCount;
 	}
 
-	graphics->Quit();
+	m_iGraphics->Quit();
 }
 
 
@@ -143,7 +143,7 @@ btDiscreteDynamicsWorld* Game::World() const
 
 SharedInput* Game::GetInput() const
 {
-	return input;
+	return m_sharedInput;
 }
 
 void Game::Quit()

@@ -12,6 +12,6 @@ public:
 	IMouse* GetMouse() const;
 
 private:
-	IMouse* const mouse;
-	IKeyboard* keyboard;
+	IMouse* const m_iMouse = nullptr;
+	IKeyboard* m_iKeyboard = nullptr;
 };
