@@ -4,11 +4,15 @@
 #include "Common.h"
 #include "IGraphics.h"
 #include "IInput.h"
+#include "SharedInput.h"
+#include <Model.h>
+#include <ShaderProgram.h>
+
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
-#include "SharedInput.h"
 
-#include <ShaderProgram.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <chrono>
 
@@ -60,7 +64,10 @@ void Game::Start()
 	);
 
 	ShaderProgram* shaderProgram = new ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	Model* backpack = new Model("../Common/Assets/Models/Backpack/backpack.obj");
 
+	glm::mat4 model;
+	glm::mat4 identityMat = glm::mat4(1);
 
 #pragma endregion Other Initializations
 
@@ -93,6 +100,16 @@ void Game::Start()
 		// Setup the viewport
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
+
+		shaderProgram->Use();
+		shaderProgram->SetMat4("uView", m_camera->GetView());
+		shaderProgram->SetMat4("uProjection", m_camera->GetProjection());
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(-2, 4, -2));
+		model = glm::scale(model, glm::vec3(1));
+		shaderProgram->SetMat4("uModel", model);
+		backpack->Draw(*shaderProgram);
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();

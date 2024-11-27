@@ -1,6 +1,6 @@
 #version 310 es
 
-precision mediump float;
+precision highp float;
 
 // in
 layout (location = 0) in vec3 iPos;

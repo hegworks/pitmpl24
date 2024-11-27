@@ -37,6 +37,15 @@
     <Filter Include="Assets\Shaders">
       <UniqueIdentifier>{a03451ab-95d2-472e-bd4a-ee1dcf6e6f08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ThirdParty\stb">
+      <UniqueIdentifier>{5f354969-08ff-4f4f-a8c4-52a10b8e1edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models">
+      <UniqueIdentifier>{882b90ec-f18f-4672-935a-181ce80f8b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Backpack">
+      <UniqueIdentifier>{909faf5e-b5b5-4f0e-937d-80289e567d11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h">
@@ -90,6 +99,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h">
       <Filter>Engine\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Model.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">
@@ -119,6 +134,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp">
       <Filter>Engine\ThirdParty\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\stb_image.cpp">
+      <Filter>Engine\ThirdParty\stb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.mtl">
@@ -139,6 +157,9 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Vertex.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\backpack.mtl">
+      <Filter>Assets\Models\Backpack</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_02.obj">
@@ -152,6 +173,9 @@
     </Object>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Naked_Snake.obj">
       <Filter>Assets</Filter>
+    </Object>
+    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\backpack.obj">
+      <Filter>Assets\Models\Backpack</Filter>
     </Object>
   </ItemGroup>
   <ItemGroup>
@@ -245,5 +269,25 @@
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Textures\container.jpg">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\ao.jpg">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\diffuse.jpg">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\normal.png">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\roughness.jpg">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\specular.jpg">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\source_attribution.txt">
+      <Filter>Assets\Models\Backpack</Filter>
+    </Text>
   </ItemGroup>
 </Project>
