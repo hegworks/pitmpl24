@@ -15,8 +15,9 @@ struct Texture;
 class Model
 {
 public:
-	Model(std::string const& path)
+	Model(std::string const& path, glm::vec2 textureCoordScale = glm::vec2(1))
 	{
+		m_textureCoordScale = textureCoordScale;
 		loadModel(path);
 	}
 
@@ -33,6 +34,8 @@ private:
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	unsigned int TextureFromFile(const char* path, const std::string& directory);
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+
+	glm::vec2 m_textureCoordScale;
 };
 
 inline void Model::Draw(ShaderProgram& shader)
@@ -83,7 +86,7 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		vertex.m_position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 		vertex.m_normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 		if(mesh->mTextureCoords[0])
-			vertex.m_texCoords = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+			vertex.m_texCoords = glm::vec2(mesh->mTextureCoords[0][i].x * m_textureCoordScale.x, mesh->mTextureCoords[0][i].y * m_textureCoordScale.y);
 		else
 			vertex.m_texCoords = glm::vec2(0.0f, 0.0f);
 		vertices.push_back(vertex);
@@ -136,7 +139,7 @@ inline unsigned int Model::TextureFromFile(const char* path, const std::string& 
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, textureData);
@@ -167,8 +170,17 @@ inline std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
 		}
 		if(!wasTextureLoadedBefore)
 		{
+			// if texture path contains backslash, change it to be the last part after backslash (fix for some fbx files)
+			std::string texturePath = str.C_Str();
+			size_t pos = texturePath.find_last_of('\\');
+			if(pos != std::string::npos)
+			{
+				texturePath = texturePath.substr(pos + 1);
+			}
+			std::cout << "Loading: " << m_directory << "/" << texturePath.c_str() << std::endl;
+
 			Texture texture;
-			texture.m_id = TextureFromFile(str.C_Str(), m_directory);
+			texture.m_id = TextureFromFile(texturePath.c_str(), m_directory);
 			texture.m_type = typeName;
 			texture.m_path = str.C_Str();
 			textures.push_back(texture);

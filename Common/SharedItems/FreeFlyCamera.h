@@ -33,12 +33,8 @@ private:
 	const glm::vec3 FRONT_INITIAL = glm::vec3(0.0f, 1.0f, 0.0f);
 	const float PITCH_MAX = 89.0f;
 	const float NEAR_PLANE = 0.1f;
-	const float FAR_PLANE = 100.0f;
-#ifdef WINDOWS_BUILD
+	const float FAR_PLANE = 1000.0f;
 	const float MOUSE_SENSITIVITY = 0.05f;
-#elif __linux__
-	const float MOUSE_SENSITIVITY = 0.01f;
-#endif
 
 	const Key UP_KEY = Key::W;
 	const Key DOWN_KEY = Key::S;

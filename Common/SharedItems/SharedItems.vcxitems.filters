@@ -46,6 +46,21 @@
     <Filter Include="Assets\Models\Backpack">
       <UniqueIdentifier>{909faf5e-b5b5-4f0e-937d-80289e567d11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Soldier">
+      <UniqueIdentifier>{1455b1b6-237b-4229-a244-d107595504df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Primitives">
+      <UniqueIdentifier>{96558101-9b34-49f8-943c-bfdb447d2c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Primitives\Cube">
+      <UniqueIdentifier>{2dde2dc7-9a00-4ba1-b58f-5b1466f08110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Primitives\Sphere">
+      <UniqueIdentifier>{489a7415-e647-4af6-995d-2003f1d08da0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Primitives\Plane">
+      <UniqueIdentifier>{1357cd9c-b4c8-4a31-920a-215b72f098cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Game.h">
@@ -142,18 +157,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.mtl">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_02.mtl">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_03.mtl">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Naked_Snake.mtl">
-      <Filter>Assets</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
@@ -163,115 +166,40 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\backpack.mtl">
       <Filter>Assets\Models\Backpack</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.mtl">
+      <Filter>Assets\Models\Primitives\Cube</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\demo_soldier_512.mat">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\demo_weapon.mat">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\Soldier_demo.FBX">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Sphere.mtl">
+      <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Plane\Plane.mtl">
+      <Filter>Assets\Models\Primitives\Plane</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_02.obj">
-      <Filter>Assets</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_03.obj">
-      <Filter>Assets</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.obj">
-      <Filter>Assets</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Naked_Snake.obj">
-      <Filter>Assets</Filter>
-    </Object>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\backpack.obj">
       <Filter>Assets\Models\Backpack</Filter>
     </Object>
+    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
+      <Filter>Assets\Models\Primitives\Cube</Filter>
+    </Object>
+    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Sphere.obj">
+      <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Object>
+    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Plane\Plane.obj">
+      <Filter>Assets\Models\Primitives\Plane</Filter>
+    </Object>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_01_em.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_02.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_02_em.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_03.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\brian_03_em.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Textures\Harvey2.jpg">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0645_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0646_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0655_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0656_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0657_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0659_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0668_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0670_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0671_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0672_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0675_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0676_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0677_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0678_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0679_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0691_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0692_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0693_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0694_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0695_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0696_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tex_0697_0.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Textures\container.jpg">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\ao.jpg">
       <Filter>Assets\Models\Backpack</Filter>
     </Image>
@@ -286,6 +214,21 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Backpack\specular.jpg">
       <Filter>Assets\Models\Backpack</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Texture.png">
+      <Filter>Assets\Models\Primitives\Cube</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\demo_soldier_512.tga">
+      <Filter>Assets\Models\Soldier</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\demo_weapon.tga">
+      <Filter>Assets\Models\Soldier</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
+      <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Plane\Ground.png">
+      <Filter>Assets\Models\Primitives\Plane</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

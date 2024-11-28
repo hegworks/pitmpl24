@@ -59,15 +59,27 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	stbi_set_flip_vertically_on_load(true);
-
 	m_camera = new FreeFlyCamera();
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
 	ShaderProgram* shaderProgram = new ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* soldier = new Model("../Common/Assets/Models/Soldier/Soldier_demo.FBX");
+
+	stbi_set_flip_vertically_on_load(true);
 	Model* backpack = new Model("../Common/Assets/Models/Backpack/backpack.obj");
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* cube = new Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* sphere = new Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* plane = new Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(5));
 
 	glm::mat4 model;
 	glm::mat4 identityMat = glm::mat4(1);
@@ -109,10 +121,45 @@ void Game::Start()
 		shaderProgram->SetMat4("uProjection", m_camera->GetProjection());
 
 		model = identityMat;
-		model = glm::translate(model, glm::vec3(-2, 4, -2));
+		model = glm::translate(model, glm::vec3(0, 0, -5));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1, 0, 0));
+		model = glm::scale(model, glm::vec3(0.05));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		soldier->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(-4, 0, -2));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(1));
 		shaderProgram->SetMat4("uModel", model);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		backpack->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(0, -1, -5));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
+		model = glm::scale(model, glm::vec3(1));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		cube->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(4, -1, -5));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
+		model = glm::scale(model, glm::vec3(1));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		sphere->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(0, -2, 0));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
+		model = glm::scale(model, glm::vec3(10));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		plane->Draw(*shaderProgram);
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
@@ -200,8 +247,9 @@ void Game::InitializeOpenGLES()
 	glDepthRangef(0.0f, 1.0f);
 	glClearDepthf(1.0f);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_BLEND);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquation(GL_FUNC_ADD);
 
 	glCullFace(GL_BACK);
