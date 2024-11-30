@@ -33,7 +33,8 @@ Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 	m_iGraphics(iGraphics)
 
 {
-
+	m_iMouse = m_sharedInput->GetMouse();
+	m_iKeyboard = m_sharedInput->GetKeyboard();
 }
 
 Game::~Game()
@@ -63,18 +64,19 @@ void Game::Start()
 
 #pragma region Other Initializations
 	m_iCamera = new Uknitty::FreeFlyCamera();
+	m_iInputProcessors.push_back(m_iCamera);
+
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
 	Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 
-
-
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 
 	m_player = new Player(snake, m_iCamera);
+	m_iInputProcessors.push_back(m_player);
 	glm::vec3 playerCurrentPos = m_player->m_transform->m_position;
 	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
 
@@ -216,40 +218,30 @@ SharedInput* Game::GetInput() const
 
 void Game::ProcessInput()
 {
-	SharedInput* input = GetInput();
-	IMouse* mouse = input->GetMouse();
-	IKeyboard* keyboard = input->GetKeyboard();
-
-	//if(keyboard->GetKey(Key::W))
-	//{
-	//	printf("we pressed W\n");
-	//}
-
-	//if(mouse->GetButtonDown(MouseButtons::LEFT))
-	//{
-	//	printf("we pressed mouse left\n");
-	//}
-
-	m_iCamera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
-	m_iCamera->ProcessInput(keyboard);
+	for(auto& iInputProcessor : m_iInputProcessors)
+	{
+		iInputProcessor->MouseCallback(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
+		iInputProcessor->ProcessInput(m_iKeyboard);
+	}
 }
 
 void Game::KeyCallback(Key key, KeyAction action)
 {
-	// Implement your key callback logic here
+	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();
+
 	if(action == KeyAction::DOWN)
 	{
-		switch(key)
+		for(auto& iInputProcessor : m_iInputProcessors)
 		{
-			case Key::ESCAPE:
-				Quit();
-				break;
-			default:
-				break;
+			iInputProcessor->KeyDown(key);
 		}
 	}
 	else
 	{
+		for(auto& iInputProcessor : m_iInputProcessors)
+		{
+			iInputProcessor->KeyUp(key);
+		}
 	}
 }
 #pragma endregion Input

@@ -10,17 +10,21 @@
 #include "btBulletDynamicsCommon.h"
 
 #include "IInputKey.h"
+#include <vector>
 
 struct ImFont;
 
 namespace Uknitty
 {
 class ICamera;
+class IInputProcessor;
 }
 
 class SharedInput;
-class GameObject;
 class IGraphics;
+class IMouse;
+class IKeyboard;
+
 class Player;
 
 class Game
@@ -42,9 +46,13 @@ protected:
 	virtual void PostRender() {}
 
 	IGraphics* m_iGraphics = nullptr;
+	IMouse* m_iMouse = nullptr;
+	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
+
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
+	std::vector<Uknitty::IInputProcessor*> m_iInputProcessors;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;
 	btDbvtBroadphase* pairCache = nullptr;

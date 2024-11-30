@@ -24,7 +24,6 @@ private:
 
 	float m_speed = SPEED_WALK;
 
-
 	// Inherited via IInputProcessor
 	virtual void MouseCallback(double xPos, double yPos);
 	virtual void KeyDown(Key key);
