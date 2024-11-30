@@ -96,6 +96,14 @@
     <ClInclude Include="..\Raspberry\RaspMouse.h" />
     <ClInclude Include="..\Raspberry\XWindow.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\NakedSnake\NakedSnake.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Soldier\Soldier.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <Link>
       <LibraryDependencies>GLESv2;EGL;pthread;X11;Xrandr;assimp;BulletCollision;BulletSoftBody;BulletDynamics;LinearMath;</LibraryDependencies>
