@@ -4,6 +4,9 @@
 
 #include <glm/glm.hpp>
 
+namespace Uknitty
+{
+
 class ICamera
 {
 public:
@@ -21,3 +24,5 @@ public:
 	virtual glm::mat4 GetView() = 0;
 	virtual glm::mat4 GetProjection() = 0;
 };
+
+}

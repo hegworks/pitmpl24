@@ -14,6 +14,9 @@
 #include <sstream>
 #include <string>
 
+namespace Uknitty
+{
+
 // this class is not directly copied from, but based on the learnopengl.com
 /// <summary>
 /// this class compiles a ShaderProgram from a given Fragment and Vertex Shader file path.
@@ -141,4 +144,7 @@ inline ShaderProgram::ShaderProgram(const char* vertexPath, const char* fragment
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
+
+}
+
 #endif

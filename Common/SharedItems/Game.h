@@ -13,10 +13,14 @@
 
 struct ImFont;
 
+namespace Uknitty
+{
+class ICamera;
+}
+
+class SharedInput;
 class GameObject;
 class IGraphics;
-class SharedInput;
-class ICamera;
 class Player;
 
 class Game
@@ -39,7 +43,7 @@ protected:
 
 	IGraphics* m_iGraphics = nullptr;
 	SharedInput* m_sharedInput = nullptr;
-	ICamera* m_iCamera = nullptr;
+	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;

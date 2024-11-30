@@ -4,20 +4,8 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{1db9b687-8c5c-413d-8ef1-1aaecba420e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{2c5af5fc-68d4-4e77-82ab-64ac44628145}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\PlatformSpecificHeaders">
-      <UniqueIdentifier>{b7d7f619-ce43-40c2-b871-0c455bede154}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{38d24b9d-d2e0-4538-b002-022fd033a9b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Headers">
-      <UniqueIdentifier>{77ad7d4f-4f33-49b8-a055-1d2c6dc3d0cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Source">
-      <UniqueIdentifier>{906e2185-51d8-4c41-aa8a-e31b6cd88f46}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Headers">
       <UniqueIdentifier>{d598ad22-2b74-4cd5-a66f-50dfb3287906}</UniqueIdentifier>
@@ -25,17 +13,8 @@
     <Filter Include="Game\Source">
       <UniqueIdentifier>{399159b8-1955-4166-ab49-9e6fae1e3222}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\ThirdParty">
-      <UniqueIdentifier>{b7b6d1ca-1c7d-4775-85e9-01d900c2febf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ThirdParty\imgui">
-      <UniqueIdentifier>{3ec76581-e5a8-4f26-b737-443be7533cbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Shaders">
       <UniqueIdentifier>{a03451ab-95d2-472e-bd4a-ee1dcf6e6f08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\ThirdParty\stb">
-      <UniqueIdentifier>{5f354969-08ff-4f4f-a8c4-52a10b8e1edb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Models">
       <UniqueIdentifier>{882b90ec-f18f-4672-935a-181ce80f8b1e}</UniqueIdentifier>
@@ -58,108 +37,135 @@
     <Filter Include="Assets\Models\NakedSnake">
       <UniqueIdentifier>{9d5d216c-b8da-4b98-861a-9415eba5c94e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uknitty">
+      <UniqueIdentifier>{2c5af5fc-68d4-4e77-82ab-64ac44628145}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uknitty\Headers">
+      <UniqueIdentifier>{77ad7d4f-4f33-49b8-a055-1d2c6dc3d0cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CrossPlatform">
+      <UniqueIdentifier>{c76a809d-ed72-430b-9c3d-a8f9110bb5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{b7b6d1ca-1c7d-4775-85e9-01d900c2febf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\imgui">
+      <UniqueIdentifier>{3ec76581-e5a8-4f26-b737-443be7533cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\stb">
+      <UniqueIdentifier>{5f354969-08ff-4f4f-a8c4-52a10b8e1edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CrossPlatform\Source">
+      <UniqueIdentifier>{906e2185-51d8-4c41-aa8a-e31b6cd88f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CrossPlatform\Headers">
+      <UniqueIdentifier>{b7d7f619-ce43-40c2-b871-0c455bede154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uknitty\Source">
+      <UniqueIdentifier>{4517ea7d-6552-49b2-a047-339c122cb0e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
-      <Filter>Engine\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Common.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imconfig.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3_loader.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_internal.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h">
-      <Filter>Engine\PlatformSpecificHeaders</Filter>
+      <Filter>CrossPlatform\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FreeFlyCamera.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
-      <Filter>Engine\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputProcessor.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Game.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IGraphics.h">
-      <Filter>Engine\PlatformSpecificHeaders</Filter>
+      <Filter>CrossPlatform\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IInput.h">
-      <Filter>Engine\PlatformSpecificHeaders</Filter>
+      <Filter>CrossPlatform\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Common.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
+      <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h">
-      <Filter>Engine\Headers</Filter>
+      <Filter>CrossPlatform\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_demo.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_draw.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_tables.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp">
-      <Filter>Engine\ThirdParty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>Engine\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
-      <Filter>Engine\Source</Filter>
+      <Filter>ThirdParty\imgui</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Game.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp">
-      <Filter>Engine\Source</Filter>
+      <Filter>CrossPlatform\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp">
-      <Filter>Engine\ThirdParty\stb</Filter>
+      <Filter>ThirdParty\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

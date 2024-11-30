@@ -2,6 +2,9 @@
 
 #include <glm/glm.hpp>
 
+namespace Uknitty
+{
+
 class Transform
 {
 public:
@@ -25,3 +28,5 @@ private:
 
 	glm::mat4 m_modelMatrix;
 };
+
+}

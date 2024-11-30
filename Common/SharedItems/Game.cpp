@@ -62,36 +62,36 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_iCamera = new FreeFlyCamera();
+	m_iCamera = new Uknitty::FreeFlyCamera();
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
-	ShaderProgram* shaderProgram = new ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 
 
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* snake = new Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 
 	m_player = new Player(snake, m_iCamera);
 	glm::vec3 playerCurrentPos = m_player->m_transform->m_position;
 	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* soldier = new Model("../Common/Assets/Models/Soldier/Soldier.obj");
+	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* cube = new Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* cube2 = new Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	Uknitty::Model* cube2 = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* sphere = new Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
+	Uknitty::Model* sphere = new Uknitty::Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
 
 	stbi_set_flip_vertically_on_load(false);
-	Model* plane = new Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(5));
+	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(5));
 
 	glm::mat4 model;
 	glm::mat4 identityMat = glm::mat4(1);

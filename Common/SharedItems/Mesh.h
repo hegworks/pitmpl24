@@ -1,13 +1,16 @@
 #pragma once
+
 #include <assimp/types.h>
 #include <vector>
-
 
 #ifdef Raspberry_BUILD
 #include <GLES3/gl3.h>
 #endif
 
 #include "ShaderProgram.h"
+
+namespace Uknitty
+{
 
 struct Vertex
 {
@@ -100,4 +103,6 @@ inline void Mesh::SetupMesh()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_texCoords));
 
 	glBindVertexArray(0);
+}
+
 }

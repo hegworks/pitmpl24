@@ -3,12 +3,12 @@
 #include "Player.h"
 #include "Transform.h"
 
-Player::Player(Model* model, ICamera* camera)
+Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera)
 {
 	m_model = model;
 	m_iCamera = camera;
 
-	m_transform = new Transform();
+	m_transform = new Uknitty::Transform();
 }
 
 Player::~Player()

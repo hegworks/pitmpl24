@@ -2,20 +2,23 @@
 
 #include "IInputProcessor.h"
 
+namespace Uknitty
+{
 class Transform;
 class Model;
 class ICamera;
+}
 
-class Player : public IInputProcessor
+class Player : public Uknitty::IInputProcessor
 {
 public:
-	Player(Model* model, ICamera* camera);
+	Player(Uknitty::Model* model, Uknitty::ICamera* camera);
 	~Player();
-	Model* m_model = nullptr;
-	Transform* m_transform = nullptr;
+	Uknitty::Model* m_model = nullptr;
+	Uknitty::Transform* m_transform = nullptr;
 
 private:
-	ICamera* m_iCamera = nullptr;
+	Uknitty::ICamera* m_iCamera = nullptr;
 
 	const float SPEED_WALK = 5.0f;
 

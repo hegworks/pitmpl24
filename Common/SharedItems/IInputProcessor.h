@@ -3,6 +3,9 @@
 #include "IInput.h"
 #include "IInputKey.h"
 
+namespace Uknitty
+{
+
 class IInputProcessor
 {
 public:
@@ -17,3 +20,5 @@ public:
 private:
 
 };
+
+}

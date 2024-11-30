@@ -7,6 +7,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace Uknitty
+{
+
 class FreeFlyCamera : public ICamera
 {
 public:
@@ -160,4 +163,6 @@ glm::mat4 FreeFlyCamera::GetView()
 glm::mat4 FreeFlyCamera::GetProjection()
 {
 	return m_projection;
+}
+
 }

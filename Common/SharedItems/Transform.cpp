@@ -3,6 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace Uknitty
+{
+
 Transform::Transform()
 {
 	Reset();
@@ -55,4 +58,6 @@ void Transform::CalculateModelMatrix()
 	m_modelMatrix = glm::rotate(m_modelMatrix, glm::radians(m_rotation.y), glm::vec3(0, 1, 0));
 	m_modelMatrix = glm::rotate(m_modelMatrix, glm::radians(m_rotation.z), glm::vec3(0, 0, 1));
 	m_modelMatrix = glm::scale(m_modelMatrix, m_scale);
+}
+
 }

@@ -12,6 +12,9 @@
 class Shader;
 struct Texture;
 
+namespace Uknitty
+{
+
 class Model
 {
 public:
@@ -188,4 +191,6 @@ inline std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
 		}
 	}
 	return textures;
+}
+
 }
