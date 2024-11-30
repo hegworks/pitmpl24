@@ -211,11 +211,6 @@ void Game::Start()
 }
 
 #pragma region Input
-SharedInput* Game::GetInput() const
-{
-	return m_sharedInput;
-}
-
 void Game::ProcessInput()
 {
 	for(auto& iInputProcessor : m_iInputProcessors)
@@ -267,11 +262,6 @@ void Game::ClearScreen()
 {
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-btDiscreteDynamicsWorld* Game::World() const
-{
-	return world;
 }
 
 void Game::Quit()

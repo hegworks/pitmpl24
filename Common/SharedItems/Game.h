@@ -34,22 +34,22 @@ public:
 	virtual ~Game();
 
 	void Start();
+
+private:
+	void InitializeOpenGLES();
+	void ClearScreen();
+	void ProcessInput();
+	void KeyCallback(Key key, KeyAction action);
 	void Quit();
 
-	btDiscreteDynamicsWorld* World() const;
-	SharedInput* GetInput() const;
-
-protected:
-	void ProcessInput();
-	virtual void Update(float /*gameDeltaTime*/) {}
-	virtual void Render() {}
-	virtual void PostRender() {}
+	void Update(float /*gameDeltaTime*/) {}
+	void Render() {}
+	void PostRender() {}
 
 	IGraphics* m_iGraphics = nullptr;
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
-
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
 	std::vector<Uknitty::IInputProcessor*> m_iInputProcessors;
@@ -62,11 +62,5 @@ protected:
 
 	bool quitting{false};
 	float gameDeltaTime;
-
-private:
-	void InitializeOpenGLES();
-	void ClearScreen();
-	void KeyCallback(Key key, KeyAction action);
-
 	int frameCount{0};
 };
