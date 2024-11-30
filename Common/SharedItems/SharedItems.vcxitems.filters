@@ -72,7 +72,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\IInput.h">
       <Filter>Engine\PlatformSpecificHeaders</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
       <Filter>Engine\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Common.h">
@@ -123,6 +123,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FreeFlyCamera.h">
       <Filter>Engine\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IInputProcessor.h">
+      <Filter>Engine\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Game.cpp">
@@ -154,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\stb_image.cpp">
       <Filter>Engine\ThirdParty\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
+      <Filter>Engine\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

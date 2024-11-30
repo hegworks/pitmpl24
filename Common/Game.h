@@ -16,7 +16,8 @@ struct ImFont;
 class GameObject;
 class IGraphics;
 class SharedInput;
-class Camera;
+class ICamera;
+class Player;
 
 class Game
 {
@@ -38,7 +39,8 @@ protected:
 
 	IGraphics* m_iGraphics = nullptr;
 	SharedInput* m_sharedInput = nullptr;
-	Camera* m_camera = nullptr;
+	ICamera* m_iCamera = nullptr;
+	Player* m_player = nullptr;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;
 	btDbvtBroadphase* pairCache = nullptr;

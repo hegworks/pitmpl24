@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Camera.h"
 #include "Common.h"
+#include "ICamera.h"
 #include "IInput.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class FreeFlyCamera : public Camera
+class FreeFlyCamera : public ICamera
 {
 public:
 	FreeFlyCamera();
@@ -67,7 +67,7 @@ private:
 	bool m_isAscendKeyPressed = false;
 	bool m_isDescendKeyPressed = false;
 
-	// Inherited via Camera
+	// Inherited via ICamera
 	glm::mat4 GetView() override;
 	glm::mat4 GetProjection() override;
 };

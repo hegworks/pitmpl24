@@ -1,11 +1,13 @@
 #include "Game.h"
 
-#include "Camera.h"
 #include "Common.h"
 #include "FreeFlyCamera.h"
+#include "ICamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
+#include "Player.h"
 #include "SharedInput.h"
+#include "Transform.h"
 #include <Model.h>
 #include <ShaderProgram.h>
 
@@ -16,6 +18,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <chrono>
+#include <string>
 
 #ifdef Raspberry_BUILD
 #include <GLES3/gl3.h>
@@ -59,21 +62,33 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_camera = new FreeFlyCamera();
+	m_iCamera = new FreeFlyCamera();
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
 	ShaderProgram* shaderProgram = new ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 
+
+
 	stbi_set_flip_vertically_on_load(false);
-	Model* soldier = new Model("../Common/Assets/Models/Soldier/Soldier_demo.FBX");
+	Model* snake = new Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+
+	m_player = new Player(snake, m_iCamera);
+	glm::vec3 playerCurrentPos = m_player->m_transform->m_position;
+	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* soldier = new Model("../Common/Assets/Models/Soldier/Soldier.obj");
 
 	stbi_set_flip_vertically_on_load(true);
 	Model* backpack = new Model("../Common/Assets/Models/Backpack/backpack.obj");
 
 	stbi_set_flip_vertically_on_load(false);
 	Model* cube = new Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+
+	stbi_set_flip_vertically_on_load(false);
+	Model* cube2 = new Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 
 	stbi_set_flip_vertically_on_load(false);
 	Model* sphere = new Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
@@ -91,6 +106,8 @@ void Game::Start()
 	auto lastTime = startTime;
 	float averageFPS{0};
 #pragma endregion Timing
+
+	float degree = 0;
 
 	while(!quitting)
 	{
@@ -110,26 +127,23 @@ void Game::Start()
 
 		ProcessInput();
 
-		m_camera->Update(gameDeltaTime);
+		m_iCamera->Update(gameDeltaTime);
 
 		// Setup the viewport
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
 		shaderProgram->Use();
-		shaderProgram->SetMat4("uView", m_camera->GetView());
-		shaderProgram->SetMat4("uProjection", m_camera->GetProjection());
+		shaderProgram->SetMat4("uView", m_iCamera->GetView());
+		shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, 0, -5));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(0.05));
-		shaderProgram->SetMat4("uModel", model);
+		m_player->m_transform->SetRotation(glm::vec3(0, degree++, 0));
+		shaderProgram->SetMat4("uModel", *m_player->m_transform->GetModelMatrix());
 		glDisable(GL_BLEND);
-		soldier->Draw(*shaderProgram);
+		m_player->m_model->Draw(*shaderProgram);
 
 		model = identityMat;
-		model = glm::translate(model, glm::vec3(-4, 0, -2));
+		model = glm::translate(model, glm::vec3(-4, 2, -2));
 		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(1));
 		shaderProgram->SetMat4("uModel", model);
@@ -138,7 +152,15 @@ void Game::Start()
 		backpack->Draw(*shaderProgram);
 
 		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, -1, -5));
+		model = glm::translate(model, glm::vec3(0, 1, -5));
+		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
+		model = glm::scale(model, glm::vec3(1));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		soldier->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(0, 0, -5));
 		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(1));
 		shaderProgram->SetMat4("uModel", model);
@@ -146,15 +168,21 @@ void Game::Start()
 		cube->Draw(*shaderProgram);
 
 		model = identityMat;
-		model = glm::translate(model, glm::vec3(4, -1, -5));
+		model = glm::translate(model, glm::vec3(1, 0, -5));
 		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(1));
+		shaderProgram->SetMat4("uModel", model);
+		glDisable(GL_BLEND);
+		cube->Draw(*shaderProgram);
+
+		model = identityMat;
+		model = glm::translate(model, glm::vec3(3, 0.5, -5));
 		shaderProgram->SetMat4("uModel", model);
 		glDisable(GL_BLEND);
 		sphere->Draw(*shaderProgram);
 
 		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, -2, 0));
+		model = glm::translate(model, glm::vec3(0, 0, 0));
 		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(10));
 		shaderProgram->SetMat4("uModel", model);
@@ -167,15 +195,14 @@ void Game::Start()
 		ImGui::SetNextWindowBgAlpha(0.2f);
 		ImGui::SetNextWindowPos(ImVec2(10, 100));
 		ImGuiWindowFlags window_flags = /*ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar  | */ ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoScrollbar;
+		ImGui::SetNextWindowSize(ImVec2(150, 50));
 
 		static bool open = true;
 		// open a new window
-		ImGui::Begin("helpinfo ", &open, window_flags);
-		ImGui::SetWindowFontScale(1.6f);
+		ImGui::Begin("AVG FPS", &open, window_flags);
 
 		// this can be anything
-		ImGui::Text("Hi there");
-		ImGui::Text("Hi to you too");
+		ImGui::Text(std::to_string(averageFPS).c_str());
 
 		ImGui::End();
 
@@ -215,8 +242,8 @@ void Game::ProcessInput()
 	//	printf("we pressed mouse left\n");
 	//}
 
-	m_camera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
-	m_camera->ProcessInput(keyboard);
+	m_iCamera->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
+	m_iCamera->ProcessInput(keyboard);
 }
 
 void Game::KeyCallback(Key key, KeyAction action)
