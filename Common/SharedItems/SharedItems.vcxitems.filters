@@ -138,6 +138,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IRenderable.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
       <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

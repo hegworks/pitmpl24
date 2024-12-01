@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "FreeFlyCamera.h"
+#include "GeneralCamera.h"
 #include "ICamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
@@ -63,7 +64,7 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_iCamera = new Uknitty::FreeFlyCamera();
+	m_iCamera = new GeneralCamera();
 	m_iInputProcessors.push_back(m_iCamera);
 	m_iLifeCycles.push_back(m_iCamera);
 
@@ -81,6 +82,8 @@ void Game::Start()
 	m_iLifeCycles.push_back(m_player);
 	m_iRenderables.push_back(m_player);
 	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
+
+	static_cast<GeneralCamera*>(m_iCamera)->SetFollowTransform(m_player->m_transform);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
