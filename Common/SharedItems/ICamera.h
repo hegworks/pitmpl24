@@ -21,6 +21,8 @@ public:
 	virtual float GetFov() const = 0;
 	virtual glm::mat4 GetView() = 0;
 	virtual glm::mat4 GetProjection() = 0;
+	virtual glm::vec3 GetForward() = 0;
+	virtual glm::vec3 GetRight() = 0;
 
 	// Inherited via IInputProcessor
 	virtual void MouseCallback(double xPos, double yPos) = 0;

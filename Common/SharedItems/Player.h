@@ -26,9 +26,19 @@ public:
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;
 
-	const float SPEED_WALK = 5.0f;
+	const float SPEED_WALK = 10.0f;
+	const float SPEED_ROTATION = 20.0f;
+	const Key FORWARD_KEY = Key::W;
+	const Key BACKWARD_KEY = Key::S;
+	const Key LEFT_KEY = Key::A;
+	const Key RIGHT_KEY = Key::D;
 
-	float m_speed = SPEED_WALK;
+	float m_moveSpeed = SPEED_WALK;
+	float m_rotationSpeed = SPEED_WALK;
+	bool m_isForwardKeyDown = false;
+	bool m_isBackwardKeyDown = false;
+	bool m_isLeftKeyDown = false;
+	bool m_isRightKeyDown = false;
 
 	// Inherited via IInputProcessor
 	virtual void MouseCallback(double xPos, double yPos) override;

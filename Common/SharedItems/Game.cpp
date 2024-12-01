@@ -80,7 +80,6 @@ void Game::Start()
 	m_iInputProcessors.push_back(m_player);
 	m_iLifeCycles.push_back(m_player);
 	m_iRenderables.push_back(m_player);
-	glm::vec3 playerCurrentPos = m_player->m_transform->m_position;
 	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
 
 	stbi_set_flip_vertically_on_load(false);
@@ -166,7 +165,6 @@ void Game::Start()
 		shaderProgram->SetMat4("uView", m_iCamera->GetView());
 		shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 
-		m_player->m_transform->SetRotation(glm::vec3(0, degree++, 0));
 		shaderProgram->SetMat4("uModel", *m_player->m_transform->GetModelMatrix());
 		glDisable(GL_BLEND);
 		m_player->m_model->Draw(*shaderProgram);
@@ -252,7 +250,7 @@ void Game::KeyCallback(Key key, KeyAction action)
 			iInputProcessor->KeyDown(key);
 		}
 	}
-	else
+	else if(action == KeyAction::UP)
 	{
 		for(auto& iInputProcessor : m_iInputProcessors)
 		{

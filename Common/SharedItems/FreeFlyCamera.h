@@ -16,18 +16,23 @@ public:
 	FreeFlyCamera();
 	~FreeFlyCamera();
 
+	// Inherited via ICamera
+	virtual glm::mat4 GetView() override;
+	virtual glm::mat4 GetProjection() override;
+	virtual glm::vec3 GetForward() override;
+	virtual glm::vec3 GetRight() override;
+	virtual void GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const override;
+	virtual float GetFov() const override { return m_fov; }
+
 	// Inherited via IInputProcessor
-	virtual void MouseCallback(double xPos, double yPos);
-	virtual void ProcessInput(IKeyboard* iKeyboard);
+	virtual void MouseCallback(double xPos, double yPos) override;
+	virtual void ProcessInput(IKeyboard* iKeyboard) override;
 	virtual void KeyDown(Key key) {};
 	virtual void KeyUp(Key key) {};
 
 	// Inherited via ILifeCycle
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
-
-	virtual void GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const;
-	virtual float GetFov() const { return m_fov; }
 
 private:
 	// settings
@@ -73,10 +78,6 @@ private:
 	bool m_isBoostKeyPressed = false;
 	bool m_isAscendKeyPressed = false;
 	bool m_isDescendKeyPressed = false;
-
-	// Inherited via ICamera
-	glm::mat4 GetView() override;
-	glm::mat4 GetProjection() override;
 };
 
 inline FreeFlyCamera::FreeFlyCamera()
@@ -172,6 +173,16 @@ glm::mat4 FreeFlyCamera::GetView()
 glm::mat4 FreeFlyCamera::GetProjection()
 {
 	return m_projection;
+}
+
+glm::vec3 FreeFlyCamera::GetForward()
+{
+	return m_front;
+}
+
+glm::vec3 FreeFlyCamera::GetRight()
+{
+	return glm::normalize(glm::cross(m_front, UP));
 }
 
 }
