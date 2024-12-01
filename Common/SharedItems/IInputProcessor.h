@@ -9,7 +9,6 @@ namespace Uknitty
 class IInputProcessor
 {
 public:
-	IInputProcessor() = default;
 	~IInputProcessor() = default;
 
 	virtual void MouseCallback(double xPos, double yPos) = 0;

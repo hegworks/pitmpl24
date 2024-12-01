@@ -30,6 +30,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputProcessor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ILifeCycle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IRenderable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />

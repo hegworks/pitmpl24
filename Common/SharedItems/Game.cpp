@@ -65,6 +65,7 @@ void Game::Start()
 #pragma region Other Initializations
 	m_iCamera = new Uknitty::FreeFlyCamera();
 	m_iInputProcessors.push_back(m_iCamera);
+	m_iLifeCycles.push_back(m_iCamera);
 
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
@@ -77,6 +78,8 @@ void Game::Start()
 
 	m_player = new Player(snake, m_iCamera);
 	m_iInputProcessors.push_back(m_player);
+	m_iLifeCycles.push_back(m_player);
+	m_iRenderables.push_back(m_player);
 	glm::vec3 playerCurrentPos = m_player->m_transform->m_position;
 	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
 
@@ -94,6 +97,16 @@ void Game::Start()
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(5));
+
+	for(auto& iLifeCycle : m_iLifeCycles)
+	{
+		iLifeCycle->Awake();
+	}
+
+	for(auto& iLifeCycle : m_iLifeCycles)
+	{
+		iLifeCycle->Start();
+	}
 
 	glm::mat4 model;
 	glm::mat4 identityMat = glm::mat4(1);
@@ -124,9 +137,26 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
-		ProcessInput();
+		for(auto& iInputProcessor : m_iInputProcessors)
+		{
+			iInputProcessor->MouseCallback(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
+			iInputProcessor->ProcessInput(m_iKeyboard);
+		}
 
-		m_iCamera->Update(gameDeltaTime);
+		for(auto& iLifeCycle : m_iLifeCycles)
+		{
+			iLifeCycle->Update(gameDeltaTime);
+		}
+
+		for(auto& iLifeCycle : m_iLifeCycles)
+		{
+			iLifeCycle->LateUpdate(gameDeltaTime);
+		}
+
+		for(auto& iRenderable : m_iRenderables)
+		{
+			iRenderable->Render();
+		}
 
 		// Setup the viewport
 		ClearScreen();
@@ -211,15 +241,6 @@ void Game::Start()
 }
 
 #pragma region Input
-void Game::ProcessInput()
-{
-	for(auto& iInputProcessor : m_iInputProcessors)
-	{
-		iInputProcessor->MouseCallback(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
-		iInputProcessor->ProcessInput(m_iKeyboard);
-	}
-}
-
 void Game::KeyCallback(Key key, KeyAction action)
 {
 	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();

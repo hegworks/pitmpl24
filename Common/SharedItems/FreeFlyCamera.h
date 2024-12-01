@@ -16,11 +16,15 @@ public:
 	FreeFlyCamera();
 	~FreeFlyCamera();
 
+	// Inherited via IInputProcessor
 	virtual void MouseCallback(double xPos, double yPos);
 	virtual void ProcessInput(IKeyboard* iKeyboard);
-	virtual void Update(float deltaTime);
 	virtual void KeyDown(Key key) {};
 	virtual void KeyUp(Key key) {};
+
+	// Inherited via ILifeCycle
+	virtual void Update(float deltaTime) override;
+	virtual void LateUpdate(float deltaTime) override;
 
 	virtual void GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const;
 	virtual float GetFov() const { return m_fov; }
@@ -146,6 +150,11 @@ inline void FreeFlyCamera::Update(float deltaTime)
 
 	m_view = glm::lookAt(m_pos, m_pos + m_front, UP);
 	m_projection = glm::perspective(glm::radians(m_fov), ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
+}
+
+inline void FreeFlyCamera::LateUpdate(float deltaTime)
+{
+
 }
 
 inline void FreeFlyCamera::GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const

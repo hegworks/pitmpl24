@@ -132,6 +132,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h">
       <Filter>CrossPlatform\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ILifeCycle.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IRenderable.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -202,6 +208,72 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\Soldier.obj">
       <Filter>Assets\Models\Soldier</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0645_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0646_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0655_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0656_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0657_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0659_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0668_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0670_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0671_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0672_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0675_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0676_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0677_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0678_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0679_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0691_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0692_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0693_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0694_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0695_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0696_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0697_0.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -223,72 +295,6 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Plane\Ground.png">
       <Filter>Assets\Models\Primitives\Plane</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0645_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0646_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0655_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0656_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0657_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0659_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0668_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0670_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0671_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0672_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0675_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0676_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0677_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0678_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0679_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0691_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0692_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0693_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0694_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0695_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0696_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Tex_0697_0.png">
-      <Filter>Assets\Models\NakedSnake</Filter>
     </Image>
   </ItemGroup>
 </Project>

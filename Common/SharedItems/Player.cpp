@@ -31,3 +31,27 @@ void Player::ProcessInput(IKeyboard* iKeyboard)
 {
 }
 
+void Player::Awake()
+{
+}
+
+void Player::Start()
+{
+}
+
+void Player::Update(float deltaTime)
+{
+}
+
+void Player::LateUpdate(float deltaTime)
+{
+}
+
+void Player::FixedUpdate()
+{
+}
+
+void Player::Render()
+{
+}
+

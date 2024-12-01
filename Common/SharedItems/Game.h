@@ -18,6 +18,8 @@ namespace Uknitty
 {
 class ICamera;
 class IInputProcessor;
+class ILifeCycle;
+class IRenderable;
 }
 
 class SharedInput;
@@ -38,7 +40,6 @@ public:
 private:
 	void InitializeOpenGLES();
 	void ClearScreen();
-	void ProcessInput();
 	void KeyCallback(Key key, KeyAction action);
 	void Quit();
 
@@ -53,6 +54,8 @@ private:
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
 	std::vector<Uknitty::IInputProcessor*> m_iInputProcessors;
+	std::vector<Uknitty::IRenderable*> m_iRenderables;
+	std::vector<Uknitty::ILifeCycle*> m_iLifeCycles;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;
 	btDbvtBroadphase* pairCache = nullptr;
