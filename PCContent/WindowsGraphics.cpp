@@ -3,6 +3,7 @@
 #include "WindowsGraphics.h"
 #include <glad/glad.h>
 #include <iostream>
+#include <windows.h>
 
 void WindowsGraphics::SwapBuffer()
 {
@@ -18,6 +19,16 @@ GLFWwindow& WindowsGraphics::Window() const
 
 WindowsGraphics::WindowsGraphics()
 {
+#pragma region Set console size and position
+	CONSOLE_SCREEN_BUFFER_INFO coninfo;
+	AllocConsole();
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &coninfo);
+	coninfo.dwSize.X = 700;
+	coninfo.dwSize.Y = 9999;
+	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coninfo.dwSize);
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, 700, 1000, 0);
+#pragma endregion Set console size and position
+
 	// Initialize GLFW and set window properties.
 	glfwInit();
 	glfwWindowHint(GL_DEPTH_BUFFER_BIT, 16);
@@ -27,6 +38,7 @@ WindowsGraphics::WindowsGraphics()
 	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // for normal opengl
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
+
 	// Creates the window.
 	m_window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
 
@@ -39,6 +51,7 @@ WindowsGraphics::WindowsGraphics()
 
 	// Set the window to be the current context.
 	glfwMakeContextCurrent(m_window);
+	glfwSetWindowPos(m_window, 700, 100);
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Error handling for if GLAD failed to initialize.
