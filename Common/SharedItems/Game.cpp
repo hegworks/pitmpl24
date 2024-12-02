@@ -81,9 +81,9 @@ void Game::Start()
 	m_iInputProcessors.push_back(m_player);
 	m_iLifeCycles.push_back(m_player);
 	m_iRenderables.push_back(m_player);
-	m_player->m_transform->SetPosition(glm::vec3(1, 1, -5));
 
-	static_cast<GeneralCamera*>(m_iCamera)->SetFollowTransform(m_player->m_transform);
+	GeneralCamera* generalCamera = static_cast<GeneralCamera*>(m_iCamera);
+	generalCamera->SetFollowTransform(m_player->m_transform);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
@@ -168,9 +168,12 @@ void Game::Start()
 		shaderProgram->SetMat4("uView", m_iCamera->GetView());
 		shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 
-		shaderProgram->SetMat4("uModel", *m_player->m_transform->GetModelMatrix());
-		glDisable(GL_BLEND);
-		m_player->m_model->Draw(*shaderProgram);
+		if(generalCamera->GetCameraType() != GeneralCamera::CameraType::FIRST_PERSON)
+		{
+			shaderProgram->SetMat4("uModel", *m_player->m_transform->GetModelMatrix());
+			glDisable(GL_BLEND);
+			m_player->m_model->Draw(*shaderProgram);
+		}
 
 		model = identityMat;
 		model = glm::translate(model, glm::vec3(0, 1, -5));

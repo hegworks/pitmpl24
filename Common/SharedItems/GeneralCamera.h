@@ -36,14 +36,16 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
 
-	void SetFollowTransform(Uknitty::Transform* followTransform) { m_followTransform = followTransform; }
-
+	const int TOTAL_CAMERA_TYPES = 3;
 	enum class CameraType
 	{
 		TOP_DOWN_FOLLOW,
 		THIRD_PERSON_FOLLOW,
 		FIRST_PERSON,
 	};
+
+	void SetFollowTransform(Uknitty::Transform* followTransform) { m_followTransform = followTransform; }
+	CameraType GetCameraType() const { return m_cameraType; }
 
 private:
 	// settings
@@ -52,23 +54,35 @@ private:
 	const glm::vec3 POS_INITIAL = glm::vec3(0);
 	const glm::vec3 UP = glm::vec3(0.0f, 1.0f, 0.0f);
 	const glm::vec3 FRONT_INITIAL = glm::vec3(0.0f, 1.0f, 0.0f);
-	const float PITCH_MAX = 89.0f;
+	const float PITCH_MAX_DEFAULT = 89.0f;
+	const float PITCH_MIN_DEFAULT = -89.0f;
+
 	const float NEAR_PLANE = 0.1f;
 	const float FAR_PLANE = 1000.0f;
 	const float MOUSE_SENSITIVITY = 0.05f;
-	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 15, -10);
-	const glm::vec3 FOLLOW_OFFSET_THIRD_PERSON = glm::vec3(0, 5, -5);
-	const glm::vec3 FOLLOW_OFFSET_FIRST_PERSON = glm::vec3(0, 2, 0);
+
+	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
+
+	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 2.0f;
+	const float FOLLOW_DISTANCE_THIRD_PERSON = 5.0f;
+	const float PITCH_MAX_THIRD_PERSON = 10.0f;
+	const float PITCH_MIN_THIRD_PERSON = -45.0f;
+
+	const glm::vec3 FOLLOW_OFFSET_FIRST_PERSON = glm::vec3(0, 2, 0.2);
+	const float FOLLOW_OFFSET_Y_FIRST_PERSON = 2.0f;
+	const float FOLLOW_DISTANCE_FIRST_PERSON = 0.5f;
+	const float YAW_MAX_FIRST_PERSON = 0.0f;
+	const float YAW_MIN_FIRST_PERSON = -180.0f;
 
 	const Key FORWARD_KEY = Key::W;
 	const Key BACKWARD_KEY = Key::S;
 	const Key RIGHT_KEY = Key::D;
 	const Key LEFT_KEY = Key::A;
+	const Key TYPE_SWITCH_KEY = Key::V;
 
 	// variables
 	CameraType m_cameraType = CameraType::TOP_DOWN_FOLLOW;
 	Uknitty::Transform* m_followTransform = nullptr;
-	glm::vec3 m_followOffset = FOLLOW_OFFSET_TOPDOWN;
 
 	double m_yaw = YAW_DEFAULT;
 	double m_pitch = 0;

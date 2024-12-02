@@ -21,6 +21,8 @@ public:
 	const glm::vec3* GetPosition() const { return &m_position; }
 	const glm::vec3* GetRotation() const { return &m_rotation; }
 	const glm::vec3* GetScale() const { return &m_scale; }
+	glm::vec3 GetForward() const;
+	glm::vec3 GetRight() const;
 
 private:
 	void CalculateModelMatrix();

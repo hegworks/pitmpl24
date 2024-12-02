@@ -50,6 +50,22 @@ void Transform::SetTransform(glm::vec3 position, glm::vec3 rotation, glm::vec3 s
 	CalculateModelMatrix();
 }
 
+glm::vec3 Transform::GetForward() const
+{
+	glm::vec3 forward;
+	forward.x = cos(glm::radians(m_rotation.y)) * cos(glm::radians(m_rotation.x));
+	forward.y = sin(glm::radians(m_rotation.x));
+	forward.z = sin(glm::radians(m_rotation.y)) * cos(glm::radians(m_rotation.x));
+	return glm::normalize(forward);
+}
+
+glm::vec3 Transform::GetRight() const
+{
+	glm::vec3 forward = GetForward();
+	glm::vec3 up = glm::vec3(0, 1, 0);
+	return glm::normalize(glm::cross(forward, up));
+}
+
 void Transform::CalculateModelMatrix()
 {
 	m_modelMatrix = glm::mat4(1);
