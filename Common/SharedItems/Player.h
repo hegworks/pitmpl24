@@ -9,32 +9,35 @@ namespace Uknitty
 class Transform;
 class Model;
 class ICamera;
+class ShaderProgram;
 }
 
 class Player :
 	public Uknitty::IInputProcessor,
-	public Uknitty::ILifeCycle,
-	public Uknitty::IRenderable
+	public Uknitty::ILifeCycle
 {
 public:
-	Player(Uknitty::Model* model, Uknitty::ICamera* camera);
+	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram);
 	~Player();
+
+	void Render();
 
 	Uknitty::Model* m_model = nullptr;
 	Uknitty::Transform* m_transform = nullptr;
 
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;
+	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 
-	const float SPEED_WALK = 10.0f;
-	const float SPEED_ROTATION = 20.0f;
+	const float SPEED_WALK = 0.6f;
+	const float SPEED_ROTATION = 1.7f;
 	const Key FORWARD_KEY = Key::W;
 	const Key BACKWARD_KEY = Key::S;
 	const Key LEFT_KEY = Key::A;
 	const Key RIGHT_KEY = Key::D;
 
 	float m_moveSpeed = SPEED_WALK;
-	float m_rotationSpeed = SPEED_WALK;
+	float m_rotationSpeed = SPEED_ROTATION;
 	bool m_isForwardKeyDown = false;
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
@@ -52,7 +55,4 @@ private:
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
 	virtual void FixedUpdate() override;
-
-	// Inherited via IRenderable
-	virtual void Render() override;
 };

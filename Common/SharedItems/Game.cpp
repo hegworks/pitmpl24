@@ -2,12 +2,14 @@
 
 #include "Common.h"
 #include "FreeFlyCamera.h"
+#include "GameObject.h"
 #include "GeneralCamera.h"
 #include "ICamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
 #include "Player.h"
 #include "SharedInput.h"
+#include "SolidObject.h"
 #include "Transform.h"
 #include <Model.h>
 #include <ShaderProgram.h>
@@ -64,6 +66,8 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
+	std::vector<SolidObject*> solidObjects;
+
 	m_iCamera = new GeneralCamera();
 	m_iInputProcessors.push_back(m_iCamera);
 	m_iLifeCycles.push_back(m_iCamera);
@@ -77,28 +81,40 @@ void Game::Start()
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 
-	m_player = new Player(snake, m_iCamera);
+	m_player = new Player(snake, m_iCamera, shaderProgram);
 	m_iInputProcessors.push_back(m_player);
 	m_iLifeCycles.push_back(m_player);
-	m_iRenderables.push_back(m_player);
 
 	GeneralCamera* generalCamera = static_cast<GeneralCamera*>(m_iCamera);
 	generalCamera->SetFollowTransform(m_player->m_transform);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
+	solidObjects.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	SolidObject* cubeObject = new SolidObject(m_iCamera, cube, shaderProgram);
+	cubeObject->m_transform->SetPosition(glm::vec3(0, 0, -5));
+	solidObjects.push_back(cubeObject);
 
 	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* cube2 = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	Uknitty::Model* cube2 = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube2/Cube.obj");
+	SolidObject* cube2Object = new SolidObject(m_iCamera, cube2, shaderProgram);
+	cube2Object->m_transform->SetPosition(glm::vec3(1, 0, -5));
+	solidObjects.push_back(cube2Object);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* sphere = new Uknitty::Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
+	SolidObject* sphereObject = new SolidObject(m_iCamera, sphere, shaderProgram);
+	sphereObject->m_transform->SetPosition(glm::vec3(3, 0.5, -5));
+	solidObjects.push_back(sphereObject);
 
 	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(5));
+	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane2/Plane.obj", glm::vec2(10, 5));
+	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
+	planeObject->m_transform->SetScale(glm::vec3(5, 0, 10));
+	solidObjects.push_back(planeObject);
 
 	for(auto& iLifeCycle : m_iLifeCycles)
 	{
@@ -128,7 +144,9 @@ void Game::Start()
 #pragma region Timing
 		auto time = std::chrono::system_clock::now();
 		std::chrono::duration<float> delta = time - lastTime;
-		gameDeltaTime = delta.count();
+		gameDeltaTime = delta.count() * 10.0f;
+
+		std::cout << gameDeltaTime << std::endl;
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(elapsed.count() > 0.25f && frameCount > 10)
@@ -155,63 +173,19 @@ void Game::Start()
 			iLifeCycle->LateUpdate(gameDeltaTime);
 		}
 
-		for(auto& iRenderable : m_iRenderables)
-		{
-			iRenderable->Render();
-		}
-
 		// Setup the viewport
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
-		shaderProgram->Use();
-		shaderProgram->SetMat4("uView", m_iCamera->GetView());
-		shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
-
 		if(generalCamera->GetCameraType() != GeneralCamera::CameraType::FIRST_PERSON)
 		{
-			shaderProgram->SetMat4("uModel", *m_player->m_transform->GetModelMatrix());
-			glDisable(GL_BLEND);
-			m_player->m_model->Draw(*shaderProgram);
+			m_player->Render();
 		}
 
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, 1, -5));
-		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(1));
-		shaderProgram->SetMat4("uModel", model);
-		glDisable(GL_BLEND);
-		soldier->Draw(*shaderProgram);
-
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, 0, -5));
-		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(1));
-		shaderProgram->SetMat4("uModel", model);
-		glDisable(GL_BLEND);
-		cube->Draw(*shaderProgram);
-
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(1, 0, -5));
-		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(1));
-		shaderProgram->SetMat4("uModel", model);
-		glDisable(GL_BLEND);
-		cube->Draw(*shaderProgram);
-
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(3, 0.5, -5));
-		shaderProgram->SetMat4("uModel", model);
-		glDisable(GL_BLEND);
-		sphere->Draw(*shaderProgram);
-
-		model = identityMat;
-		model = glm::translate(model, glm::vec3(0, 0, 0));
-		model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(10));
-		shaderProgram->SetMat4("uModel", model);
-		glDisable(GL_BLEND);
-		plane->Draw(*shaderProgram);
+		for(auto& solidObject : solidObjects)
+		{
+			solidObject->Render();
+		}
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();

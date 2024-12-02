@@ -4,10 +4,11 @@
 #include "Player.h"
 #include "Transform.h"
 
-Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera)
+Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram)
 {
 	m_model = model;
 	m_iCamera = camera;
+	m_shaderProgram = shaderProgram;
 
 	m_transform = new Uknitty::Transform();
 }
@@ -97,5 +98,12 @@ void Player::FixedUpdate()
 
 void Player::Render()
 {
+	m_shaderProgram->Use();
+	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
+	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
+	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
+	glDisable(GL_BLEND);
+	m_model->Draw(*m_shaderProgram);
+	m_shaderProgram->UnUse();
 }
 

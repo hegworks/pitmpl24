@@ -64,6 +64,9 @@
     <Filter Include="Uknitty\Source">
       <UniqueIdentifier>{4517ea7d-6552-49b2-a047-339c122cb0e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\libtmx-parser">
+      <UniqueIdentifier>{5b7b2129-bc34-4357-aa61-b3dc0b8823b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
@@ -141,6 +144,21 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -177,6 +195,18 @@
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>

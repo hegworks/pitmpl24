@@ -36,6 +36,11 @@ public:
 		glUseProgram(ID);
 	}
 
+	void UnUse()
+	{
+		glUseProgram(0);
+	}
+
 	void Delete()
 	{
 		glDeleteProgram(ID);
