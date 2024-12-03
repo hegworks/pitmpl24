@@ -113,9 +113,7 @@ void Game::Start()
 	tmxparser::TmxMap map;
 
 	// test from file
-	error = tmxparser::parseFromFile("../Common/Assets/Maps/1.tmx", &map, "../Common/Assets/Maps/");
-
-
+	error = tmxparser::parseFromFile("../Common/Assets/Maps/2.tmx", &map, "../Common/Assets/Maps/");
 
 	if(!error)
 	{
@@ -156,10 +154,6 @@ void Game::Start()
 						- glm::vec2((object.x + (object.width / 2.0f)) / TILE_SIZE, (object.y + (object.height / 2.0f)) / TILE_SIZE);
 					wallData->size = glm::ivec2(object.width / TILE_SIZE, object.height / TILE_SIZE);
 					wallData->wallType = static_cast<WallType>(std::stoi(object.propertyMap["vhu"]));
-					if(wallData->wallType == WallType::VERTICAL)
-					{
-						std::cout << wallData->position.x << " , " << wallData->position.y << std::endl;
-					}
 					wallDatas.push_back(wallData);
 				}
 			}
