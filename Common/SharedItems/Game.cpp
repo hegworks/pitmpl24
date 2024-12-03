@@ -84,11 +84,14 @@ void Game::Start()
 
 #pragma region tmxparser
 	const int TILE_SIZE = 32;
+	const glm::ivec2 MAP_CENTER = glm::ivec2(15, 11);
 	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
+	const std::string TANK_OBJECTGROUP = "tank";
 
-	std::vector<glm::ivec2> crate2x4s;
-	std::vector<glm::ivec2> crate4x4s;
+	std::vector<glm::ivec2> crate2x4positions;
+	std::vector<glm::ivec2> crate4x4positions;
+	std::vector<glm::ivec2> tankPositions;
 
 	tmxparser::TmxReturn error;
 	tmxparser::TmxMap map;
@@ -110,14 +113,21 @@ void Game::Start()
 			{
 				for(tmxparser::TmxObject& object : objectGroup.objects)
 				{
-					crate2x4s.push_back(glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+					crate2x4positions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 				}
 			}
 			if(objectGroup.name == CRATE_4_X_4_OBJECTGROUP)
 			{
 				for(tmxparser::TmxObject& object : objectGroup.objects)
 				{
-					crate4x4s.push_back(glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+					crate4x4positions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				}
+			}
+			if(objectGroup.name == TANK_OBJECTGROUP)
+			{
+				for(tmxparser::TmxObject& object : objectGroup.objects)
+				{
+					tankPositions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 				}
 			}
 		}
@@ -130,20 +140,29 @@ void Game::Start()
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* crate2x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
-	for(auto& crate2x4pos : crate2x4s)
+	for(auto& crate2x4pos : crate2x4positions)
 	{
 		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, shaderProgram);
-		crate2x4Object->m_transform->SetPosition(glm::vec3(-crate2x4pos.x, 0, -crate2x4pos.y));
+		crate2x4Object->m_transform->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
 		solidObjects.push_back(crate2x4Object);
 	}
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
-	for(auto& crate4x4pos : crate4x4s)
+	for(auto& crate4x4pos : crate4x4positions)
 	{
 		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, shaderProgram);
-		crate4x4Object->m_transform->SetPosition(glm::vec3(-crate4x4pos.x, 0, -crate4x4pos.y));
+		crate4x4Object->m_transform->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
 		solidObjects.push_back(crate4x4Object);
+	}
+
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
+	for(auto& tankPos : tankPositions)
+	{
+		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, shaderProgram);
+		tankObject->m_transform->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
+		solidObjects.push_back(tankObject);
 	}
 
 #pragma endregion tmxparser
@@ -181,9 +200,9 @@ void Game::Start()
 	//solidObjects.push_back(cubeObject);
 
 	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(30));
+	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
-	planeObject->m_transform->SetScale(glm::vec3(30));
+	planeObject->m_transform->SetScale(glm::vec3(32, 0, 24));
 	solidObjects.push_back(planeObject);
 
 	/*for(auto& iLifeCycle : m_iLifeCycles)
