@@ -36,6 +36,18 @@ public:
 	virtual void Update(float deltaTime) override = 0;
 	virtual void LateUpdate(float deltaTime) override = 0;
 	virtual void FixedUpdate() override {};
+
+	const int TOTAL_CAMERA_TYPES = 3;
+	enum class CameraType
+	{
+		TOP_DOWN_FOLLOW,
+		THIRD_PERSON_FOLLOW,
+		FIRST_PERSON,
+	};
+	CameraType GetCameraType() const { return m_cameraType; }
+
+protected:
+	CameraType m_cameraType = CameraType::TOP_DOWN_FOLLOW;
 };
 
 }

@@ -52,21 +52,29 @@ void Player::Start()
 void Player::Update(float deltaTime)
 {
 	glm::vec3 movement = glm::vec3(0);
+	glm::vec3 forward = m_iCamera->GetForward();
+	if(m_iCamera->GetCameraType() == Uknitty::ICamera::CameraType::TOP_DOWN_FOLLOW)
+	{
+		forward.x = forward.x > 0 ? 1 : 0;
+		forward.y = forward.y > 0 ? 1 : 0;
+		forward.z = forward.z > 0 ? 1 : 0;
+	}
+	glm::vec3 right = m_iCamera->GetRight();
 	if(m_isForwardKeyDown)
 	{
-		movement += m_iCamera->GetForward();
+		movement += forward;
 	}
 	if(m_isBackwardKeyDown)
 	{
-		movement -= m_iCamera->GetForward();
+		movement -= forward;
 	}
 	if(m_isRightKeyDown)
 	{
-		movement += m_iCamera->GetRight();
+		movement += right;
 	}
 	if(m_isLeftKeyDown)
 	{
-		movement -= m_iCamera->GetRight();
+		movement -= right;
 	}
 	movement.y = 0;
 	if(glm::length(movement) > 0)

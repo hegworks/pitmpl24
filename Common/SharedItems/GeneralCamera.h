@@ -36,16 +36,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
 
-	const int TOTAL_CAMERA_TYPES = 3;
-	enum class CameraType
-	{
-		TOP_DOWN_FOLLOW,
-		THIRD_PERSON_FOLLOW,
-		FIRST_PERSON,
-	};
-
 	void SetFollowTransform(Uknitty::Transform* followTransform) { m_followTransform = followTransform; }
-	CameraType GetCameraType() const { return m_cameraType; }
 
 private:
 	// settings
@@ -62,7 +53,7 @@ private:
 	const float MOUSE_SENSITIVITY = 0.05f;
 
 	//const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
-	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 30, -4);
+	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 35, -4);
 
 	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 2.0f;
 	const float FOLLOW_DISTANCE_THIRD_PERSON = 5.0f;
@@ -82,7 +73,6 @@ private:
 	const Key TYPE_SWITCH_KEY = Key::V;
 
 	// variables
-	CameraType m_cameraType = CameraType::TOP_DOWN_FOLLOW;
 	Uknitty::Transform* m_followTransform = nullptr;
 
 	double m_yaw = YAW_DEFAULT;
