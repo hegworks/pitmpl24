@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Game.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h" />
@@ -34,15 +35,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputProcessor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ILifeCycle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IRenderable.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tmxparser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -52,15 +53,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_draw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_tables.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Game.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)tmxparser.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
   </ItemGroup>
   <ItemGroup>

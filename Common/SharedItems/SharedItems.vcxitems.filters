@@ -144,19 +144,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.h">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.h">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.h">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)base64.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)tmxparser.h">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -197,17 +200,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\base64.cpp">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tinyxml2.cpp">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)libtmx-parser\tmxparser.cpp">
-      <Filter>ThirdParty\libtmx-parser</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)tmxparser.cpp">
+      <Filter>ThirdParty\libtmx-parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

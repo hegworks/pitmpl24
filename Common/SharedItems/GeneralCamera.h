@@ -61,7 +61,8 @@ private:
 	const float FAR_PLANE = 1000.0f;
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
+	//const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
+	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 30, -4);
 
 	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 2.0f;
 	const float FOLLOW_DISTANCE_THIRD_PERSON = 5.0f;

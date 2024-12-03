@@ -20,6 +20,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "tmxparser.h"
+#include "TmxParserHelper.h"
+
 #include <chrono>
 #include <string>
 
@@ -78,9 +81,77 @@ void Game::Start()
 
 	Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 
+
+#pragma region tmxparser
+	const int TILE_SIZE = 32;
+	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
+	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
+
+	std::vector<glm::ivec2> crate2x4s;
+	std::vector<glm::ivec2> crate4x4s;
+
+	tmxparser::TmxReturn error;
+	tmxparser::TmxMap map;
+
+	// test from file
+	error = tmxparser::parseFromFile("../Common/Assets/Maps/1.tmx", &map, "../Common/Assets/Maps/");
+
+
+
+	if(!error)
+	{
+		TmxParserHelper tmxParserHelper;
+		//tmxParserHelper.printTmxMapData(&map);
+		std::vector<tmxparser::TmxObjectGroup> objectGroups = (&map)->objectGroupCollection;
+
+		for(tmxparser::TmxObjectGroup& objectGroup : objectGroups)
+		{
+			if(objectGroup.name == CRATE_2_X_4_OBJECTGROUP)
+			{
+				for(tmxparser::TmxObject& object : objectGroup.objects)
+				{
+					crate2x4s.push_back(glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				}
+			}
+			if(objectGroup.name == CRATE_4_X_4_OBJECTGROUP)
+			{
+				for(tmxparser::TmxObject& object : objectGroup.objects)
+				{
+					crate4x4s.push_back(glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				}
+			}
+		}
+	}
+	else
+	{
+		printf("error parsing file");
+	}
+
+
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* crate2x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
+	for(auto& crate2x4pos : crate2x4s)
+	{
+		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, shaderProgram);
+		crate2x4Object->m_transform->SetPosition(glm::vec3(-crate2x4pos.x, 0, -crate2x4pos.y));
+		solidObjects.push_back(crate2x4Object);
+	}
+
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+	for(auto& crate4x4pos : crate4x4s)
+	{
+		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, shaderProgram);
+		crate4x4Object->m_transform->SetPosition(glm::vec3(-crate4x4pos.x, 0, -crate4x4pos.y));
+		solidObjects.push_back(crate4x4Object);
+	}
+
+#pragma endregion tmxparser
+
+
+
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-
 	m_player = new Player(snake, m_iCamera, shaderProgram);
 	m_iInputProcessors.push_back(m_player);
 	m_iLifeCycles.push_back(m_player);
@@ -88,35 +159,34 @@ void Game::Start()
 	GeneralCamera* generalCamera = static_cast<GeneralCamera*>(m_iCamera);
 	generalCamera->SetFollowTransform(m_player->m_transform);
 
-	stbi_set_flip_vertically_on_load(false);
+	/*stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
-	solidObjects.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));
+	solidObjects.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));*/
 
 	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
-	SolidObject* cubeObject = new SolidObject(m_iCamera, cube, shaderProgram);
-	cubeObject->m_transform->SetPosition(glm::vec3(0, 0, -5));
-	solidObjects.push_back(cubeObject);
+	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
+	worldCenterObject->m_transform->SetPosition(glm::vec3(0, 0, 0));
+	worldCenterObject->m_transform->SetScale(glm::vec3(0.1, 100, 0.1));
+	solidObjects.push_back(worldCenterObject);
+
+	//stbi_set_flip_vertically_on_load(false);
+	//glm::vec3 cubeSize = glm::vec3(30, 1, 10);
+	////glm::vec3 cubeSize = glm::vec3(1);
+	//glm::vec3 cubePos = glm::vec3(2, 0, 2);
+	//glm::vec3 cubeRot = glm::vec3(0, 0, 0);
+	//Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj", glm::vec2(cubeSize.x, cubeSize.z));
+	//SolidObject* cubeObject = new SolidObject(m_iCamera, cube, shaderProgram);
+	//cubeObject->m_transform->SetTransform(cubePos, cubeRot, cubeSize);
+	//solidObjects.push_back(cubeObject);
 
 	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* cube2 = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube2/Cube.obj");
-	SolidObject* cube2Object = new SolidObject(m_iCamera, cube2, shaderProgram);
-	cube2Object->m_transform->SetPosition(glm::vec3(1, 0, -5));
-	solidObjects.push_back(cube2Object);
-
-	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* sphere = new Uknitty::Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
-	SolidObject* sphereObject = new SolidObject(m_iCamera, sphere, shaderProgram);
-	sphereObject->m_transform->SetPosition(glm::vec3(3, 0.5, -5));
-	solidObjects.push_back(sphereObject);
-
-	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane2/Plane.obj", glm::vec2(10, 5));
+	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(30));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
-	planeObject->m_transform->SetScale(glm::vec3(5, 0, 10));
+	planeObject->m_transform->SetScale(glm::vec3(30));
 	solidObjects.push_back(planeObject);
 
-	for(auto& iLifeCycle : m_iLifeCycles)
+	/*for(auto& iLifeCycle : m_iLifeCycles)
 	{
 		iLifeCycle->Awake();
 	}
@@ -124,7 +194,7 @@ void Game::Start()
 	for(auto& iLifeCycle : m_iLifeCycles)
 	{
 		iLifeCycle->Start();
-	}
+	}*/
 
 	glm::mat4 model;
 	glm::mat4 identityMat = glm::mat4(1);
@@ -145,8 +215,6 @@ void Game::Start()
 		auto time = std::chrono::system_clock::now();
 		std::chrono::duration<float> delta = time - lastTime;
 		gameDeltaTime = delta.count() * 10.0f;
-
-		std::cout << gameDeltaTime << std::endl;
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(elapsed.count() > 0.25f && frameCount > 10)
