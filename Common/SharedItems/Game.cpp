@@ -48,6 +48,20 @@ Game::~Game()
 
 }
 
+enum class WallType
+{
+	VERTICAL,
+	HORIZONTAL,
+	UNIFORM,
+};
+
+struct WallData
+{
+	glm::vec2 position;
+	glm::ivec2 size;
+	WallType wallType;
+};
+
 void Game::Start()
 {
 	InitializeOpenGLES();
@@ -84,14 +98,16 @@ void Game::Start()
 
 #pragma region tmxparser
 	const int TILE_SIZE = 32;
-	const glm::ivec2 MAP_CENTER = glm::ivec2(15, 11);
+	const glm::vec2 MAP_CENTER = glm::vec2(16, 12);
 	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
 	const std::string TANK_OBJECTGROUP = "tank";
+	const std::string WALL_OBJECTGROUP = "wall";
 
 	std::vector<glm::ivec2> crate2x4positions;
 	std::vector<glm::ivec2> crate4x4positions;
 	std::vector<glm::ivec2> tankPositions;
+	std::vector<WallData*> wallDatas;
 
 	tmxparser::TmxReturn error;
 	tmxparser::TmxMap map;
@@ -113,21 +129,38 @@ void Game::Start()
 			{
 				for(tmxparser::TmxObject& object : objectGroup.objects)
 				{
-					crate2x4positions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+					crate2x4positions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 				}
 			}
 			if(objectGroup.name == CRATE_4_X_4_OBJECTGROUP)
 			{
 				for(tmxparser::TmxObject& object : objectGroup.objects)
 				{
-					crate4x4positions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+					crate4x4positions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 				}
 			}
 			if(objectGroup.name == TANK_OBJECTGROUP)
 			{
 				for(tmxparser::TmxObject& object : objectGroup.objects)
 				{
-					tankPositions.push_back(MAP_CENTER - glm::ivec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+					tankPositions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				}
+			}
+			if(objectGroup.name == WALL_OBJECTGROUP)
+			{
+				for(tmxparser::TmxObject& object : objectGroup.objects)
+				{
+					WallData* wallData = new WallData();
+					wallData->position =
+						MAP_CENTER
+						- glm::vec2((object.x + (object.width / 2.0f)) / TILE_SIZE, (object.y + (object.height / 2.0f)) / TILE_SIZE);
+					wallData->size = glm::ivec2(object.width / TILE_SIZE, object.height / TILE_SIZE);
+					wallData->wallType = static_cast<WallType>(std::stoi(object.propertyMap["vhu"]));
+					if(wallData->wallType == WallType::VERTICAL)
+					{
+						std::cout << wallData->position.x << " , " << wallData->position.y << std::endl;
+					}
+					wallDatas.push_back(wallData);
 				}
 			}
 		}
@@ -165,6 +198,107 @@ void Game::Start()
 		solidObjects.push_back(tankObject);
 	}
 
+	for(auto& wallData : wallDatas)
+	{
+		switch(wallData->wallType)
+		{
+			case WallType::VERTICAL:
+			{
+				glm::vec3 wallVerticalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+
+				Uknitty::Model* wallModel = nullptr;
+				if(wallData->size.x == 1)
+				{
+					stbi_set_flip_vertically_on_load(false);
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+				}
+				else if(wallData->size.x == 2)
+				{
+					stbi_set_flip_vertically_on_load(false);
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+				}
+				else
+				{
+					throw std::runtime_error("vertical wall width bigger than 2 is not supported yet");
+				}
+
+				SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
+				wallVerticalObject->m_transform->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
+				wallVerticalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				solidObjects.push_back(wallVerticalObject);
+			}
+
+			break;
+
+			case WallType::HORIZONTAL:
+			{
+				glm::vec3 wallHorizontalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+
+				Uknitty::Model* wallModel = nullptr;
+				if(wallData->size.y == 1)
+				{
+					stbi_set_flip_vertically_on_load(false);
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallHorizontalScale.x, 1));
+				}
+				else if(wallData->size.y == 2)
+				{
+					stbi_set_flip_vertically_on_load(false);
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
+				}
+				else
+				{
+					throw std::runtime_error("horizontal wall width bigger than 2 is not supported yet");
+				}
+
+				SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
+				wallHorizontalObject->m_transform->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
+				wallHorizontalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				solidObjects.push_back(wallHorizontalObject);
+			}
+
+			break;
+
+			case WallType::UNIFORM:
+			{
+				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+				stbi_set_flip_vertically_on_load(false);
+				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
+				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
+				wallUnifromObject->m_transform->SetScale(wallUniformScale);
+				wallUnifromObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				solidObjects.push_back(wallUnifromObject);
+			}
+
+			break;
+
+			default:
+				throw std::runtime_error("uknown WallType");
+		}
+	}
+
+
+
+	/*glm::vec3 wallUniformScale = glm::vec3(8, 1, 8);
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
+	SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
+	wallUnifromObject->m_transform->SetScale(wallUniformScale);
+	solidObjects.push_back(wallUnifromObject);*/
+
+	/*glm::vec3 wallVerticalScale = glm::vec3(1, 1, 8);
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* wall2x1VerticalModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+	SolidObject* wall2x1VerticalObject = new SolidObject(m_iCamera, wall2x1VerticalModel, shaderProgram);
+	wall2x1VerticalObject->m_transform->SetScale(wallVerticalScale);
+	solidObjects.push_back(wall2x1VerticalObject);*/
+
+	/*glm::vec3 wallHorizontalScale = glm::vec3(8, 1, 1);
+	stbi_set_flip_vertically_on_load(false);
+	Uknitty::Model* wall1x2HorizontalModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
+	SolidObject* wall1x2HorizontalObject = new SolidObject(m_iCamera, wall1x2HorizontalModel, shaderProgram);
+	wall1x2HorizontalObject->m_transform->SetScale(wallHorizontalScale);
+	solidObjects.push_back(wall1x2HorizontalObject);*/
+
 #pragma endregion tmxparser
 
 
@@ -185,8 +319,7 @@ void Game::Start()
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
-	worldCenterObject->m_transform->SetPosition(glm::vec3(0, 0, 0));
-	worldCenterObject->m_transform->SetScale(glm::vec3(0.1, 100, 0.1));
+	worldCenterObject->m_transform->SetScale(glm::vec3(0.05, 100, 0.05));
 	solidObjects.push_back(worldCenterObject);
 
 	//stbi_set_flip_vertically_on_load(false);
@@ -346,7 +479,7 @@ void Game::InitializeOpenGLES()
 
 void Game::ClearScreen()
 {
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClearColor(189.0f / 256.0f, 224 / 256.0f, 254 / 256.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

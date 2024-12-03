@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="59">
- <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="343" source="tileset.tsx"/>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="60">
+ <imagelayer id="13" name="Image Layer 1">
+  <image source="../../../../../BlockA/MetalGear/assets/tiles/1.png" width="1024" height="768"/>
+ </imagelayer>
  <objectgroup id="3" name="tank">
   <object id="53" name="tank" type="Solid" x="224" y="480">
    <properties>
