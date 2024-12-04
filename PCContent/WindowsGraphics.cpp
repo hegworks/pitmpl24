@@ -64,4 +64,5 @@ WindowsGraphics::WindowsGraphics()
 void WindowsGraphics::Quit()
 {
 	glfwDestroyWindow(m_window);
+	glfwTerminate();
 }

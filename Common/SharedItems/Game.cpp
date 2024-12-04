@@ -32,6 +32,11 @@
 
 #ifdef WINDOWS_BUILD
 #include "glad/glad.h"
+
+#if defined(DEBUG) && defined(VISUAL_LEAK_DETECTOR)
+#include <vld.h>
+#endif // DEBUG
+
 #endif
 
 Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
@@ -113,7 +118,7 @@ void Game::Start()
 	tmxparser::TmxMap map;
 
 	// test from file
-	error = tmxparser::parseFromFile("../Common/Assets/Maps/2.tmx", &map, "../Common/Assets/Maps/");
+	error = tmxparser::parseFromFile("../Common/Assets/Maps/1.tmx", &map, "../Common/Assets/Maps/");
 
 	if(!error)
 	{
@@ -429,6 +434,8 @@ void Game::Start()
 		++frameCount;
 	}
 
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
 	m_iGraphics->Quit();
 }
 

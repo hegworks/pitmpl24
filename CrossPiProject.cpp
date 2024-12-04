@@ -35,6 +35,7 @@ int main()
 	Game* game = new Game(sharedInput, WinGraphics);
 	game->Start();
 
+	delete(WinGraphics);
 	return 0;
 }
 

@@ -73,8 +73,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>PCContent;PCContent\include;PCContent\include\glm;PCContent\include\bullet;PCContent]\include\GLFW;PCContent\include\glad;Common;$(IncludePath)</IncludePath>
-    <LibraryPath>PCContent\lib;PCContent\lib\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>PCContent;PCContent\include;PCContent\include\glm;PCContent\include\bullet;PCContent]\include\GLFW;PCContent\include\glad;Common;C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win64;PCContent\lib;PCContent\lib\x64\Debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
