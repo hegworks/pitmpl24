@@ -97,10 +97,43 @@
     <ClInclude Include="..\Raspberry\XWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Crate_2x4\Crate.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Crate_4x4\Crate.obj">
+      <FileType>Document</FileType>
+    </None>
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\NakedSnake\NakedSnake.obj">
       <FileType>Document</FileType>
     </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Primitives\Plane\Plane.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\PrototypeTank\Tank.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\PrototypeWall_1x4x1\Wall_1x4x1.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\PrototypeWall_1x4x2\Wall_1x4x2.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\PrototypeWall_2x4x1\Wall_2x4x1.obj">
+      <FileType>Document</FileType>
+    </None>
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Soldier\Soldier.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Tank\Tank.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Wall_1x4x1\Wall_1x4x1.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Wall_1x4x2\Wall_1x4x2.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Wall_2x4x1\Wall_2x4x1.obj">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
