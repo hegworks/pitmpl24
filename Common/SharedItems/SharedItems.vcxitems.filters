@@ -415,6 +415,36 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeTank\Tank.obj">
       <Filter>Assets\Models\PrototypeTank</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x1\Wall_1x4x1.obj">
+      <Filter>Assets\Models\Wall_1x4x1</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Wall_1x4x2.obj">
+      <Filter>Assets\Models\Wall_1x4x2</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeTank\Texture.png">
+      <Filter>Assets\Models\PrototypeTank</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tank\Tank.obj">
+      <Filter>Assets\Models\Tank</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_2x4x1\Texture.png">
+      <Filter>Assets\Models\PrototypeWall_2x4x1</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x2\Texture.png">
+      <Filter>Assets\Models\PrototypeWall_1x4x2</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x1\Texture.png">
+      <Filter>Assets\Models\PrototypeWall_1x4x1</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tank\Texture.png">
+      <Filter>Assets\Models\Tank</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x1\Texture.png">
+      <Filter>Assets\Models\Wall_1x4x1</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Texture.png">
+      <Filter>Assets\Models\Wall_1x4x2</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -423,24 +453,6 @@
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Sphere.obj">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
     </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x1\Wall_1x4x1.obj">
-      <Filter>Assets\Models\PrototypeWall_1x4x1</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x2\Wall_1x4x2.obj">
-      <Filter>Assets\Models\PrototypeWall_1x4x2</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_2x4x1\Wall_2x4x1.obj">
-      <Filter>Assets\Models\PrototypeWall_2x4x1</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tank\Tank.obj">
-      <Filter>Assets\Models\Tank</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x1\Wall_1x4x1.obj">
-      <Filter>Assets\Models\Wall_1x4x1</Filter>
-    </Object>
-    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Wall_1x4x2.obj">
-      <Filter>Assets\Models\Wall_1x4x2</Filter>
-    </Object>
   </ItemGroup>
   <ItemGroup>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Texture.png">
@@ -448,27 +460,6 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeTank\Texture.png">
-      <Filter>Assets\Models\PrototypeTank</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x1\Texture.png">
-      <Filter>Assets\Models\PrototypeWall_1x4x1</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_1x4x2\Texture.png">
-      <Filter>Assets\Models\PrototypeWall_1x4x2</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PrototypeWall_2x4x1\Texture.png">
-      <Filter>Assets\Models\PrototypeWall_2x4x1</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Tank\Texture.png">
-      <Filter>Assets\Models\Tank</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x1\Texture.png">
-      <Filter>Assets\Models\Wall_1x4x1</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Texture.png">
-      <Filter>Assets\Models\Wall_1x4x2</Filter>
     </Image>
   </ItemGroup>
 </Project>
