@@ -71,6 +71,8 @@ void Scene::FixedUpdate()
 
 void Scene::Destroy()
 {
+	std::cout << "Destroying Scene: " << m_mapId << std::endl;
+
 	m_interfaceManager->Destroy();
 
 	for(auto& wallData : m_wallDatas)
@@ -87,7 +89,6 @@ void Scene::Destroy()
 		delete model;
 	}
 
-	delete m_interfaceManager;
 	delete this;
 }
 

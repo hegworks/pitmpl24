@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include <iostream>
 #include <stb_image.h>
 
 class Shader;
@@ -24,9 +25,18 @@ public:
 		m_textureCoordScale = textureCoordScale;
 		loadModel(path);
 	}
-
+	~Model()
+	{
+		std::cout << "Destroying Model: " << m_directory << std::endl;
+		for(unsigned int i = 0; i < textures_loaded.size(); i++)
+		{
+			glDeleteTextures(1, &textures_loaded[i].m_id);
+		}
+	}
 
 	void Draw(ShaderProgram& shader);
+	std::string GetFileName() const { return m_directory; }
+
 private:
 	// model data
 	std::vector<Mesh> meshes;

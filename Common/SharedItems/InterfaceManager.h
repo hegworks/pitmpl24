@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 namespace Uknitty
@@ -86,6 +87,8 @@ public:
 
 	void Destroy()
 	{
+		std::cout << "Destroying InterfaceManager" << std::endl;
+
 		DestroyCaller(m_flowAbles);
 		m_flowAbles.clear();
 
@@ -100,6 +103,8 @@ public:
 
 		DestroyCaller(m_inputAbles);
 		m_inputAbles.clear();
+
+		delete this;
 	}
 
 	void AddFlow(Flow* flow)

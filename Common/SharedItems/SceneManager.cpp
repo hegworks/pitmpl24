@@ -82,10 +82,10 @@ void SceneManager::FixedUpdate()
 
 void SceneManager::Destroy()
 {
+	std::cout << "Destroying SceneManager" << std::endl;
 	m_interfaceManager->Destroy();
 	delete m_shaderProgram;
 	delete m_snakeModel;
-	delete m_interfaceManager;
 	delete this;
 }
 

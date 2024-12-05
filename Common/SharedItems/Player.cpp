@@ -109,7 +109,7 @@ void Player::FixedUpdate()
 
 void Player::Destroy()
 {
-	std::cout << "Player Destroyed" << std::endl;
+	std::cout << "Destroying Player" << std::endl;
 	delete this;
 }
 

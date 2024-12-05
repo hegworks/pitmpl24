@@ -195,5 +195,6 @@ void GeneralCamera::GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::v
 
 void GeneralCamera::Destroy()
 {
+	std::cout << "Destroying GeneralCamera" << std::endl;
 	delete this;
 }

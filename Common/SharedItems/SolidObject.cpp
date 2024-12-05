@@ -3,6 +3,7 @@
 #include "ShaderProgram.h"
 #include "SolidObject.h"
 #include "Transform.h"
+#include <iostream>
 
 SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram)
 {
@@ -30,5 +31,6 @@ void SolidObject::Draw()
 
 void SolidObject::Destroy()
 {
+	std::cout << "Destroying SolidObject with model: " << m_model->GetFileName() << std::endl;
 	delete this;
 }
