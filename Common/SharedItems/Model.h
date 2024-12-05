@@ -18,8 +18,9 @@ namespace Uknitty
 class Model
 {
 public:
-	Model(std::string const& path, glm::vec2 textureCoordScale = glm::vec2(1))
+	Model(std::string const& path, glm::vec2 textureCoordScale = glm::vec2(1), bool shouldVerticallyFlipTexture = false)
 	{
+		stbi_set_flip_vertically_on_load(shouldVerticallyFlipTexture);
 		m_textureCoordScale = textureCoordScale;
 		loadModel(path);
 	}

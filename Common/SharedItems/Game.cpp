@@ -238,7 +238,6 @@ void Game::Start()
 	}
 
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* crate2x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
 	for(auto& crate2x4pos : crate2x4positions)
 	{
@@ -247,7 +246,6 @@ void Game::Start()
 		renderAbles.push_back(crate2x4Object);
 	}
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
 	for(auto& crate4x4pos : crate4x4positions)
 	{
@@ -256,7 +254,6 @@ void Game::Start()
 		renderAbles.push_back(crate4x4Object);
 	}
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
 	for(auto& tankPos : tankPositions)
 	{
@@ -276,12 +273,10 @@ void Game::Start()
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.x == 1)
 				{
-					stbi_set_flip_vertically_on_load(false);
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
 				}
 				else if(wallData->size.x == 2)
 				{
-					stbi_set_flip_vertically_on_load(false);
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
 				}
 				else
@@ -304,12 +299,10 @@ void Game::Start()
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.y == 1)
 				{
-					stbi_set_flip_vertically_on_load(false);
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallHorizontalScale.x, 1));
 				}
 				else if(wallData->size.y == 2)
 				{
-					stbi_set_flip_vertically_on_load(false);
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
 				}
 				else
@@ -328,7 +321,6 @@ void Game::Start()
 			case WallType::UNIFORM:
 			{
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
-				stbi_set_flip_vertically_on_load(false);
 				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
 				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
 				wallUnifromObject->m_transform->SetScale(wallUniformScale);
@@ -345,20 +337,17 @@ void Game::Start()
 
 #pragma endregion tmxparser
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 	m_player = new Player(snake, m_iCamera, shaderProgram);
 	flowInputRenderAbles.push_back(m_player);
 
 	static_cast<GeneralCamera*>(m_iCamera)->SetFollowTransform(m_player->m_transform);
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
 	worldCenterObject->m_transform->SetScale(glm::vec3(0.05, 100, 0.05));
 	renderAbles.push_back(worldCenterObject);
 
-	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
 	planeObject->m_transform->SetScale(glm::vec3(32, 0, 24));
