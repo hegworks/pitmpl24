@@ -242,7 +242,7 @@ void Game::Start()
 	for(auto& crate2x4pos : crate2x4positions)
 	{
 		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, shaderProgram);
-		crate2x4Object->m_transform->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
+		crate2x4Object->GetTransform()->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
 		renderAbles.push_back(crate2x4Object);
 	}
 
@@ -250,7 +250,7 @@ void Game::Start()
 	for(auto& crate4x4pos : crate4x4positions)
 	{
 		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, shaderProgram);
-		crate4x4Object->m_transform->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
+		crate4x4Object->GetTransform()->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
 		renderAbles.push_back(crate4x4Object);
 	}
 
@@ -258,7 +258,7 @@ void Game::Start()
 	for(auto& tankPos : tankPositions)
 	{
 		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, shaderProgram);
-		tankObject->m_transform->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
+		tankObject->GetTransform()->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
 		renderAbles.push_back(tankObject);
 	}
 
@@ -285,8 +285,8 @@ void Game::Start()
 				}
 
 				SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
-				wallVerticalObject->m_transform->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
-				wallVerticalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
+				wallVerticalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
 				renderAbles.push_back(wallVerticalObject);
 			}
 
@@ -311,8 +311,8 @@ void Game::Start()
 				}
 
 				SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
-				wallHorizontalObject->m_transform->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
-				wallHorizontalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
+				wallHorizontalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
 				renderAbles.push_back(wallHorizontalObject);
 			}
 
@@ -323,8 +323,8 @@ void Game::Start()
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
 				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
 				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
-				wallUnifromObject->m_transform->SetScale(wallUniformScale);
-				wallUnifromObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+				wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
+				wallUnifromObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
 				renderAbles.push_back(wallUnifromObject);
 			}
 
@@ -345,12 +345,12 @@ void Game::Start()
 
 	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
-	worldCenterObject->m_transform->SetScale(glm::vec3(0.05, 100, 0.05));
+	worldCenterObject->GetTransform()->SetScale(glm::vec3(0.05, 100, 0.05));
 	renderAbles.push_back(worldCenterObject);
 
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
-	planeObject->m_transform->SetScale(glm::vec3(32, 0, 24));
+	planeObject->GetTransform()->SetScale(glm::vec3(32, 0, 24));
 	renderAbles.push_back(planeObject);
 
 	AwakeCaller(flowAbles);
