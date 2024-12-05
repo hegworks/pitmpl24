@@ -1,9 +1,10 @@
+#include <windows.h>
+
 #include "Common.h"
 #include "Game.h"
 #include "WindowsGraphics.h"
 #include <glad/glad.h>
 #include <iostream>
-#include <windows.h>
 
 void WindowsGraphics::SwapBuffer()
 {

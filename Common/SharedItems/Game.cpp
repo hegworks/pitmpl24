@@ -122,8 +122,6 @@ void Game::Start()
 
 	if(!error)
 	{
-		TmxParserHelper tmxParserHelper;
-		//tmxParserHelper.printTmxMapData(&map);
 		std::vector<tmxparser::TmxObjectGroup> objectGroups = (&map)->objectGroupCollection;
 
 		for(tmxparser::TmxObjectGroup& objectGroup : objectGroups)
@@ -346,9 +344,6 @@ void Game::Start()
 	{
 		iLifeCycle->Start();
 	}*/
-
-	glm::mat4 model;
-	glm::mat4 identityMat = glm::mat4(1);
 
 #pragma endregion Other Initializations
 

@@ -55,9 +55,9 @@ void Player::Update(float deltaTime)
 	glm::vec3 forward = m_iCamera->GetForward();
 	if(m_iCamera->GetCameraType() == Uknitty::ICamera::CameraType::TOP_DOWN_FOLLOW)
 	{
-		forward.x = forward.x > 0 ? 1 : 0;
-		forward.y = forward.y > 0 ? 1 : 0;
-		forward.z = forward.z > 0 ? 1 : 0;
+		forward.x = forward.x > 0.0f ? 1.0f : 0.0f;
+		forward.y = forward.y > 0.0f ? 1.0f : 0.0f;
+		forward.z = forward.z > 0.0f ? 1.0f : 0.0f;
 	}
 	glm::vec3 right = m_iCamera->GetRight();
 	if(m_isForwardKeyDown)

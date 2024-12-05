@@ -112,9 +112,9 @@ void GeneralCamera::LateUpdate(float deltaTime)
 
 			// Convert pitch and yaw to a direction vector for the offset
 			glm::vec3 offsetDir;
-			offsetDir.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-			offsetDir.y = sin(glm::radians(m_pitch));
-			offsetDir.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+            offsetDir.x = static_cast<float>(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+            offsetDir.y = static_cast<float>(sin(glm::radians(m_pitch)));
+            offsetDir.z = static_cast<float>(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 			offsetDir = glm::normalize(offsetDir);
 
 			// Calculate the camera position
@@ -140,9 +140,9 @@ void GeneralCamera::LateUpdate(float deltaTime)
 
 			// Calculate the front vector based on yaw and pitch
 			glm::vec3 direction;
-			direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-			direction.y = sin(glm::radians(m_pitch));
-			direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+            direction.x = static_cast<float>(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+            direction.y = static_cast<float>(sin(glm::radians(m_pitch)));
+            direction.z = static_cast<float>(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 			m_front = glm::normalize(direction);
 
 			// Update the view matrix to look in the front direction

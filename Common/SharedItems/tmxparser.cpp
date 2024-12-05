@@ -618,7 +618,7 @@ TmxReturn _parseLayerDataNode(tinyxml2::XMLElement* element, const TmxTilesetCol
 
 		std::string csv = base64_decode(csvbase64);
 
-		unsigned int length = csv.size() / sizeof(unsigned int);
+        size_t length = csv.size() / sizeof(unsigned int);
 
 		// tiled base64 layer data is an unsigned 32bit array little endian
 		// TODO - verify this on other platforms, write some tests
