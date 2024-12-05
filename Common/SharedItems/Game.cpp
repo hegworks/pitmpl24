@@ -2,11 +2,11 @@
 
 #include "Common.h"
 #include "FreeFlyCamera.h"
-#include "GameObject.h"
 #include "GeneralCamera.h"
 #include "ICamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
+#include "Interfaces.h"
 #include "Player.h"
 #include "SharedInput.h"
 #include "SolidObject.h"
@@ -67,6 +67,61 @@ struct WallData
 	WallType wallType;
 };
 
+template <typename T>
+void ProcessInputCaller(std::vector<T*>& inputAbles, IMouse* mouse, IKeyboard* keyboard)
+{
+	for(T* i : inputAbles)
+	{
+		i->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
+		i->ProcessInput(keyboard);
+	}
+}
+
+template <typename T>
+void UpdateCaller(std::vector<T*>& flowAble, float deltaTime)
+{
+	for(T* i : flowAble)
+	{
+		i->Update(deltaTime);
+	}
+}
+
+template <typename T>
+void LateUpdateCaller(std::vector<T*>& flowAble, float deltaTime)
+{
+	for(T* i : flowAble)
+	{
+		i->LateUpdate(deltaTime);
+	}
+}
+
+template <typename T>
+void DrawCaller(std::vector<T*>& renderAble)
+{
+	for(T* i : renderAble)
+	{
+		i->Draw();
+	}
+}
+
+template <typename T>
+void KeyDownCaller(std::vector<T*>& inputAble, Key key)
+{
+	for(T* i : inputAble)
+	{
+		i->KeyDown(key);
+	}
+}
+
+template <typename T>
+void KeyUpCaller(std::vector<T*>& inputAble, Key key)
+{
+	for(T* i : inputAble)
+	{
+		i->KeyUp(key);
+	}
+}
+
 void Game::Start()
 {
 	InitializeOpenGLES();
@@ -88,11 +143,8 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	std::vector<SolidObject*> solidObjects;
-
 	m_iCamera = new GeneralCamera();
-	m_iInputProcessors.push_back(m_iCamera);
-	m_iLifeCycles.push_back(m_iCamera);
+	flowInputAbles.push_back(m_iCamera);
 
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
@@ -174,7 +226,7 @@ void Game::Start()
 	{
 		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, shaderProgram);
 		crate2x4Object->m_transform->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
-		solidObjects.push_back(crate2x4Object);
+		renderAbles.push_back(crate2x4Object);
 	}
 
 	stbi_set_flip_vertically_on_load(false);
@@ -183,7 +235,7 @@ void Game::Start()
 	{
 		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, shaderProgram);
 		crate4x4Object->m_transform->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
-		solidObjects.push_back(crate4x4Object);
+		renderAbles.push_back(crate4x4Object);
 	}
 
 	stbi_set_flip_vertically_on_load(false);
@@ -192,7 +244,7 @@ void Game::Start()
 	{
 		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, shaderProgram);
 		tankObject->m_transform->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
-		solidObjects.push_back(tankObject);
+		renderAbles.push_back(tankObject);
 	}
 
 	for(auto& wallData : wallDatas)
@@ -222,7 +274,7 @@ void Game::Start()
 				SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
 				wallVerticalObject->m_transform->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
 				wallVerticalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				solidObjects.push_back(wallVerticalObject);
+				renderAbles.push_back(wallVerticalObject);
 			}
 
 			break;
@@ -250,7 +302,7 @@ void Game::Start()
 				SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, shaderProgram);
 				wallHorizontalObject->m_transform->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
 				wallHorizontalObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				solidObjects.push_back(wallHorizontalObject);
+				renderAbles.push_back(wallHorizontalObject);
 			}
 
 			break;
@@ -263,7 +315,7 @@ void Game::Start()
 				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
 				wallUnifromObject->m_transform->SetScale(wallUniformScale);
 				wallUnifromObject->m_transform->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				solidObjects.push_back(wallUnifromObject);
+				renderAbles.push_back(wallUnifromObject);
 			}
 
 			break;
@@ -280,21 +332,21 @@ void Game::Start()
 	Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
 	SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
 	wallUnifromObject->m_transform->SetScale(wallUniformScale);
-	solidObjects.push_back(wallUnifromObject);*/
+	renderAbles.push_back(wallUnifromObject);*/
 
 	/*glm::vec3 wallVerticalScale = glm::vec3(1, 1, 8);
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* wall2x1VerticalModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
 	SolidObject* wall2x1VerticalObject = new SolidObject(m_iCamera, wall2x1VerticalModel, shaderProgram);
 	wall2x1VerticalObject->m_transform->SetScale(wallVerticalScale);
-	solidObjects.push_back(wall2x1VerticalObject);*/
+	renderAbles.push_back(wall2x1VerticalObject);*/
 
 	/*glm::vec3 wallHorizontalScale = glm::vec3(8, 1, 1);
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* wall1x2HorizontalModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
 	SolidObject* wall1x2HorizontalObject = new SolidObject(m_iCamera, wall1x2HorizontalModel, shaderProgram);
 	wall1x2HorizontalObject->m_transform->SetScale(wallHorizontalScale);
-	solidObjects.push_back(wall1x2HorizontalObject);*/
+	renderAbles.push_back(wall1x2HorizontalObject);*/
 
 #pragma endregion tmxparser
 
@@ -303,21 +355,20 @@ void Game::Start()
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 	m_player = new Player(snake, m_iCamera, shaderProgram);
-	m_iInputProcessors.push_back(m_player);
-	m_iLifeCycles.push_back(m_player);
+	flowInputRenderAbles.push_back(m_player);
 
 	GeneralCamera* generalCamera = static_cast<GeneralCamera*>(m_iCamera);
 	generalCamera->SetFollowTransform(m_player->m_transform);
 
 	/*stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
-	solidObjects.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));*/
+	renderAbles.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));*/
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
 	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
 	worldCenterObject->m_transform->SetScale(glm::vec3(0.05, 100, 0.05));
-	solidObjects.push_back(worldCenterObject);
+	renderAbles.push_back(worldCenterObject);
 
 	//stbi_set_flip_vertically_on_load(false);
 	//glm::vec3 cubeSize = glm::vec3(30, 1, 10);
@@ -327,13 +378,13 @@ void Game::Start()
 	//Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj", glm::vec2(cubeSize.x, cubeSize.z));
 	//SolidObject* cubeObject = new SolidObject(m_iCamera, cube, shaderProgram);
 	//cubeObject->m_transform->SetTransform(cubePos, cubeRot, cubeSize);
-	//solidObjects.push_back(cubeObject);
+	//renderAbles.push_back(cubeObject);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
 	planeObject->m_transform->SetScale(glm::vec3(32, 0, 24));
-	solidObjects.push_back(planeObject);
+	renderAbles.push_back(planeObject);
 
 	/*for(auto& iLifeCycle : m_iLifeCycles)
 	{
@@ -371,35 +422,24 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
-		for(auto& iInputProcessor : m_iInputProcessors)
-		{
-			iInputProcessor->MouseCallback(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
-			iInputProcessor->ProcessInput(m_iKeyboard);
-		}
+		ProcessInputCaller(inputAbles, m_iMouse, m_iKeyboard);
+		ProcessInputCaller(flowInputAbles, m_iMouse, m_iKeyboard);
+		ProcessInputCaller(flowInputRenderAbles, m_iMouse, m_iKeyboard);
 
-		for(auto& iLifeCycle : m_iLifeCycles)
-		{
-			iLifeCycle->Update(gameDeltaTime);
-		}
+		UpdateCaller(flowAbles, gameDeltaTime);
+		UpdateCaller(flowInputAbles, gameDeltaTime);
+		UpdateCaller(flowInputRenderAbles, gameDeltaTime);
 
-		for(auto& iLifeCycle : m_iLifeCycles)
-		{
-			iLifeCycle->LateUpdate(gameDeltaTime);
-		}
+		LateUpdateCaller(flowAbles, gameDeltaTime);
+		LateUpdateCaller(flowInputAbles, gameDeltaTime);
+		LateUpdateCaller(flowInputRenderAbles, gameDeltaTime);
 
-		// Setup the viewport
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
-		if(generalCamera->GetCameraType() != GeneralCamera::CameraType::FIRST_PERSON)
-		{
-			m_player->Render();
-		}
+		DrawCaller(renderAbles);
+		DrawCaller(flowInputRenderAbles);
 
-		for(auto& solidObject : solidObjects)
-		{
-			solidObject->Render();
-		}
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
@@ -441,17 +481,15 @@ void Game::KeyCallback(Key key, KeyAction action)
 
 	if(action == KeyAction::DOWN)
 	{
-		for(auto& iInputProcessor : m_iInputProcessors)
-		{
-			iInputProcessor->KeyDown(key);
-		}
+		KeyDownCaller(inputAbles, key);
+		KeyDownCaller(flowInputAbles, key);
+		KeyDownCaller(flowInputRenderAbles, key);
 	}
 	else if(action == KeyAction::UP)
 	{
-		for(auto& iInputProcessor : m_iInputProcessors)
-		{
-			iInputProcessor->KeyUp(key);
-		}
+		KeyUpCaller(inputAbles, key);
+		KeyUpCaller(flowInputAbles, key);
+		KeyUpCaller(flowInputRenderAbles, key);
 	}
 }
 #pragma endregion Input

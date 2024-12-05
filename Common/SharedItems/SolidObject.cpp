@@ -12,7 +12,7 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 	m_transform = new Uknitty::Transform();
 }
 
-void SolidObject::Render()
+void SolidObject::Draw()
 {
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());

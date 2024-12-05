@@ -17,9 +17,12 @@ struct ImFont;
 namespace Uknitty
 {
 class ICamera;
-class IInputProcessor;
-class ILifeCycle;
-class IRenderable;
+class Interfaces;
+class Input;
+class Render;
+class Flow;
+class FlowInput;
+class FlowInputRender;
 }
 
 class SharedInput;
@@ -53,9 +56,12 @@ private:
 	SharedInput* m_sharedInput = nullptr;
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
-	std::vector<Uknitty::IInputProcessor*> m_iInputProcessors;
-	std::vector<Uknitty::IRenderable*> m_iRenderables;
-	std::vector<Uknitty::ILifeCycle*> m_iLifeCycles;
+
+	std::vector<Uknitty::Input*> inputAbles;
+	std::vector<Uknitty::Flow*> flowAbles;
+	std::vector<Uknitty::Render*> renderAbles;
+	std::vector<Uknitty::FlowInput*> flowInputAbles;
+	std::vector<Uknitty::FlowInputRender*> flowInputRenderAbles;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;
 	btDbvtBroadphase* pairCache = nullptr;

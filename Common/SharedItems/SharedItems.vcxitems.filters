@@ -147,9 +147,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IInputProcessor.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Game.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
@@ -167,12 +164,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h">
       <Filter>CrossPlatform\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ILifeCycle.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IRenderable.h">
-      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h">
       <Filter>Game\Headers</Filter>
@@ -194,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h">
       <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Interfaces.h">
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

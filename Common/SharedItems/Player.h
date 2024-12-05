@@ -1,8 +1,6 @@
 #pragma once
 
-#include "IInputProcessor.h"
-#include "ILifeCycle.h"
-#include "IRenderable.h"
+#include "Interfaces.h"
 
 namespace Uknitty
 {
@@ -12,18 +10,30 @@ class ICamera;
 class ShaderProgram;
 }
 
-class Player :
-	public Uknitty::IInputProcessor,
-	public Uknitty::ILifeCycle
+class Player : public Uknitty::FlowInputRender
 {
 public:
 	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram);
 	~Player();
 
-	void Render();
-
 	Uknitty::Model* m_model = nullptr;
 	Uknitty::Transform* m_transform = nullptr;
+
+	// Inherited via FlowInputRender
+	virtual void MouseCallback(double xPos, double yPos) override;
+	virtual void KeyDown(Key key) override;
+	virtual void KeyUp(Key key) override;
+	virtual void ProcessInput(IKeyboard* iKeyboard) override;
+
+	// Inherited via FlowInputRender
+	virtual void Awake() override;
+	virtual void Start() override;
+	virtual void Update(float deltaTime) override;
+	virtual void LateUpdate(float deltaTime) override;
+	virtual void FixedUpdate() override;
+
+	// Inherited via FlowInputRender
+	virtual void Draw() override;
 
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;
@@ -42,17 +52,4 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
-
-	// Inherited via IInputProcessor
-	virtual void MouseCallback(double xPos, double yPos) override;
-	virtual void KeyDown(Key key) override;
-	virtual void KeyUp(Key key) override;
-	virtual void ProcessInput(IKeyboard* iKeyboard) override;
-
-	// Inherited via ILifeCycle
-	virtual void Awake() override;
-	virtual void Start() override;
-	virtual void Update(float deltaTime) override;
-	virtual void LateUpdate(float deltaTime) override;
-	virtual void FixedUpdate() override;
 };

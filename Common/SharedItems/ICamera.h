@@ -2,17 +2,14 @@
 
 #include "IInput.h"
 #include "IInputKey.h"
-#include "IInputProcessor.h"
-#include "ILifeCycle.h"
+#include "Interfaces.h"
 
 #include <glm/glm.hpp>
 
 namespace Uknitty
 {
 
-class ICamera :
-	public IInputProcessor,
-	public ILifeCycle
+class ICamera : public FlowInput
 {
 public:
 	virtual ~ICamera() = default;
@@ -24,13 +21,13 @@ public:
 	virtual glm::vec3 GetForward() = 0;
 	virtual glm::vec3 GetRight() = 0;
 
-	// Inherited via IInputProcessor
+	// Inherited via FlowInput
 	virtual void MouseCallback(double xPos, double yPos) = 0;
 	virtual void KeyDown(Key key) = 0;
 	virtual void KeyUp(Key key) = 0;
 	virtual void ProcessInput(IKeyboard* iKeyboard) = 0;
 
-	// Inherited via ILifeCycle
+	// Inherited via FlowInput
 	virtual void Awake() override {};
 	virtual void Start() override {};
 	virtual void Update(float deltaTime) override = 0;

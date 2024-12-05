@@ -1,5 +1,6 @@
+#include "GeneralCamera.h"
 #include "ICamera.h"
-#include "IInputProcessor.h"
+#include "Interfaces.h"
 #include "Model.h"
 #include "Player.h"
 #include "Transform.h"
@@ -104,8 +105,12 @@ void Player::FixedUpdate()
 {
 }
 
-void Player::Render()
+void Player::Draw()
 {
+	if(m_iCamera->GetCameraType() == GeneralCamera::CameraType::FIRST_PERSON)
+	{
+		return;
+	}
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
@@ -114,4 +119,3 @@ void Player::Render()
 	m_model->Draw(*m_shaderProgram);
 	m_shaderProgram->UnUse();
 }
-
