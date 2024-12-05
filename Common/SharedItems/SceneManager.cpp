@@ -84,6 +84,7 @@ void SceneManager::Destroy()
 {
 	delete m_currentScene;
 	delete m_player;
+	delete m_snakeModel;
 	delete m_shaderProgram;
 	delete m_camera;
 	delete m_interfaceManager;
@@ -102,8 +103,8 @@ void SceneManager::LoadScene(int mapId)
 
 void SceneManager::CreatePlayer()
 {
-	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	m_player = new Player(snake, m_camera, m_shaderProgram);
+	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram);
 }
 
 void SceneManager::CreateCamera()

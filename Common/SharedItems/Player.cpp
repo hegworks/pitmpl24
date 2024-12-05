@@ -16,6 +16,7 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 
 Player::~Player()
 {
+	delete m_transform;
 }
 
 void Player::ProcessMousePosition(double xPos, double yPos)

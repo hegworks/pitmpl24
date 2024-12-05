@@ -9,6 +9,7 @@ namespace Uknitty
 {
 class ShaderProgram;
 class InterfaceManager;
+class Model;
 }
 class Scene;
 class GeneralCamera;
@@ -42,6 +43,7 @@ private:
 	std::vector<Uknitty::Render*> m_renderAbles;
 	std::vector<Uknitty::FlowInput*> m_flowInputAbles;
 	std::vector<Uknitty::FlowInputRender*> m_flowInputRenderAbles;
+	Uknitty::Model* m_snakeModel = nullptr;
 
 	const int INITIAL_MAP_ID = 1;
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Maps/";
