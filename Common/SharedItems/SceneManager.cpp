@@ -1,6 +1,8 @@
 #include "SceneManager.h"
 
 #include "GeneralCamera.h"
+#include "Model.h"
+#include "Player.h"
 #include "Scene.h"
 #include "ShaderProgram.h"
 
@@ -26,11 +28,10 @@ void SceneManager::Awake()
 
 void SceneManager::Start()
 {
-	m_generalCamera = new GeneralCamera();
-	m_flowInputAbles.push_back(m_generalCamera);
-
-	Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
-
+	CreatePlayer();
+	CreateCamera();
+	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
+	CreateShaderProgram();
 	LoadScene(INITIAL_MAP_ID);
 }
 
@@ -56,5 +57,23 @@ void SceneManager::Draw()
 
 void SceneManager::LoadScene(int mapId)
 {
-	m_currentScene = new Scene(mapId);
+	m_currentScene = new Scene(mapId, m_camera, m_shaderProgram, m_player);
+}
+
+void SceneManager::CreatePlayer()
+{
+	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	m_player = new Player(snake, m_camera, m_shaderProgram);
+	m_flowInputRenderAbles.push_back(m_player);
+}
+
+void SceneManager::CreateCamera()
+{
+	m_camera = new GeneralCamera();
+	m_flowInputAbles.push_back(m_camera);
+}
+
+void SceneManager::CreateShaderProgram()
+{
+	m_shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 }
