@@ -78,6 +78,24 @@ void ProcessInputCaller(std::vector<T*>& inputAbles, IMouse* mouse, IKeyboard* k
 }
 
 template <typename T>
+void AwakeCaller(std::vector<T*>& flowAble)
+{
+	for(T* i : flowAble)
+	{
+		i->Awake();
+	}
+}
+
+template <typename T>
+void StartCaller(std::vector<T*>& flowAble)
+{
+	for(T* i : flowAble)
+	{
+		i->Start();
+	}
+}
+
+template <typename T>
 void UpdateCaller(std::vector<T*>& flowAble, float deltaTime)
 {
 	for(T* i : flowAble)
@@ -325,44 +343,14 @@ void Game::Start()
 		}
 	}
 
-
-
-	/*glm::vec3 wallUniformScale = glm::vec3(8, 1, 8);
-	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
-	SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, shaderProgram);
-	wallUnifromObject->m_transform->SetScale(wallUniformScale);
-	renderAbles.push_back(wallUnifromObject);*/
-
-	/*glm::vec3 wallVerticalScale = glm::vec3(1, 1, 8);
-	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* wall2x1VerticalModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
-	SolidObject* wall2x1VerticalObject = new SolidObject(m_iCamera, wall2x1VerticalModel, shaderProgram);
-	wall2x1VerticalObject->m_transform->SetScale(wallVerticalScale);
-	renderAbles.push_back(wall2x1VerticalObject);*/
-
-	/*glm::vec3 wallHorizontalScale = glm::vec3(8, 1, 1);
-	stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* wall1x2HorizontalModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
-	SolidObject* wall1x2HorizontalObject = new SolidObject(m_iCamera, wall1x2HorizontalModel, shaderProgram);
-	wall1x2HorizontalObject->m_transform->SetScale(wallHorizontalScale);
-	renderAbles.push_back(wall1x2HorizontalObject);*/
-
 #pragma endregion tmxparser
-
-
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 	m_player = new Player(snake, m_iCamera, shaderProgram);
 	flowInputRenderAbles.push_back(m_player);
 
-	GeneralCamera* generalCamera = static_cast<GeneralCamera*>(m_iCamera);
-	generalCamera->SetFollowTransform(m_player->m_transform);
-
-	/*stbi_set_flip_vertically_on_load(false);
-	Uknitty::Model* soldier = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
-	renderAbles.push_back(new SolidObject(m_iCamera, soldier, shaderProgram));*/
+	static_cast<GeneralCamera*>(m_iCamera)->SetFollowTransform(m_player->m_transform);
 
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
@@ -370,31 +358,19 @@ void Game::Start()
 	worldCenterObject->m_transform->SetScale(glm::vec3(0.05, 100, 0.05));
 	renderAbles.push_back(worldCenterObject);
 
-	//stbi_set_flip_vertically_on_load(false);
-	//glm::vec3 cubeSize = glm::vec3(30, 1, 10);
-	////glm::vec3 cubeSize = glm::vec3(1);
-	//glm::vec3 cubePos = glm::vec3(2, 0, 2);
-	//glm::vec3 cubeRot = glm::vec3(0, 0, 0);
-	//Uknitty::Model* cube = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj", glm::vec2(cubeSize.x, cubeSize.z));
-	//SolidObject* cubeObject = new SolidObject(m_iCamera, cube, shaderProgram);
-	//cubeObject->m_transform->SetTransform(cubePos, cubeRot, cubeSize);
-	//renderAbles.push_back(cubeObject);
-
 	stbi_set_flip_vertically_on_load(false);
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
 	planeObject->m_transform->SetScale(glm::vec3(32, 0, 24));
 	renderAbles.push_back(planeObject);
 
-	/*for(auto& iLifeCycle : m_iLifeCycles)
-	{
-		iLifeCycle->Awake();
-	}
+	AwakeCaller(flowAbles);
+	AwakeCaller(flowInputAbles);
+	AwakeCaller(flowInputRenderAbles);
 
-	for(auto& iLifeCycle : m_iLifeCycles)
-	{
-		iLifeCycle->Start();
-	}*/
+	StartCaller(flowAbles);
+	StartCaller(flowInputAbles);
+	StartCaller(flowInputRenderAbles);
 
 #pragma endregion Other Initializations
 
