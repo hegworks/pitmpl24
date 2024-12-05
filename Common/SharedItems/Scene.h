@@ -9,11 +9,12 @@ namespace Uknitty
 {
 class ShaderProgram;
 class ICamera;
+class InterfaceManager;
 }
 class GeneralCamera;
 class Player;
 
-class Scene : Uknitty::FlowInputRender
+class Scene : public Uknitty::FlowInputRender
 {
 public:
 	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player);
@@ -48,15 +49,11 @@ private:
 
 	GeneralCamera* m_generalCamera = nullptr;
 	Player* m_player = nullptr;
-	tmxparser::TmxMap* m_tmxMap = nullptr;
+	tmxparser::TmxMap m_tmxMap;
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
-
-	std::vector<Uknitty::Input*> m_inputAbles;
-	std::vector<Uknitty::Flow*> m_flowAbles;
-	std::vector<Uknitty::Render*> m_renderAbles;
-	std::vector<Uknitty::FlowInput*> m_flowInputAbles;
-	std::vector<Uknitty::FlowInputRender*> m_flowInputRenderAbles;
+	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
+	int m_mapId = 0;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";

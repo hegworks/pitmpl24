@@ -30,8 +30,6 @@ void SceneManager::KeyUp(Key key)
 void SceneManager::Awake()
 {
 	m_interfaceManager = new Uknitty::InterfaceManager();
-
-	m_interfaceManager->Awake();
 }
 
 void SceneManager::Start()
@@ -47,7 +45,9 @@ void SceneManager::Start()
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
 
 	LoadScene(INITIAL_MAP_ID);
+	m_interfaceManager->AddFlowInputRender(m_currentScene);
 
+	m_interfaceManager->Awake();
 	m_interfaceManager->Start();
 }
 

@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include "ICamera.h"
+#include "InterfaceManager.h"
 #include "Model.h"
 #include "ShaderProgram.h"
 #include "SolidObject.h"
@@ -11,76 +12,87 @@
 
 Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player)
 {
+	m_mapId = mapId;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
 	m_player = player;
-
-	LoadMapDataFromFile(mapId);
-	LoadObjectDataFromMap();
-	CreateGround();
 }
 
 void Scene::ProcessMousePosition(double xPos, double yPos)
 {
+	m_interfaceManager->ProcessMousePosition(xPos, yPos);
 }
 
 void Scene::ProcessKeyboard(IKeyboard* iKeyboard)
 {
+	m_interfaceManager->ProcessKeyboard(iKeyboard);
 }
 
 void Scene::KeyDown(Key key)
 {
+	m_interfaceManager->KeyDown(key);
 }
 
 void Scene::KeyUp(Key key)
 {
+	m_interfaceManager->KeyUp(key);
 }
 
 void Scene::Awake()
 {
+	m_interfaceManager = new Uknitty::InterfaceManager();
 }
 
 void Scene::Start()
 {
+	LoadMapDataFromFile(m_mapId);
+	LoadObjectDataFromMap();
+	CreateSolidObjectsFromData();
+	CreateGround();
+
+	m_interfaceManager->Awake();
+	m_interfaceManager->Start();
 }
 
 void Scene::Update(float deltaTime)
 {
+	m_interfaceManager->Update(deltaTime);
 }
 
 void Scene::LateUpdate(float deltaTime)
 {
+	m_interfaceManager->LateUpdate(deltaTime);
 }
 
 void Scene::FixedUpdate()
 {
+	m_interfaceManager->FixedUpdate();
 }
 
 void Scene::Destroy()
 {
+	m_interfaceManager->Destroy();
 }
 
 void Scene::Draw()
 {
+	m_interfaceManager->Draw();
 }
 
 void Scene::LoadMapDataFromFile(int mapId)
 {
 	std::string fullPath = MAPS_PATH + std::to_string(mapId) + MAPS_EXTENTION;
-	tmxparser::TmxMap map;
-	tmxparser::TmxReturn error = tmxparser::parseFromFile(fullPath, &map, MAPS_PATH);
+	std::cout << "Loading: " << fullPath << std::endl;
+	tmxparser::TmxReturn error = tmxparser::parseFromFile(fullPath, &m_tmxMap, MAPS_PATH);
 	if(error)
 	{
 		throw std::runtime_error("parseFromFile failed for file: " + fullPath);
 	}
-
-	m_tmxMap = &map;
-	std::cout << "YAY" << std::endl;
 }
 
 void Scene::LoadObjectDataFromMap()
 {
-	std::vector<tmxparser::TmxObjectGroup> objectGroups = m_tmxMap->objectGroupCollection;
+	std::vector<tmxparser::TmxObjectGroup> objectGroups = m_tmxMap.objectGroupCollection;
 
 	for(tmxparser::TmxObjectGroup& objectGroup : objectGroups)
 	{
@@ -128,7 +140,7 @@ void Scene::CreateSolidObjectsFromData()
 	{
 		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, m_shaderProgram);
 		crate2x4Object->GetTransform()->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
-		m_renderAbles.push_back(crate2x4Object);
+		m_interfaceManager->AddRender(crate2x4Object);
 	}
 
 	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
@@ -136,7 +148,7 @@ void Scene::CreateSolidObjectsFromData()
 	{
 		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, m_shaderProgram);
 		crate4x4Object->GetTransform()->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
-		m_renderAbles.push_back(crate4x4Object);
+		m_interfaceManager->AddRender(crate4x4Object);
 	}
 
 	Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
@@ -144,7 +156,7 @@ void Scene::CreateSolidObjectsFromData()
 	{
 		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram);
 		tankObject->GetTransform()->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
-		m_renderAbles.push_back(tankObject);
+		m_interfaceManager->AddRender(tankObject);
 	}
 
 	for(auto& wallData : m_wallDatas)
@@ -172,7 +184,7 @@ void Scene::CreateSolidObjectsFromData()
 				SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram);
 				wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
 				wallVerticalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_renderAbles.push_back(wallVerticalObject);
+				m_interfaceManager->AddRender(wallVerticalObject);
 			}
 
 			break;
@@ -198,7 +210,7 @@ void Scene::CreateSolidObjectsFromData()
 				SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram);
 				wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
 				wallHorizontalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_renderAbles.push_back(wallHorizontalObject);
+				m_interfaceManager->AddRender(wallHorizontalObject);
 			}
 
 			break;
@@ -210,7 +222,7 @@ void Scene::CreateSolidObjectsFromData()
 				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram);
 				wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
 				wallUnifromObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_renderAbles.push_back(wallUnifromObject);
+				m_interfaceManager->AddRender(wallUnifromObject);
 			}
 
 			break;
@@ -226,5 +238,5 @@ void Scene::CreateGround()
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram);
 	planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
-	m_renderAbles.push_back(planeObject);
+	m_interfaceManager->AddRender(planeObject);
 }
