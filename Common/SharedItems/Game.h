@@ -55,15 +55,7 @@ private:
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
-	Uknitty::ICamera* m_iCamera = nullptr;
-	Player* m_player = nullptr;
 	SceneManager* m_sceneManager = nullptr;
-
-	std::vector<Uknitty::Input*> inputAbles;
-	std::vector<Uknitty::Flow*> flowAbles;
-	std::vector<Uknitty::Render*> renderAbles;
-	std::vector<Uknitty::FlowInput*> flowInputAbles;
-	std::vector<Uknitty::FlowInputRender*> flowInputRenderAbles;
 
 	btDefaultCollisionConfiguration* configuration = nullptr;
 	btDbvtBroadphase* pairCache = nullptr;

@@ -32,6 +32,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InterfaceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Interfaces.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />

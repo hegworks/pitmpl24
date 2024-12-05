@@ -2,27 +2,17 @@
 
 #include "Common.h"
 #include "FreeFlyCamera.h"
-#include "GeneralCamera.h"
 #include "ICamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
-#include "Interfaces.h"
-#include "Player.h"
 #include "SceneManager.h"
 #include "SharedInput.h"
-#include "SolidObject.h"
-#include "Transform.h"
-#include <Model.h>
-#include <ShaderProgram.h>
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include "tmxparser.h"
-#include "TmxParserHelper.h"
 
 #include <chrono>
 #include <string>
@@ -58,79 +48,6 @@ Game::~Game()
 
 }
 
-template <typename T>
-void ProcessInputCaller(std::vector<T*>& inputAbles, IMouse* mouse, IKeyboard* keyboard)
-{
-	for(T* i : inputAbles)
-	{
-		i->ProcessMousePosition(mouse->GetPosition().x, mouse->GetPosition().y);
-		i->ProcessKeyboard(keyboard);
-	}
-}
-
-template <typename T>
-void AwakeCaller(std::vector<T*>& flowAble)
-{
-	for(T* i : flowAble)
-	{
-		i->Awake();
-	}
-}
-
-template <typename T>
-void StartCaller(std::vector<T*>& flowAble)
-{
-	for(T* i : flowAble)
-	{
-		i->Start();
-	}
-}
-
-template <typename T>
-void UpdateCaller(std::vector<T*>& flowAble, float deltaTime)
-{
-	for(T* i : flowAble)
-	{
-		i->Update(deltaTime);
-	}
-}
-
-template <typename T>
-void LateUpdateCaller(std::vector<T*>& flowAble, float deltaTime)
-{
-	for(T* i : flowAble)
-	{
-		i->LateUpdate(deltaTime);
-	}
-}
-
-template <typename T>
-void DrawCaller(std::vector<T*>& renderAble)
-{
-	for(T* i : renderAble)
-	{
-		i->Draw();
-	}
-}
-
-template <typename T>
-void KeyDownCaller(std::vector<T*>& inputAble, Key key)
-{
-	for(T* i : inputAble)
-	{
-		i->KeyDown(key);
-	}
-}
-
-template <typename T>
-void KeyUpCaller(std::vector<T*>& inputAble, Key key)
-{
-	for(T* i : inputAble)
-	{
-		i->KeyUp(key);
-	}
-}
-
 void Game::Start()
 {
 	InitializeOpenGLES();
@@ -153,67 +70,8 @@ void Game::Start()
 
 #pragma region Other Initializations
 	m_sceneManager = new SceneManager();
-	flowInputRenderAbles.push_back(m_sceneManager);
-
-	/*
-#pragma region tmxparser
-	const int TILE_SIZE = 32;
-	const glm::vec2 MAP_CENTER = glm::vec2(16, 12);
-	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
-	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
-	const std::string TANK_OBJECTGROUP = "tank";
-	const std::string WALL_OBJECTGROUP = "wall";
-
-	std::vector<glm::ivec2> crate2x4positions;
-	std::vector<glm::ivec2> crate4x4positions;
-	std::vector<glm::ivec2> tankPositions;
-	std::vector<WallData*> wallDatas;
-
-	tmxparser::TmxReturn error;
-	tmxparser::TmxMap map;
-
-	// test from file
-	error = tmxparser::parseFromFile("../Common/Assets/Maps/1.tmx", &map, "../Common/Assets/Maps/");
-
-	if(!error)
-	{
-		
-	}
-	else
-	{
-		printf("error parsing file");
-	}
-
-
-	
-
-#pragma endregion tmxparser
-
-	Uknitty::Model* snake = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	m_player = new Player(snake, m_iCamera, shaderProgram);
-	flowInputRenderAbles.push_back(m_player);
-
-	static_cast<GeneralCamera*>(m_iCamera)->SetFollowTransform(m_player->m_transform);
-
-	Uknitty::Model* worldCenter = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
-	SolidObject* worldCenterObject = new SolidObject(m_iCamera, worldCenter, shaderProgram);
-	worldCenterObject->GetTransform()->SetScale(glm::vec3(0.05, 100, 0.05));
-	renderAbles.push_back(worldCenterObject);
-
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(24, 32));
-	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
-	planeObject->GetTransform()->SetScale(glm::vec3(32, 0, 24));
-	renderAbles.push_back(planeObject);
-	*/
-
-	AwakeCaller(flowAbles);
-	AwakeCaller(flowInputAbles);
-	AwakeCaller(flowInputRenderAbles);
-
-	StartCaller(flowAbles);
-	StartCaller(flowInputAbles);
-	StartCaller(flowInputRenderAbles);
-
+	m_sceneManager->Awake();
+	m_sceneManager->Start();
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -255,24 +113,15 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
-		ProcessInputCaller(inputAbles, m_iMouse, m_iKeyboard);
-		ProcessInputCaller(flowInputAbles, m_iMouse, m_iKeyboard);
-		ProcessInputCaller(flowInputRenderAbles, m_iMouse, m_iKeyboard);
-
-		UpdateCaller(flowAbles, gameDeltaTime);
-		UpdateCaller(flowInputAbles, gameDeltaTime);
-		UpdateCaller(flowInputRenderAbles, gameDeltaTime);
-
-		LateUpdateCaller(flowAbles, gameDeltaTime);
-		LateUpdateCaller(flowInputAbles, gameDeltaTime);
-		LateUpdateCaller(flowInputRenderAbles, gameDeltaTime);
+		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
+		m_sceneManager->ProcessKeyboard(m_iKeyboard);
+		m_sceneManager->Update(gameDeltaTime);
+		m_sceneManager->LateUpdate(gameDeltaTime);
 
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
-		DrawCaller(renderAbles);
-		DrawCaller(flowInputRenderAbles);
-
+		m_sceneManager->Draw();
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
@@ -302,6 +151,7 @@ void Game::Start()
 		++frameCount;
 	}
 
+	m_sceneManager->Destroy();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui::DestroyContext();
 	m_iGraphics->Quit();
@@ -314,15 +164,11 @@ void Game::KeyCallback(Key key, KeyAction action)
 
 	if(action == KeyAction::DOWN)
 	{
-		KeyDownCaller(inputAbles, key);
-		KeyDownCaller(flowInputAbles, key);
-		KeyDownCaller(flowInputRenderAbles, key);
+		m_sceneManager->KeyDown(key);
 	}
 	else if(action == KeyAction::UP)
 	{
-		KeyUpCaller(inputAbles, key);
-		KeyUpCaller(flowInputAbles, key);
-		KeyUpCaller(flowInputRenderAbles, key);
+		m_sceneManager->KeyUp(key);
 	}
 }
 #pragma endregion Input

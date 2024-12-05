@@ -7,6 +7,7 @@
 namespace Uknitty
 {
 class ShaderProgram;
+class InterfaceManager;
 }
 class Scene;
 class GeneralCamera;
@@ -14,6 +15,7 @@ class Player;
 
 class SceneManager : public Uknitty::FlowInputRender
 {
+public:
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
 	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
@@ -32,6 +34,7 @@ private:
 	GeneralCamera* m_camera = nullptr;
 	Player* m_player = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
+	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 
 	std::vector<Uknitty::Input*> m_inputAbles;
 	std::vector<Uknitty::Flow*> m_flowAbles;
@@ -48,4 +51,3 @@ private:
 	void CreateCamera();
 	void CreateShaderProgram();
 };
-
