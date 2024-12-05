@@ -12,6 +12,11 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 	m_transform = new Uknitty::Transform();
 }
 
+SolidObject::~SolidObject()
+{
+	delete m_transform;
+}
+
 void SolidObject::Draw()
 {
 	m_shaderProgram->Use();

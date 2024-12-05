@@ -87,6 +87,36 @@ public:
 		DestroyCaller(m_flowAbles);
 		DestroyCaller(m_flowInputAbles);
 		DestroyCaller(m_flowInputRenderAbles);
+
+		for(Input* ptr : m_inputAbles)
+		{
+			delete ptr;
+		}
+		m_inputAbles.clear();
+
+		for(Flow* ptr : m_flowAbles)
+		{
+			delete ptr;
+		}
+		m_flowAbles.clear();
+
+		for(Render* ptr : m_renderAbles)
+		{
+			delete ptr;
+		}
+		m_renderAbles.clear();
+
+		for(FlowInput* ptr : m_flowInputAbles)
+		{
+			delete ptr;
+		}
+		m_flowInputAbles.clear();
+
+		for(FlowInputRender* ptr : m_flowInputRenderAbles)
+		{
+			delete ptr;
+		}
+		m_flowInputRenderAbles.clear();
 	}
 
 	void AddFlow(Flow* flow)
@@ -112,6 +142,31 @@ public:
 	void AddFlowInputRender(FlowInputRender* flowInputRender)
 	{
 		m_flowInputRenderAbles.push_back(flowInputRender);
+	}
+
+	void RemoveFlow(Flow* flow)
+	{
+		m_flowAbles.erase(std::remove(m_flowAbles.begin(), m_flowAbles.end(), flow), m_flowAbles.end());
+	}
+
+	void RemoveRender(Render* render)
+	{
+		m_renderAbles.erase(std::remove(m_renderAbles.begin(), m_renderAbles.end(), render), m_renderAbles.end());
+	}
+
+	void RemoveInput(Input* input)
+	{
+		m_inputAbles.erase(std::remove(m_inputAbles.begin(), m_inputAbles.end(), input), m_inputAbles.end());
+	}
+
+	void RemoveFlowInput(FlowInput* flowInput)
+	{
+		m_flowInputAbles.erase(std::remove(m_flowInputAbles.begin(), m_flowInputAbles.end(), flowInput), m_flowInputAbles.end());
+	}
+
+	void RemoveFlowInputRender(FlowInputRender* flowInputRender)
+	{
+		m_flowInputRenderAbles.erase(std::remove(m_flowInputRenderAbles.begin(), m_flowInputRenderAbles.end(), flowInputRender), m_flowInputRenderAbles.end());
 	}
 
 private:

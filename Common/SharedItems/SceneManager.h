@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IInputKey.h"
 #include "Interfaces.h"
 #include <string>
 #include <vector>
@@ -45,6 +46,9 @@ private:
 	const int INITIAL_MAP_ID = 1;
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Maps/";
 	const std::string FRAGMENT_SHADER_PATH = "../Common/Assets/Maps/";
+	const Key CHANGE_SCENE_KEY = Key::C;
+
+	int m_currentMapId = INITIAL_MAP_ID;
 
 	void LoadScene(int mapId);
 	void CreatePlayer();

@@ -19,7 +19,21 @@ void SceneManager::ProcessKeyboard(IKeyboard* iKeyboard)
 
 void SceneManager::KeyDown(Key key)
 {
-	m_interfaceManager->KeyDown(key);
+	if(key == CHANGE_SCENE_KEY)
+	{
+		m_currentScene->Destroy();
+		m_interfaceManager->RemoveFlowInputRender(m_currentScene);
+		m_currentMapId = m_currentMapId == 1 ? 2 : 1;
+		LoadScene(m_currentMapId);
+		m_interfaceManager->AddFlowInputRender(m_currentScene);
+		m_currentScene->Awake();
+		m_currentScene->Start();
+	}
+
+	else
+	{
+		m_interfaceManager->KeyDown(key);
+	}
 }
 
 void SceneManager::KeyUp(Key key)

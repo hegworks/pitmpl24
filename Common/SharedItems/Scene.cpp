@@ -72,6 +72,15 @@ void Scene::FixedUpdate()
 void Scene::Destroy()
 {
 	m_interfaceManager->Destroy();
+
+	for(auto& wallData : m_wallDatas)
+	{
+		delete wallData;
+	}
+	m_wallDatas.clear();
+	m_crate2x4positions.clear();
+	m_crate4x4positions.clear();
+	m_tankPositions.clear();
 }
 
 void Scene::Draw()

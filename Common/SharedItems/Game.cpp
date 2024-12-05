@@ -113,8 +113,8 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
-		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
 		m_sceneManager->ProcessKeyboard(m_iKeyboard);
+		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
 		m_sceneManager->Update(gameDeltaTime);
 		m_sceneManager->LateUpdate(gameDeltaTime);
 
