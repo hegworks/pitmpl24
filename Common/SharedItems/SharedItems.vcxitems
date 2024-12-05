@@ -36,6 +36,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h" />
@@ -55,6 +57,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Game.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp" />

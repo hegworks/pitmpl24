@@ -1,5 +1,8 @@
 #pragma once
 
+#include "IInput.h"
+#include "IInputKey.h"
+
 namespace Uknitty
 {
 
@@ -11,9 +14,6 @@ class GameObject
 
 class Input : public GameObject
 {
-
-#include "IInput.h"
-#include "IInputKey.h"
 
 public:
 	virtual void ProcessMousePosition(double xPos, double yPos) = 0;
@@ -30,6 +30,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void LateUpdate(float deltaTime) = 0;
 	virtual void FixedUpdate() = 0;
+	virtual void Destroy() = 0;
 };
 
 class Render : public GameObject
@@ -50,6 +51,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void LateUpdate(float deltaTime) = 0;
 	virtual void FixedUpdate() = 0;
+	virtual void Destroy() = 0;
 };
 
 #pragma endregion 2 Base Classes

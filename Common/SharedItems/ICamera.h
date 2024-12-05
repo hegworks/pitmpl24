@@ -33,6 +33,7 @@ public:
 	virtual void Update(float deltaTime) override = 0;
 	virtual void LateUpdate(float deltaTime) override = 0;
 	virtual void FixedUpdate() override {};
+	virtual void Destroy() override {};
 
 	const int TOTAL_CAMERA_TYPES = 3;
 	enum class CameraType

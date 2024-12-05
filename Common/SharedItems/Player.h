@@ -31,6 +31,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
 	virtual void FixedUpdate() override;
+	virtual void Destroy() override;
 
 	// Inherited via FlowInputRender
 	virtual void Draw() override;

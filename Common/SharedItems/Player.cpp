@@ -105,6 +105,10 @@ void Player::FixedUpdate()
 {
 }
 
+void Player::Destroy()
+{
+}
+
 void Player::Draw()
 {
 	if(m_iCamera->GetCameraType() == GeneralCamera::CameraType::FIRST_PERSON)

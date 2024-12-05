@@ -31,6 +31,7 @@ class IMouse;
 class IKeyboard;
 
 class Player;
+class SceneManager;
 
 class Game
 {
@@ -56,6 +57,7 @@ private:
 	SharedInput* m_sharedInput = nullptr;
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Player* m_player = nullptr;
+	SceneManager* m_sceneManager = nullptr;
 
 	std::vector<Uknitty::Input*> inputAbles;
 	std::vector<Uknitty::Flow*> flowAbles;

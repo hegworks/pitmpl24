@@ -8,6 +8,7 @@
 #include "IInput.h"
 #include "Interfaces.h"
 #include "Player.h"
+#include "SceneManager.h"
 #include "SharedInput.h"
 #include "SolidObject.h"
 #include "Transform.h"
@@ -46,6 +47,10 @@ Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 {
 	m_iMouse = m_sharedInput->GetMouse();
 	m_iKeyboard = m_sharedInput->GetKeyboard();
+
+	m_sharedInput->GetKeyboard()->SetKeyCallback(
+		[this](Key key, KeyAction action) { KeyCallback(key, action); }
+	);
 }
 
 Game::~Game()
@@ -161,16 +166,10 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_iCamera = new GeneralCamera();
-	flowInputAbles.push_back(m_iCamera);
+	m_sceneManager = new SceneManager();
+	flowInputRenderAbles.push_back(m_sceneManager);
 
-	m_sharedInput->GetKeyboard()->SetKeyCallback(
-		[this](Key key, KeyAction action) { KeyCallback(key, action); }
-	);
-
-	Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
-
-
+	/*
 #pragma region tmxparser
 	const int TILE_SIZE = 32;
 	const glm::vec2 MAP_CENTER = glm::vec2(16, 12);
@@ -352,6 +351,7 @@ void Game::Start()
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, shaderProgram);
 	planeObject->GetTransform()->SetScale(glm::vec3(32, 0, 24));
 	renderAbles.push_back(planeObject);
+	*/
 
 	AwakeCaller(flowAbles);
 	AwakeCaller(flowInputAbles);
@@ -370,7 +370,7 @@ void Game::Start()
 	static int frames = 0;
 	static double starttime = 0;
 	static bool first = true;
-	static float fps = 0.0f;
+	static int fps = 0;
 
 #pragma endregion Timing
 
@@ -395,7 +395,7 @@ void Game::Start()
 			frames++;
 			if(elapsed.count() - starttime > 0.25 && frames > 10)
 			{
-				fps = (double)frames / (elapsed.count() - starttime);
+				fps = static_cast<int>(frames / (elapsed.count() - starttime));
 				starttime = elapsed.count();
 				frames = 0;
 			}
