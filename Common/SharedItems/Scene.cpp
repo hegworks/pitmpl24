@@ -87,6 +87,7 @@ void Scene::Destroy()
 		delete model;
 	}
 
+	delete m_interfaceManager;
 	delete this;
 }
 

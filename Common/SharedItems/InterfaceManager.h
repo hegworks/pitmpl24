@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 namespace Uknitty
 {
 
@@ -93,17 +95,11 @@ public:
 		DestroyCaller(m_flowInputRenderAbles);
 		m_flowInputRenderAbles.clear();
 
-		for(Input* ptr : m_inputAbles)
-		{
-			delete ptr;
-		}
-		m_inputAbles.clear();
-
-		for(Render* ptr : m_renderAbles)
-		{
-			delete ptr;
-		}
+		DestroyCaller(m_renderAbles);
 		m_renderAbles.clear();
+
+		DestroyCaller(m_inputAbles);
+		m_inputAbles.clear();
 	}
 
 	void AddFlow(Flow* flow)

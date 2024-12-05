@@ -27,3 +27,8 @@ void SolidObject::Draw()
 	m_model->Draw(*m_shaderProgram);
 	m_shaderProgram->UnUse();
 }
+
+void SolidObject::Destroy()
+{
+	delete this;
+}

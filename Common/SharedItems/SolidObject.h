@@ -20,6 +20,7 @@ public:
 
 	// Inherited via Render
 	void Draw() override;
+	void Destroy() override;
 
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;

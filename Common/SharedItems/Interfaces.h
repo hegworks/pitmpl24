@@ -20,6 +20,7 @@ public:
 	virtual void ProcessKeyboard(IKeyboard* iKeyboard) = 0;
 	virtual void KeyDown(Key key) = 0;
 	virtual void KeyUp(Key key) = 0;
+	virtual void Destroy() = 0;
 };
 
 class Flow : public GameObject
@@ -37,6 +38,7 @@ class Render : public GameObject
 {
 public:
 	virtual void Draw() = 0;
+	virtual void Destroy() = 0;
 };
 
 #pragma endregion 1 Base Class
