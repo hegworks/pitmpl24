@@ -10,6 +10,7 @@ namespace Uknitty
 class ShaderProgram;
 class ICamera;
 class InterfaceManager;
+class Model;
 }
 class GeneralCamera;
 class Player;
@@ -70,6 +71,7 @@ private:
 	std::vector<glm::ivec2> m_crate4x4positions;
 	std::vector<glm::ivec2> m_tankPositions;
 	std::vector<WallData*> m_wallDatas;
+	std::vector<Uknitty::Model*> m_models;
 
 	void LoadMapDataFromFile(int mapId);
 	void LoadObjectDataFromMap();

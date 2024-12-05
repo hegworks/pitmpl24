@@ -85,8 +85,13 @@ public:
 	void Destroy()
 	{
 		DestroyCaller(m_flowAbles);
+		m_flowAbles.clear();
+
 		DestroyCaller(m_flowInputAbles);
+		m_flowInputAbles.clear();
+
 		DestroyCaller(m_flowInputRenderAbles);
+		m_flowInputRenderAbles.clear();
 
 		for(Input* ptr : m_inputAbles)
 		{
@@ -94,29 +99,11 @@ public:
 		}
 		m_inputAbles.clear();
 
-		for(Flow* ptr : m_flowAbles)
-		{
-			delete ptr;
-		}
-		m_flowAbles.clear();
-
 		for(Render* ptr : m_renderAbles)
 		{
 			delete ptr;
 		}
 		m_renderAbles.clear();
-
-		for(FlowInput* ptr : m_flowInputAbles)
-		{
-			delete ptr;
-		}
-		m_flowInputAbles.clear();
-
-		for(FlowInputRender* ptr : m_flowInputRenderAbles)
-		{
-			delete ptr;
-		}
-		m_flowInputRenderAbles.clear();
 	}
 
 	void AddFlow(Flow* flow)

@@ -192,3 +192,8 @@ void GeneralCamera::GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::v
 	front = m_front;
 	up = UP;
 }
+
+void GeneralCamera::Destroy()
+{
+	delete this;
+}

@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Player.h"
 #include "Transform.h"
+#include <iostream>
 
 Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram)
 {
@@ -108,6 +109,8 @@ void Player::FixedUpdate()
 
 void Player::Destroy()
 {
+	std::cout << "Player Destroyed" << std::endl;
+	delete this;
 }
 
 void Player::Draw()

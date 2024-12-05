@@ -25,6 +25,7 @@ public:
 	virtual glm::vec3 GetRight() override { return glm::normalize(glm::cross(m_front, UP)); };
 	virtual void GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const override;
 	virtual float GetFov() const override { return m_fov; }
+	virtual void Destroy() override;
 
 	// Inherited via IInputProcessor
 	virtual void ProcessMousePosition(double xPos, double yPos) override;

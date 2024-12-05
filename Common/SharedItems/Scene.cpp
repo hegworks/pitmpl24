@@ -81,6 +81,13 @@ void Scene::Destroy()
 	m_crate2x4positions.clear();
 	m_crate4x4positions.clear();
 	m_tankPositions.clear();
+
+	for(Uknitty::Model* model : m_models)
+	{
+		delete model;
+	}
+
+	delete this;
 }
 
 void Scene::Draw()
@@ -245,6 +252,7 @@ void Scene::CreateSolidObjectsFromData()
 void Scene::CreateGround()
 {
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
+	m_models.push_back(plane);
 	SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram);
 	planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
 	m_interfaceManager->AddRender(planeObject);
