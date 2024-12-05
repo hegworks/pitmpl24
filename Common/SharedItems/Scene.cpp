@@ -152,6 +152,7 @@ void Scene::LoadObjectDataFromMap()
 void Scene::CreateSolidObjectsFromData()
 {
 	Uknitty::Model* crate2x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
+	m_models.push_back(crate2x4Model);
 	for(auto& crate2x4pos : m_crate2x4positions)
 	{
 		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, m_shaderProgram);
@@ -160,6 +161,7 @@ void Scene::CreateSolidObjectsFromData()
 	}
 
 	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+	m_models.push_back(crate4x4Model);
 	for(auto& crate4x4pos : m_crate4x4positions)
 	{
 		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, m_shaderProgram);
@@ -168,6 +170,7 @@ void Scene::CreateSolidObjectsFromData()
 	}
 
 	Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
+	m_models.push_back(tankModel);
 	for(auto& tankPos : m_tankPositions)
 	{
 		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram);
@@ -187,10 +190,12 @@ void Scene::CreateSolidObjectsFromData()
 				if(wallData->size.x == 1)
 				{
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+					m_models.push_back(wallModel);
 				}
 				else if(wallData->size.x == 2)
 				{
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+					m_models.push_back(wallModel);
 				}
 				else
 				{
@@ -213,10 +218,12 @@ void Scene::CreateSolidObjectsFromData()
 				if(wallData->size.y == 1)
 				{
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallHorizontalScale.x, 1));
+					m_models.push_back(wallModel);
 				}
 				else if(wallData->size.y == 2)
 				{
 					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
+					m_models.push_back(wallModel);
 				}
 				else
 				{
@@ -235,6 +242,7 @@ void Scene::CreateSolidObjectsFromData()
 			{
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
 				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
+				m_models.push_back(wallUniformModel);
 				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram);
 				wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
 				wallUnifromObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
