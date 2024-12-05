@@ -20,10 +20,10 @@ public:
 	Uknitty::Transform* m_transform = nullptr;
 
 	// Inherited via FlowInputRender
-	virtual void MouseCallback(double xPos, double yPos) override;
+	virtual void ProcessMousePosition(double xPos, double yPos) override;
 	virtual void KeyDown(Key key) override;
 	virtual void KeyUp(Key key) override;
-	virtual void ProcessInput(IKeyboard* iKeyboard) override;
+	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
 
 	// Inherited via FlowInputRender
 	virtual void Awake() override;

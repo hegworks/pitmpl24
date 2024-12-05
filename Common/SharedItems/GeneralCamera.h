@@ -27,8 +27,8 @@ public:
 	virtual float GetFov() const override { return m_fov; }
 
 	// Inherited via IInputProcessor
-	virtual void MouseCallback(double xPos, double yPos) override;
-	virtual void ProcessInput(IKeyboard* iKeyboard) override;
+	virtual void ProcessMousePosition(double xPos, double yPos) override;
+	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
 	virtual void KeyDown(Key key) override;
 	virtual void KeyUp(Key key) override;
 

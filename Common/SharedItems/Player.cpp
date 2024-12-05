@@ -18,7 +18,7 @@ Player::~Player()
 {
 }
 
-void Player::MouseCallback(double xPos, double yPos)
+void Player::ProcessMousePosition(double xPos, double yPos)
 {
 }
 
@@ -38,7 +38,7 @@ void Player::KeyUp(Key key)
 	if(key == RIGHT_KEY) m_isRightKeyDown = false;
 }
 
-void Player::ProcessInput(IKeyboard* iKeyboard)
+void Player::ProcessKeyboard(IKeyboard* iKeyboard)
 {
 }
 

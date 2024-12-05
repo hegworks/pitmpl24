@@ -25,8 +25,8 @@ public:
 	virtual float GetFov() const override { return m_fov; }
 
 	// Inherited via IInputProcessor
-	virtual void MouseCallback(double xPos, double yPos) override;
-	virtual void ProcessInput(IKeyboard* iKeyboard) override;
+	virtual void ProcessMousePosition(double xPos, double yPos) override;
+	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
 	virtual void KeyDown(Key key) {};
 	virtual void KeyUp(Key key) {};
 
@@ -88,7 +88,7 @@ inline FreeFlyCamera::~FreeFlyCamera()
 {
 }
 
-inline void FreeFlyCamera::MouseCallback(double xPos, double yPos)
+inline void FreeFlyCamera::ProcessMousePosition(double xPos, double yPos)
 {
 	if(m_isFirstMouse) // initially set to true
 	{
@@ -114,7 +114,7 @@ inline void FreeFlyCamera::MouseCallback(double xPos, double yPos)
 		m_pitch = -PITCH_MAX;
 }
 
-inline void FreeFlyCamera::ProcessInput(IKeyboard* iKeyboard)
+inline void FreeFlyCamera::ProcessKeyboard(IKeyboard* iKeyboard)
 {
 	m_isUpKeyPressed = iKeyboard->GetKey(UP_KEY);
 	m_isDownKeyPressed = iKeyboard->GetKey(DOWN_KEY);

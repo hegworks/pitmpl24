@@ -13,7 +13,7 @@ GeneralCamera::~GeneralCamera()
 {
 }
 
-void GeneralCamera::MouseCallback(double xPos, double yPos)
+void GeneralCamera::ProcessMousePosition(double xPos, double yPos)
 {
 	switch(m_cameraType)
 	{
@@ -61,7 +61,7 @@ void GeneralCamera::MouseCallback(double xPos, double yPos)
 	}
 }
 
-void GeneralCamera::ProcessInput(IKeyboard* iKeyboard)
+void GeneralCamera::ProcessKeyboard(IKeyboard* iKeyboard)
 {
 }
 

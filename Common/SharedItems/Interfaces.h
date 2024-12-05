@@ -16,10 +16,10 @@ class Input : public GameObject
 #include "IInputKey.h"
 
 public:
-	virtual void MouseCallback(double xPos, double yPos) = 0;
+	virtual void ProcessMousePosition(double xPos, double yPos) = 0;
+	virtual void ProcessKeyboard(IKeyboard* iKeyboard) = 0;
 	virtual void KeyDown(Key key) = 0;
 	virtual void KeyUp(Key key) = 0;
-	virtual void ProcessInput(IKeyboard* iKeyboard) = 0;
 };
 
 class Flow : public GameObject

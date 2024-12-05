@@ -72,8 +72,8 @@ void ProcessInputCaller(std::vector<T*>& inputAbles, IMouse* mouse, IKeyboard* k
 {
 	for(T* i : inputAbles)
 	{
-		i->MouseCallback(mouse->GetPosition().x, mouse->GetPosition().y);
-		i->ProcessInput(keyboard);
+		i->ProcessMousePosition(mouse->GetPosition().x, mouse->GetPosition().y);
+		i->ProcessKeyboard(keyboard);
 	}
 }
 
