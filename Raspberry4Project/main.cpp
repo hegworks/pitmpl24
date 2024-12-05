@@ -47,6 +47,8 @@ int main()
 	// now we fire up our game giving it access to the input systems and graphics which are different on each platform but abstracted away   
 	Game* game = new Game(sharedInput, graphics);
 	game->Start();
-
+	delete game;
+	delete sharedInput;
+	delete graphics;
 	return 0;
 }

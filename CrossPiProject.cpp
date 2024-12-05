@@ -34,8 +34,9 @@ int main()
 
 	Game* game = new Game(sharedInput, WinGraphics);
 	game->Start();
-
-	delete(WinGraphics);
+	delete game;
+	delete sharedInput;
+	delete WinGraphics;
 	return 0;
 }
 

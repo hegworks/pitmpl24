@@ -24,7 +24,7 @@
 #ifdef WINDOWS_BUILD
 #include "glad/glad.h"
 
-#if defined(DEBUG) && defined(VISUAL_LEAK_DETECTOR)
+#if defined(_DEBUG) && defined(VISUAL_LEAK_DETECTOR)
 #include <vld.h>
 #endif // DEBUG
 

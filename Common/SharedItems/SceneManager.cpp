@@ -82,6 +82,11 @@ void SceneManager::FixedUpdate()
 
 void SceneManager::Destroy()
 {
+	delete m_currentScene;
+	delete m_player;
+	delete m_shaderProgram;
+	delete m_camera;
+	delete m_interfaceManager;
 	m_interfaceManager->Destroy();
 }
 
