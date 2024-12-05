@@ -377,7 +377,12 @@ void Game::Start()
 #pragma region Timing
 	auto startTime = std::chrono::system_clock::now();
 	auto lastTime = startTime;
-	float averageFPS{0};
+
+	static int frames = 0;
+	static double starttime = 0;
+	static bool first = true;
+	static float fps = 0.0f;
+
 #pragma endregion Timing
 
 	float degree = 0;
@@ -390,11 +395,21 @@ void Game::Start()
 		gameDeltaTime = delta.count() * 10.0f;
 
 		std::chrono::duration<float> elapsed = time - startTime;
-		if(elapsed.count() > 0.25f && frameCount > 10)
+		if(first)
 		{
-			averageFPS = static_cast<float>(frameCount) / elapsed.count();
-			startTime = time;
-			frameCount = 0;
+			frames = 0;
+			starttime = elapsed.count();
+			first = false;
+		}
+		else
+		{
+			frames++;
+			if(elapsed.count() - starttime > 0.25 && frames > 10)
+			{
+				fps = (double)frames / (elapsed.count() - starttime);
+				starttime = elapsed.count();
+				frames = 0;
+			}
 		}
 #pragma endregion Timing
 
@@ -430,7 +445,7 @@ void Game::Start()
 		ImGui::Begin("AVG FPS", &open, window_flags);
 
 		// this can be anything
-		ImGui::Text(std::to_string(averageFPS).c_str());
+		ImGui::Text(std::to_string((int)fps).c_str());
 
 		ImGui::End();
 
