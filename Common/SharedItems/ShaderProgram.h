@@ -67,6 +67,10 @@ public:
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 	}
+	void SetVec3(const std::string& name, glm::vec3 value) const
+	{
+		glUniform3fv(GetUniformLocation(name), 1, glm::value_ptr(value));
+	}
 };
 
 inline ShaderProgram::ShaderProgram(const char* vertexPath, const char* fragmentPath)

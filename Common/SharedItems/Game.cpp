@@ -113,13 +113,13 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
+		ClearScreen();
+		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
+
 		m_sceneManager->ProcessKeyboard(m_iKeyboard);
 		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
 		m_sceneManager->Update(gameDeltaTime);
 		m_sceneManager->LateUpdate(gameDeltaTime);
-
-		ClearScreen();
-		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
 		m_sceneManager->Draw();
 
@@ -192,7 +192,8 @@ void Game::InitializeOpenGLES()
 
 void Game::ClearScreen()
 {
-	glClearColor(189.0f / 256.0f, 224 / 256.0f, 254 / 256.0f, 1.0f);
+	//glClearColor(189.0f / 256.0f, 224 / 256.0f, 254 / 256.0f, 1.0f);
+	glClearColor(0.2, 0.2, 0.2, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

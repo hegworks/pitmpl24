@@ -1,5 +1,6 @@
 #pragma once
 
+#include "btBulletDynamicsCommon.h"
 #include "IInputKey.h"
 #include "Interfaces.h"
 #include <string>
@@ -10,6 +11,7 @@ namespace Uknitty
 class ShaderProgram;
 class InterfaceManager;
 class Model;
+class BTDebugDraw;
 }
 class Scene;
 class GeneralCamera;
@@ -38,6 +40,16 @@ private:
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 
+	btDefaultCollisionConfiguration* m_btCollisionConfiguration = nullptr;
+	btDbvtBroadphase* m_btBroadphase = nullptr;
+	btCollisionDispatcher* m_btDispatcher = nullptr;
+	btSequentialImpulseConstraintSolver* m_btSolver = nullptr;
+	Uknitty::BTDebugDraw* m_btDebugDrawer = nullptr;
+	btDiscreteDynamicsWorld* m_btDynamicsWorld = nullptr;
+	//keep track of the shapes, we release memory at exit.
+	//make sure to re-use collision shapes among rigid bodies whenever possible!
+	btAlignedObjectArray<btCollisionShape*> m_btCollisionShapes;
+
 	Uknitty::Model* m_snakeModel = nullptr;
 
 	const int INITIAL_MAP_ID = 1;
@@ -51,4 +63,7 @@ private:
 	void CreatePlayer();
 	void CreateCamera();
 	void CreateShaderProgram();
+	void CreatePhysicsWorld();
+	void UpdatePhysics();
+	void DestroyPhysics();
 };

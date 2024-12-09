@@ -198,6 +198,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)btIDebugDraw.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BTDebugDraw.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GlCheckError.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -253,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -453,6 +465,12 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Texture.png">
       <Filter>Assets\Models\Wall_1x4x2</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\BTDebugFragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\BTDebugVertex.glsl">
+      <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

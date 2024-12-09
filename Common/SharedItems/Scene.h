@@ -1,5 +1,6 @@
 #pragma once
 
+#include "common.h"
 #include "Interfaces.h"
 #include "tmxparser.h"
 #include <string>
@@ -59,8 +60,6 @@ private:
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";
 	const int TILE_SIZE = 32;
-	const int MAP_SCALE_X = 32;
-	const int MAP_SCALE_Z = 24;
 	const glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";

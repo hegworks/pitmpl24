@@ -7,7 +7,6 @@
 #include <GLES2/gl2.h>
 
 #endif
-#include "btBulletDynamicsCommon.h"
 
 #include "IInputKey.h"
 #include <vector>
@@ -56,12 +55,6 @@ private:
 	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
 	SceneManager* m_sceneManager = nullptr;
-
-	btDefaultCollisionConfiguration* configuration = nullptr;
-	btDbvtBroadphase* pairCache = nullptr;
-	btCollisionDispatcher* dispatcher = nullptr;
-	btSequentialImpulseConstraintSolver* constraintSolver = nullptr;
-	btDiscreteDynamicsWorld* world = nullptr;
 
 	bool quitting{false};
 	float gameDeltaTime;
