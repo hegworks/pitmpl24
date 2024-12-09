@@ -38,11 +38,6 @@ private:
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 
-	std::vector<Uknitty::Input*> m_inputAbles;
-	std::vector<Uknitty::Flow*> m_flowAbles;
-	std::vector<Uknitty::Render*> m_renderAbles;
-	std::vector<Uknitty::FlowInput*> m_flowInputAbles;
-	std::vector<Uknitty::FlowInputRender*> m_flowInputRenderAbles;
 	Uknitty::Model* m_snakeModel = nullptr;
 
 	const int INITIAL_MAP_ID = 1;
