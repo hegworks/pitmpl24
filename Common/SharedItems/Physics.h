@@ -49,7 +49,7 @@ public:
 	void GetTransform()
 	{
 		if(m_motionState)
-			m_motionState->getWorldTransform(m_rigidBody->getWorldTransform()); //this is the important part
+			return m_motionState->getWorldTransform(m_rigidBody->getWorldTransform()); //this is the important part
 	}
 
 	static inline glm::vec3 BtVec3ToGLMVec3(btVector3 vector)

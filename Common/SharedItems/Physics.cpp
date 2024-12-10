@@ -34,8 +34,10 @@ void Uknitty::Physics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 p
 	btTransform btTransform;
 	btTransform.setIdentity();
 	btTransform.setOrigin(btVector3(position.x, position.y + (scale.y / 2.0), position.z));
+	m_motionState = new btDefaultMotionState(btTransform);
 
 	btVector3 localInertia(0, 0, 0);
+	// if mass is 0, then the object is static (no need to calculate inertia)
 	if(mass > 0.0f)
 	{
 		m_collisionShape->calculateLocalInertia(mass, localInertia);
@@ -44,9 +46,7 @@ void Uknitty::Physics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 p
 	{
 		throw std::runtime_error("mass can't be negative");
 	}
-	// if mass is 0, then the object is static
 
-	m_motionState = new btDefaultMotionState(btTransform);
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyInfo(mass, m_motionState, m_collisionShape, localInertia);
 	m_rigidBody = new btRigidBody(rigidBodyInfo);
 }

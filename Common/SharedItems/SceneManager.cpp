@@ -5,6 +5,7 @@
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
+#include "Physics.h"
 #include "Player.h"
 #include "Scene.h"
 #include "ShaderProgram.h"
@@ -56,12 +57,13 @@ void SceneManager::Start()
 
 	CreateShaderProgram();
 
+	CreatePhysicsWorld();
+
 	CreatePlayer();
+	m_btDynamicsWorld->addRigidBody(m_player->GetPhysics()->GetRigidBody());
 	m_interfaceManager->AddFlowInputRender(m_player);
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
-
-	CreatePhysicsWorld();
 
 	LoadScene(INITIAL_MAP_ID);
 	m_interfaceManager->AddFlowInputRender(m_currentScene);

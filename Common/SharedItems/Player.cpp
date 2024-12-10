@@ -2,6 +2,7 @@
 #include "ICamera.h"
 #include "Interfaces.h"
 #include "Model.h"
+#include "Physics.h"
 #include "Player.h"
 #include "Transform.h"
 #include <iostream>
@@ -13,6 +14,10 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 	m_shaderProgram = shaderProgram;
 
 	m_transform = new Uknitty::Transform();
+	m_physics = new Uknitty::Physics();
+	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
+	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
+	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
 }
 
 Player::~Player()
@@ -83,7 +88,7 @@ void Player::Update(float deltaTime)
 	if(glm::length(movement) > 0)
 	{
 		movement = glm::normalize(movement);
-		m_transform->SetPosition(*m_transform->GetPosition() + movement * m_moveSpeed * deltaTime);
+		m_physics->GetRigidBody()->setLinearVelocity(btVector3(movement.x * m_moveSpeed, 0, movement.z * m_moveSpeed));
 
 		// REF: these calculations for gradual rotation are from ChatGPT
 		float targetAngle = atan2(movement.x, movement.z);
@@ -97,6 +102,15 @@ void Player::Update(float deltaTime)
 		glm::vec3 rotation = glm::vec3(0, glm::degrees(newAngle), 0);
 		m_transform->SetRotation(rotation);
 	}
+	else
+	{
+		btVector3 linearVelocity = m_physics->GetRigidBody()->getLinearVelocity();
+		// we don't want to affect gravity
+		m_physics->GetRigidBody()->setLinearVelocity(btVector3(0, linearVelocity.getY(), 0));
+	}
+	glm::vec3 rigidBodyPos = Uknitty::Physics::BtVec3ToGLMVec3(m_physics->GetRigidBody()->getWorldTransform().getOrigin());
+	rigidBodyPos.y -= MODEL_DIMENSIONS.y / 2.0;
+	m_transform->SetPosition(rigidBodyPos);
 }
 
 void Player::LateUpdate(float deltaTime)
