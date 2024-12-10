@@ -138,6 +138,13 @@ void Scene::LoadObjectDataFromMap()
 				m_tankPositions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
+		if(objectGroup.name == FENCE_OBJECTGROUP)
+		{
+			for(tmxparser::TmxObject& object : objectGroup.objects)
+			{
+				m_fencePositions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+			}
+		}
 		if(objectGroup.name == WALL_OBJECTGROUP)
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
@@ -213,6 +220,19 @@ void Scene::CreateSolidObjectsFromData()
 		}
 	}
 #pragma endregion Tank
+
+#pragma region Fence
+	{
+		glm::vec3 modelDimensions = glm::vec3(4, 4, 0.3);
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence.obj");
+		m_models.push_back(model);
+		for(auto& pos : m_fencePositions)
+		{
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			m_interfaceManager->AddRender(solidObject);
+		}
+	}
+#pragma endregion Fence
 
 #pragma region Wall
 	for(auto& wallData : m_wallDatas)

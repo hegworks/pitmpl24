@@ -15,5 +15,5 @@ public:
 
 private:
 	RoomChangeStorage* m_roomChangeStorage;
-	int m_currentLevelId = 1;
+	int m_currentLevelId = 0;
 };

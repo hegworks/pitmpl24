@@ -4,7 +4,7 @@
   <export target="2.csv" format="csv"/>
  </editorsettings>
  <imagelayer id="3" name="Image Layer 1">
-  <image source="2.png" width="1024" height="768"/>
+  <image source="5.png" width="1024" height="768"/>
  </imagelayer>
  <objectgroup id="3" name="tank">
   <object id="54" name="tank" type="Solid" x="352" y="352">

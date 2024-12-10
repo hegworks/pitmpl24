@@ -69,7 +69,7 @@ void SceneManager::Start()
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
 
-	LoadScene(INITIAL_MAP_ID);
+	LoadScene(m_roomFinder->GetCurrentLevelId());
 	m_interfaceManager->AddFlowInputRender(m_currentScene);
 
 	m_interfaceManager->Awake();

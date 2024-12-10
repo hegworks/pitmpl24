@@ -75,12 +75,14 @@ private:
 	const std::string TANK_OBJECTGROUP = "tank";
 	const std::string WALL_OBJECTGROUP = "wall";
 	const std::string RC_OBJECTGROUP = "rc";
+	const std::string FENCE_OBJECTGROUP = "fence";
 
 	int m_mapId = 0;
 
 	std::vector<glm::ivec2> m_crate2x4positions;
 	std::vector<glm::ivec2> m_crate4x4positions;
 	std::vector<glm::ivec2> m_tankPositions;
+	std::vector<glm::ivec2> m_fencePositions;
 	std::vector<WallData*> m_wallDatas;
 	std::vector<Uknitty::Model*> m_models;
 	std::vector<RoomChangeData*> m_roomChangeDatas;

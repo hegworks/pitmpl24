@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="63">
- <imagelayer id="13" name="Image Layer 1">
-  <image source="../../../../../BlockA/MetalGear/assets/tiles/1.png" width="1024" height="768"/>
- </imagelayer>
-</map>
