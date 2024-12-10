@@ -35,7 +35,8 @@ public:
 	}
 
 	void Draw(ShaderProgram& shader);
-	std::string GetFileName() const { return m_directory; }
+	std::string GetDirectory() const { return m_directory; }
+	std::string GetStrippedFileName() const;
 
 private:
 	// model data
@@ -70,6 +71,13 @@ inline void Model::loadModel(std::string path)
 	m_directory = path.substr(0, path.find_last_of('/'));
 
 	processNode(scene->mRootNode, scene);
+}
+
+inline std::string Model::GetStrippedFileName() const
+{
+	std::string result = m_directory.substr(m_directory.find_last_of('/') + 1);
+	result = result.substr(result.find_last_of('\\') + 1);
+	return result;
 }
 
 inline void Model::processNode(aiNode* node, const aiScene* scene)

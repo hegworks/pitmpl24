@@ -100,6 +100,9 @@
     <Filter Include="Assets\Maps">
       <UniqueIdentifier>{a3b53a78-87ef-410b-9ede-daa2348dd917}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Headers\Room">
+      <UniqueIdentifier>{b28ea2da-5b17-4a32-a0b0-cf2401341ca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
@@ -207,6 +210,21 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChange.h">
+      <Filter>Game\Headers\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangePositionType.h">
+      <Filter>Game\Headers\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeStorage.h">
+      <Filter>Game\Headers\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeType.h">
+      <Filter>Game\Headers\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomFinder.h">
+      <Filter>Game\Headers\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -268,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp">
       <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)roomFinder.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

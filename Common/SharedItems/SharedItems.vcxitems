@@ -40,6 +40,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChange.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangePositionType.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeType.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)roomFinder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h" />
@@ -63,6 +68,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)roomFinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />

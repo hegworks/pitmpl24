@@ -19,6 +19,10 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
+	auto userPointerData = new Uknitty::Physics::UserPointerData();
+	userPointerData->physicsType = Uknitty::Physics::PhysicsType::PLAYER;
+	userPointerData->name = "Player";
+	m_physics->SetUserPointerData(userPointerData);
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Player");
 }
 

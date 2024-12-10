@@ -2,6 +2,7 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "glm.hpp"
+#include "roomChangeType.h"
 
 namespace Uknitty
 {
@@ -11,6 +12,21 @@ class Physics
 public:
 	Physics();
 	~Physics();
+
+	enum class PhysicsType
+	{
+		SOLID,
+		PLAYER,
+		ROOM_CHANGE,
+	};
+
+	struct UserPointerData
+	{
+		PhysicsType physicsType;
+		RoomChangeType roomChangeType;
+		std::string name;
+		void* extraData;  // Optional additional data
+	};
 
 	void InitialzeWithBoxShape(glm::vec3 position, glm::vec3 scale, float mass);
 	void InitialzeWithCapsuleShape(glm::vec3 position, float radius, float height, float mass);
@@ -62,10 +78,19 @@ public:
 		return btVector3(vector.x, vector.y, vector.z);
 	}
 
+	void SetUserPointerData(UserPointerData* userPointerData)
+	{
+		m_userPointerData = userPointerData;
+		m_rigidBody->setUserPointer(m_userPointerData);
+	}
+
+	UserPointerData* GetUserPointerData() const { return m_userPointerData; }
+
 private:
 	btRigidBody* m_rigidBody = nullptr;
 	btCollisionShape* m_collisionShape = nullptr;
 	btMotionState* m_motionState = nullptr; // the general position, orientation and scale of our object to return back
+	UserPointerData* m_userPointerData = nullptr;
 
 	void Initialze(btCollisionShape* btCollisionShape, glm::vec3 position, glm::vec3 scale, float mass);
 };

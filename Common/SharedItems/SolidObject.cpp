@@ -15,12 +15,16 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
-	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetFileName());
+	auto userPointerData = new Uknitty::Physics::UserPointerData();
+	userPointerData->physicsType = Uknitty::Physics::PhysicsType::SOLID;
+	userPointerData->name = model->GetStrippedFileName();
+	m_physics->SetUserPointerData(userPointerData);
+	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetStrippedFileName());
 }
 
 SolidObject::~SolidObject()
 {
-	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), m_model->GetFileName());
+	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), m_model->GetStrippedFileName());
 	delete m_physics;
 	delete m_transform;
 }
@@ -38,7 +42,7 @@ void SolidObject::Draw()
 
 void SolidObject::Destroy()
 {
-	std::cout << "Destroying SolidObject with model: " << m_model->GetFileName() << std::endl;
+	std::cout << "Destroying SolidObject with model: " << m_model->GetStrippedFileName() << std::endl;
 	delete this;
 }
 
