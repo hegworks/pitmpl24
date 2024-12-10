@@ -60,7 +60,7 @@ void SceneManager::Start()
 	CreatePhysicsWorld();
 
 	CreatePlayer();
-	m_btDynamicsWorld->addRigidBody(m_player->GetPhysics()->GetRigidBody());
+	m_btDynamicsWorld->DebugAddRigidBody(m_player->GetPhysics()->GetRigidBody(), "Player");
 	m_interfaceManager->AddFlowInputRender(m_player);
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
@@ -91,8 +91,8 @@ void SceneManager::FixedUpdate()
 void SceneManager::Destroy()
 {
 	std::cout << "Destroying SceneManager" << std::endl;
-	DestroyPhysics();
 	m_interfaceManager->Destroy();
+	DestroyPhysics();
 	delete m_shaderProgram;
 	delete m_snakeModel;
 	delete this;
@@ -172,7 +172,7 @@ void SceneManager::CreatePhysicsWorld()
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 
-		m_btDynamicsWorld->addRigidBody(body);
+		m_btDynamicsWorld->DebugAddRigidBody(body, "sphere");
 	}
 #pragma endregion
 

@@ -165,8 +165,7 @@ void Scene::CreateSolidObjectsFromData()
 
 		for(auto& pos : m_crate2x4positions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -179,8 +178,7 @@ void Scene::CreateSolidObjectsFromData()
 		m_models.push_back(model);
 		for(auto& pos : m_crate4x4positions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -193,8 +191,7 @@ void Scene::CreateSolidObjectsFromData()
 		m_models.push_back(tankModel);
 		for(auto& pos : m_tankPositions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			SolidObject* solidObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -227,9 +224,8 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallVerticalScale.x, 4, wallVerticalScale.z);
-					SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
-					m_btDynamicsWorld->addRigidBody(wallVerticalObject->GetPhysics()->GetRigidBody());
 					m_interfaceManager->AddRender(wallVerticalObject);
 				}
 			}
@@ -258,9 +254,8 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallHorizontalScale.x, 4, wallHorizontalScale.z);
-					SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
-					m_btDynamicsWorld->addRigidBody(wallHorizontalObject->GetPhysics()->GetRigidBody());
 					m_interfaceManager->AddRender(wallHorizontalObject);
 				}
 			}
@@ -274,9 +269,8 @@ void Scene::CreateSolidObjectsFromData()
 				m_models.push_back(wallUniformModel);
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
-					SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
-					m_btDynamicsWorld->addRigidBody(wallUnifromObject->GetPhysics()->GetRigidBody());
 					m_interfaceManager->AddRender(wallUnifromObject);
 				}
 			}
@@ -296,10 +290,9 @@ void Scene::CreateGround()
 	m_models.push_back(plane);
 	{
 		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
-		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, modelDimensions, glm::vec3(0));
+		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(0));
 		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
 		planeObject->GetPhysics()->SetPosition(glm::vec3(0, -1 * modelDimensions.y / 2.0, 0));
-		m_btDynamicsWorld->addRigidBody(planeObject->GetPhysics()->GetRigidBody());
 		m_interfaceManager->AddRender(planeObject);
 	}
 }

@@ -87,9 +87,22 @@ public:
 
 	virtual void addRigidBody(btRigidBody* body) = 0;
 
+	inline void DebugAddRigidBody(btRigidBody* body, std::string name)
+	{
+		printf("Adding RigidBody: %s\n", name.c_str());
+		addRigidBody(body);
+	}
+
 	virtual void addRigidBody(btRigidBody* body, int group, int mask) = 0;
 
 	virtual void removeRigidBody(btRigidBody* body) = 0;
+
+	inline void DebugRemoveRigidBody(btRigidBody* body, std::string name)
+	{
+		printf("Removing RigidBody: %s\n", name.c_str());
+		removeRigidBody(body);
+		printf("Rigidbodies Left: %i\n", getNumCollisionObjects());
+	}
 
 	virtual void setConstraintSolver(btConstraintSolver* solver) = 0;
 

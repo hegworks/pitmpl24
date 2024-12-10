@@ -6,19 +6,22 @@
 #include "Transform.h"
 #include <iostream>
 
-SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position)
+SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, glm::vec3 modelDimensions, glm::vec3 position)
 {
-	SetDependencies(iCamera, model, shaderProgram);
+	SetDependencies(iCamera, model, shaderProgram, btDynamicsWorld);
 
 	m_transform = new Uknitty::Transform();
 	m_transform->SetPosition(position);
 
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
+	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetFileName());
 }
 
 SolidObject::~SolidObject()
 {
+	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), m_model->GetFileName());
+	delete m_physics;
 	delete m_transform;
 }
 
@@ -39,9 +42,10 @@ void SolidObject::Destroy()
 	delete this;
 }
 
-void SolidObject::SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram)
+void SolidObject::SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
 {
 	m_iCamera = iCamera;
 	m_model = model;
 	m_shaderProgram = shaderProgram;
+	m_btDynamicsWorld = btDynamicsWorld;
 }
