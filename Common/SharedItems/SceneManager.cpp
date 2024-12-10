@@ -8,6 +8,7 @@
 #include "Model.h"
 #include "Physics.h"
 #include "Player.h"
+#include "roomFinder.h"
 #include "Scene.h"
 #include "ShaderProgram.h"
 #include <BTDebugDraw.h>
@@ -49,6 +50,7 @@ void SceneManager::KeyUp(Key key)
 void SceneManager::Awake()
 {
 	m_interfaceManager = new Uknitty::InterfaceManager();
+	m_roomFinder = new RoomFinder();
 }
 
 void SceneManager::Start()
@@ -63,6 +65,7 @@ void SceneManager::Start()
 	CreatePlayer();
 	m_collisionManager->registerListener(m_player->GetPhysics()->GetRigidBody(), m_player->GetPhysics());
 	m_interfaceManager->AddFlowInputRender(m_player);
+	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
 
@@ -105,9 +108,30 @@ void SceneManager::Draw()
 	m_btDynamicsWorld->debugDrawWorld();
 }
 
+void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
+{
+	std::cout << "Player collided with room change: " << static_cast<int>(roomChangeType) << std::endl;
+	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
+	int newMapId = newRoomChange->nextRoomId;
+	ChangeScene(newMapId);
+	m_roomFinder->SetCurrentLevelId(newMapId);
+	m_player->RoomChangedSetPosition(newRoomChange);
+}
+
 void SceneManager::LoadScene(int mapId)
 {
 	m_currentScene = new Scene(mapId, m_camera, m_shaderProgram, m_player, m_btDynamicsWorld);
+}
+
+void SceneManager::ChangeScene(int mapId)
+{
+	m_currentScene->Destroy();
+	m_interfaceManager->RemoveFlowInputRender(m_currentScene);
+	m_currentMapId = mapId;
+	LoadScene(m_currentMapId);
+	m_interfaceManager->AddFlowInputRender(m_currentScene);
+	m_currentScene->Awake();
+	m_currentScene->Start();
 }
 
 void SceneManager::CreatePlayer()

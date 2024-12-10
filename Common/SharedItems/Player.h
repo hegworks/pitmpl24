@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Interfaces.h"
+#include "roomChange.h"
+#include "roomChangeType.h"
+#include <functional>
 
 namespace Uknitty
 {
@@ -38,6 +41,8 @@ public:
 	virtual void Draw() override;
 
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
+	void SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback);
+	void RoomChangedSetPosition(RoomChange* roomChange);
 
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;
@@ -45,7 +50,7 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
-	const float SPEED_WALK = 2.0f;
+	const float SPEED_WALK = 3.0f;
 	const float SPEED_ROTATION = 1.7f;
 	const Key FORWARD_KEY = Key::W;
 	const Key BACKWARD_KEY = Key::S;
@@ -59,6 +64,8 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
+
+	std::function<void(RoomChangeType roomChangeType)> m_collidedWithRoomChangeCallback = nullptr;
 
 	void OnCollision(const btCollisionObject* other);
 };

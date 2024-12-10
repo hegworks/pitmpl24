@@ -3,6 +3,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "IInputKey.h"
 #include "Interfaces.h"
+#include <roomChangeType.h>
 #include <string>
 #include <vector>
 
@@ -17,6 +18,7 @@ class CollisionManager;
 class Scene;
 class GeneralCamera;
 class Player;
+class RoomFinder;
 
 class SceneManager : public Uknitty::FlowInputRender
 {
@@ -40,6 +42,7 @@ private:
 	Player* m_player = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
+	RoomFinder* m_roomFinder = nullptr;
 
 	btDefaultCollisionConfiguration* m_btCollisionConfiguration = nullptr;
 	btDbvtBroadphase* m_btBroadphase = nullptr;
@@ -61,7 +64,10 @@ private:
 
 	int m_currentMapId = INITIAL_MAP_ID;
 
+	void OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType);
+
 	void LoadScene(int mapId);
+	void ChangeScene(int mapId);
 	void CreatePlayer();
 	void CreateCamera();
 	void CreateShaderProgram();

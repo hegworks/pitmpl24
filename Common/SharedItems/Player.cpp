@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Transform.h"
 #include <iostream>
+#include <roomChange.h>
+#include <roomChangePositionType.h>
 
 Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
 {
@@ -151,6 +153,35 @@ void Player::Draw()
 	m_shaderProgram->UnUse();
 }
 
+void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)
+{
+	m_collidedWithRoomChangeCallback = callback;
+}
+
+void Player::RoomChangedSetPosition(RoomChange* roomChange)
+{
+	glm::vec3 currentPos = *m_transform->GetPosition();
+	glm::vec2 newPos2D = glm::vec2(currentPos.x, currentPos.z);
+	switch(roomChange->positionType)
+	{
+		case RoomChangePositionType::TOP:
+		case RoomChangePositionType::BOTTOM:
+			newPos2D.y = roomChange->newPlayerPos.y;
+			break;
+		case RoomChangePositionType::LEFT:
+		case RoomChangePositionType::RIGHT:
+			newPos2D.x = roomChange->newPlayerPos.x;
+			break;
+		case RoomChangePositionType::EXCEPTION:
+			newPos2D = roomChange->newPlayerPos;
+			break;
+		default:
+			throw std::runtime_error("Invalid room change position type");
+	}
+	glm::vec3 newPos3D = glm::vec3(newPos2D.x, currentPos.y, newPos2D.y);
+	m_physics->SetPosition(newPos3D);
+}
+
 void Player::OnCollision(const btCollisionObject* other)
 {
 	if(other->getUserPointer())
@@ -159,6 +190,10 @@ void Player::OnCollision(const btCollisionObject* other)
 		if(data->physicsType == Uknitty::Physics::PhysicsType::ROOM_CHANGE)
 		{
 			std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
+			if(m_collidedWithRoomChangeCallback)
+			{
+				m_collidedWithRoomChangeCallback(data->roomChangeType);
+			}
 		}
 		else
 		{

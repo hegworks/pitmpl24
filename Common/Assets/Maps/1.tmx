@@ -91,19 +91,16 @@
   <object id="63" name="rc2" type="rc" x="32" y="-32" width="800" height="32">
    <properties>
     <property name="RoomChangeType" type="int" value="2"/>
-    <property name="udlr" type="int" value="0"/>
    </properties>
   </object>
   <object id="75" name="rc1" type="rc" x="1024" y="512" width="32" height="224">
    <properties>
     <property name="RoomChangeType" type="int" value="1"/>
-    <property name="udlr" type="int" value="3"/>
    </properties>
   </object>
   <object id="74" name="rc0" type="rc" x="384" y="768" width="256" height="32">
    <properties>
     <property name="RoomChangeType" type="int" value="0"/>
-    <property name="udlr" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>

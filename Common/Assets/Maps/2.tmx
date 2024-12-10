@@ -90,4 +90,16 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup id="14" name="rc">
+  <object id="75" name="rc1" type="rc" x="1024" y="128" width="32" height="608">
+   <properties>
+    <property name="RoomChangeType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="74" name="rc0" type="rc" x="-32" y="512" width="32" height="224">
+   <properties>
+    <property name="RoomChangeType" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
