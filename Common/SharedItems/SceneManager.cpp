@@ -209,8 +209,33 @@ void SceneManager::UpdatePhysics()
 {
 	m_btDynamicsWorld->stepSimulation(1.0f / 60.0f, 10);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
-	m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
-
+	bool isPlayerNullptr = m_player;
+	bool isPlayerPhysicsNullptr = m_player->GetPhysics();
+	bool isPlayerRigidBodyNullptr = m_player->GetPhysics()->GetRigidBody();
+	bool isCollisionManagerNullptr = m_collisionManager;
+	if(isPlayerNullptr && isPlayerPhysicsNullptr && isPlayerRigidBodyNullptr && isCollisionManagerNullptr)
+	{
+		m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
+	}
+	else
+	{
+		if(!isPlayerNullptr)
+		{
+			std::cout << "ERROR::Player is nullptr" << std::endl;
+		}
+		if(!isPlayerPhysicsNullptr)
+		{
+			std::cout << "ERROR::Player Physics is nullptr" << std::endl;
+		}
+		if(!isPlayerRigidBodyNullptr)
+		{
+			std::cout << "ERROR::Player RigidBody is nullptr" << std::endl;
+		}
+		if(!isCollisionManagerNullptr)
+		{
+			std::cout << "ERROR::Collision Manager is nullptr" << std::endl;
+		}
+	}
 	/*int numManifolds = m_btDynamicsWorld->getDispatcher()->getNumManifolds();
 	for(int i = 0; i < numManifolds; i++)
 	{
