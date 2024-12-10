@@ -14,7 +14,7 @@ class Physics;
 class Player : public Uknitty::FlowInputRender
 {
 public:
-	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram);
+	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld);
 	~Player();
 
 	Uknitty::Model* m_model = nullptr;
@@ -43,6 +43,7 @@ private:
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::Physics* m_physics = nullptr;
+	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
 	const float SPEED_WALK = 2.0f;
 	const float SPEED_ROTATION = 1.7f;

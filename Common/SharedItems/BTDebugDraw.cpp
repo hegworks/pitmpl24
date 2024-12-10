@@ -28,6 +28,7 @@ BTDebugDraw::~BTDebugDraw()
 	glDeleteVertexArrays(1, &m_vao);
 	glDeleteBuffers(1, &m_vbo);
 	m_shaderProgram->Delete();
+	delete m_shaderProgram;
 }
 
 // REF: this implementation has taken inspiration from https://stackoverflow.com/a/54069424

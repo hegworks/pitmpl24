@@ -7,21 +7,25 @@
 #include "Transform.h"
 #include <iostream>
 
-Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram)
+Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
 {
 	m_model = model;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
+	m_btDynamicsWorld = btDynamicsWorld;
 
 	m_transform = new Uknitty::Transform();
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
+	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Player");
 }
 
 Player::~Player()
 {
+	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), "Player");
+	delete m_physics;
 	delete m_transform;
 }
 

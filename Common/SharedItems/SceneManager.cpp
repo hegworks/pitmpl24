@@ -60,7 +60,6 @@ void SceneManager::Start()
 	CreatePhysicsWorld();
 
 	CreatePlayer();
-	m_btDynamicsWorld->DebugAddRigidBody(m_player->GetPhysics()->GetRigidBody(), "Player");
 	m_interfaceManager->AddFlowInputRender(m_player);
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
@@ -112,7 +111,7 @@ void SceneManager::LoadScene(int mapId)
 void SceneManager::CreatePlayer()
 {
 	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram);
+	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram, m_btDynamicsWorld);
 }
 
 void SceneManager::CreateCamera()
