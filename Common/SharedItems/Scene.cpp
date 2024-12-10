@@ -1,8 +1,10 @@
 #include "Scene.h"
 
+#include "btBulletDynamicsCommon.h"
 #include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
+#include "Physics.h"
 #include "ShaderProgram.h"
 #include "SolidObject.h"
 #include "Transform.h"
@@ -10,12 +12,13 @@
 #include <stdexcept>
 #include <tmxparser.h>
 
-Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player)
+Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld)
 {
 	m_mapId = mapId;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
 	m_player = player;
+	m_btDynamicsWorld = btDynamicsWorld;
 }
 
 void Scene::ProcessMousePosition(double xPos, double yPos)
@@ -153,33 +156,51 @@ void Scene::LoadObjectDataFromMap()
 
 void Scene::CreateSolidObjectsFromData()
 {
-	Uknitty::Model* crate2x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
-	m_models.push_back(crate2x4Model);
-	for(auto& crate2x4pos : m_crate2x4positions)
-	{
-		SolidObject* crate2x4Object = new SolidObject(m_iCamera, crate2x4Model, m_shaderProgram);
-		crate2x4Object->GetTransform()->SetPosition(glm::vec3(crate2x4pos.x, 0, crate2x4pos.y));
-		m_interfaceManager->AddRender(crate2x4Object);
-	}
 
-	Uknitty::Model* crate4x4Model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
-	m_models.push_back(crate4x4Model);
-	for(auto& crate4x4pos : m_crate4x4positions)
+#pragma region Crate2x4
 	{
-		SolidObject* crate4x4Object = new SolidObject(m_iCamera, crate4x4Model, m_shaderProgram);
-		crate4x4Object->GetTransform()->SetPosition(glm::vec3(crate4x4pos.x, 0, crate4x4pos.y));
-		m_interfaceManager->AddRender(crate4x4Object);
-	}
+		glm::vec3 modelDimensions = glm::vec3(2, 1.5, 4);
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
+		m_models.push_back(model);
 
-	Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
-	m_models.push_back(tankModel);
-	for(auto& tankPos : m_tankPositions)
+		for(auto& pos : m_crate2x4positions)
+		{
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			m_interfaceManager->AddRender(solidObject);
+		}
+	}
+#pragma endregion Crate2x4
+
+#pragma region Crate4x4
 	{
-		SolidObject* tankObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram);
-		tankObject->GetTransform()->SetPosition(glm::vec3(tankPos.x, 0, tankPos.y));
-		m_interfaceManager->AddRender(tankObject);
+		glm::vec3 modelDimensions = glm::vec3(4, 1.5, 4);
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+		m_models.push_back(model);
+		for(auto& pos : m_crate4x4positions)
+		{
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			m_interfaceManager->AddRender(solidObject);
+		}
 	}
+#pragma endregion Crate4x4
 
+#pragma region Tank
+	{
+		glm::vec3 modelDimensions = glm::vec3(4, 2, 6);
+		Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
+		m_models.push_back(tankModel);
+		for(auto& pos : m_tankPositions)
+		{
+			SolidObject* solidObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			m_btDynamicsWorld->addRigidBody(solidObject->GetPhysics()->GetRigidBody());
+			m_interfaceManager->AddRender(solidObject);
+		}
+	}
+#pragma endregion Tank
+
+#pragma region Wall
 	for(auto& wallData : m_wallDatas)
 	{
 		switch(wallData->wallType)
@@ -204,10 +225,13 @@ void Scene::CreateSolidObjectsFromData()
 					throw std::runtime_error("vertical wall width bigger than 2 is not supported yet");
 				}
 
-				SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram);
-				wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
-				wallVerticalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_interfaceManager->AddRender(wallVerticalObject);
+				{
+					glm::vec3 modelDimensions = glm::vec3(wallVerticalScale.x, 4, wallVerticalScale.z);
+					SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
+					m_btDynamicsWorld->addRigidBody(wallVerticalObject->GetPhysics()->GetRigidBody());
+					m_interfaceManager->AddRender(wallVerticalObject);
+				}
 			}
 
 			break;
@@ -232,10 +256,13 @@ void Scene::CreateSolidObjectsFromData()
 					throw std::runtime_error("horizontal wall width bigger than 2 is not supported yet");
 				}
 
-				SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram);
-				wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
-				wallHorizontalObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_interfaceManager->AddRender(wallHorizontalObject);
+				{
+					glm::vec3 modelDimensions = glm::vec3(wallHorizontalScale.x, 4, wallHorizontalScale.z);
+					SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
+					m_btDynamicsWorld->addRigidBody(wallHorizontalObject->GetPhysics()->GetRigidBody());
+					m_interfaceManager->AddRender(wallHorizontalObject);
+				}
 			}
 
 			break;
@@ -245,10 +272,13 @@ void Scene::CreateSolidObjectsFromData()
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
 				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
 				m_models.push_back(wallUniformModel);
-				SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram);
-				wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
-				wallUnifromObject->GetTransform()->SetPosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
-				m_interfaceManager->AddRender(wallUnifromObject);
+				{
+					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
+					SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
+					m_btDynamicsWorld->addRigidBody(wallUnifromObject->GetPhysics()->GetRigidBody());
+					m_interfaceManager->AddRender(wallUnifromObject);
+				}
 			}
 
 			break;
@@ -257,13 +287,18 @@ void Scene::CreateSolidObjectsFromData()
 				throw std::runtime_error("uknown WallType");
 		}
 	}
+#pragma endregion Wall
 }
 
 void Scene::CreateGround()
 {
 	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
 	m_models.push_back(plane);
-	SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram);
-	planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
-	m_interfaceManager->AddRender(planeObject);
+	{
+		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
+		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, modelDimensions, glm::vec3(0), glm::vec3(0, -1, 0));
+		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
+		m_btDynamicsWorld->addRigidBody(planeObject->GetPhysics()->GetRigidBody());
+		m_interfaceManager->AddRender(planeObject);
+	}
 }

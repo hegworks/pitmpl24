@@ -170,6 +170,12 @@ void Game::KeyCallback(Key key, KeyAction action)
 	{
 		m_sceneManager->KeyUp(key);
 	}
+
+	if(key == Key::Z && action == KeyAction::DOWN)
+	{
+		m_isWireframeMode = !m_isWireframeMode;
+		glPolygonMode(GL_FRONT_AND_BACK, m_isWireframeMode ? GL_LINE : GL_FILL);
+	}
 }
 #pragma endregion Input
 

@@ -15,11 +15,12 @@ class Model;
 }
 class GeneralCamera;
 class Player;
+class btDynamicsWorld;
 
 class Scene : public Uknitty::FlowInputRender
 {
 public:
-	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player);
+	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld);
 
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
@@ -55,7 +56,7 @@ private:
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
-	int m_mapId = 0;
+	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";
@@ -65,6 +66,8 @@ private:
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
 	const std::string TANK_OBJECTGROUP = "tank";
 	const std::string WALL_OBJECTGROUP = "wall";
+
+	int m_mapId = 0;
 
 	std::vector<glm::ivec2> m_crate2x4positions;
 	std::vector<glm::ivec2> m_crate4x4positions;

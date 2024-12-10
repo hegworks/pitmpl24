@@ -1,7 +1,6 @@
 #include "BTDebugDraw.h"
 
 #include "btBulletDynamicsCommon.h"
-#include "GlCheckError.h"
 #include <ICamera.h>
 #include <ShaderProgram.h>
 
@@ -20,17 +19,18 @@ BTDebugDraw::BTDebugDraw(ICamera* camera)
 {
 	m_camera = camera;
 	m_shaderProgram = new ShaderProgram("../Common/Assets/Shaders/BTDebugVertex.glsl", "../Common/Assets/Shaders/BTDebugFragment.glsl");
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &m_vao);
+	glGenBuffers(1, &m_vbo);
 }
 
 BTDebugDraw::~BTDebugDraw()
 {
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &m_vao);
+	glDeleteBuffers(1, &m_vbo);
 	m_shaderProgram->Delete();
 }
 
+// REF: this implementation has taken inspiration from https://stackoverflow.com/a/54069424
 void BTDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
 	std::vector<float> vertices =
@@ -39,9 +39,9 @@ void BTDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btV
 		to.getX(), to.getY(), to.getZ()
 	};
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(m_vao);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -54,13 +54,8 @@ void BTDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btV
 	m_shaderProgram->SetMat4("uMVP", m_camera->GetProjection() * m_camera->GetView() * glm::mat4(1));
 	m_shaderProgram->SetVec3("uColor", glm::vec3(color.getX(), color.getY(), color.getZ()));
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(m_vao);
 	glDrawArrays(GL_LINES, 0, 2);
-}
-
-void BTDebugDraw::CreateLine()
-{
-
 }
 
 } // namespace Uknitty

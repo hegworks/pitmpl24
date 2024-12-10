@@ -59,4 +59,5 @@ private:
 	bool quitting{false};
 	float gameDeltaTime;
 	int frameCount{0};
+	bool m_isWireframeMode = false;
 };

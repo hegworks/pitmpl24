@@ -10,17 +10,6 @@ namespace Uknitty
 class ShaderProgram;
 class ICamera;
 
-struct GLDebugLine
-{
-	int shaderProgramId;
-	unsigned int VBO, VAO;
-	std::vector<float> vertices;
-	glm::vec3 startPoint;
-	glm::vec3 endPoint;
-	glm::mat4 MVP;
-	glm::vec3 lineColor;
-};
-
 class BTDebugDraw : public btIDebugDraw
 {
 public:
@@ -38,9 +27,7 @@ private:
 	ICamera* m_camera = nullptr;
 	ShaderProgram* m_shaderProgram = nullptr;
 
-	unsigned int VBO, VAO;
-
-	void CreateLine();
+	unsigned int m_vbo, m_vao;
 };
 
 } // namespace Uknitty

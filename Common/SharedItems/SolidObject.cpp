@@ -1,16 +1,31 @@
 #include "ICamera.h"
 #include "Model.h"
+#include "Physics.h"
 #include "ShaderProgram.h"
 #include "SolidObject.h"
 #include "Transform.h"
 #include <iostream>
 
-SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram)
+SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position)
 {
-	m_iCamera = iCamera;
-	m_model = model;
-	m_shaderProgram = shaderProgram;
+	SetDependencies(iCamera, model, shaderProgram);
+
 	m_transform = new Uknitty::Transform();
+	m_transform->SetPosition(position);
+
+	m_physics = new Uknitty::Physics();
+	m_physics->Initialze(position, modelDimensions, 0);
+}
+
+SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position, glm::vec3 colliderPosition)
+{
+	SetDependencies(iCamera, model, shaderProgram);
+
+	m_transform = new Uknitty::Transform();
+	m_transform->SetPosition(position);
+
+	m_physics = new Uknitty::Physics();
+	m_physics->Initialze(colliderPosition, modelDimensions, 0);
 }
 
 SolidObject::~SolidObject()
@@ -33,4 +48,11 @@ void SolidObject::Destroy()
 {
 	std::cout << "Destroying SolidObject with model: " << m_model->GetFileName() << std::endl;
 	delete this;
+}
+
+void SolidObject::SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram)
+{
+	m_iCamera = iCamera;
+	m_model = model;
+	m_shaderProgram = shaderProgram;
 }

@@ -198,13 +198,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)btIDebugDraw.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BTDebugDraw.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GlCheckError.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -264,6 +264,9 @@
       <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
