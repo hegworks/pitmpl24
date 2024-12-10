@@ -23,6 +23,7 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 	userPointerData->physicsType = Uknitty::Physics::PhysicsType::PLAYER;
 	userPointerData->name = "Player";
 	m_physics->SetUserPointerData(userPointerData);
+	m_physics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Player");
 }
 
@@ -148,4 +149,13 @@ void Player::Draw()
 	glDisable(GL_BLEND);
 	m_model->Draw(*m_shaderProgram);
 	m_shaderProgram->UnUse();
+}
+
+void Player::OnCollision(const btCollisionObject* other)
+{
+	if(other->getUserPointer())
+	{
+		auto data = static_cast<Uknitty::Physics::UserPointerData*>(other->getUserPointer());
+		std::cout << "Player collided with " << data->name << std::endl;
+	}
 }

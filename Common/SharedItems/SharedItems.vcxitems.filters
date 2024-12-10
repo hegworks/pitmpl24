@@ -225,6 +225,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)roomFinder.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)roomFinder.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

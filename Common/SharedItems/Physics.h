@@ -3,6 +3,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "glm.hpp"
 #include "roomChangeType.h"
+#include <functional>
 
 namespace Uknitty
 {
@@ -38,6 +39,8 @@ public:
 	btCollisionShape* GetShape() { return m_collisionShape; }
 	btRigidBody* GetRigidBody() { return m_rigidBody; }
 	btMotionState* GetMotionState() { return m_motionState; }
+
+	std::function<void(const btCollisionObject* other)> m_collisionCallback;
 
 	//// couple of useful utility functions to simplify the rotate and position of our physics objects 
 	//// these act on the Rigid body and therefore will reposition/orient an object while it is
@@ -85,6 +88,19 @@ public:
 	}
 
 	UserPointerData* GetUserPointerData() const { return m_userPointerData; }
+
+	void SetCollisionCallback(std::function<void(const btCollisionObject* other)> callback)
+	{
+		m_collisionCallback = callback;
+	}
+
+	void OnCollision(const btCollisionObject* other)
+	{
+		if(m_collisionCallback)
+		{
+			m_collisionCallback(other);
+		}
+	}
 
 private:
 	btRigidBody* m_rigidBody = nullptr;

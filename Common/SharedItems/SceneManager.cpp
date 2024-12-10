@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include "btBulletDynamicsCommon.h"
+#include "CollisionManager.h"
 #include "common.h"
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
@@ -60,6 +61,7 @@ void SceneManager::Start()
 	CreatePhysicsWorld();
 
 	CreatePlayer();
+	m_collisionManager->registerListener(m_player->GetPhysics()->GetRigidBody(), m_player->GetPhysics());
 	m_interfaceManager->AddFlowInputRender(m_player);
 
 	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
@@ -141,6 +143,8 @@ void SceneManager::CreatePhysicsWorld()
 	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
 	m_btDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	m_btDynamicsWorld->setDebugDrawer(m_btDebugDrawer);
+
+	m_collisionManager = new Uknitty::CollisionManager();
 #pragma endregion Bullet Initialization
 
 #pragma region Sphere Dynamic RigidBody
@@ -180,27 +184,8 @@ void SceneManager::CreatePhysicsWorld()
 void SceneManager::UpdatePhysics()
 {
 	m_btDynamicsWorld->stepSimulation(1.0f / 60.0f, 10);
-	btCollisionObject* obj = m_btDynamicsWorld->getCollisionObjectArray()[2];
-	//print positions of all objects
-	for(int j = m_btDynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-	{
-		btCollisionObject* obj = m_btDynamicsWorld->getCollisionObjectArray()[j];
-		btRigidBody* body = btRigidBody::upcast(obj);
-		if(j == m_btDynamicsWorld->getNumCollisionObjects() - 1)
-		{
-			body->setLinearVelocity(btVector3(1.0, body->getLinearVelocity().getY(), 1.0));
-		}
-		btTransform trans;
-		if(body && body->getMotionState())
-		{
-			body->getMotionState()->getWorldTransform(trans);
-		}
-		else
-		{
-			trans = obj->getWorldTransform();
-		}
-		//printf("world pos object %d = %f,%f,%f\n", j, float(trans.getOrigin().getX()), float(trans.getOrigin().getY()), float(trans.getOrigin().getZ()));
-	}
+	m_btDynamicsWorld->performDiscreteCollisionDetection();
+	m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
 
 	/*int numManifolds = m_btDynamicsWorld->getDispatcher()->getNumManifolds();
 	for(int i = 0; i < numManifolds; i++)

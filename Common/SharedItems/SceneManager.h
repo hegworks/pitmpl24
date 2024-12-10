@@ -12,6 +12,7 @@ class ShaderProgram;
 class InterfaceManager;
 class Model;
 class BTDebugDraw;
+class CollisionManager;
 }
 class Scene;
 class GeneralCamera;
@@ -49,6 +50,7 @@ private:
 	//keep track of the shapes, we release memory at exit.
 	//make sure to re-use collision shapes among rigid bodies whenever possible!
 	btAlignedObjectArray<btCollisionShape*> m_btCollisionShapes;
+	Uknitty::CollisionManager* m_collisionManager = nullptr;
 
 	Uknitty::Model* m_snakeModel = nullptr;
 

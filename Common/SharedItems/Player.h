@@ -59,4 +59,6 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
+
+	void OnCollision(const btCollisionObject* other);
 };
