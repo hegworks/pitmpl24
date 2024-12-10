@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "Interfaces.h"
+#include "roomChangeType.h"
 #include "tmxparser.h"
 #include <string>
 #include <vector>
@@ -50,6 +51,13 @@ private:
 		WallType wallType;
 	};
 
+	struct RoomChangeData
+	{
+		glm::vec2 position;
+		glm::ivec2 size;
+		RoomChangeType roomChangeType;
+	};
+
 	GeneralCamera* m_generalCamera = nullptr;
 	Player* m_player = nullptr;
 	tmxparser::TmxMap m_tmxMap;
@@ -66,6 +74,7 @@ private:
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
 	const std::string TANK_OBJECTGROUP = "tank";
 	const std::string WALL_OBJECTGROUP = "wall";
+	const std::string RC_OBJECTGROUP = "rc";
 
 	int m_mapId = 0;
 
@@ -74,6 +83,7 @@ private:
 	std::vector<glm::ivec2> m_tankPositions;
 	std::vector<WallData*> m_wallDatas;
 	std::vector<Uknitty::Model*> m_models;
+	std::vector<RoomChangeData*> m_roomChangeDatas;
 
 	void LoadMapDataFromFile(int mapId);
 	void LoadObjectDataFromMap();

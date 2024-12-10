@@ -15,10 +15,6 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
-	auto userPointerData = new Uknitty::Physics::UserPointerData();
-	userPointerData->physicsType = Uknitty::Physics::PhysicsType::SOLID;
-	userPointerData->name = model->GetStrippedFileName();
-	//m_physics->SetUserPointerData(userPointerData);
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetStrippedFileName());
 }
 

@@ -145,10 +145,27 @@ void Scene::LoadObjectDataFromMap()
 				WallData* wallData = new WallData();
 				wallData->position =
 					MAP_CENTER
-					- glm::vec2((object.x + (object.width / 2.0f)) / TILE_SIZE, (object.y + (object.height / 2.0f)) / TILE_SIZE);
+					- glm::vec2(
+						(object.x + (object.width / 2.0f)) / TILE_SIZE,
+						(object.y + (object.height / 2.0f)) / TILE_SIZE);
 				wallData->size = glm::ivec2(object.width / TILE_SIZE, object.height / TILE_SIZE);
 				wallData->wallType = static_cast<WallType>(std::stoi(object.propertyMap["vhu"]));
 				m_wallDatas.push_back(wallData);
+			}
+		}
+		if(objectGroup.name == RC_OBJECTGROUP)
+		{
+			for(tmxparser::TmxObject& object : objectGroup.objects)
+			{
+				RoomChangeData* roomChangeData = new RoomChangeData();
+				roomChangeData->position =
+					MAP_CENTER
+					- glm::vec2(
+						(object.x + (object.width / 2.0f)) / TILE_SIZE,
+						(object.y + (object.height / 2.0f)) / TILE_SIZE);
+				roomChangeData->size = glm::ivec2(object.width / TILE_SIZE, object.height / TILE_SIZE);
+				roomChangeData->roomChangeType = static_cast<RoomChangeType>(std::stoi(object.propertyMap["RoomChangeType"]));
+				m_roomChangeDatas.push_back(roomChangeData);
 			}
 		}
 	}
@@ -282,6 +299,28 @@ void Scene::CreateSolidObjectsFromData()
 		}
 	}
 #pragma endregion Wall
+
+#pragma region RoomChange
+	{
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
+		m_models.push_back(model);
+		for(auto& data : m_roomChangeDatas)
+		{
+			glm::vec3 scale = glm::vec3(data->size.x, 5, data->size.y);
+			glm::vec3 modelDimensions = glm::vec3(scale.x, 5, scale.z);
+			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(data->position.x, 0, data->position.y));
+			solidObject->GetTransform()->SetScale(scale);
+
+			auto userPointerData = new Uknitty::Physics::UserPointerData();
+			userPointerData->physicsType = Uknitty::Physics::PhysicsType::ROOM_CHANGE;
+			userPointerData->roomChangeType = data->roomChangeType;
+			solidObject->GetPhysics()->SetUserPointerData(userPointerData);
+
+			m_interfaceManager->AddRender(solidObject);
+		}
+	}
+#pragma endregion RoomChange
+
 }
 
 void Scene::CreateGround()

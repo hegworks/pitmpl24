@@ -156,6 +156,13 @@ void Player::OnCollision(const btCollisionObject* other)
 	if(other->getUserPointer())
 	{
 		auto data = static_cast<Uknitty::Physics::UserPointerData*>(other->getUserPointer());
-		std::cout << "Player collided with " << data->name << std::endl;
+		if(data->physicsType == Uknitty::Physics::PhysicsType::ROOM_CHANGE)
+		{
+			std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
+		}
+		else
+		{
+			std::cout << "Player <-----> " << data->name << std::endl;
+		}
 	}
 }
