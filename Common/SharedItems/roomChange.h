@@ -1,7 +1,8 @@
 ﻿#pragma once
+
 #include "glm.hpp"
-#include "roomChangePositionType.h"
-#include "roomChangeType.h"
+#include "RoomChangePositionType.h"
+#include "RoomChangeType.h"
 
 struct RoomChange
 {

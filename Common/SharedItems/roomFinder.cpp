@@ -1,6 +1,6 @@
-﻿#include "roomFinder.h"
+﻿#include "RoomFinder.h"
 
-#include "roomChangeStorage.h"
+#include "RoomChangeStorage.h"
 
 RoomFinder::RoomFinder(RoomChangeStorage* roomChangeStorage)
 {

@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "roomChange.h"
+
+#include "RoomChange.h"
 
 constexpr int TOTAL_LEVEL_MAPS = 10;
 constexpr float RCS_TOP_Y = -11;

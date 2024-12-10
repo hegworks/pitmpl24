@@ -210,19 +210,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)roomChange.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RoomChange.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangePositionType.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RoomChangePositionType.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeStorage.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RoomChangeStorage.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)roomChangeType.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RoomChangeType.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)roomFinder.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)RoomFinder.h">
       <Filter>Game\Headers\Room</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
@@ -290,7 +290,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)roomFinder.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
