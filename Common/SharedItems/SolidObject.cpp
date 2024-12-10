@@ -14,18 +14,7 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 	m_transform->SetPosition(position);
 
 	m_physics = new Uknitty::Physics();
-	m_physics->Initialze(position, modelDimensions, 0);
-}
-
-SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position, glm::vec3 colliderPosition)
-{
-	SetDependencies(iCamera, model, shaderProgram);
-
-	m_transform = new Uknitty::Transform();
-	m_transform->SetPosition(position);
-
-	m_physics = new Uknitty::Physics();
-	m_physics->Initialze(colliderPosition, modelDimensions, 0);
+	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
 }
 
 SolidObject::~SolidObject()

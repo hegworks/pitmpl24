@@ -296,8 +296,9 @@ void Scene::CreateGround()
 	m_models.push_back(plane);
 	{
 		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
-		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, modelDimensions, glm::vec3(0), glm::vec3(0, -1, 0));
+		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, modelDimensions, glm::vec3(0));
 		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
+		planeObject->GetPhysics()->SetPosition(glm::vec3(0, -1 * modelDimensions.y / 2.0, 0));
 		m_btDynamicsWorld->addRigidBody(planeObject->GetPhysics()->GetRigidBody());
 		m_interfaceManager->AddRender(planeObject);
 	}

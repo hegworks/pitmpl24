@@ -15,7 +15,6 @@ class SolidObject : public Uknitty::Render
 {
 public:
 	SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position);
-	SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, glm::vec3 modelDimensions, glm::vec3 position, glm::vec3 colliderPosition);
 	~SolidObject();
 
 	Uknitty::Transform* GetTransform() const { return m_transform; }
