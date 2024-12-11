@@ -63,6 +63,7 @@ private:
 	const Key CHANGE_SCENE_KEY = Key::C;
 
 	int m_currentMapId = INITIAL_MAP_ID;
+	bool m_isNewSceneLoading = false;
 
 	void OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType);
 

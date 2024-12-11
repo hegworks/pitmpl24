@@ -38,7 +38,7 @@ void SceneManager::KeyDown(Key key)
 
 	//else
 	//{
-		m_interfaceManager->KeyDown(key);
+	m_interfaceManager->KeyDown(key);
 	//}
 }
 
@@ -115,7 +115,9 @@ void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 	std::cout << "Player collided with room change: " << static_cast<int>(roomChangeType) << std::endl;
 	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
 	int newMapId = newRoomChange->nextRoomId;
+	m_isNewSceneLoading = true;
 	ChangeScene(newMapId);
+	m_isNewSceneLoading = false;
 	m_roomFinder->SetCurrentLevelId(newMapId);
 	m_player->RoomChangedSetPosition(newRoomChange);
 }
@@ -216,35 +218,12 @@ void SceneManager::CreatePhysicsWorld()
 
 void SceneManager::UpdatePhysics(float deltaTime)
 {
+	if(m_isNewSceneLoading) return;
+
 	m_btDynamicsWorld->stepSimulation(deltaTime, 1.0f / 30.0f, 10);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
-	bool isPlayerNullptr = m_player;
-	bool isPlayerPhysicsNullptr = m_player->GetPhysics();
-	bool isPlayerRigidBodyNullptr = m_player->GetPhysics()->GetRigidBody();
-	bool isCollisionManagerNullptr = m_collisionManager;
-	if(isPlayerNullptr && isPlayerPhysicsNullptr && isPlayerRigidBodyNullptr && isCollisionManagerNullptr)
-	{
-		m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
-	}
-	else
-	{
-		if(!isPlayerNullptr)
-		{
-			std::cout << "ERROR::Player is nullptr" << std::endl;
-		}
-		if(!isPlayerPhysicsNullptr)
-		{
-			std::cout << "ERROR::Player Physics is nullptr" << std::endl;
-		}
-		if(!isPlayerRigidBodyNullptr)
-		{
-			std::cout << "ERROR::Player RigidBody is nullptr" << std::endl;
-		}
-		if(!isCollisionManagerNullptr)
-		{
-			std::cout << "ERROR::Collision Manager is nullptr" << std::endl;
-		}
-	}
+	m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
+
 	/*int numManifolds = m_btDynamicsWorld->getDispatcher()->getNumManifolds();
 	for(int i = 0; i < numManifolds; i++)
 	{
