@@ -4,10 +4,10 @@
 #include "Model.h"
 #include "Physics.h"
 #include "Player.h"
+#include "RoomChange.h"
+#include "RoomChangePositionType.h"
 #include "Transform.h"
 #include <iostream>
-#include <roomChange.h>
-#include <roomChangePositionType.h>
 
 Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
 {
@@ -26,12 +26,20 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 	userPointerData->name = "Player";
 	m_physics->SetUserPointerData(userPointerData);
 	m_physics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
+#ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Player");
+#elif Raspberry_BUILD
+	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody());
+#endif
 }
 
 Player::~Player()
 {
+#ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), "Player");
+#elif Raspberry_BUILD
+	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
+#endif
 	delete m_physics;
 	delete m_transform;
 }

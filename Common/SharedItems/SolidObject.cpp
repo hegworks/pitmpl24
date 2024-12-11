@@ -15,12 +15,21 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
+
+#ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetStrippedFileName());
+#elif Raspberry_BUILD
+	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody());
+#endif
 }
 
 SolidObject::~SolidObject()
 {
+#ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), m_model->GetStrippedFileName());
+#elif Raspberry_BUILD
+	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
+#endif
 	delete m_physics;
 	delete m_transform;
 }

@@ -2,13 +2,13 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "CollisionManager.h"
-#include "common.h"
+#include "Common.h"
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
 #include "Physics.h"
 #include "Player.h"
-#include "roomFinder.h"
+#include "RoomFinder.h"
 #include "Scene.h"
 #include "ShaderProgram.h"
 #include <BTDebugDraw.h>
@@ -25,7 +25,7 @@ void SceneManager::ProcessKeyboard(IKeyboard* iKeyboard)
 
 void SceneManager::KeyDown(Key key)
 {
-	if(key == CHANGE_SCENE_KEY)
+	/*if(key == CHANGE_SCENE_KEY)
 	{
 		m_currentScene->Destroy();
 		m_interfaceManager->RemoveFlowInputRender(m_currentScene);
@@ -34,12 +34,12 @@ void SceneManager::KeyDown(Key key)
 		m_interfaceManager->AddFlowInputRender(m_currentScene);
 		m_currentScene->Awake();
 		m_currentScene->Start();
-	}
+	}*/
 
-	else
-	{
+	//else
+	//{
 		m_interfaceManager->KeyDown(key);
-	}
+	//}
 }
 
 void SceneManager::KeyUp(Key key)
@@ -105,7 +105,9 @@ void SceneManager::Destroy()
 void SceneManager::Draw()
 {
 	m_interfaceManager->Draw();
+#ifdef DEBUG_DRAW
 	m_btDynamicsWorld->debugDrawWorld();
+#endif // DEBUG_DRAW
 }
 
 void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
@@ -164,45 +166,52 @@ void SceneManager::CreatePhysicsWorld()
 	m_btDynamicsWorld = new btDiscreteDynamicsWorld(m_btDispatcher, m_btBroadphase, m_btSolver, m_btCollisionConfiguration);
 	m_btDynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
+#ifdef DEBUG_DRAW
 	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
 	m_btDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	m_btDynamicsWorld->setDebugDrawer(m_btDebugDrawer);
+#endif // DEBUG_DRAW
 
 	m_collisionManager = new Uknitty::CollisionManager();
 #pragma endregion Bullet Initialization
 
-#pragma region Sphere Dynamic RigidBody
-	{
-		//create a dynamic rigidbody
+	/*
+	#pragma region Sphere Dynamic RigidBody
+		{
+			//create a dynamic rigidbody
 
-		//btCollisionShape* colShape = new btBoxShape(btVector3(1,1,1));
-		btCollisionShape* colShape = new btSphereShape(btScalar(1.));
-		m_btCollisionShapes.push_back(colShape);
+			//btCollisionShape* colShape = new btBoxShape(btVector3(1,1,1));
+			btCollisionShape* colShape = new btSphereShape(btScalar(1.));
+			m_btCollisionShapes.push_back(colShape);
 
-		/// Create Dynamic Objects
-		btTransform startTransform;
-		startTransform.setIdentity();
+			/// Create Dynamic Objects
+			btTransform startTransform;
+			startTransform.setIdentity();
 
-		btScalar mass(1.f);
+			btScalar mass(1.f);
 
-		//rigidbody is dynamic if and only if mass is non zero, otherwise static
-		bool isDynamic = (mass != 0.f);
+			//rigidbody is dynamic if and only if mass is non zero, otherwise static
+			bool isDynamic = (mass != 0.f);
 
-		btVector3 localInertia(0, 0, 0);
-		if(isDynamic)
-			colShape->calculateLocalInertia(mass, localInertia);
+			btVector3 localInertia(0, 0, 0);
+			if(isDynamic)
+				colShape->calculateLocalInertia(mass, localInertia);
 
-		startTransform.setOrigin(btVector3(0, 40, 0));
+			startTransform.setOrigin(btVector3(0, 40, 0));
 
-		//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
-		btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
-		btRigidBody* body = new btRigidBody(rbInfo);
+			//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+			btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+			btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, colShape, localInertia);
+			btRigidBody* body = new btRigidBody(rbInfo);
 
-		m_btDynamicsWorld->DebugAddRigidBody(body, "sphere");
-	}
-#pragma endregion
-
+	#ifdef WINDOWS_BUILD
+			m_btDynamicsWorld->DebugAddRigidBody(body, "sphere");
+	#elif Raspberry_BUILD
+			m_btDynamicsWorld->addRigidBody(body);
+	#endif
+		}
+	#pragma endregion
+	*/
 }
 
 void SceneManager::UpdatePhysics()

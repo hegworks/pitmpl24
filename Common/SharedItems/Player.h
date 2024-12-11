@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Interfaces.h"
-#include "roomChange.h"
-#include "roomChangeType.h"
+#include "RoomChange.h"
+#include "RoomChangeType.h"
 #include <functional>
 
 namespace Uknitty

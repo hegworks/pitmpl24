@@ -1,11 +1,14 @@
 #pragma once
 
-#pragma once
 #ifndef SHADER_H
 #define SHADER_H
 
 #ifdef WINDOWS_BUILD
 #include "glad/glad.h"
+#endif
+
+#ifdef Raspberry_BUILD
+#include <GLES3/gl3.h>
 #endif
 
 #include <fstream>

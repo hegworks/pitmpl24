@@ -103,6 +103,9 @@
     <Filter Include="Game\Headers\Room">
       <UniqueIdentifier>{b28ea2da-5b17-4a32-a0b0-cf2401341ca0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Fence">
+      <UniqueIdentifier>{067ba083-b781-4e3e-b924-eed7f0be2e26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
@@ -445,12 +448,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\2.tmx">
       <Filter>Assets\Maps</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\tileset.tsx">
-      <Filter>Assets\Maps</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\0.tsx">
-      <Filter>Assets\Maps</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\1.tmx">
       <Filter>Assets\Maps</Filter>
     </None>
@@ -502,6 +499,42 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\BTDebugVertex.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\Fence.mtl">
+      <Filter>Assets\Models\Fence</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\BaseColor.png">
+      <Filter>Assets\Models\Fence</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\Fence.obj">
+      <Filter>Assets\Models\Fence</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\0.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\3.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\4.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\5.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\6.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\7.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\8.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\9.tmx">
+      <Filter>Assets\Maps</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\Fence2.mtl">
+      <Filter>Assets\Models\Fence</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -509,6 +542,9 @@
     </Object>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Sphere.obj">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Object>
+    <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\Fence2.obj">
+      <Filter>Assets\Models\Fence</Filter>
     </Object>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "common.h"
+#include "Common.h"
 #include "Interfaces.h"
-#include "roomChangeType.h"
+#include "RoomChangeType.h"
 #include "tmxparser.h"
 #include <string>
 #include <vector>

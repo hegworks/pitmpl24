@@ -1,9 +1,9 @@
 #pragma once
 
 #include "btBulletDynamicsCommon.h"
-#include "glm.hpp"
-#include "roomChangeType.h"
+#include "RoomChangeType.h"
 #include <functional>
+#include <glm/glm.hpp>
 
 namespace Uknitty
 {

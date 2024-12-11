@@ -224,7 +224,7 @@ void Scene::CreateSolidObjectsFromData()
 #pragma region Fence
 	{
 		glm::vec3 modelDimensions = glm::vec3(4, 4, 0.3);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence2.obj");
 		m_models.push_back(model);
 		for(auto& pos : m_fencePositions)
 		{
