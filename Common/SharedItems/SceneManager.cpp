@@ -78,7 +78,7 @@ void SceneManager::Start()
 
 void SceneManager::Update(float deltaTime)
 {
-	UpdatePhysics();
+	UpdatePhysics(deltaTime);
 	m_interfaceManager->Update(deltaTime);
 }
 
@@ -214,9 +214,9 @@ void SceneManager::CreatePhysicsWorld()
 	*/
 }
 
-void SceneManager::UpdatePhysics()
+void SceneManager::UpdatePhysics(float deltaTime)
 {
-	m_btDynamicsWorld->stepSimulation(1.0f / 60.0f, 10);
+	m_btDynamicsWorld->stepSimulation(deltaTime, 1.0f / 30.0f, 10);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	bool isPlayerNullptr = m_player;
 	bool isPlayerPhysicsNullptr = m_player->GetPhysics();

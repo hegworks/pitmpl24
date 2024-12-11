@@ -50,7 +50,7 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
-	const float SPEED_WALK = 3.0f;
+	const float SPEED_WALK = 1.5f;
 	const float SPEED_ROTATION = 1.7f;
 	const Key FORWARD_KEY = Key::W;
 	const Key BACKWARD_KEY = Key::S;

@@ -72,6 +72,6 @@ private:
 	void CreateCamera();
 	void CreateShaderProgram();
 	void CreatePhysicsWorld();
-	void UpdatePhysics();
+	void UpdatePhysics(float deltaTime);
 	void DestroyPhysics();
 };
