@@ -11,6 +11,8 @@ namespace Uknitty
 class InterfaceManager
 {
 public:
+
+#pragma region Input
 	void ProcessMousePosition(double xPos, double yPos)
 	{
 		ProcessMousePositionCaller(m_inputAbles, xPos, yPos);
@@ -45,17 +47,23 @@ public:
 		KeyUpCaller(m_flowInputAbles, key);
 		KeyUpCaller(m_flowInputRenderAbles, key);
 	}
+#pragma endregion Input
 
+#pragma region Render
 	void Draw()
 	{
 		DrawCaller(m_renderAbles);
+		DrawCaller(m_flowRenderAbles);
 		DrawCaller(m_flowInputRenderAbles);
 	}
+#pragma endregion Render
 
+#pragma region Flow
 	void Awake()
 	{
 		AwakeCaller(m_flowAbles);
 		AwakeCaller(m_flowInputAbles);
+		AwakeCaller(m_flowRenderAbles);
 		AwakeCaller(m_flowInputRenderAbles);
 	}
 
@@ -63,6 +71,7 @@ public:
 	{
 		StartCaller(m_flowAbles);
 		StartCaller(m_flowInputAbles);
+		StartCaller(m_flowRenderAbles);
 		StartCaller(m_flowInputRenderAbles);
 	}
 
@@ -70,6 +79,7 @@ public:
 	{
 		UpdateCaller(m_flowAbles, deltaTime);
 		UpdateCaller(m_flowInputAbles, deltaTime);
+		UpdateCaller(m_flowRenderAbles, deltaTime);
 		UpdateCaller(m_flowInputRenderAbles, deltaTime);
 	}
 
@@ -77,6 +87,7 @@ public:
 	{
 		LateUpdateCaller(m_flowAbles, deltaTime);
 		LateUpdateCaller(m_flowInputAbles, deltaTime);
+		LateUpdateCaller(m_flowRenderAbles, deltaTime);
 		LateUpdateCaller(m_flowInputRenderAbles, deltaTime);
 	}
 
@@ -84,6 +95,7 @@ public:
 	{
 		FixedUpdateCaller(m_flowAbles);
 		FixedUpdateCaller(m_flowInputAbles);
+		FixedUpdateCaller(m_flowRenderAbles);
 		FixedUpdateCaller(m_flowInputRenderAbles);
 	}
 
@@ -97,6 +109,9 @@ public:
 		DestroyCaller(m_flowInputAbles);
 		m_flowInputAbles.clear();
 
+		DestroyCaller(m_flowRenderAbles);
+		m_flowRenderAbles.clear();
+
 		DestroyCaller(m_flowInputRenderAbles);
 		m_flowInputRenderAbles.clear();
 
@@ -108,7 +123,9 @@ public:
 
 		delete this;
 	}
+#pragma endregion Flow
 
+#pragma region Add
 	void AddFlow(Flow* flow)
 	{
 		m_flowAbles.push_back(flow);
@@ -129,11 +146,18 @@ public:
 		m_flowInputAbles.push_back(flowInput);
 	}
 
+	void AddFlowRender(FlowRender* flowRender)
+	{
+		m_flowRenderAbles.push_back(flowRender);
+	}
+
 	void AddFlowInputRender(FlowInputRender* flowInputRender)
 	{
 		m_flowInputRenderAbles.push_back(flowInputRender);
 	}
+#pragma endregion Add
 
+#pragma region Remove
 	void RemoveFlow(Flow* flow)
 	{
 		m_flowAbles.erase(std::remove(m_flowAbles.begin(), m_flowAbles.end(), flow), m_flowAbles.end());
@@ -154,16 +178,23 @@ public:
 		m_flowInputAbles.erase(std::remove(m_flowInputAbles.begin(), m_flowInputAbles.end(), flowInput), m_flowInputAbles.end());
 	}
 
+	void RemoveFlowRender(FlowRender* flowRender)
+	{
+		m_flowRenderAbles.erase(std::remove(m_flowRenderAbles.begin(), m_flowRenderAbles.end(), flowRender), m_flowRenderAbles.end());
+	}
+
 	void RemoveFlowInputRender(FlowInputRender* flowInputRender)
 	{
 		m_flowInputRenderAbles.erase(std::remove(m_flowInputRenderAbles.begin(), m_flowInputRenderAbles.end(), flowInputRender), m_flowInputRenderAbles.end());
 	}
+#pragma endregion Remove
 
 private:
 	std::vector<Input*> m_inputAbles;
 	std::vector<Flow*> m_flowAbles;
 	std::vector<Render*> m_renderAbles;
 	std::vector<FlowInput*> m_flowInputAbles;
+	std::vector<FlowRender*> m_flowRenderAbles;
 	std::vector<FlowInputRender*> m_flowInputRenderAbles;
 
 	template <typename T>

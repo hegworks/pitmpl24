@@ -67,7 +67,7 @@ void SceneManager::Start()
 	m_interfaceManager->AddFlowInputRender(m_player);
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
 
-	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->m_transform);
+	static_cast<GeneralCamera*>(m_camera)->SetFollowTransform(m_player->GetTransform());
 
 	LoadScene(m_roomFinder->GetCurrentLevelId());
 	m_interfaceManager->AddFlowInputRender(m_currentScene);

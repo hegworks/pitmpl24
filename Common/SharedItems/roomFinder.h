@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "Common.h"
 #include "RoomChange.h"
 
 class RoomChangeStorage;
@@ -15,5 +16,5 @@ public:
 
 private:
 	RoomChangeStorage* m_roomChangeStorage;
-	int m_currentLevelId = 0;
+	int m_currentLevelId = STARTING_MAP_ID;
 };

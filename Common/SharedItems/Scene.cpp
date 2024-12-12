@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include "btBulletDynamicsCommon.h"
+#include "Enemy.h"
 #include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
@@ -175,6 +176,17 @@ void Scene::LoadObjectDataFromMap()
 				m_roomChangeDatas.push_back(roomChangeData);
 			}
 		}
+		if(objectGroup.name == ENEMY_PATROL_OBJECTGROUP)
+		{
+			for(tmxparser::TmxObject& object : objectGroup.objects)
+			{
+				int enemyIndex = std::stoi(object.type);
+				int enemyPositionIndex = std::stoi(object.name);
+				glm::vec2 enemyPosition2D = MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE);
+				glm::vec3 enemyPosition3D = glm::vec3(enemyPosition2D.x, 0, enemyPosition2D.y);
+				m_enemiesPatrolPositions[enemyIndex][enemyPositionIndex] = enemyPosition3D;
+			}
+		}
 	}
 }
 
@@ -341,7 +353,23 @@ void Scene::CreateSolidObjectsFromData()
 	}
 #pragma endregion RoomChange
 
+#pragma region Enemy
+	{
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
+		m_models.push_back(model);
+		for(auto& enemy : m_enemiesPatrolPositions)
+		{
+			std::vector<glm::vec3> patrolPositionsVector;
+			for(auto& patrolPositionsMap : enemy.second)
+			{
+				patrolPositionsVector.push_back(patrolPositionsMap.second);
+			}
+			Enemy* enemy = new Enemy(model, m_iCamera, m_shaderProgram, m_btDynamicsWorld, patrolPositionsVector);
+			m_interfaceManager->AddFlowRender(enemy);
+		}
+	}
 }
+#pragma endregion Enemy
 
 void Scene::CreateGround()
 {

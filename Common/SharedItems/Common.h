@@ -9,3 +9,4 @@ constexpr int SCRHEIGHT = 540;
 constexpr float ASPECT_RATIO = 16.0f / 9.0f;
 constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
+constexpr int STARTING_MAP_ID = 2;

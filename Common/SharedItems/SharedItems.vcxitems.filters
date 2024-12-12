@@ -231,6 +231,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enemy.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyState.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -298,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
       <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

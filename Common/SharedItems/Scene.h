@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Common.h"
+#include "glm/glm.hpp"
 #include "Interfaces.h"
 #include "RoomChangeType.h"
 #include "tmxparser.h"
+#include <map>
 #include <string>
-#include <vector>
 
 namespace Uknitty
 {
@@ -76,6 +77,7 @@ private:
 	const std::string WALL_OBJECTGROUP = "wall";
 	const std::string RC_OBJECTGROUP = "rc";
 	const std::string FENCE_OBJECTGROUP = "fence";
+	const std::string ENEMY_PATROL_OBJECTGROUP = "ep";
 
 	int m_mapId = 0;
 
@@ -86,6 +88,10 @@ private:
 	std::vector<WallData*> m_wallDatas;
 	std::vector<Uknitty::Model*> m_models;
 	std::vector<RoomChangeData*> m_roomChangeDatas;
+	/// <summary>
+	/// enemyIndex, patrolPositionIndex, patrolPosition
+	/// </summary>
+	std::map<int, std::map<int, glm::vec3>> m_enemiesPatrolPositions;
 
 	void LoadMapDataFromFile(int mapId);
 	void LoadObjectDataFromMap();

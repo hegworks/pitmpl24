@@ -19,6 +19,7 @@ public:
 		SOLID,
 		PLAYER,
 		ROOM_CHANGE,
+		ENEMY,
 	};
 
 	struct UserPointerData
