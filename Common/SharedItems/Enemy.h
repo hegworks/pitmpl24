@@ -36,6 +36,12 @@ public:
 	Uknitty::Transform* GetTransform() const { return m_transform; }
 
 private:
+	struct PosData
+	{
+		int index; // index of m_patrolPositions
+		glm::vec3 pos;
+	};
+
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::Physics* m_physics = nullptr;
@@ -46,12 +52,23 @@ private:
 	const float SPEED_WALK = 1.5f;
 	const float SPEED_ROTATION = 1.7f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1, 2, 1);
+	const float DISTANCE_THRESHOLD = 0.1f; // deadzone for reaching target position
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
 	std::vector<glm::vec3> m_patrolPositions;
+	PosData m_sourcePos;
+	PosData m_targetPos;
 
 	EnemyState m_enemyState = EnemyState::PATROL;
 
 	void OnCollision(const btCollisionObject* other);
+	void MoveTowardTargetPos();
+	bool HasReachedTargetPos();
+	void ChangeTargetToNextPatrolPos();
+	void MoveInDirection(glm::vec3 direction);
+	void RotateTowardCurrentDirection();
+	void SetTransformPosToRigidBodyPos();
+	glm::vec3 GetCurrentRigidBodyPos();
+	glm::vec3 GetCurrentFeetPos();
 };

@@ -2,7 +2,7 @@
 
 //#define FULLSCREEN // uncomment to full screen
 //#define VISUAL_LEAK_DETECTOR // uncomment to use VLD
-//#define DEBUG_DRAW // uncomment to draw physics debug
+#define DEBUG_DRAW // uncomment to draw physics debug
 
 constexpr int SCRWIDTH = 960;
 constexpr int SCRHEIGHT = 540;
