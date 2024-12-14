@@ -2,6 +2,7 @@
 
 #include "AStar.hpp"
 #include "btBulletDynamicsCommon.h"
+#include "Common.h"
 #include "Enemy.h"
 #include "ICamera.h"
 #include "InterfaceManager.h"
@@ -419,9 +420,14 @@ void Scene::CreateEnemies()
 {
 	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
 	m_models.push_back(model);
-	int DEBUG_MAX_ENEMIES_TO_SPAWN = 1;
+	int debug_maxEnemiesToSpawn = DEBUG_MAX_ENEMIES_TO_SPAWN;
 	for(auto& enemy : m_enemiesPatrolPositions)
 	{
+		if(--debug_maxEnemiesToSpawn < 0)
+		{
+			break;
+		}
+
 		std::vector<glm::vec3> patrolPositionsVector;
 		for(auto& patrolPositionsMap : enemy.second)
 		{
@@ -429,10 +435,5 @@ void Scene::CreateEnemies()
 		}
 		Enemy* enemy = new Enemy(model, m_iCamera, m_shaderProgram, m_btDynamicsWorld, patrolPositionsVector, m_pathFinder, m_sceneManagerBlackboard);
 		m_interfaceManager->AddFlowRender(enemy);
-
-		if(--DEBUG_MAX_ENEMIES_TO_SPAWN == 0)
-		{
-			break;
-		}
 	}
 }
