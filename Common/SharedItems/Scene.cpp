@@ -1,11 +1,13 @@
 #include "Scene.h"
 
+#include "AStar.hpp"
 #include "btBulletDynamicsCommon.h"
 #include "Enemy.h"
 #include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
 #include "Physics.h"
+#include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "SolidObject.h"
 #include "Transform.h"
@@ -13,13 +15,14 @@
 #include <stdexcept>
 #include <tmxparser.h>
 
-Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld)
+Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard)
 {
 	m_mapId = mapId;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
 	m_player = player;
 	m_btDynamicsWorld = btDynamicsWorld;
+	m_sceneManagerBlackboard = sceneManagerBlackboard;
 }
 
 void Scene::ProcessMousePosition(double xPos, double yPos)
@@ -53,6 +56,8 @@ void Scene::Start()
 	LoadObjectDataFromMap();
 	CreateSolidObjectsFromData();
 	CreateGround();
+	CreatePathFinder();
+	CreateEnemies();
 
 	m_interfaceManager->Awake();
 	m_interfaceManager->Start();
@@ -253,6 +258,7 @@ void Scene::CreateSolidObjectsFromData()
 		{
 			case WallType::VERTICAL:
 			{
+
 				glm::vec3 wallVerticalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
 
 				Uknitty::Model* wallModel = nullptr;
@@ -277,12 +283,14 @@ void Scene::CreateSolidObjectsFromData()
 					wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
 					m_interfaceManager->AddRender(wallVerticalObject);
 				}
+
 			}
 
 			break;
 
 			case WallType::HORIZONTAL:
 			{
+
 				glm::vec3 wallHorizontalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
 
 				Uknitty::Model* wallModel = nullptr;
@@ -307,6 +315,7 @@ void Scene::CreateSolidObjectsFromData()
 					wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
 					m_interfaceManager->AddRender(wallHorizontalObject);
 				}
+
 			}
 
 			break;
@@ -352,24 +361,7 @@ void Scene::CreateSolidObjectsFromData()
 		}
 	}
 #pragma endregion RoomChange
-
-#pragma region Enemy
-	{
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
-		m_models.push_back(model);
-		for(auto& enemy : m_enemiesPatrolPositions)
-		{
-			std::vector<glm::vec3> patrolPositionsVector;
-			for(auto& patrolPositionsMap : enemy.second)
-			{
-				patrolPositionsVector.push_back(patrolPositionsMap.second);
-			}
-			Enemy* enemy = new Enemy(model, m_iCamera, m_shaderProgram, m_btDynamicsWorld, patrolPositionsVector);
-			m_interfaceManager->AddFlowRender(enemy);
-		}
-	}
 }
-#pragma endregion Enemy
 
 void Scene::CreateGround()
 {
@@ -381,5 +373,66 @@ void Scene::CreateGround()
 		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
 		planeObject->GetPhysics()->SetPosition(glm::vec3(0, -1 * modelDimensions.y / 2.0, 0));
 		m_interfaceManager->AddRender(planeObject);
+	}
+}
+
+void Scene::CreatePathFinder()
+{
+	m_pathFinder = new AStar::Generator();
+	m_pathFinder->setWorldSize({MAP_SCALE_X, MAP_SCALE_Z});
+	m_pathFinder->setHeuristic(AStar::Heuristic::manhattan);
+	m_pathFinder->setDiagonalMovement(true);
+
+	std::vector<tmxparser::TmxLayer> layers = m_tmxMap.layerCollection;
+
+#ifdef DEBUG_DRAW_ASTAR_COLLISIONS
+	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	glm::vec3 modelDimensions = glm::vec3(1, 6, 1);
+#endif // DEBUG_DRAW_ASTAR_COLLISIONS
+
+	for(tmxparser::TmxLayer& layer : layers)
+	{
+		if(layer.name == ASTAR_LAYER_COLLECTION)
+		{
+			for(int y = 0; y < layer.height; y++)
+			{
+				for(int x = 0; x < layer.width; x++)
+				{
+					if(layer.tiles[x + y * layer.width].gid == ASTAR_UNWALKABLE_GID)
+					{
+						m_pathFinder->addCollision({x, y});
+
+#ifdef DEBUG_DRAW_ASTAR_COLLISIONS
+						glm::vec2 pos = MAP_CENTER - glm::vec2(x + 0.5f, y + 0.5f); // 0.5 is half of the dimension of the model
+						SolidObject* DEBUG_OBJECT = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+						DEBUG_OBJECT->GetTransform()->SetScale(modelDimensions);
+						m_interfaceManager->AddRender(DEBUG_OBJECT);
+#endif // DEBUG_DRAW_ASTAR_COLLISIONS
+					}
+				}
+			}
+		}
+	}
+}
+
+void Scene::CreateEnemies()
+{
+	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
+	m_models.push_back(model);
+	int DEBUG_MAX_ENEMIES_TO_SPAWN = 1;
+	for(auto& enemy : m_enemiesPatrolPositions)
+	{
+		std::vector<glm::vec3> patrolPositionsVector;
+		for(auto& patrolPositionsMap : enemy.second)
+		{
+			patrolPositionsVector.push_back(patrolPositionsMap.second);
+		}
+		Enemy* enemy = new Enemy(model, m_iCamera, m_shaderProgram, m_btDynamicsWorld, patrolPositionsVector, m_pathFinder, m_sceneManagerBlackboard);
+		m_interfaceManager->AddFlowRender(enemy);
+
+		if(--DEBUG_MAX_ENEMIES_TO_SPAWN == 0)
+		{
+			break;
+		}
 	}
 }

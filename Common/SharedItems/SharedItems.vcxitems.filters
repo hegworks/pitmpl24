@@ -106,6 +106,12 @@
     <Filter Include="Assets\Models\Fence">
       <UniqueIdentifier>{067ba083-b781-4e3e-b924-eed7f0be2e26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\aStar">
+      <UniqueIdentifier>{ac9ccf34-9457-4e5e-99bf-e49747d9ac89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uknitty\Headers\Tools">
+      <UniqueIdentifier>{dcd62520-62ee-4714-a464-288f97e5b33a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ICamera.h">
@@ -237,6 +243,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyState.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AStar.hpp">
+      <Filter>ThirdParty\aStar</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h">
+      <Filter>Uknitty\Headers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h">
+      <Filter>Uknitty\Headers\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -307,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
+      <Filter>ThirdParty\aStar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

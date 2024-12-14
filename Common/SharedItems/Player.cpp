@@ -6,15 +6,17 @@
 #include "Player.h"
 #include "RoomChange.h"
 #include "RoomChangePositionType.h"
+#include "SceneManagerBlackboard.h"
 #include "Transform.h"
 #include <iostream>
 
-Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
+Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard)
 {
 	m_model = model;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
 	m_btDynamicsWorld = btDynamicsWorld;
+	m_sceneManagerBlackboard = sceneManagerBlackboard;
 
 	m_transform = new Uknitty::Transform();
 	m_physics = new Uknitty::Physics();
@@ -130,6 +132,7 @@ void Player::Update(float deltaTime)
 	glm::vec3 rigidBodyPos = Uknitty::Physics::BtVec3ToGLMVec3(m_physics->GetRigidBody()->getWorldTransform().getOrigin());
 	rigidBodyPos.y -= MODEL_DIMENSIONS.y / 2.0;
 	m_transform->SetPosition(rigidBodyPos);
+	m_sceneManagerBlackboard->SetPlayerFeetPos(rigidBodyPos);
 }
 
 void Player::LateUpdate(float deltaTime)
@@ -188,6 +191,10 @@ void Player::RoomChangedSetPosition(RoomChange* roomChange)
 	}
 	glm::vec3 newPos3D = glm::vec3(newPos2D.x, currentPos.y, newPos2D.y);
 	m_physics->SetPosition(newPos3D);
+	glm::vec3 rigidBodyPos = newPos3D;
+	newPos3D.y -= MODEL_DIMENSIONS.y / 2.0;
+	m_transform->SetPosition(newPos3D);
+	m_sceneManagerBlackboard->SetPlayerFeetPos(newPos3D);
 }
 
 void Player::OnCollision(const btCollisionObject* other)
@@ -197,7 +204,7 @@ void Player::OnCollision(const btCollisionObject* other)
 		auto data = static_cast<Uknitty::Physics::UserPointerData*>(other->getUserPointer());
 		if(data->physicsType == Uknitty::Physics::PhysicsType::ROOM_CHANGE)
 		{
-			std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
+			//std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
 			if(m_collidedWithRoomChangeCallback)
 			{
 				m_collidedWithRoomChangeCallback(data->roomChangeType);
@@ -205,7 +212,7 @@ void Player::OnCollision(const btCollisionObject* other)
 		}
 		else
 		{
-			std::cout << "Player <-----> " << data->name << std::endl;
+			//std::cout << "Player <-----> " << data->name << std::endl;
 		}
 	}
 }

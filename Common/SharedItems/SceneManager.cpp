@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "RoomFinder.h"
 #include "Scene.h"
+#include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include <BTDebugDraw.h>
 
@@ -51,6 +52,7 @@ void SceneManager::Awake()
 {
 	m_interfaceManager = new Uknitty::InterfaceManager();
 	m_roomFinder = new RoomFinder();
+	m_sceneManagerBlackboard = new SceneManagerBlackboard();
 }
 
 void SceneManager::Start()
@@ -105,26 +107,27 @@ void SceneManager::Destroy()
 void SceneManager::Draw()
 {
 	m_interfaceManager->Draw();
-#ifdef DEBUG_DRAW
+#ifdef DEBUG_DRAW_PHYSICS
 	m_btDynamicsWorld->debugDrawWorld();
-#endif // DEBUG_DRAW
+#endif // DEBUG_DRAW_PHYSICS
 }
 
 void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 {
 	std::cout << "Player collided with room change: " << static_cast<int>(roomChangeType) << std::endl;
-	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
-	int newMapId = newRoomChange->nextRoomId;
+
 	m_isNewSceneLoading = true;
+	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
+	m_player->RoomChangedSetPosition(newRoomChange);
+	int newMapId = newRoomChange->nextRoomId;
 	ChangeScene(newMapId);
 	m_isNewSceneLoading = false;
 	m_roomFinder->SetCurrentLevelId(newMapId);
-	m_player->RoomChangedSetPosition(newRoomChange);
 }
 
 void SceneManager::LoadScene(int mapId)
 {
-	m_currentScene = new Scene(mapId, m_camera, m_shaderProgram, m_player, m_btDynamicsWorld);
+	m_currentScene = new Scene(mapId, m_camera, m_shaderProgram, m_player, m_btDynamicsWorld, m_sceneManagerBlackboard);
 }
 
 void SceneManager::ChangeScene(int mapId)
@@ -141,7 +144,7 @@ void SceneManager::ChangeScene(int mapId)
 void SceneManager::CreatePlayer()
 {
 	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram, m_btDynamicsWorld);
+	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram, m_btDynamicsWorld, m_sceneManagerBlackboard);
 }
 
 void SceneManager::CreateCamera()
@@ -168,11 +171,11 @@ void SceneManager::CreatePhysicsWorld()
 	m_btDynamicsWorld = new btDiscreteDynamicsWorld(m_btDispatcher, m_btBroadphase, m_btSolver, m_btCollisionConfiguration);
 	m_btDynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
-#ifdef DEBUG_DRAW
+#ifdef DEBUG_DRAW_PHYSICS
 	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
 	m_btDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	m_btDynamicsWorld->setDebugDrawer(m_btDebugDrawer);
-#endif // DEBUG_DRAW
+#endif // DEBUG_DRAW_PHYSICS
 
 	m_collisionManager = new Uknitty::CollisionManager();
 #pragma endregion Bullet Initialization

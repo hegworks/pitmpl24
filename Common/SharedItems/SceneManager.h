@@ -19,6 +19,7 @@ class Scene;
 class GeneralCamera;
 class Player;
 class RoomFinder;
+class SceneManagerBlackboard;
 
 class SceneManager : public Uknitty::FlowInputRender
 {
@@ -54,6 +55,7 @@ private:
 	//make sure to re-use collision shapes among rigid bodies whenever possible!
 	btAlignedObjectArray<btCollisionShape*> m_btCollisionShapes;
 	Uknitty::CollisionManager* m_collisionManager = nullptr;
+	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 
 	Uknitty::Model* m_snakeModel = nullptr;
 

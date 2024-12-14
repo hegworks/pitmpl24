@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AStar.hpp"
 #include "Common.h"
 #include "glm/glm.hpp"
 #include "Interfaces.h"
@@ -18,11 +19,12 @@ class Model;
 class GeneralCamera;
 class Player;
 class btDynamicsWorld;
+class SceneManagerBlackboard;
 
 class Scene : public Uknitty::FlowInputRender
 {
 public:
-	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld);
+	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard);
 
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
@@ -66,11 +68,11 @@ private:
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
+	AStar::Generator* m_pathFinder = nullptr;
+	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";
-	const int TILE_SIZE = 32;
-	const glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 	const std::string CRATE_2_X_4_OBJECTGROUP = "crate2x4";
 	const std::string CRATE_4_X_4_OBJECTGROUP = "crate4x4";
 	const std::string TANK_OBJECTGROUP = "tank";
@@ -78,6 +80,8 @@ private:
 	const std::string RC_OBJECTGROUP = "rc";
 	const std::string FENCE_OBJECTGROUP = "fence";
 	const std::string ENEMY_PATROL_OBJECTGROUP = "ep";
+	const std::string ASTAR_LAYER_COLLECTION = "astar";
+	const int ASTAR_UNWALKABLE_GID = 1;
 
 	int m_mapId = 0;
 
@@ -97,5 +101,7 @@ private:
 	void LoadObjectDataFromMap();
 	void CreateSolidObjectsFromData();
 	void CreateGround();
+	void CreatePathFinder();
+	void CreateEnemies();
 };
 

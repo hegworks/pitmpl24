@@ -1,5 +1,6 @@
 #pragma once
 
+#include "glm/glm.hpp"
 #include "Interfaces.h"
 
 namespace Uknitty
@@ -10,6 +11,8 @@ class ICamera;
 class ShaderProgram;
 class Physics;
 }
+
+class btDynamicsWorld;
 
 class SolidObject : public Uknitty::Render
 {

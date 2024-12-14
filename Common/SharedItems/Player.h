@@ -14,10 +14,12 @@ class ShaderProgram;
 class Physics;
 }
 
+class SceneManagerBlackboard;
+
 class Player : public Uknitty::FlowInputRender
 {
 public:
-	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld);
+	Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard);
 	~Player();
 
 	// Inherited via FlowInputRender
@@ -49,6 +51,7 @@ private:
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 	Uknitty::Model* m_model = nullptr;
 	Uknitty::Transform* m_transform = nullptr;
+	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 
 	const float SPEED_WALK = 1.5f;
 	const float SPEED_ROTATION = 1.7f;
@@ -56,7 +59,7 @@ private:
 	const Key BACKWARD_KEY = Key::S;
 	const Key LEFT_KEY = Key::A;
 	const Key RIGHT_KEY = Key::D;
-	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1, 2, 1);
+	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.2, 2, 1.2);
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;

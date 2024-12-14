@@ -1,27 +1,39 @@
 #include "Enemy.h"
 
+#include "AStar.hpp"
+#include "BTDebugDraw.h"
+#include "Common.h"
+#include "CountdownTimer.h"
 #include "EnemyState.h"
 #include "glm/glm.hpp"
 #include "ICamera.h"
 #include "Model.h"
 #include "Physics.h"
+#include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "Transform.h"
+#include "UknittyMath.h"
+#include <iostream>
 
-Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, std::vector<glm::vec3> patrolPositions)
+Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard)
 {
 	m_model = model;
 	m_iCamera = camera;
 	m_shaderProgram = shaderProgram;
 	m_btDynamicsWorld = btDynamicsWorld;
 	m_patrolPositions = patrolPositions;
+	m_pathFinder = pathFinder;
+	m_sceneManagerBlackboard = sceneManagerBlackboard;
 
 	m_transform = new Uknitty::Transform();
+	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
 
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
+	m_physics->GetRigidBody()->setRollingFriction(0.0f);
+	m_physics->GetRigidBody()->setSpinningFriction(0.0f);
 	auto userPointerData = new Uknitty::Physics::UserPointerData();
 	userPointerData->physicsType = Uknitty::Physics::PhysicsType::ENEMY;
 	userPointerData->name = "Enemy";
@@ -33,7 +45,11 @@ Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderPro
 	m_targetPos = {1, m_patrolPositions[1]};
 	m_moveSpeed = SPEED_WALK;
 	m_rotationSpeed = SPEED_ROTATION;
-	m_enemyState = EnemyState::PATROL;
+
+	CalculateNewAstarPath();
+	ChangeTargetToNextAstarPos();
+	m_enemyState = EnemyState::ALARM;
+
 #ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Enemy");
 #elif Raspberry_BUILD
@@ -62,6 +78,8 @@ void Enemy::Start()
 
 void Enemy::Update(float deltaTime)
 {
+	m_astarPathGenerationTimer->Update(deltaTime);
+
 	switch(m_enemyState)
 	{
 		case EnemyState::PATROL:
@@ -73,6 +91,30 @@ void Enemy::Update(float deltaTime)
 			else
 			{
 				ChangeTargetToNextPatrolPos();
+			}
+			break;
+		case EnemyState::ALARM:
+			if(HasReachedPlayerPos())
+			{
+				SetTransformPosToRigidBodyPos();
+				break;
+			}
+
+			// we have not reached the player yet
+			if(m_astarPathGenerationTimer->IsFinished() || HasReachedAstarFinalPos() || !HasAnyAstarPath())
+			{
+				m_astarPathGenerationTimer->Reset();
+
+				CalculateNewAstarPath();
+				ChangeTargetToNextAstarPos();
+			}
+
+			MoveTowardTargetPos();
+			RotateTowardCurrentDirection();
+
+			if(HasReachedTargetPos())
+			{
+				ChangeTargetToNextAstarPos();
 			}
 			break;
 	}
@@ -101,6 +143,20 @@ void Enemy::Draw()
 	glDisable(GL_BLEND);
 	m_model->Draw(*m_shaderProgram);
 	m_shaderProgram->UnUse();
+
+#ifdef DEBUG_DRAW_ASTAR_PATH
+	btVector3 color = Uknitty::Physics::GLMVec3ToBtVec3({1, 1, 0});
+
+	for(int i = m_astarCurrentPathPositions.size() - 1; i >= 0; i--)
+	{
+		glm::vec2 worldCoord = glm::vec2(m_astarCurrentPathPositions[i].x, m_astarCurrentPathPositions[i].z);
+		glLineWidth(2);
+		btVector3 lineStart = Uknitty::Physics::GLMVec3ToBtVec3({worldCoord.x, 0, worldCoord.y});
+		btVector3 lineEnd = Uknitty::Physics::GLMVec3ToBtVec3({worldCoord.x, 5, worldCoord.y});
+		m_btDynamicsWorld->getDebugDrawer()->drawLine(lineStart, lineEnd, color);
+		glLineWidth(1);
+	}
+#endif // DEBUG_DRAW_ASTAR_PATH
 }
 
 void Enemy::OnCollision(const btCollisionObject* other)
@@ -115,7 +171,12 @@ void Enemy::MoveTowardTargetPos()
 
 bool Enemy::HasReachedTargetPos()
 {
-	return glm::distance(GetCurrentFeetPos(), m_targetPos.pos) < DISTANCE_THRESHOLD;
+	return glm::distance(GetCurrentFeetPos(), m_targetPos.pos) < ASTAR_TARGET_DISTANCE_THRESHOLD;
+}
+
+bool Enemy::HasReachedPlayerPos()
+{
+	return glm::distance(GetCurrentFeetPos(), m_sceneManagerBlackboard->GetPlayerFeetPos()) < PLAYER_DISTANCE_THRESHOLD;
 }
 
 void Enemy::ChangeTargetToNextPatrolPos()
@@ -162,4 +223,126 @@ glm::vec3 Enemy::GetCurrentFeetPos()
 	glm::vec3 pos = GetCurrentRigidBodyPos();
 	pos.y -= MODEL_DIMENSIONS.y / 2.0;
 	return pos;
+}
+
+void Enemy::CalculateNewAstarPath()
+{
+	// enmey
+	glm::vec3 sourceWorldPos = GetCurrentFeetPos();
+	glm::vec2 rawSourceWorldCoord = {sourceWorldPos.x, sourceWorldPos.z};
+	glm::ivec2 sourceAstarCoord = FindUncollisionedAstarCoord(rawSourceWorldCoord);
+
+	// player
+	glm::vec3 rawTargetWorldPos = m_sceneManagerBlackboard->GetPlayerFeetPos();
+	glm::vec2 targetWorldCoord = {rawTargetWorldPos.x, rawTargetWorldPos.z};
+	glm::ivec2 targetAstarCoord = FindUncollisionedAstarCoord(targetWorldCoord);
+
+	const auto path = m_pathFinder->findPath({sourceAstarCoord.x, sourceAstarCoord.y}, {targetAstarCoord.x, targetAstarCoord.y});
+
+	ClearAstarPath();
+
+	for(int i = path.size() - ASTAR_PATH_SKIP_BEGINNING_COUNT; i >= 0; i--)
+	{
+		const glm::ivec2 astarCoord = {path[i].x, path[i].y};
+		const glm::vec2 worldCoord = AstarCoordToWorldCoord(astarCoord);
+		m_astarCurrentPathPositions.push_back(glm::vec3(worldCoord.x, 0, worldCoord.y));
+	}
+}
+
+void Enemy::ClearAstarPath()
+{
+	m_astarCurrentPathPositions.clear();
+	m_astarCurrentPathIndex = -1;
+}
+
+void Enemy::ChangeTargetToNextAstarPos()
+{
+	m_astarCurrentPathIndex = (m_astarCurrentPathIndex + 1) % m_astarCurrentPathPositions.size();
+	m_targetPos.pos = m_astarCurrentPathPositions[m_astarCurrentPathIndex];
+}
+
+bool Enemy::HasReachedAstarFinalPos()
+{
+	return m_astarCurrentPathIndex == m_astarCurrentPathPositions.size() - 1;
+}
+
+bool Enemy::HasAnyAstarPath()
+{
+	return m_astarCurrentPathPositions.size() > 0;
+}
+
+bool Enemy::IsCoordCollisionInAstar(glm::ivec2 coord)
+{
+	return m_pathFinder->detectCollision({coord.x,coord.y});
+}
+
+glm::vec2 Enemy::WorldCoordToAstarCoord(glm::vec2 worldCoord)
+{
+	float x = Uknitty::Math::range_to_range(16, -16, 0, 31, worldCoord.x);
+	float y = Uknitty::Math::range_to_range(12, -12, 0, 23, worldCoord.y);
+	return {x, y};
+}
+
+glm::vec2 Enemy::AstarCoordToWorldCoord(glm::ivec2 astarCoord)
+{
+	int x = Uknitty::Math::range_to_range(0, 31, 16, -16, astarCoord.x);
+	int y = Uknitty::Math::range_to_range(0, 23, 12, -12, astarCoord.y);
+	return {x, y};
+}
+
+glm::ivec2 Enemy::FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord)
+{
+	glm::vec2 wFxFy = glm::vec2(std::floor(rawWorldCoord.x), std::floor(rawWorldCoord.y));
+	{
+		glm::vec2 a = WorldCoordToAstarCoord(wFxFy);
+		glm::ivec2 aFxFy = glm::ivec2(std::floor(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aFxFy.x, aFxFy.y})) aFxFy;
+		glm::ivec2 aFxCy = glm::ivec2(std::floor(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aFxCy.x, aFxCy.y})) return aFxCy;
+		glm::ivec2 aCxFy = glm::ivec2(std::ceil(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aCxFy.x, aCxFy.y})) return aCxFy;
+		glm::ivec2 aCxCy = glm::ivec2(std::ceil(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aCxCy.x, aCxCy.y})) return aCxCy;
+	}
+
+	glm::vec2 wFxCy = glm::vec2(std::floor(rawWorldCoord.x), std::ceil(rawWorldCoord.y));
+	{
+		glm::vec2 a = WorldCoordToAstarCoord(wFxCy);
+		glm::ivec2 aFxFy = glm::ivec2(std::floor(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aFxFy.x, aFxFy.y})) return aFxFy;
+		glm::ivec2 aFxCy = glm::ivec2(std::floor(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aFxCy.x, aFxCy.y})) return  aFxCy;
+		glm::ivec2 aCxFy = glm::ivec2(std::ceil(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aCxFy.x, aCxFy.y})) return aCxFy;
+		glm::ivec2 aCxCy = glm::ivec2(std::ceil(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aCxCy.x, aCxCy.y})) return aCxCy;
+	}
+
+	glm::vec2 wCxFy = glm::vec2(std::ceil(rawWorldCoord.x), std::floor(rawWorldCoord.y));
+	{
+		glm::vec2 a = WorldCoordToAstarCoord(wCxFy);
+		glm::ivec2 aFxFy = glm::ivec2(std::floor(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aFxFy.x, aFxFy.y})) return aFxFy;
+		glm::ivec2 aFxCy = glm::ivec2(std::floor(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aFxCy.x, aFxCy.y})) return aFxCy;
+		glm::ivec2 aCxFy = glm::ivec2(std::ceil(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aCxFy.x, aCxFy.y})) return aCxFy;
+		glm::ivec2 aCxCy = glm::ivec2(std::ceil(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aCxCy.x, aCxCy.y})) return aCxCy;
+	}
+
+	glm::vec2 wCxCy = glm::vec2(std::ceil(rawWorldCoord.x), std::ceil(rawWorldCoord.y));
+	{
+		glm::vec2 a = WorldCoordToAstarCoord(wCxCy);
+		glm::ivec2 aFxFy = glm::ivec2(std::floor(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aFxFy.x, aFxFy.y})) return aFxFy;
+		glm::ivec2 aFxCy = glm::ivec2(std::floor(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aFxCy.x, aFxCy.y})) return aFxCy;
+		glm::ivec2 aCxFy = glm::ivec2(std::ceil(a.x), std::floor(a.y));
+		if(!IsCoordCollisionInAstar({aCxFy.x, aCxFy.y})) return aCxFy;
+		glm::ivec2 aCxCy = glm::ivec2(std::ceil(a.x), std::ceil(a.y));
+		if(!IsCoordCollisionInAstar({aCxCy.x, aCxCy.y})) return aCxCy;
+	}
+
+	throw new std::runtime_error("No uncollisioned astar coord found");
 }
