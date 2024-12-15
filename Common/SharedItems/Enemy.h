@@ -60,12 +60,13 @@ private:
 	const float SPEED_ROTATION = 1.7f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(0.8, 2, 0.8);
 	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 1.0f; // deadzone for reaching astar target position
-	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.1f; // deadzone for reaching patrol target position
+	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching patrol target position
 	const float PLAYER_DISTANCE_THRESHOLD = 4.0f; // deadzone for reaching player position
 	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
 	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
 	const float SIGHT_RAY_LENGTH = 30.0f;
-	static constexpr int SIGHT_RAY_COUNT = 3;
+	const int SIGHT_RAY_COUNT = 3; // for symmetrical results, set this to an odd value
+	const float SIGHT_RAY_DIFFERENCE_DEGREE = 5.0f;
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;

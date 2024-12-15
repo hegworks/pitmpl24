@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+#include "array"
 #include "AStar.hpp"
 #include "BTDebugDraw.h"
 #include "Common.h"
@@ -362,38 +363,45 @@ glm::ivec2 Enemy::FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord)
 
 bool Enemy::IsPlayerInSight()
 {
-	glm::vec3 headPos = GetHeadPos();
+	const glm::vec3 headPos = GetHeadPos();
 	glm::vec3 dir = m_transform->GetForward();
-	btVector3 from = Uknitty::Physics::GLMVec3ToBtVec3(headPos);
-	btVector3 to = Uknitty::Physics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));
-	to.setY(from.getY());
-	//std::cout << "from: " << from.x() << " " << from.y() << " " << from.z() << std::endl;
-	//std::cout << "to: " << to.x() << " " << to.y() << " " << to.z() << std::endl;
+	const btVector3 from = Uknitty::Physics::GLMVec3ToBtVec3(headPos);
+	const btVector3 centeredTo = Uknitty::Physics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));
 
-#ifdef DEBUG_DRAW_PHYSICS 
-	m_btDynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::PINK));
-#endif // DEBUG_DRAW_PHYSICS 
-
-	btCollisionWorld::ClosestRayResultCallback closestResults(from, to);
-	//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
-
-	m_btDynamicsWorld->rayTest(from, to, closestResults);
-
-	if(closestResults.hasHit())
+	int sideCounter = 0;
+	for(int i = 0; i < SIGHT_RAY_COUNT; i++)
 	{
-		btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+		btVector3 to = centeredTo;
+		float angle = (i % 2 == 0 ? 1 : -1) * ((i + 1) / 2) * SIGHT_RAY_DIFFERENCE_DEGREE;
+		glm::mat4 rotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(0, 1, 0));
+		glm::vec3 rotatedDir = glm::vec3(rotationMat * glm::vec4(dir, 1.0f));
+		to = from + Uknitty::Physics::GLMVec3ToBtVec3(rotatedDir) * SIGHT_RAY_LENGTH;
 
-#ifdef DEBUG_DRAW_PHYSICS 
-		m_btDynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
-		m_btDynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+#ifdef DEBUG_DRAW_PHYSICS
+		m_btDynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::PINK));
 #endif // DEBUG_DRAW_PHYSICS 
 
-		if(closestResults.m_collisionObject->getUserPointer())
+		btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
+		//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+
+		m_btDynamicsWorld->rayTest(from, to, closestResults);
+
+		if(closestResults.hasHit())
 		{
-			auto userPointerData = static_cast<Uknitty::Physics::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
-			if(userPointerData->physicsType == Uknitty::Physics::PhysicsType::PLAYER)
+			btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+
+#ifdef DEBUG_DRAW_PHYSICS 
+			m_btDynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+			m_btDynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+#endif // DEBUG_DRAW_PHYSICS 
+
+			if(closestResults.m_collisionObject->getUserPointer())
 			{
-				return true;
+				auto userPointerData = static_cast<Uknitty::Physics::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
+				if(userPointerData->physicsType == Uknitty::Physics::PhysicsType::PLAYER)
+				{
+					return true;
+				}
 			}
 		}
 	}
