@@ -46,9 +46,9 @@ Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderPro
 	m_moveSpeed = SPEED_WALK;
 	m_rotationSpeed = SPEED_ROTATION;
 
-	CalculateNewAstarPath();
-	ChangeTargetToNextAstarPos();
-	m_enemyState = EnemyState::ALARM;
+	//CalculateNewAstarPath();
+	//ChangeTargetToNextAstarPos();
+	//m_enemyState = EnemyState::ALARM;
 
 #ifdef WINDOWS_BUILD
 	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Enemy");
@@ -83,7 +83,7 @@ void Enemy::Update(float deltaTime)
 	switch(m_enemyState)
 	{
 		case EnemyState::PATROL:
-			if(!HasReachedTargetPos())
+			if(!HasReachedPatrolTargetPos())
 			{
 				MoveTowardTargetPos();
 				RotateTowardCurrentDirection();
@@ -91,6 +91,10 @@ void Enemy::Update(float deltaTime)
 			else
 			{
 				ChangeTargetToNextPatrolPos();
+			}
+			if(IsPlayerInSight())
+			{
+				m_enemyState = EnemyState::ALARM;
 			}
 			break;
 		case EnemyState::ALARM:
@@ -112,7 +116,7 @@ void Enemy::Update(float deltaTime)
 			MoveTowardTargetPos();
 			RotateTowardCurrentDirection();
 
-			if(HasReachedTargetPos())
+			if(HasReachedAstarTargetPos())
 			{
 				ChangeTargetToNextAstarPos();
 			}
@@ -169,9 +173,14 @@ void Enemy::MoveTowardTargetPos()
 	MoveInDirection(direction);
 }
 
-bool Enemy::HasReachedTargetPos()
+bool Enemy::HasReachedAstarTargetPos()
 {
 	return glm::distance(GetCurrentFeetPos(), m_targetPos.pos) < ASTAR_TARGET_DISTANCE_THRESHOLD;
+}
+
+bool Enemy::HasReachedPatrolTargetPos()
+{
+	return glm::distance(GetCurrentFeetPos(), m_targetPos.pos) < PATROL_TARGET_DISTANCE_THRESHOLD;
 }
 
 bool Enemy::HasReachedPlayerPos()
@@ -203,6 +212,7 @@ void Enemy::MoveInDirection(glm::vec3 direction)
 void Enemy::RotateTowardCurrentDirection()
 {
 	glm::vec3 direction = glm::normalize(Uknitty::Physics::BtVec3ToGLMVec3(m_physics->GetRigidBody()->getLinearVelocity()));
+	m_lastDirection = direction;
 	float targetAngle = atan2(direction.x, direction.z);
 	glm::vec3 rotation = glm::vec3(0, glm::degrees(targetAngle), 0);
 	m_transform->SetRotation(rotation);
@@ -220,9 +230,12 @@ glm::vec3 Enemy::GetCurrentRigidBodyPos()
 
 glm::vec3 Enemy::GetCurrentFeetPos()
 {
-	glm::vec3 pos = GetCurrentRigidBodyPos();
-	pos.y -= MODEL_DIMENSIONS.y / 2.0;
-	return pos;
+	return GetCurrentRigidBodyPos() - glm::vec3(0, MODEL_DIMENSIONS.y / 2.0, 0);
+}
+
+glm::vec3 Enemy::GetHeadPos()
+{
+	return GetCurrentRigidBodyPos() + glm::vec3(0, MODEL_DIMENSIONS.y / 2.0, 0);
 }
 
 void Enemy::CalculateNewAstarPath()
@@ -345,4 +358,44 @@ glm::ivec2 Enemy::FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord)
 	}
 
 	throw new std::runtime_error("No uncollisioned astar coord found");
+}
+
+bool Enemy::IsPlayerInSight()
+{
+	glm::vec3 headPos = GetHeadPos();
+	glm::vec3 dir = m_transform->GetForward();
+	btVector3 from = Uknitty::Physics::GLMVec3ToBtVec3(headPos);
+	btVector3 to = Uknitty::Physics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));
+	to.setY(from.getY());
+	//std::cout << "from: " << from.x() << " " << from.y() << " " << from.z() << std::endl;
+	//std::cout << "to: " << to.x() << " " << to.y() << " " << to.z() << std::endl;
+
+#ifdef DEBUG_DRAW_PHYSICS 
+	m_btDynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::PINK));
+#endif // DEBUG_DRAW_PHYSICS 
+
+	btCollisionWorld::ClosestRayResultCallback closestResults(from, to);
+	//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+
+	m_btDynamicsWorld->rayTest(from, to, closestResults);
+
+	if(closestResults.hasHit())
+	{
+		btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+
+#ifdef DEBUG_DRAW_PHYSICS 
+		m_btDynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+		m_btDynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+#endif // DEBUG_DRAW_PHYSICS 
+
+		if(closestResults.m_collisionObject->getUserPointer())
+		{
+			auto userPointerData = static_cast<Uknitty::Physics::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
+			if(userPointerData->physicsType == Uknitty::Physics::PhysicsType::PLAYER)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }

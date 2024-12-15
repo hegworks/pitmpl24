@@ -12,7 +12,7 @@
 
 #pragma region to use a feature, comment out its line
 #undef VISUAL_LEAK_DETECTOR
-#undef DEBUG_DRAW_PHYSICS
+//#undef DEBUG_DRAW_PHYSICS
 #undef DEBUG_DRAW_ASTAR_COLLISIONS
 #undef DEBUG_DRAW_ASTAR_PATH
 #undef DEBUG_DONT_DRAW_SOLIDS
@@ -30,5 +30,5 @@ constexpr int STARTING_MAP_ID = 2;
 #pragma endregion Release settings
 
 #pragma region Debug settings
-constexpr int DEBUG_MAX_ENEMIES_TO_SPAWN = 2;
+constexpr int DEBUG_MAX_ENEMIES_TO_SPAWN = 1;
 #pragma endregion Debug settings

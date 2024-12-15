@@ -4,6 +4,7 @@
 #include "RoomChangeType.h"
 #include <functional>
 #include <glm/glm.hpp>
+#include <stdexcept>
 
 namespace Uknitty
 {
@@ -80,6 +81,43 @@ public:
 	static inline btVector3 GLMVec3ToBtVec3(glm::vec3 vector)
 	{
 		return btVector3(vector.x, vector.y, vector.z);
+	}
+
+	enum class Color
+	{
+		RED,
+		GREEN,
+		BLUE,
+		YELLOW,
+		PINK,
+		CYAN,
+		BLACK,
+		WHITE,
+	};
+
+	static inline btVector3 GetBtColor(Color color)
+	{
+		switch(color)
+		{
+			case Color::RED:
+				return btVector3(1, 0, 0);
+			case Color::GREEN:
+				return btVector3(0, 1, 0);
+			case Color::BLUE:
+				return btVector3(0, 0, 1);
+			case Color::YELLOW:
+				return btVector3(1, 1, 0);
+			case Color::PINK:
+				return btVector3(1, 0, 1);
+			case Color::CYAN:
+				return btVector3(0, 1, 1);
+			case Color::BLACK:
+				return btVector3(0, 0, 0);
+			case Color::WHITE:
+				return btVector3(1, 1, 1);
+			default:
+				throw std::runtime_error("Color not found");
+		}
 	}
 
 	void SetUserPointerData(UserPointerData* userPointerData)

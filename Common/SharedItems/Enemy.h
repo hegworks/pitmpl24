@@ -59,10 +59,13 @@ private:
 	const float SPEED_WALK = 0.7f;
 	const float SPEED_ROTATION = 1.7f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(0.8, 2, 0.8);
-	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 1.0f; // deadzone for reaching target position
+	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 1.0f; // deadzone for reaching astar target position
+	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.1f; // deadzone for reaching patrol target position
 	const float PLAYER_DISTANCE_THRESHOLD = 4.0f; // deadzone for reaching player position
-	const float ASTAR_PATH_GENERATION_DURATION = 0.5f;
-	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3;
+	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
+	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
+	const float SIGHT_RAY_LENGTH = 30.0f;
+	static constexpr int SIGHT_RAY_COUNT = 3;
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
@@ -72,12 +75,14 @@ private:
 	std::vector<glm::vec3> m_astarCurrentPathPositions;
 	int m_astarCurrentPathIndex = 0;
 	bool m_hadReachedPlayerPos = false;
+	glm::vec3 m_lastDirection;
 
 	EnemyState m_enemyState = EnemyState::PATROL;
 
 	void OnCollision(const btCollisionObject* other);
 	void MoveTowardTargetPos();
-	bool HasReachedTargetPos();
+	bool HasReachedAstarTargetPos();
+	bool HasReachedPatrolTargetPos();
 	bool HasReachedPlayerPos();
 	void ChangeTargetToNextPatrolPos();
 	void MoveInDirection(glm::vec3 direction);
@@ -85,13 +90,15 @@ private:
 	void SetTransformPosToRigidBodyPos();
 	glm::vec3 GetCurrentRigidBodyPos();
 	glm::vec3 GetCurrentFeetPos();
+	glm::vec3 GetHeadPos();
 	void CalculateNewAstarPath();
 	void ClearAstarPath();
 	void ChangeTargetToNextAstarPos();
 	bool HasReachedAstarFinalPos();
 	bool HasAnyAstarPath();
-	bool IsCoordCollisionInAstar(glm::ivec2 coord);
-	glm::vec2 WorldCoordToAstarCoord(glm::vec2 worldCoord);
-	glm::vec2 AstarCoordToWorldCoord(glm::ivec2 astarCoord);
-	glm::ivec2 FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord);
+	bool IsCoordCollisionInAstar(glm::ivec2 coord); //TODO move to AStar class
+	glm::vec2 WorldCoordToAstarCoord(glm::vec2 worldCoord); //TODO move to AStar class
+	glm::vec2 AstarCoordToWorldCoord(glm::ivec2 astarCoord); //TODO move to AStar class
+	glm::ivec2 FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord); //TODO move to AStar class
+	bool IsPlayerInSight();
 };
