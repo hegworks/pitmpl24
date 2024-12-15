@@ -38,7 +38,7 @@ SolidObject::~SolidObject()
 
 void SolidObject::Draw()
 {
-#ifndef DONT_DRAW_SOLIDS
+#ifndef DEBUG_DONT_DRAW_SOLIDS
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
@@ -46,7 +46,7 @@ void SolidObject::Draw()
 	glDisable(GL_BLEND);
 	m_model->Draw(*m_shaderProgram);
 	m_shaderProgram->UnUse();
-#endif // DONT_DRAW_SOLIDS
+#endif // DEBUG_DONT_DRAW_SOLIDS
 }
 
 void SolidObject::Destroy()
