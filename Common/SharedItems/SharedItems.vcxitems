@@ -25,6 +25,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />

@@ -15,6 +15,8 @@ class Physics;
 }
 
 class SceneManagerBlackboard;
+class btDynamicsWorld;
+class btCollisionObject;
 
 class Player : public Uknitty::FlowInputRender
 {

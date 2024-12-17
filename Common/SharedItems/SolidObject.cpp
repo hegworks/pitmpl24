@@ -4,6 +4,7 @@
 #include "ICamera.h"
 #include "Model.h"
 #include "Physics.h"
+#include "PhysicsCollisionFilters.h"
 #include "ShaderProgram.h"
 #include "Transform.h"
 #include <iostream>
@@ -18,20 +19,14 @@ SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknit
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithBoxShape(position, modelDimensions, 0);
 
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), model->GetStrippedFileName());
-#elif Raspberry_BUILD
-	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody());
-#endif
+	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody(), COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+	std::cout << "Adding RigidBody: " << model->GetStrippedFileName() << std::endl;
 }
 
 SolidObject::~SolidObject()
 {
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), m_model->GetStrippedFileName());
-#elif Raspberry_BUILD
 	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
-#endif
+	std::cout << "Removing RigidBody: " << m_model->GetStrippedFileName() << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;
 	delete m_physics;
 	delete m_transform;
 }

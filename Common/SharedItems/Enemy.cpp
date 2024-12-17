@@ -10,6 +10,7 @@
 #include "ICamera.h"
 #include "Model.h"
 #include "Physics.h"
+#include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "Transform.h"
@@ -51,20 +52,14 @@ Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderPro
 	//ChangeTargetToNextAstarPos();
 	//m_enemyState = EnemyState::ALARM;
 
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Enemy");
-#elif Raspberry_BUILD
-	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody());
-#endif
+	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody(), COLL_GROUP_ENEMY, COLL_MASK_ENEMY);
+	std::cout << "Adding RigidBody: Enemy" << std::endl;
 }
 
 Enemy::~Enemy()
 {
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), "Enemy");
-#elif Raspberry_BUILD
 	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
-#endif
+	std::cout << "Removing RigidBody: Enemy" << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;
 	delete m_physics;
 	delete m_transform;
 }
@@ -384,6 +379,8 @@ bool Enemy::IsPlayerInSight()
 #endif // DEBUG_DRAW_PHYSICS 
 
 		btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
+		closestResults.m_collisionFilterGroup = COLL_GROUP_ENEMY;
+		closestResults.m_collisionFilterMask = COLL_MASK_ENEMY;
 		//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
 
 		m_btDynamicsWorld->rayTest(from, to, closestResults);

@@ -253,16 +253,14 @@ void Scene::CreateSolidObjectsFromData()
 #pragma endregion Fence
 
 #pragma region Pikmin
-	{ // this is just a joke :D
+	{ // this is just a joke :D (but it also marks the center of the world)
 		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Pikmin/Pikmin.obj");
 		m_models.push_back(model);
-		{
-			glm::vec3 modelDimensions = glm::vec3(0);
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(0));
-			solidObject->GetTransform()->SetScale(glm::vec3(2));
-			solidObject->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
-			m_interfaceManager->AddRender(solidObject);
-		}
+		glm::vec3 modelDimensions = glm::vec3(0);
+		SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(0));
+		solidObject->GetTransform()->SetScale(glm::vec3(2));
+		solidObject->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
+		m_interfaceManager->AddRender(solidObject);
 	}
 #pragma endregion
 

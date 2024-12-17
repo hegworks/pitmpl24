@@ -255,6 +255,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h">
       <Filter>Uknitty\Headers\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">

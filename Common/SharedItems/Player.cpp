@@ -1,9 +1,11 @@
+#include "Player.h"
+
 #include "GeneralCamera.h"
 #include "ICamera.h"
 #include "Interfaces.h"
 #include "Model.h"
 #include "Physics.h"
-#include "Player.h"
+#include "PhysicsCollisionFilters.h"
 #include "RoomChange.h"
 #include "RoomChangePositionType.h"
 #include "SceneManagerBlackboard.h"
@@ -28,20 +30,14 @@ Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderP
 	userPointerData->name = "Player";
 	m_physics->SetUserPointerData(userPointerData);
 	m_physics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugAddRigidBody(m_physics->GetRigidBody(), "Player");
-#elif Raspberry_BUILD
-	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody());
-#endif
+	m_btDynamicsWorld->addRigidBody(m_physics->GetRigidBody(), COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
+	std::cout << "Adding RigidBody: Player" << std::endl;
 }
 
 Player::~Player()
 {
-#ifdef WINDOWS_BUILD
-	m_btDynamicsWorld->DebugRemoveRigidBody(m_physics->GetRigidBody(), "Player");
-#elif Raspberry_BUILD
 	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
-#endif
+	std::cout << "Removing RigidBody: Player" << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;
 	delete m_physics;
 	delete m_transform;
 }
