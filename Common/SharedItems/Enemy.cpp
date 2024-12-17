@@ -79,8 +79,6 @@ void Enemy::Start()
 
 void Enemy::Update(float deltaTime)
 {
-	m_astarPathGenerationTimer->Update(deltaTime);
-
 	switch(m_enemyState)
 	{
 		case EnemyState::PATROL:
@@ -99,6 +97,8 @@ void Enemy::Update(float deltaTime)
 			}
 			break;
 		case EnemyState::ALARM:
+			m_astarPathGenerationTimer->Update(deltaTime);
+
 			if(HasReachedPlayerPos())
 			{
 				SetTransformPosToRigidBodyPos();
@@ -106,7 +106,9 @@ void Enemy::Update(float deltaTime)
 			}
 
 			// we have not reached the player yet
-			if(m_astarPathGenerationTimer->IsFinished() || HasReachedAstarFinalPos() || !HasAnyAstarPath())
+			if(m_astarPathGenerationTimer->IsFinished() ||
+			   HasReachedAstarFinalPos() ||
+			   !HasAnyAstarPath())
 			{
 				m_astarPathGenerationTimer->Reset();
 
