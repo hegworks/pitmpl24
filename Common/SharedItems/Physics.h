@@ -1,7 +1,7 @@
 #pragma once
 
 #include "btBulletDynamicsCommon.h"
-#include "RoomChangeType.h"
+#include "RoomChangeType.h" //TODO move this out of the Uknitty layer
 #include <functional>
 #include <glm/glm.hpp>
 #include <stdexcept>
@@ -15,6 +15,7 @@ public:
 	Physics();
 	~Physics();
 
+	//TODO move this out of the Uknitty layer
 	enum class PhysicsType
 	{
 		SOLID,
@@ -23,6 +24,7 @@ public:
 		ENEMY,
 	};
 
+	//TODO move this out of the Uknitty layer
 	struct UserPointerData
 	{
 		PhysicsType physicsType;

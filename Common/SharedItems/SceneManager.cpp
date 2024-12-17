@@ -169,7 +169,7 @@ void SceneManager::CreatePhysicsWorld()
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
 	m_btSolver = new btSequentialImpulseConstraintSolver;
 	m_btDynamicsWorld = new btDiscreteDynamicsWorld(m_btDispatcher, m_btBroadphase, m_btSolver, m_btCollisionConfiguration);
-	m_btDynamicsWorld->setGravity(btVector3(0, -9.81, 0));
+	m_btDynamicsWorld->setGravity(btVector3(0, GRAVITY, 0));
 
 #ifdef DEBUG_DRAW_PHYSICS
 	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
@@ -223,7 +223,7 @@ void SceneManager::UpdatePhysics(float deltaTime)
 {
 	if(m_isNewSceneLoading) return;
 
-	m_btDynamicsWorld->stepSimulation(deltaTime, 1.0f / 30.0f, 10);
+	m_btDynamicsWorld->stepSimulation(deltaTime, PHYSICS_TIMESTEP, 10);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
 

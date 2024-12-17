@@ -64,8 +64,8 @@ private:
 	const glm::vec3 FOLLOW_OFFSET_FIRST_PERSON = glm::vec3(0, 2, 0.2);
 	const float FOLLOW_OFFSET_Y_FIRST_PERSON = 2.0f;
 	const float FOLLOW_DISTANCE_FIRST_PERSON = 0.5f;
-	const float YAW_MAX_FIRST_PERSON = 0.0f;
-	const float YAW_MIN_FIRST_PERSON = -180.0f;
+	const float PITCH_MAX_FIRST_PERSON = 80.0f;
+	const float PITCH_MIN_FIRST_PERSON = -80.0f;
 
 	const Key FORWARD_KEY = Key::W;
 	const Key BACKWARD_KEY = Key::S;

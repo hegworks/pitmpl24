@@ -73,4 +73,5 @@ private:
 	std::function<void(RoomChangeType roomChangeType)> m_collidedWithRoomChangeCallback = nullptr;
 
 	void OnCollision(const btCollisionObject* other);
+	void SetGunPos();
 };

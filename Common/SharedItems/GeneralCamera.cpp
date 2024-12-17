@@ -47,8 +47,8 @@ void GeneralCamera::ProcessMousePosition(double xPos, double yPos)
 					if(m_pitch < PITCH_MIN_THIRD_PERSON) m_pitch = PITCH_MIN_THIRD_PERSON;
 					break;
 				case GeneralCamera::CameraType::FIRST_PERSON:
-					if(m_pitch > PITCH_MAX_DEFAULT) m_pitch = PITCH_MAX_DEFAULT;
-					if(m_pitch < PITCH_MIN_DEFAULT) m_pitch = PITCH_MIN_DEFAULT;
+					if(m_pitch > PITCH_MAX_FIRST_PERSON) m_pitch = PITCH_MAX_FIRST_PERSON;
+					if(m_pitch < PITCH_MIN_FIRST_PERSON) m_pitch = PITCH_MIN_FIRST_PERSON;
 					break;
 				case GeneralCamera::CameraType::TOP_DOWN_FOLLOW:
 				default:

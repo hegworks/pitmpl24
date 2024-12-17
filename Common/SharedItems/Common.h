@@ -27,6 +27,8 @@ constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
 constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 constexpr int STARTING_MAP_ID = 2;
+constexpr float PHYSICS_TIMESTEP = 1.0f / 45.0f;
+constexpr float GRAVITY = -9.81f * 0.3f;
 #pragma endregion Release settings
 
 #pragma region Debug settings

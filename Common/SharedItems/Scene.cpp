@@ -4,10 +4,12 @@
 #include "btBulletDynamicsCommon.h"
 #include "Common.h"
 #include "Enemy.h"
+#include "GunBullet.h"
 #include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
 #include "Physics.h"
+#include "Player.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "SolidObject.h"
@@ -38,6 +40,12 @@ void Scene::ProcessKeyboard(IKeyboard* iKeyboard)
 
 void Scene::KeyDown(Key key)
 {
+	if(key == Key::B)
+	{
+		GunBullet* gunBullet = new GunBullet(m_iCamera, m_shaderProgram, m_btDynamicsWorld);
+		gunBullet->SetPosition(m_sceneManagerBlackboard->GetPlayerGunPos());
+		m_interfaceManager->AddFlowRender(gunBullet);
+	}
 	m_interfaceManager->KeyDown(key);
 }
 
@@ -262,7 +270,7 @@ void Scene::CreateSolidObjectsFromData()
 		solidObject->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
 		m_interfaceManager->AddRender(solidObject);
 	}
-#pragma endregion
+#pragma endregion Pikmin
 
 #pragma region Wall
 	for(auto& wallData : m_wallDatas)

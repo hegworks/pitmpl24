@@ -258,6 +258,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GunBullet.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -331,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
       <Filter>ThirdParty\aStar</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DynamicObject.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

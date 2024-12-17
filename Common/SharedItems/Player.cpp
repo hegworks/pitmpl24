@@ -129,6 +129,7 @@ void Player::Update(float deltaTime)
 	rigidBodyPos.y -= MODEL_DIMENSIONS.y / 2.0;
 	m_transform->SetPosition(rigidBodyPos);
 	m_sceneManagerBlackboard->SetPlayerFeetPos(rigidBodyPos);
+	SetGunPos();
 }
 
 void Player::LateUpdate(float deltaTime)
@@ -191,6 +192,7 @@ void Player::RoomChangedSetPosition(RoomChange* roomChange)
 	newPos3D.y -= MODEL_DIMENSIONS.y / 2.0;
 	m_transform->SetPosition(newPos3D);
 	m_sceneManagerBlackboard->SetPlayerFeetPos(newPos3D);
+	SetGunPos();
 }
 
 void Player::OnCollision(const btCollisionObject* other)
@@ -211,4 +213,12 @@ void Player::OnCollision(const btCollisionObject* other)
 			//std::cout << "Player <-----> " << data->name << std::endl;
 		}
 	}
+}
+
+void Player::SetGunPos()
+{
+	glm::vec3 rigidBodyPos = Uknitty::Physics::BtVec3ToGLMVec3(m_physics->GetRigidBody()->getWorldTransform().getOrigin());
+	glm::vec3 cameraForward = m_iCamera->GetForward();
+	cameraForward.y = 0;
+	m_sceneManagerBlackboard->SetPlayerGunPos(rigidBodyPos + glm::normalize(cameraForward) * 2.0f);
 }

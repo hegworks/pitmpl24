@@ -24,8 +24,8 @@ public:
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
 
 	// Inherited via Render
-	void Draw() override;
-	void Destroy() override;
+	virtual void Draw() override;
+	virtual void Destroy() override;
 
 private:
 	Uknitty::ICamera* m_iCamera = nullptr;
