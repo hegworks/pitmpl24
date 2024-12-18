@@ -13,14 +13,14 @@
 #include "Transform.h"
 #include <iostream>
 
-Player::Player(Uknitty::Model* model, SceneManagerBlackboard* sceneManagerBlackboard)
+Player::Player(Uknitty::Model* model)
 {
 	m_iCamera = SharedDependencies::GetCamera();
 	m_shaderProgram = SharedDependencies::GetShaderProgram();
 	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 
 	m_model = model;
-	m_sceneManagerBlackboard = sceneManagerBlackboard;
 
 	m_transform = new Uknitty::Transform();
 	m_physics = new Uknitty::Physics();

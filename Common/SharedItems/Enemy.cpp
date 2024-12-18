@@ -18,16 +18,16 @@
 #include "UknittyMath.h"
 #include <iostream>
 
-Enemy::Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard)
+Enemy::Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder)
 {
 	m_iCamera = SharedDependencies::GetCamera();
 	m_shaderProgram = SharedDependencies::GetShaderProgram();
 	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 
 	m_model = model;
 	m_patrolPositions = patrolPositions;
 	m_pathFinder = pathFinder;
-	m_sceneManagerBlackboard = sceneManagerBlackboard;
 
 	m_transform = new Uknitty::Transform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);

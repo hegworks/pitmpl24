@@ -21,7 +21,7 @@ class btCollisionObject;
 class Player : public Uknitty::FlowInputRender
 {
 public:
-	Player(Uknitty::Model* model, SceneManagerBlackboard* sceneManagerBlackboard);
+	Player(Uknitty::Model* model);
 	~Player();
 
 	// Inherited via FlowInputRender

@@ -19,15 +19,15 @@
 #include <stdexcept>
 #include <tmxparser.h>
 
-Scene::Scene(int mapId, Player* player, SceneManagerBlackboard* sceneManagerBlackboard)
+Scene::Scene(int mapId, Player* player)
 {
 	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
 	m_iCamera = SharedDependencies::GetCamera();
 	m_shaderProgram = SharedDependencies::GetShaderProgram();
+	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 
 	m_mapId = mapId;
 	m_player = player;
-	m_sceneManagerBlackboard = sceneManagerBlackboard;
 }
 
 void Scene::ProcessMousePosition(double xPos, double yPos)
@@ -455,7 +455,7 @@ void Scene::CreateEnemies()
 		{
 			patrolPositionsVector.push_back(patrolPositionsMap.second);
 		}
-		Enemy* enemy = new Enemy(model, patrolPositionsVector, m_pathFinder, m_sceneManagerBlackboard);
+		Enemy* enemy = new Enemy(model, patrolPositionsVector, m_pathFinder);
 		m_interfaceManager->AddFlowRender(enemy);
 	}
 }

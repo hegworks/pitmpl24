@@ -24,7 +24,7 @@ class SceneManagerBlackboard;
 class Scene : public Uknitty::FlowInputRender
 {
 public:
-	Scene(int mapId, Player* player, SceneManagerBlackboard* sceneManagerBlackboard);
+	Scene(int mapId, Player* player);
 
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
