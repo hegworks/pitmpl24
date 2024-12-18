@@ -24,7 +24,7 @@ class SceneManagerBlackboard;
 class Scene : public Uknitty::FlowInputRender
 {
 public:
-	Scene(int mapId, Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard);
+	Scene(int mapId, Player* player, SceneManagerBlackboard* sceneManagerBlackboard);
 
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
@@ -67,7 +67,7 @@ private:
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
-	btDynamicsWorld* m_btDynamicsWorld = nullptr;
+	const btDynamicsWorld* m_btDynamicsWorld = nullptr;
 	AStar::Generator* m_pathFinder = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 

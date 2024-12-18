@@ -5,7 +5,7 @@
 class GunBullet : public DynamicObject
 {
 public:
-	GunBullet(Uknitty::ICamera* iCamera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld);
+	GunBullet();
 	~GunBullet();
 
 private:

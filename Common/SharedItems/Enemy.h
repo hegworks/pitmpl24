@@ -24,7 +24,7 @@ class SceneManagerBlackboard;
 class Enemy : public Uknitty::FlowRender
 {
 public:
-	Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard);
+	Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard);
 	~Enemy();
 
 	// Inherited via FlowRender

@@ -9,15 +9,17 @@
 #include "RoomChange.h"
 #include "RoomChangePositionType.h"
 #include "SceneManagerBlackboard.h"
+#include "SharedDependencies.h"
 #include "Transform.h"
 #include <iostream>
 
-Player::Player(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard)
+Player::Player(Uknitty::Model* model, SceneManagerBlackboard* sceneManagerBlackboard)
 {
+	m_iCamera = SharedDependencies::GetCamera();
+	m_shaderProgram = SharedDependencies::GetShaderProgram();
+	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+
 	m_model = model;
-	m_iCamera = camera;
-	m_shaderProgram = shaderProgram;
-	m_btDynamicsWorld = btDynamicsWorld;
 	m_sceneManagerBlackboard = sceneManagerBlackboard;
 
 	m_transform = new Uknitty::Transform();

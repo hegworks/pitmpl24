@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "SharedDependencies.h"
 #include <BTDebugDraw.h>
 
 void SceneManager::ProcessMousePosition(double xPos, double yPos)
@@ -127,7 +128,7 @@ void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 
 void SceneManager::LoadScene(int mapId)
 {
-	m_currentScene = new Scene(mapId, m_camera, m_shaderProgram, m_player, m_btDynamicsWorld, m_sceneManagerBlackboard);
+	m_currentScene = new Scene(mapId, m_player, m_sceneManagerBlackboard);
 }
 
 void SceneManager::ChangeScene(int mapId)
@@ -144,17 +145,19 @@ void SceneManager::ChangeScene(int mapId)
 void SceneManager::CreatePlayer()
 {
 	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	m_player = new Player(m_snakeModel, m_camera, m_shaderProgram, m_btDynamicsWorld, m_sceneManagerBlackboard);
+	m_player = new Player(m_snakeModel, m_sceneManagerBlackboard);
 }
 
 void SceneManager::CreateCamera()
 {
 	m_camera = new GeneralCamera();
+	SharedDependencies::SetCamera(m_camera);
 }
 
 void SceneManager::CreateShaderProgram()
 {
 	m_shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	SharedDependencies::SetShaderProgram(m_shaderProgram);
 }
 
 void SceneManager::CreatePhysicsWorld()
@@ -170,6 +173,7 @@ void SceneManager::CreatePhysicsWorld()
 	m_btSolver = new btSequentialImpulseConstraintSolver;
 	m_btDynamicsWorld = new btDiscreteDynamicsWorld(m_btDispatcher, m_btBroadphase, m_btSolver, m_btCollisionConfiguration);
 	m_btDynamicsWorld->setGravity(btVector3(0, GRAVITY, 0));
+	SharedDependencies::SetDynamicsWorld(m_btDynamicsWorld);
 
 #ifdef DEBUG_DRAW_PHYSICS
 	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
@@ -223,7 +227,7 @@ void SceneManager::UpdatePhysics(float deltaTime)
 {
 	if(m_isNewSceneLoading) return;
 
-	m_btDynamicsWorld->stepSimulation(deltaTime, PHYSICS_TIMESTEP, 10);
+	m_btDynamicsWorld->stepSimulation(deltaTime, 10, PHYSICS_TIMESTEP);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	m_btDynamicsWorld->contactTest(m_player->GetPhysics()->GetRigidBody(), *m_collisionManager);
 

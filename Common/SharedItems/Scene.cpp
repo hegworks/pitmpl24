@@ -12,19 +12,21 @@
 #include "Player.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "SharedDependencies.h"
 #include "SolidObject.h"
 #include "Transform.h"
 #include <iostream>
 #include <stdexcept>
 #include <tmxparser.h>
 
-Scene::Scene(int mapId, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, Player* player, btDynamicsWorld* btDynamicsWorld, SceneManagerBlackboard* sceneManagerBlackboard)
+Scene::Scene(int mapId, Player* player, SceneManagerBlackboard* sceneManagerBlackboard)
 {
+	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+	m_iCamera = SharedDependencies::GetCamera();
+	m_shaderProgram = SharedDependencies::GetShaderProgram();
+
 	m_mapId = mapId;
-	m_iCamera = camera;
-	m_shaderProgram = shaderProgram;
 	m_player = player;
-	m_btDynamicsWorld = btDynamicsWorld;
 	m_sceneManagerBlackboard = sceneManagerBlackboard;
 }
 
@@ -42,7 +44,7 @@ void Scene::KeyDown(Key key)
 {
 	if(key == Key::B)
 	{
-		GunBullet* gunBullet = new GunBullet(m_iCamera, m_shaderProgram, m_btDynamicsWorld);
+		GunBullet* gunBullet = new GunBullet();
 		gunBullet->SetPosition(m_sceneManagerBlackboard->GetPlayerGunPos());
 		m_interfaceManager->AddFlowRender(gunBullet);
 	}
@@ -215,7 +217,7 @@ void Scene::CreateSolidObjectsFromData()
 
 		for(auto& pos : m_crate2x4positions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -228,7 +230,7 @@ void Scene::CreateSolidObjectsFromData()
 		m_models.push_back(model);
 		for(auto& pos : m_crate4x4positions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -241,7 +243,7 @@ void Scene::CreateSolidObjectsFromData()
 		m_models.push_back(tankModel);
 		for(auto& pos : m_tankPositions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, tankModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			SolidObject* solidObject = new SolidObject(tankModel, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -254,7 +256,7 @@ void Scene::CreateSolidObjectsFromData()
 		m_models.push_back(model);
 		for(auto& pos : m_fencePositions)
 		{
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 			m_interfaceManager->AddRender(solidObject);
 		}
 	}
@@ -265,7 +267,7 @@ void Scene::CreateSolidObjectsFromData()
 		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Pikmin/Pikmin.obj");
 		m_models.push_back(model);
 		glm::vec3 modelDimensions = glm::vec3(0);
-		SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(0));
+		SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(0));
 		solidObject->GetTransform()->SetScale(glm::vec3(2));
 		solidObject->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
 		m_interfaceManager->AddRender(solidObject);
@@ -300,7 +302,7 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallVerticalScale.x, 4, wallVerticalScale.z);
-					SolidObject* wallVerticalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallVerticalObject = new SolidObject(wallModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
 					m_interfaceManager->AddRender(wallVerticalObject);
 				}
@@ -332,7 +334,7 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallHorizontalScale.x, 4, wallHorizontalScale.z);
-					SolidObject* wallHorizontalObject = new SolidObject(m_iCamera, wallModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallHorizontalObject = new SolidObject(wallModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
 					m_interfaceManager->AddRender(wallHorizontalObject);
 				}
@@ -348,7 +350,7 @@ void Scene::CreateSolidObjectsFromData()
 				m_models.push_back(wallUniformModel);
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
-					SolidObject* wallUnifromObject = new SolidObject(m_iCamera, wallUniformModel, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
+					SolidObject* wallUnifromObject = new SolidObject(wallUniformModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
 					wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
 					m_interfaceManager->AddRender(wallUnifromObject);
 				}
@@ -370,7 +372,7 @@ void Scene::CreateSolidObjectsFromData()
 		{
 			glm::vec3 scale = glm::vec3(data->size.x, 5, data->size.y);
 			glm::vec3 modelDimensions = glm::vec3(scale.x, 5, scale.z);
-			SolidObject* solidObject = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(data->position.x, 0, data->position.y));
+			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(data->position.x, 0, data->position.y));
 			solidObject->GetTransform()->SetScale(scale);
 
 			auto userPointerData = new Uknitty::Physics::UserPointerData();
@@ -390,7 +392,7 @@ void Scene::CreateGround()
 	m_models.push_back(plane);
 	{
 		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
-		SolidObject* planeObject = new SolidObject(m_iCamera, plane, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(0));
+		SolidObject* planeObject = new SolidObject(plane, modelDimensions, glm::vec3(0));
 		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
 		planeObject->GetPhysics()->SetPosition(glm::vec3(0, -1 * modelDimensions.y / 2.0, 0));
 		m_interfaceManager->AddRender(planeObject);
@@ -425,7 +427,7 @@ void Scene::CreatePathFinder()
 
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
 						glm::vec2 pos = MAP_CENTER - glm::vec2(x + 0.5f, y + 0.5f); // 0.5 is half of the dimension of the model
-						SolidObject* DEBUG_OBJECT = new SolidObject(m_iCamera, model, m_shaderProgram, m_btDynamicsWorld, modelDimensions, glm::vec3(pos.x, 0, pos.y));
+						SolidObject* DEBUG_OBJECT = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
 						DEBUG_OBJECT->GetTransform()->SetScale(modelDimensions);
 						m_interfaceManager->AddRender(DEBUG_OBJECT);
 #endif // DEBUG_DRAW_ASTAR_COLLISIONS
@@ -453,7 +455,7 @@ void Scene::CreateEnemies()
 		{
 			patrolPositionsVector.push_back(patrolPositionsMap.second);
 		}
-		Enemy* enemy = new Enemy(model, m_iCamera, m_shaderProgram, m_btDynamicsWorld, patrolPositionsVector, m_pathFinder, m_sceneManagerBlackboard);
+		Enemy* enemy = new Enemy(model, patrolPositionsVector, m_pathFinder, m_sceneManagerBlackboard);
 		m_interfaceManager->AddFlowRender(enemy);
 	}
 }

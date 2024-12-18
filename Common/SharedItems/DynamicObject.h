@@ -17,9 +17,10 @@ class btDynamicsWorld;
 class DynamicObject : public Uknitty::FlowRender
 {
 public:
-	DynamicObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, glm::vec3 position, Uknitty::Physics* physics);
+	DynamicObject() = default;
 	~DynamicObject();
 
+	void Construct(Uknitty::Model* model, glm::vec3 position, Uknitty::Physics* physics);
 	void SetPosition(glm::vec3 pos);
 
 	// Inherited via FlowRender
@@ -40,7 +41,5 @@ protected:
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
 	glm::vec3 GetCurrentPhysicsPos();
-	void SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, Uknitty::Physics* physics);
 	void SetModelPosToPhysicsPos();
-
 };

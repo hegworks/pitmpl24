@@ -6,12 +6,17 @@
 #include "Physics.h"
 #include "PhysicsCollisionFilters.h"
 #include "ShaderProgram.h"
+#include "SharedDependencies.h"
 #include "Transform.h"
 #include <iostream>
 
-SolidObject::SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, glm::vec3 modelDimensions, glm::vec3 position)
+SolidObject::SolidObject(Uknitty::Model* model, glm::vec3 modelDimensions, glm::vec3 position)
 {
-	SetDependencies(iCamera, model, shaderProgram, btDynamicsWorld);
+	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+	m_iCamera = SharedDependencies::GetCamera();
+	m_shaderProgram = SharedDependencies::GetShaderProgram();
+
+	m_model = model;
 
 	m_transform = new Uknitty::Transform();
 	m_transform->SetPosition(position);
@@ -48,12 +53,4 @@ void SolidObject::Destroy()
 {
 	std::cout << "Destroying SolidObject with model: " << m_model->GetStrippedFileName() << std::endl;
 	delete this;
-}
-
-void SolidObject::SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld)
-{
-	m_iCamera = iCamera;
-	m_model = model;
-	m_shaderProgram = shaderProgram;
-	m_btDynamicsWorld = btDynamicsWorld;
 }

@@ -13,16 +13,18 @@
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "SharedDependencies.h"
 #include "Transform.h"
 #include "UknittyMath.h"
 #include <iostream>
 
-Enemy::Enemy(Uknitty::Model* model, Uknitty::ICamera* camera, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard)
+Enemy::Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder, SceneManagerBlackboard* sceneManagerBlackboard)
 {
+	m_iCamera = SharedDependencies::GetCamera();
+	m_shaderProgram = SharedDependencies::GetShaderProgram();
+	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
+
 	m_model = model;
-	m_iCamera = camera;
-	m_shaderProgram = shaderProgram;
-	m_btDynamicsWorld = btDynamicsWorld;
 	m_patrolPositions = patrolPositions;
 	m_pathFinder = pathFinder;
 	m_sceneManagerBlackboard = sceneManagerBlackboard;

@@ -28,6 +28,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />

@@ -17,7 +17,7 @@ class btDynamicsWorld;
 class SolidObject : public Uknitty::Render
 {
 public:
-	SolidObject(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld, glm::vec3 modelDimensions, glm::vec3 position);
+	SolidObject(Uknitty::Model* model, glm::vec3 modelDimensions, glm::vec3 position);
 	~SolidObject();
 
 	Uknitty::Transform* GetTransform() const { return m_transform; }
@@ -34,7 +34,5 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
-
-	void SetDependencies(Uknitty::ICamera* iCamera, Uknitty::Model* model, Uknitty::ShaderProgram* shaderProgram, btDynamicsWorld* btDynamicsWorld);
 };
 
