@@ -2,13 +2,13 @@
 
 precision highp float;
 
+//in
+in vec3 ioColor;
+
 // out
 out vec4 oFragColor;
 
-// uniform
-uniform vec3 uColor;
-
 void main()
 {
-   oFragColor = vec4(uColor, 1.0f);
+   oFragColor = vec4(ioColor, 1.0f);
 }

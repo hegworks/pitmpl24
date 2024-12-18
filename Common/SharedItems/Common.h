@@ -12,7 +12,7 @@
 
 #pragma region to use a feature, comment out its line
 #undef VISUAL_LEAK_DETECTOR
-#undef DEBUG_DRAW_PHYSICS
+//#undef DEBUG_DRAW_PHYSICS
 #undef DEBUG_DRAW_ASTAR_COLLISIONS
 #undef DEBUG_DRAW_ASTAR_PATH
 #undef DEBUG_DONT_DRAW_SOLIDS

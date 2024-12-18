@@ -109,6 +109,7 @@ void SceneManager::Draw()
 	m_interfaceManager->Draw();
 #ifdef DEBUG_DRAW_PHYSICS
 	m_btDynamicsWorld->debugDrawWorld();
+	m_btDebugDrawer->flushLines();
 #endif // DEBUG_DRAW_PHYSICS
 }
 
@@ -175,7 +176,7 @@ void SceneManager::CreatePhysicsWorld()
 	SharedDependencies::SetDynamicsWorld(m_btDynamicsWorld);
 
 #ifdef DEBUG_DRAW_PHYSICS
-	m_btDebugDrawer = new Uknitty::BTDebugDraw(m_camera);
+	m_btDebugDrawer = new Uknitty::BTDebugDraw();
 	m_btDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
 	m_btDynamicsWorld->setDebugDrawer(m_btDebugDrawer);
 #endif // DEBUG_DRAW_PHYSICS

@@ -6,6 +6,7 @@
 #include "IGraphics.h"
 #include "IInput.h"
 #include "SceneManager.h"
+#include "SharedDependencies.h"
 #include "SharedInput.h"
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"

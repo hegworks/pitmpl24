@@ -1,6 +1,7 @@
 #include "BTDebugDraw.h"
 
 #include "btBulletDynamicsCommon.h"
+#include "SharedDependencies.h"
 #include <ICamera.h>
 #include <ShaderProgram.h>
 
@@ -15,18 +16,20 @@
 namespace Uknitty
 {
 
-BTDebugDraw::BTDebugDraw(ICamera* camera)
+BTDebugDraw::BTDebugDraw()
 {
-	m_camera = camera;
+	m_camera = SharedDependencies::GetCamera();
 	m_shaderProgram = new ShaderProgram("../Common/Assets/Shaders/BTDebugVertex.glsl", "../Common/Assets/Shaders/BTDebugFragment.glsl");
 	glGenVertexArrays(1, &m_vao);
 	glGenBuffers(1, &m_vbo);
+	glGenBuffers(1, &m_colorVbo);
 }
 
 BTDebugDraw::~BTDebugDraw()
 {
 	glDeleteVertexArrays(1, &m_vao);
 	glDeleteBuffers(1, &m_vbo);
+	glDeleteBuffers(1, &m_colorVbo);
 	m_shaderProgram->Delete();
 	delete m_shaderProgram;
 }
@@ -40,23 +43,43 @@ void BTDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btV
 		to.getX(), to.getY(), to.getZ()
 	};
 
+	m_vertexData.insert(m_vertexData.end(), vertices.begin(), vertices.end());
+
+	for(int i = 0; i < 2; ++i)
+	{
+		m_colorData.insert(
+			m_colorData.end(),
+			{
+				color.getX(), color.getY(), color.getZ()
+			});
+	}
+}
+
+void BTDebugDraw::flushLines()
+{
+	if(m_vertexData.empty()) return;
+
 	glBindVertexArray(m_vao);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glBufferData(GL_ARRAY_BUFFER, m_vertexData.size() * sizeof(float), m_vertexData.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_colorVbo);
+	glBufferData(GL_ARRAY_BUFFER, m_colorData.size() * sizeof(float), m_colorData.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(1);
 
 	m_shaderProgram->Use();
-	m_shaderProgram->SetMat4("uMVP", m_camera->GetProjection() * m_camera->GetView() * glm::mat4(1));
-	m_shaderProgram->SetVec3("uColor", glm::vec3(color.getX(), color.getY(), color.getZ()));
+	m_shaderProgram->SetMat4("uMVP", m_camera->GetProjection() * m_camera->GetView() /* *glm::mat4(1) */);
 
-	glBindVertexArray(m_vao);
-	glDrawArrays(GL_LINES, 0, 2);
+	glDrawArrays(GL_LINES, 0, m_vertexData.size() / 3);
+
+	glBindVertexArray(0);
+
+	m_vertexData.clear();
+	m_colorData.clear();
 }
 
 } // namespace Uknitty
