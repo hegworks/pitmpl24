@@ -212,7 +212,7 @@ void Scene::CreateSolidObjectsFromData()
 #pragma region Crate2x4
 	{
 		glm::vec3 modelDimensions = glm::vec3(2, 1.5, 4);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj", m_shaderProgram);
 		m_models.push_back(model);
 
 		for(auto& pos : m_crate2x4positions)
@@ -226,7 +226,7 @@ void Scene::CreateSolidObjectsFromData()
 #pragma region Crate4x4
 	{
 		glm::vec3 modelDimensions = glm::vec3(4, 1.5, 4);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj", m_shaderProgram);
 		m_models.push_back(model);
 		for(auto& pos : m_crate4x4positions)
 		{
@@ -239,7 +239,7 @@ void Scene::CreateSolidObjectsFromData()
 #pragma region Tank
 	{
 		glm::vec3 modelDimensions = glm::vec3(4, 2, 6);
-		Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj");
+		Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj", m_shaderProgram);
 		m_models.push_back(tankModel);
 		for(auto& pos : m_tankPositions)
 		{
@@ -252,7 +252,7 @@ void Scene::CreateSolidObjectsFromData()
 #pragma region Fence
 	{
 		glm::vec3 modelDimensions = glm::vec3(4, 4, 0.3);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence2.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence2.obj", m_shaderProgram);
 		m_models.push_back(model);
 		for(auto& pos : m_fencePositions)
 		{
@@ -264,7 +264,7 @@ void Scene::CreateSolidObjectsFromData()
 
 #pragma region Pikmin
 	{ // this is just a joke :D (but it also marks the center of the world)
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Pikmin/Pikmin.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Pikmin/Pikmin.obj", m_shaderProgram);
 		m_models.push_back(model);
 		glm::vec3 modelDimensions = glm::vec3(0);
 		SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(0));
@@ -287,12 +287,12 @@ void Scene::CreateSolidObjectsFromData()
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.x == 1)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallVerticalScale.z, 1));
 					m_models.push_back(wallModel);
 				}
 				else if(wallData->size.x == 2)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", glm::vec2(wallVerticalScale.z, 1));
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", m_shaderProgram, glm::vec2(wallVerticalScale.z, 1));
 					m_models.push_back(wallModel);
 				}
 				else
@@ -319,12 +319,12 @@ void Scene::CreateSolidObjectsFromData()
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.y == 1)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallHorizontalScale.x, 1));
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallHorizontalScale.x, 1));
 					m_models.push_back(wallModel);
 				}
 				else if(wallData->size.y == 2)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", glm::vec2(wallHorizontalScale.x, 1));
+					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", m_shaderProgram, glm::vec2(wallHorizontalScale.x, 1));
 					m_models.push_back(wallModel);
 				}
 				else
@@ -346,7 +346,7 @@ void Scene::CreateSolidObjectsFromData()
 			case WallType::UNIFORM:
 			{
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
-				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", glm::vec2(wallUniformScale.x, 1));
+				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallUniformScale.x, 1));
 				m_models.push_back(wallUniformModel);
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
@@ -366,7 +366,7 @@ void Scene::CreateSolidObjectsFromData()
 
 #pragma region RoomChange
 	{
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
+		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj", m_shaderProgram);
 		m_models.push_back(model);
 		for(auto& data : m_roomChangeDatas)
 		{
@@ -388,7 +388,7 @@ void Scene::CreateSolidObjectsFromData()
 
 void Scene::CreateGround()
 {
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
+	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", m_shaderProgram, glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
 	m_models.push_back(plane);
 	{
 		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
@@ -409,7 +409,7 @@ void Scene::CreatePathFinder()
 	std::vector<tmxparser::TmxLayer> layers = m_tmxMap.layerCollection;
 
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
-	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj");
+	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj", m_shaderProgram);
 	glm::vec3 modelDimensions = glm::vec3(1, 6, 1);
 #endif // DEBUG_DRAW_ASTAR_COLLISIONS
 
@@ -440,7 +440,7 @@ void Scene::CreatePathFinder()
 
 void Scene::CreateEnemies()
 {
-	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj");
+	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj", m_shaderProgram);
 	m_models.push_back(model);
 	int debug_maxEnemiesToSpawn = DEBUG_MAX_ENEMIES_TO_SPAWN;
 	for(auto& enemy : m_enemiesPatrolPositions)

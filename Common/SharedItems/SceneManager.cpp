@@ -144,7 +144,7 @@ void SceneManager::ChangeScene(int mapId)
 
 void SceneManager::CreatePlayer()
 {
-	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	m_snakeModel = new Uknitty::Model("../Common/Assets/Models/NakedSnake/NakedSnake.obj", m_shaderProgram);
 	m_player = new Player(m_snakeModel);
 }
 

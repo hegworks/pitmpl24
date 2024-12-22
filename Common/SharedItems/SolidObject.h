@@ -10,6 +10,7 @@ class Model;
 class ICamera;
 class ShaderProgram;
 class Physics;
+class SceneGraphNode;
 }
 
 class btDynamicsWorld;
@@ -22,6 +23,7 @@ public:
 
 	Uknitty::Transform* GetTransform() const { return m_transform; }
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
+	Uknitty::SceneGraphNode* GetSceneGraphNode() const { return m_sceneGraphNode; }
 
 	// Inherited via Render
 	virtual void Draw() override;
@@ -34,5 +36,6 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
+	Uknitty::SceneGraphNode* m_sceneGraphNode = nullptr;
 };
 

@@ -44,7 +44,7 @@ void SolidObject::Draw()
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
 	glDisable(GL_BLEND);
-	m_model->Draw(*m_shaderProgram);
+	m_model->Draw();
 	m_shaderProgram->UnUse();
 #endif // DEBUG_DONT_DRAW_SOLIDS
 }

@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
+#include "ShaderProgram.h"
 #include <iostream>
 #include <stb_image.h>
 
-class Shader;
 struct Texture;
 
 namespace Uknitty
@@ -19,10 +19,11 @@ namespace Uknitty
 class Model
 {
 public:
-	Model(std::string const& path, glm::vec2 textureCoordScale = glm::vec2(1), bool shouldVerticallyFlipTexture = false)
+	Model(std::string const& path, ShaderProgram* shaderProgram, glm::vec2 textureCoordScale = glm::vec2(1), bool shouldVerticallyFlipTexture = false)
 	{
 		stbi_set_flip_vertically_on_load(shouldVerticallyFlipTexture);
 		m_textureCoordScale = textureCoordScale;
+		m_shader = shaderProgram;
 		loadModel(path);
 	}
 	~Model()
@@ -34,7 +35,7 @@ public:
 		}
 	}
 
-	void Draw(ShaderProgram& shader);
+	void Draw();
 	std::string GetDirectory() const { return m_directory; }
 	std::string GetStrippedFileName() const;
 
@@ -51,12 +52,13 @@ private:
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 	glm::vec2 m_textureCoordScale;
+	ShaderProgram* m_shader = nullptr;
 };
 
-inline void Model::Draw(ShaderProgram& shader)
+inline void Model::Draw()
 {
 	for(unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+		meshes[i].Draw();
 }
 
 inline void Model::loadModel(std::string path)
@@ -126,7 +128,7 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-	return Mesh(vertices, indices, textures);
+	return Mesh(vertices, indices, textures, m_shader);
 }
 
 inline unsigned int Model::TextureFromFile(const char* path, const std::string& directory)

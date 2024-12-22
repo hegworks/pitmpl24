@@ -8,7 +8,7 @@
 
 GunBullet::GunBullet()
 {
-	static Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Bullet/Bullet.obj");
+	static Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Bullet/Bullet.obj", m_shaderProgram);
 	m_model = model;
 
 	m_physics = new Uknitty::Physics();

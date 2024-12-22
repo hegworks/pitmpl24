@@ -145,7 +145,7 @@ void Enemy::Draw()
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
 	glDisable(GL_BLEND);
-	m_model->Draw(*m_shaderProgram);
+	m_model->Draw();
 	m_shaderProgram->UnUse();
 
 #ifdef DEBUG_DRAW_ASTAR_PATH

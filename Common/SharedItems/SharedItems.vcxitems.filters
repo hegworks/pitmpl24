@@ -267,6 +267,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneGraphNode.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneGraphNode.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

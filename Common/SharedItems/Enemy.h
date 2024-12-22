@@ -28,13 +28,13 @@ public:
 	~Enemy();
 
 	// Inherited via FlowRender
-	void Awake() override;
-	void Start() override;
-	void Update(float deltaTime) override;
-	void LateUpdate(float deltaTime) override;
-	void FixedUpdate() override;
-	void Destroy() override;
-	void Draw() override;
+	virtual void Awake() override;
+	virtual void Start() override;
+	virtual void Update(float deltaTime) override;
+	virtual void LateUpdate(float deltaTime) override;
+	virtual void FixedUpdate() override;
+	virtual void Destroy() override;
+	virtual void Draw() override;
 
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
 	Uknitty::Transform* GetTransform() const { return m_transform; }

@@ -28,6 +28,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneGraphNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneGraphNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp" />

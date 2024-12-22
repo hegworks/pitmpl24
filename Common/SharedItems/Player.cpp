@@ -27,6 +27,7 @@ Player::Player(Uknitty::Model* model)
 	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
+	m_physics->SetPosition(PLAYER_INITIAL_POS);
 	auto userPointerData = new Uknitty::Physics::UserPointerData();
 	userPointerData->physicsType = Uknitty::Physics::PhysicsType::PLAYER;
 	userPointerData->name = "Player";
@@ -159,7 +160,7 @@ void Player::Draw()
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
 	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
 	glDisable(GL_BLEND);
-	m_model->Draw(*m_shaderProgram);
+	m_model->Draw();
 	m_shaderProgram->UnUse();
 }
 
