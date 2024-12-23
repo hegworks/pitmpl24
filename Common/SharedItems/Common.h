@@ -3,16 +3,12 @@
 #include "glm/glm.hpp"
 
 #pragma region Do NOT comment out lines here, use the next section
-#define VISUAL_LEAK_DETECTOR
-#define DEBUG_DRAW_PHYSICS
 #define DEBUG_DRAW_ASTAR_COLLISIONS
 #define DEBUG_DRAW_ASTAR_PATH
 #define DEBUG_DONT_DRAW_SOLIDS
 #pragma endregion Do NOT comment out lines here, use the next section
 
 #pragma region to use a feature, comment out its line
-#undef VISUAL_LEAK_DETECTOR
-//#undef DEBUG_DRAW_PHYSICS
 #undef DEBUG_DRAW_ASTAR_COLLISIONS
 #undef DEBUG_DRAW_ASTAR_PATH
 #undef DEBUG_DONT_DRAW_SOLIDS
@@ -27,8 +23,6 @@ constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
 constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 constexpr int STARTING_MAP_ID = 0;
-constexpr float PHYSICS_TIMESTEP = 1.0f / 30.0f; //		x/y		y times every x second
-constexpr float GRAVITY = -9.81f;
 constexpr glm::vec3 PLAYER_INITIAL_POS = glm::vec3(3, 0, 0);
 #pragma endregion Release settings
 

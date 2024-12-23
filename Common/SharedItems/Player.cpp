@@ -2,17 +2,15 @@
 
 #include "GeneralCamera.h"
 #include "ICamera.h"
-#include "Interfaces.h"
 #include "Model.h"
-#include "Physics.h"
 #include "PhysicsCollisionFilters.h"
 #include "RoomChange.h"
 #include "RoomChangePositionType.h"
 #include "SceneManagerBlackboard.h"
 #include "SharedDependencies.h"
-#include "Transform.h"
 #include <iostream>
 
+#if 0
 Player::Player(Uknitty::Model* model)
 {
 	m_iCamera = SharedDependencies::GetCamera();
@@ -22,7 +20,7 @@ Player::Player(Uknitty::Model* model)
 
 	m_model = model;
 
-	m_transform = new Uknitty::Transform();
+	m_transform = new Uknitty::CTransform();
 	m_physics = new Uknitty::Physics();
 	m_physics->InitialzeWithCapsuleShape(glm::vec3(0), MODEL_DIMENSIONS.x / 2.0, MODEL_DIMENSIONS.y / 2.0, 70.0f);
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
@@ -44,6 +42,8 @@ Player::~Player()
 	delete m_physics;
 	delete m_transform;
 }
+
+
 
 void Player::ProcessMousePosition(double xPos, double yPos)
 {
@@ -158,7 +158,7 @@ void Player::Draw()
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
-	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
+	m_shaderProgram->SetMat4("uModel", *m_transform->GetMatrix());
 	glDisable(GL_BLEND);
 	m_model->Draw();
 	m_shaderProgram->UnUse();
@@ -225,3 +225,4 @@ void Player::SetGunPos()
 	cameraForward.y = 0;
 	m_sceneManagerBlackboard->SetPlayerGunPos(rigidBodyPos + glm::normalize(cameraForward) * 2.0f);
 }
+#endif

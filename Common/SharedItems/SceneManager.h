@@ -2,7 +2,6 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "IInputKey.h"
-#include "Interfaces.h"
 #include "RoomChangeType.h"
 #include <string>
 #include <vector>
@@ -21,21 +20,9 @@ class Player;
 class RoomFinder;
 class SceneManagerBlackboard;
 
-class SceneManager : public Uknitty::FlowInputRender
+class SceneManager
 {
 public:
-	// Inherited via FlowInputRender
-	virtual void ProcessMousePosition(double xPos, double yPos) override;
-	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
-	virtual void KeyDown(Key key) override;
-	virtual void KeyUp(Key key) override;
-	virtual void Awake() override;
-	virtual void Start() override;
-	virtual void Update(float deltaTime) override;
-	virtual void LateUpdate(float deltaTime) override;
-	virtual void FixedUpdate() override;
-	virtual void Destroy() override;
-	virtual void Draw() override;
 
 private:
 	Scene* m_currentScene = nullptr;
@@ -45,16 +32,6 @@ private:
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 	RoomFinder* m_roomFinder = nullptr;
 
-	btDefaultCollisionConfiguration* m_btCollisionConfiguration = nullptr;
-	btDbvtBroadphase* m_btBroadphase = nullptr;
-	btCollisionDispatcher* m_btDispatcher = nullptr;
-	btSequentialImpulseConstraintSolver* m_btSolver = nullptr;
-	Uknitty::BTDebugDraw* m_btDebugDrawer = nullptr;
-	btDiscreteDynamicsWorld* m_btDynamicsWorld = nullptr;
-	//keep track of the shapes, we release memory at exit.
-	//make sure to re-use collision shapes among rigid bodies whenever possible!
-	btAlignedObjectArray<btCollisionShape*> m_btCollisionShapes;
-	Uknitty::CollisionManager* m_collisionManager = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 
 	Uknitty::Model* m_snakeModel = nullptr;

@@ -1,11 +1,10 @@
 #pragma once
 
 #include "glm/glm.hpp"
-#include "Interfaces.h"
 
 namespace Uknitty
 {
-class Transform;
+class CTransform;
 class Model;
 class ICamera;
 class ShaderProgram;
@@ -14,8 +13,9 @@ class Physics;
 
 class btDynamicsWorld;
 
-class DynamicObject : public Uknitty::FlowRender
+class DynamicObject
 {
+#if 0
 public:
 	DynamicObject() = default;
 	~DynamicObject();
@@ -35,11 +35,12 @@ public:
 protected:
 	Uknitty::ICamera* m_iCamera = nullptr;
 	Uknitty::Model* m_model = nullptr;
-	Uknitty::Transform* m_transform = nullptr;
+	Uknitty::CTransform* m_transform = nullptr;
 	Uknitty::Physics* m_physics = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 
 	glm::vec3 GetCurrentPhysicsPos();
 	void SetModelPosToPhysicsPos();
+#endif
 };

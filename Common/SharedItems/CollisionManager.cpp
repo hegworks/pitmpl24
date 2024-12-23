@@ -1,6 +1,6 @@
 #include "CollisionManager.h"
 
-#include "Physics.h"
+#include "CPhysics.h"
 
 btScalar Uknitty::CollisionManager::addSingleResult(btManifoldPoint& cp,
 													const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0,

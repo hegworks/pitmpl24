@@ -10,6 +10,7 @@ namespace Uknitty
 
 class InterfaceManager
 {
+#if 0
 public:
 
 #pragma region Input
@@ -305,6 +306,7 @@ private:
 			i->Destroy();
 		}
 	}
+#endif
 };
 
 } // namespace uknitty

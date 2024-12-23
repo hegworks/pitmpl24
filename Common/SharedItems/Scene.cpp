@@ -8,13 +8,11 @@
 #include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
-#include "Physics.h"
 #include "Player.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"
 #include "SolidObject.h"
-#include "Transform.h"
 #include <iostream>
 #include <stdexcept>
 #include <tmxparser.h>
@@ -30,6 +28,7 @@ Scene::Scene(int mapId, Player* player)
 	m_player = player;
 }
 
+#if 0
 void Scene::ProcessMousePosition(double xPos, double yPos)
 {
 	m_interfaceManager->ProcessMousePosition(xPos, yPos);
@@ -459,3 +458,4 @@ void Scene::CreateEnemies()
 		m_interfaceManager->AddFlowRender(enemy);
 	}
 }
+#endif

@@ -9,11 +9,11 @@
 namespace Uknitty
 {
 
-class Physics
+class CPhysics
 {
 public:
-	Physics();
-	~Physics();
+	CPhysics();
+	~CPhysics();
 
 	//TODO move this out of the Uknitty layer
 	enum class PhysicsType

@@ -2,16 +2,17 @@
 
 #include "IInput.h"
 #include "IInputKey.h"
-#include "Interfaces.h"
 
 #include <glm/glm.hpp>
 
 namespace Uknitty
 {
 
-class ICamera : public FlowInput
+class ICamera
 {
+#if 0
 public:
+
 	virtual ~ICamera() = default;
 
 	virtual void GetCameraProperties(glm::vec3& pos, glm::vec3& front, glm::vec3& up) const = 0;
@@ -46,6 +47,7 @@ public:
 
 protected:
 	CameraType m_cameraType = CameraType::TOP_DOWN_FOLLOW;
+#endif
 };
 
-}
+} // namespace Uknitty

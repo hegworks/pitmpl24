@@ -156,7 +156,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FreeFlyCamera.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)CTransform.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Game.h">
@@ -180,9 +180,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCamera.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
@@ -197,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h">
       <Filter>Game\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Interfaces.h">
-      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)InterfaceManager.h">
       <Filter>Uknitty\Headers</Filter>
@@ -216,7 +210,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GlCheckError.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)CPhysics.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RoomChange.h">
@@ -267,7 +261,25 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SceneGraphNode.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CInput.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CRender.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UknittySettings.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -302,7 +314,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)CTransform.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp">
@@ -329,7 +341,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)CPhysics.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp">
@@ -350,7 +362,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SceneGraphNode.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CRender.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsManager.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>

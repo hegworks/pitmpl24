@@ -1,33 +1,36 @@
-#include "Physics.h"
+#include "CPhysics.h"
 
 #include "btBulletDynamicsCommon.h"
 #include <glm/glm.hpp>
 #include <stdexcept>
 
-Uknitty::Physics::Physics()
+namespace Uknitty
+{
+
+CPhysics::CPhysics()
 {
 }
 
-Uknitty::Physics::~Physics()
+CPhysics::~CPhysics()
 {
 	delete m_rigidBody;
 	delete m_collisionShape;
 	delete m_motionState;
 }
 
-void Uknitty::Physics::InitialzeWithBoxShape(glm::vec3 position, glm::vec3 scale, float mass)
+void CPhysics::InitialzeWithBoxShape(glm::vec3 position, glm::vec3 scale, float mass)
 {
 	btCollisionShape* shape = new btBoxShape(btVector3(btScalar(scale.x / 2.0), btScalar(scale.y / 2.0), btScalar(scale.z / 2.0)));
 	Initialze(shape, position, scale, mass);
 }
 
-void Uknitty::Physics::InitialzeWithCapsuleShape(glm::vec3 position, float radius, float height, float mass)
+void CPhysics::InitialzeWithCapsuleShape(glm::vec3 position, float radius, float height, float mass)
 {
 	btCollisionShape* shape = new btCapsuleShape(radius, height);
 	Initialze(shape, position, glm::vec3(radius, height, radius), mass);
 }
 
-void Uknitty::Physics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 position, glm::vec3 scale, float mass)
+void CPhysics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 position, glm::vec3 scale, float mass)
 {
 	m_collisionShape = btCollisionShape;
 
@@ -50,3 +53,5 @@ void Uknitty::Physics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 p
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyInfo(mass, m_motionState, m_collisionShape, localInertia);
 	m_rigidBody = new btRigidBody(rigidBodyInfo);
 }
+
+} // namespace Uknitty

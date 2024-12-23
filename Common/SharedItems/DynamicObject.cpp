@@ -3,10 +3,9 @@
 #include "glm/glm.hpp"
 #include "ICamera.h"
 #include "Model.h"
-#include "Physics.h"
 #include "SharedDependencies.h"
-#include "Transform.h"
 
+#if 0
 DynamicObject::~DynamicObject()
 {
 	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
@@ -23,7 +22,7 @@ void DynamicObject::Construct(Uknitty::Model* model, glm::vec3 position, Uknitty
 	m_model = model;
 	m_physics = physics;
 
-	m_transform = new Uknitty::Transform();
+	m_transform = new Uknitty::CTransform();
 	m_transform->SetPosition(position);
 }
 
@@ -64,7 +63,7 @@ void DynamicObject::Draw()
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
-	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
+	m_shaderProgram->SetMat4("uModel", *m_transform->GetMatrix());
 	glDisable(GL_BLEND);
 	m_model->Draw();
 	m_shaderProgram->UnUse();
@@ -79,3 +78,4 @@ void DynamicObject::SetModelPosToPhysicsPos()
 {
 	m_transform->SetPosition(GetCurrentPhysicsPos());
 }
+#endif

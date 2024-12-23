@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Interfaces.h"
 #include "RoomChange.h"
 #include "RoomChangeType.h"
 #include <functional>
 
 namespace Uknitty
 {
-class Transform;
+class CTransform;
 class Model;
 class ICamera;
 class ShaderProgram;
@@ -18,11 +17,13 @@ class SceneManagerBlackboard;
 class btDynamicsWorld;
 class btCollisionObject;
 
-class Player : public Uknitty::FlowInputRender
+class Player
 {
+#if 0
 public:
 	Player(Uknitty::Model* model);
 	~Player();
+
 
 	// Inherited via FlowInputRender
 	virtual void ProcessMousePosition(double xPos, double yPos) override;
@@ -42,7 +43,7 @@ public:
 	virtual void Draw() override;
 
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
-	Uknitty::Transform* GetTransform() const { return m_transform; }
+	Uknitty::CTransform* GetTransform() const { return m_transform; }
 	void SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback);
 	void RoomChangedSetPosition(RoomChange* roomChange);
 
@@ -52,7 +53,7 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 	Uknitty::Model* m_model = nullptr;
-	Uknitty::Transform* m_transform = nullptr;
+	Uknitty::CTransform* m_transform = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 
 	const float SPEED_WALK = 1.5f;
@@ -74,4 +75,5 @@ private:
 
 	void OnCollision(const btCollisionObject* other);
 	void SetGunPos();
+#endif
 };

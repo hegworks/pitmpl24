@@ -22,6 +22,7 @@ class Render;
 class Flow;
 class FlowInput;
 class FlowInputRender;
+class Engine;
 }
 
 class SharedInput;
@@ -55,6 +56,7 @@ private:
 	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
 	SceneManager* m_sceneManager = nullptr;
+	Uknitty::Engine* m_engine;
 
 	bool quitting{false};
 	float gameDeltaTime;

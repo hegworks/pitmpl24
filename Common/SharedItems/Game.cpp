@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Common.h"
+#include "Engine.h"
 #include "FreeFlyCamera.h"
 #include "ICamera.h"
 #include "IGraphics.h"
@@ -8,6 +9,7 @@
 #include "SceneManager.h"
 #include "SharedDependencies.h"
 #include "SharedInput.h"
+#include "SolidObject.h"
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
@@ -70,9 +72,9 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_sceneManager = new SceneManager();
-	m_sceneManager->Awake();
-	m_sceneManager->Start();
+	m_engine = Uknitty::Engine::GetInstance();
+
+	Uknitty::Engine::GetInstance()->CreateGameObject<SolidObject>();
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -117,12 +119,16 @@ void Game::Start()
 		ClearScreen();
 		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
 
+		m_engine->Update(gameDeltaTime);
+
+#if 0
 		m_sceneManager->ProcessKeyboard(m_iKeyboard);
 		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
 		m_sceneManager->Update(gameDeltaTime);
 		m_sceneManager->LateUpdate(gameDeltaTime);
 
 		m_sceneManager->Draw();
+#endif
 
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
@@ -152,7 +158,7 @@ void Game::Start()
 		++frameCount;
 	}
 
-	m_sceneManager->Destroy();
+	//m_sceneManager->Destroy();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui::DestroyContext();
 	m_iGraphics->Quit();
@@ -163,6 +169,7 @@ void Game::KeyCallback(Key key, KeyAction action)
 {
 	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();
 
+#if 0
 	if(action == KeyAction::DOWN)
 	{
 		m_sceneManager->KeyDown(key);
@@ -171,6 +178,9 @@ void Game::KeyCallback(Key key, KeyAction action)
 	{
 		m_sceneManager->KeyUp(key);
 	}
+#endif
+
+
 
 #ifdef WINDOWS_BUILD
 	if(key == Key::Z && action == KeyAction::DOWN)

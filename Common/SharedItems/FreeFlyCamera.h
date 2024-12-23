@@ -10,8 +10,10 @@
 namespace Uknitty
 {
 
+#if 0
 class FreeFlyCamera : public ICamera
 {
+
 public:
 	FreeFlyCamera();
 	~FreeFlyCamera();
@@ -184,5 +186,6 @@ glm::vec3 FreeFlyCamera::GetRight()
 {
 	return glm::normalize(glm::cross(m_front, UP));
 }
+#endif
 
-}
+} // namespace Uknitty

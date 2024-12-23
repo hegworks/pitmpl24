@@ -8,12 +8,12 @@
 
 namespace Uknitty
 {
-class Transform;
+class CTransform;
 }
 
 class GeneralCamera : public Uknitty::ICamera
 {
-
+#if 0
 public:
 	GeneralCamera();
 	~GeneralCamera();
@@ -37,7 +37,7 @@ public:
 	virtual void Update(float deltaTime) override;
 	virtual void LateUpdate(float deltaTime) override;
 
-	void SetFollowTransform(Uknitty::Transform* followTransform) { m_followTransform = followTransform; }
+	void SetFollowTransform(Uknitty::CTransform* followTransform) { m_followTransform = followTransform; }
 
 private:
 	// settings
@@ -74,7 +74,7 @@ private:
 	const Key TYPE_SWITCH_KEY = Key::V;
 
 	// variables
-	Uknitty::Transform* m_followTransform = nullptr;
+	Uknitty::CTransform* m_followTransform = nullptr;
 
 	double m_yaw = YAW_DEFAULT;
 	double m_pitch = 0;
@@ -94,4 +94,5 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
+#endif
 };

@@ -24,11 +24,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GunBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SceneGraphNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CRender.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
@@ -47,10 +51,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InterfaceManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Interfaces.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Physics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CPhysics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RoomChange.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RoomChangePositionType.h" />
@@ -65,7 +68,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tmxparser.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CTransform.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UknittySettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\backends\imgui_impl_opengl3.cpp" />
@@ -76,6 +80,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DynamicObject.cpp" />
@@ -83,18 +90,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Game.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Physics.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CPhysics.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CRender.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SceneGraphNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tmxparser.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Maps\0.tmx">

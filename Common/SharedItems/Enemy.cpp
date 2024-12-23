@@ -9,15 +9,14 @@
 #include "glm/glm.hpp"
 #include "ICamera.h"
 #include "Model.h"
-#include "Physics.h"
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"
-#include "Transform.h"
 #include "UknittyMath.h"
 #include <iostream>
 
+#if 0
 Enemy::Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder)
 {
 	m_iCamera = SharedDependencies::GetCamera();
@@ -29,7 +28,7 @@ Enemy::Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, ASta
 	m_patrolPositions = patrolPositions;
 	m_pathFinder = pathFinder;
 
-	m_transform = new Uknitty::Transform();
+	m_transform = new Uknitty::CTransform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
 
 	m_physics = new Uknitty::Physics();
@@ -143,7 +142,7 @@ void Enemy::Draw()
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
 	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
-	m_shaderProgram->SetMat4("uModel", *m_transform->GetModelMatrix());
+	m_shaderProgram->SetMat4("uModel", *m_transform->GetMatrix());
 	glDisable(GL_BLEND);
 	m_model->Draw();
 	m_shaderProgram->UnUse();
@@ -408,3 +407,4 @@ bool Enemy::IsPlayerInSight()
 	}
 	return false;
 }
+#endif

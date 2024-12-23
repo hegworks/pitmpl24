@@ -2,10 +2,10 @@
 
 #include "glm/glm.hpp"
 #include "Model.h"
-#include "Physics.h"
 #include "PhysicsCollisionFilters.h"
 #include <iostream>
 
+#if 0
 GunBullet::GunBullet()
 {
 	static Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Bullet/Bullet.obj", m_shaderProgram);
@@ -31,3 +31,4 @@ GunBullet::~GunBullet()
 	delete m_physics;
 	delete m_model;
 }
+#endif

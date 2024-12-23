@@ -3,12 +3,11 @@
 #include "AStar.hpp"
 #include "EnemyState.h"
 #include "glm/glm.hpp"
-#include "Interfaces.h"
 #include <vector>
 
 namespace Uknitty
 {
-class Transform;
+class CTransform;
 class Model;
 class ICamera;
 class ShaderProgram;
@@ -21,8 +20,9 @@ class btDynamicsWorld;
 class btCollisionObject;
 class SceneManagerBlackboard;
 
-class Enemy : public Uknitty::FlowRender
+class Enemy
 {
+#if 0
 public:
 	Enemy(Uknitty::Model* model, std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder);
 	~Enemy();
@@ -37,7 +37,7 @@ public:
 	virtual void Draw() override;
 
 	Uknitty::Physics* GetPhysics() const { return m_physics; }
-	Uknitty::Transform* GetTransform() const { return m_transform; }
+	Uknitty::CTransform* GetTransform() const { return m_transform; }
 
 private:
 	struct PosData
@@ -51,7 +51,7 @@ private:
 	Uknitty::Physics* m_physics = nullptr;
 	btDynamicsWorld* m_btDynamicsWorld = nullptr;
 	Uknitty::Model* m_model = nullptr;
-	Uknitty::Transform* m_transform = nullptr;
+	Uknitty::CTransform* m_transform = nullptr;
 	AStar::Generator* m_pathFinder = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 	Uknitty::CountdownTimer* m_astarPathGenerationTimer = nullptr;
@@ -102,4 +102,5 @@ private:
 	glm::vec2 AstarCoordToWorldCoord(glm::ivec2 astarCoord); //TODO move to AStar class
 	glm::ivec2 FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord); //TODO move to AStar class
 	bool IsPlayerInSight();
+#endif
 };

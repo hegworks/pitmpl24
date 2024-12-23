@@ -3,7 +3,6 @@
 #include "AStar.hpp"
 #include "Common.h"
 #include "glm/glm.hpp"
-#include "Interfaces.h"
 #include "RoomChangeType.h"
 #include "tmxparser.h"
 #include <map>
@@ -21,23 +20,10 @@ class Player;
 class btDynamicsWorld;
 class SceneManagerBlackboard;
 
-class Scene : public Uknitty::FlowInputRender
+class Scene
 {
 public:
 	Scene(int mapId, Player* player);
-
-	// Inherited via FlowInputRender
-	virtual void ProcessMousePosition(double xPos, double yPos) override;
-	virtual void ProcessKeyboard(IKeyboard* iKeyboard) override;
-	virtual void KeyDown(Key key) override;
-	virtual void KeyUp(Key key) override;
-	virtual void Awake() override;
-	virtual void Start() override;
-	virtual void Update(float deltaTime) override;
-	virtual void LateUpdate(float deltaTime) override;
-	virtual void FixedUpdate() override;
-	virtual void Destroy() override;
-	virtual void Draw() override;
 
 private:
 	enum class WallType
