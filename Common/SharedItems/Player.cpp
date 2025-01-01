@@ -1,7 +1,6 @@
 #include "Player.h"
 
 #include "GeneralCamera.h"
-#include "ICamera.h"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
 #include "RoomChange.h"

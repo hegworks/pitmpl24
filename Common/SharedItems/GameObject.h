@@ -72,15 +72,17 @@ public:
 	CTransform* GetLocalTransform() const { return m_localTransform; }
 	CTransform* GetWorldTransform() const { return m_worldTransform; }
 
-	void AddInput();
-	void AddRender();
-	void AddPhysics();
+	void AddCInput(CInput* cinput);
+	void AddCRender();
+	void AddCPhysics();
 
-	CRender* GetRender() const;
-	CPhysics* GetPhysics() const;
-	CInput* GetInput() const;
+	CRender* GetCRender() const;
+	CPhysics* GetCPhysics() const;
+	CInput* GetCInput() const;
 
-	bool HasRender() const { return m_render != nullptr; }
+	bool HasCRender() const { return m_render != nullptr; }
+	bool HasCPhysics() const { return m_physics != nullptr; }
+	bool HasCInput() const { return m_input != nullptr; }
 
 private:
 	bool m_isEnabled = false;
@@ -92,7 +94,7 @@ private:
 	CTransform* m_worldTransform = nullptr;
 #pragma endregion Essential
 
-#pragma region Optional (Can be added after construction by client)
+#pragma region Optional (Can be added after construction by client using related functions)
 	CInput* m_input = nullptr;
 	CRender* m_render = nullptr;
 	CPhysics* m_physics = nullptr;

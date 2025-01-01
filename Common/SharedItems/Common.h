@@ -15,9 +15,6 @@
 #pragma endregion to use a feature, comment out its line
 
 #pragma region Release settings
-constexpr int SCRWIDTH = 960;
-constexpr int SCRHEIGHT = 540;
-constexpr float ASPECT_RATIO = 16.0f / 9.0f;
 constexpr int TILE_SIZE = 32;
 constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;

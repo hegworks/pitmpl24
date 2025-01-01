@@ -2,7 +2,7 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "SharedDependencies.h"
-#include <ICamera.h>
+#include <CameraObject.h>
 #include <ShaderProgram.h>
 
 #ifdef Raspberry_BUILD

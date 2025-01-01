@@ -5,7 +5,6 @@
 #include "Common.h"
 #include "Enemy.h"
 #include "GunBullet.h"
-#include "ICamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"
 #include "Player.h"

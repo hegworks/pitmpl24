@@ -1,7 +1,6 @@
 #include "DynamicObject.h"
 
 #include "glm/glm.hpp"
-#include "ICamera.h"
 #include "Model.h"
 #include "SharedDependencies.h"
 

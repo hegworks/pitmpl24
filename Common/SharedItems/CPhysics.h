@@ -15,7 +15,7 @@ public:
 	CPhysics();
 	~CPhysics();
 
-	//TODO move this out of the Uknitty layer
+	//TODO move this out of the Uknitty layer, or to the UknittySettings
 	enum class PhysicsType
 	{
 		SOLID,
@@ -24,7 +24,7 @@ public:
 		ENEMY,
 	};
 
-	//TODO move this out of the Uknitty layer
+	//TODO move this out of the Uknitty layer, or to the UknittySettings
 	struct UserPointerData
 	{
 		PhysicsType physicsType;

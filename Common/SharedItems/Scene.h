@@ -11,7 +11,7 @@
 namespace Uknitty
 {
 class ShaderProgram;
-class ICamera;
+class CameraObject;
 class InterfaceManager;
 class Model;
 }
@@ -50,7 +50,7 @@ private:
 	GeneralCamera* m_generalCamera = nullptr;
 	Player* m_player = nullptr;
 	tmxparser::TmxMap m_tmxMap;
-	Uknitty::ICamera* m_iCamera = nullptr;
+	Uknitty::CameraObject* m_iCamera = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
 	const btDynamicsWorld* m_btDynamicsWorld = nullptr;

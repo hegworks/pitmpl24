@@ -1,14 +1,19 @@
 #pragma once
 
 #include "GameObject.h"
+#include "IInputKey.h"
 #include <type_traits>
 #include <vector>
+
+class IMouse;
+class IKeyboard;
 
 namespace Uknitty
 {
 
 class GameObject;
 class PhysicsManager;
+class CameraObject;
 
 class Engine
 {
@@ -37,9 +42,24 @@ public:
 	template <typename T>
 	void DestroyGameObject(T* gameObject);
 
+	void InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard);
+	void ValidateBeforeFirstUpdate();
+
+	void SetMainCamera(CameraObject* cameraObject);
+	CameraObject* GetMainCamera();
+
+	void CreateAndUseDefaultCamera();
+
+	void KeyDown(Key key);
+	void KeyUp(Key key);
+
 private:
 	std::vector <GameObject*> m_gameObjects;
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
+	CameraObject* m_mainCamera = nullptr;
+
+	IMouse* m_iMouse = nullptr;
+	IKeyboard* m_iKeyboard = nullptr;
 };
 
 template<typename T>

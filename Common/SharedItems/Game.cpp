@@ -1,15 +1,16 @@
 #include "Game.h"
 
+#include "CameraObject.h"
 #include "Common.h"
 #include "Engine.h"
-#include "FreeFlyCamera.h"
-#include "ICamera.h"
+#include "GeneralCamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
 #include "SceneManager.h"
 #include "SharedDependencies.h"
 #include "SharedInput.h"
 #include "SolidObject.h"
+#include "UknittySettings.h"
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
@@ -68,13 +69,16 @@ void Game::Start()
 	ImGui::StyleColorsDark();
 	ImGui_ImplOpenGL3_Init(glsl_version);
 	ImGuiIO& io = ImGui::GetIO();
-	io.DisplaySize = ImVec2(SCRWIDTH, SCRHEIGHT);
+	io.DisplaySize = ImVec2(Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 #pragma endregion imgui
 
 #pragma region Other Initializations
 	m_engine = Uknitty::Engine::GetInstance();
-
+	m_engine->CreateAndUseDefaultCamera();
+	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
 	Uknitty::Engine::GetInstance()->CreateGameObject<SolidObject>();
+
+	m_engine->ValidateBeforeFirstUpdate();
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -117,7 +121,7 @@ void Game::Start()
 #pragma endregion Timing
 
 		ClearScreen();
-		glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
+		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 
 		m_engine->Update(gameDeltaTime);
 
@@ -169,18 +173,15 @@ void Game::KeyCallback(Key key, KeyAction action)
 {
 	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();
 
-#if 0
+
 	if(action == KeyAction::DOWN)
 	{
-		m_sceneManager->KeyDown(key);
+		m_engine->GetInstance()->KeyDown(key);
 	}
 	else if(action == KeyAction::UP)
 	{
-		m_sceneManager->KeyUp(key);
+		m_engine->GetInstance()->KeyUp(key);
 	}
-#endif
-
-
 
 #ifdef WINDOWS_BUILD
 	if(key == Key::Z && action == KeyAction::DOWN)
@@ -206,7 +207,7 @@ void Game::InitializeOpenGLES()
 	glBlendEquation(GL_FUNC_ADD);
 
 	glCullFace(GL_BACK);
-	glViewport(0, 0, SCRWIDTH, SCRHEIGHT);
+	glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 }
 
 void Game::ClearScreen()

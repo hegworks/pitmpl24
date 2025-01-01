@@ -15,7 +15,7 @@ struct ImFont;
 
 namespace Uknitty
 {
-class ICamera;
+class CameraObject;
 class Interfaces;
 class Input;
 class Render;

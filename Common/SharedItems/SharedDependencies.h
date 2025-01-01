@@ -5,7 +5,7 @@
 
 namespace Uknitty
 {
-class ICamera;
+class CameraObject;
 class ShaderProgram;
 }
 
@@ -21,7 +21,7 @@ public:
 		if(!btDynamicsWorld) throw std::runtime_error("btDynamicsWorld is nullptr");
 		m_btDynamicsWorld = btDynamicsWorld;
 	}
-	const static void SetCamera(Uknitty::ICamera* camera)
+	const static void SetCamera(Uknitty::CameraObject* camera)
 	{
 		if(!camera) throw std::runtime_error("Camera is nullptr");
 		m_camera = camera;
@@ -39,10 +39,10 @@ public:
 		if(!m_btDynamicsWorld) throw std::runtime_error("DynamicsWorld has not been set, but something is trying to access it");
 		return const_cast<btDiscreteDynamicsWorld*>(m_btDynamicsWorld);
 	}
-	static Uknitty::ICamera* GetCamera()
+	static Uknitty::CameraObject* GetCamera()
 	{
 		if(!m_camera) throw std::runtime_error("Camera has not been set, but something is trying to access it");
-		return const_cast<Uknitty::ICamera*>(m_camera);
+		return const_cast<Uknitty::CameraObject*>(m_camera);
 	}
 	static Uknitty::ShaderProgram* GetShaderProgram()
 	{
@@ -53,6 +53,6 @@ public:
 
 private:
 	inline static const btDiscreteDynamicsWorld* m_btDynamicsWorld = nullptr;
-	inline static const Uknitty::ICamera* m_camera = nullptr;
+	inline static const Uknitty::CameraObject* m_camera = nullptr;
 	inline static const Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 };

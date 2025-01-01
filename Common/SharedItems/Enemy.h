@@ -9,7 +9,7 @@ namespace Uknitty
 {
 class CTransform;
 class Model;
-class ICamera;
+class CameraObject;
 class ShaderProgram;
 class Physics;
 class BTDebugDraw;

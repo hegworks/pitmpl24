@@ -3,7 +3,6 @@
 #include "Common.h"
 #include "Engine.h"
 #include "GameObject.h"
-#include "ICamera.h"
 #include "PhysicsCollisionFilters.h"
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"

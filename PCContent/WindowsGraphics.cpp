@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "Game.h"
+#include "UknittySettings.h"
 #include "WindowsGraphics.h"
 #include <glad/glad.h>
 #include <iostream>
@@ -41,7 +42,7 @@ WindowsGraphics::WindowsGraphics()
 	// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_ANY_PROFILE);
 
 	// Creates the window.
-	m_window = glfwCreateWindow(SCRWIDTH, SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
+	m_window = glfwCreateWindow(Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT, "PC Based OpenGLES", NULL, NULL);
 
 	// Error handling for if window creation failed.
 	if(m_window == NULL)

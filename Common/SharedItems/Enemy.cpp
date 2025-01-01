@@ -7,7 +7,6 @@
 #include "CountdownTimer.h"
 #include "EnemyState.h"
 #include "glm/glm.hpp"
-#include "ICamera.h"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"

@@ -25,7 +25,7 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 {
 	glm::mat4 transform = parentsMVP * (*m_localTransform->GetMatrix());
 	m_worldTransform->OverrideMatrix(transform);
-	if(m_render)
+	if(HasCRender())
 	{
 		m_render->Draw(transform);
 	}
@@ -35,37 +35,37 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 	}
 }
 
-void GameObject::AddInput()
+void GameObject::AddCInput(CInput* cinput)
 {
 	if(m_input) throw std::runtime_error("GameObject already has Input");
-	m_input = new CInput();
+	m_input = cinput;
 }
 
-void GameObject::AddRender()
+void GameObject::AddCRender()
 {
 	if(m_render) throw std::runtime_error("GameObject already has Render");
 	m_render = new CRender();
 }
 
-void GameObject::AddPhysics()
+void GameObject::AddCPhysics()
 {
 	if(m_physics) throw std::runtime_error("GameObject already has Physics");
 	m_physics = new CPhysics();
 }
 
-CRender* GameObject::GetRender() const
+CRender* GameObject::GetCRender() const
 {
 	if(!m_render) throw std::runtime_error("GameObject does not have Render");
 	return m_render;
 }
 
-CPhysics* GameObject::GetPhysics() const
+CPhysics* GameObject::GetCPhysics() const
 {
 	if(!m_physics) throw std::runtime_error("GameObject does not have Physics");
 	return m_physics;
 }
 
-CInput* GameObject::GetInput() const
+CInput* GameObject::GetCInput() const
 {
 	if(!m_input) throw std::runtime_error("GameObject does not have Input");
 	return m_input;

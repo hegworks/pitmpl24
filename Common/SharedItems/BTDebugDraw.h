@@ -8,7 +8,7 @@ namespace Uknitty
 {
 
 class ShaderProgram;
-class ICamera;
+class CameraObject;
 
 class BTDebugDraw : public btIDebugDraw
 {
@@ -25,7 +25,7 @@ public:
 
 private:
 	int m_debugMode = 0;
-	ICamera* m_camera = nullptr;
+	CameraObject* m_camera = nullptr;
 	ShaderProgram* m_shaderProgram = nullptr;
 
 	unsigned int m_vbo, m_vao, m_colorVbo;
