@@ -33,8 +33,8 @@ public:
 		void* extraData;  // Optional additional data
 	};
 
-	void InitialzeWithBoxShape(glm::vec3 position, glm::vec3 scale, float mass);
-	void InitialzeWithCapsuleShape(glm::vec3 position, float radius, float height, float mass);
+	void InitialzeWithBoxShape(glm::vec3 dimensions, float mass);
+	void InitialzeWithCapsuleShape(float radius, float height, float mass);
 
 	// best to allow our Object to set and return use things in accessors
 	//void SetShape(btCollisionShape* collisionShape) { m_collisionShape = collisionShape; }
@@ -149,7 +149,7 @@ private:
 	btMotionState* m_motionState = nullptr; // the general position, orientation and scale of our object to return back
 	UserPointerData* m_userPointerData = nullptr;
 
-	void Initialze(btCollisionShape* btCollisionShape, glm::vec3 position, glm::vec3 scale, float mass);
+	void Initialze(btCollisionShape* btCollisionShape, glm::vec3 dimensions, float mass);
 };
 
 } // namespace Uknitty

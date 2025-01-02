@@ -11,8 +11,9 @@ class ShaderProgram;
 class ModelObject : public Uknitty::GameObject
 {
 public:
-	void Initialize(Model* model, ShaderProgram* shaderProgram);
 	virtual void OnAwake() override;
+
+	void Initialize(Model* model, ShaderProgram* shaderProgram);
 };
 
 } // namespace Uknitty

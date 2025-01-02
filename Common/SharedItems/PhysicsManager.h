@@ -1,6 +1,7 @@
 #pragma once
 
 #include "btBulletDynamicsCommon.h"
+#include "glm/glm.hpp"
 #include <vector>
 
 namespace Uknitty
@@ -17,10 +18,13 @@ public:
 	~PhysicsManager();
 
 	void Update(float deltaTime);
+	void Draw(glm::mat4 cameraViewProjection);
 	void AddContactTestRigidbody(btRigidBody* rigidbody);
 	void RemoveContactTestRigidbody(btRigidBody* rigidbody);
 	void RegisterListener(btRigidBody* rigidbody, Uknitty::CPhysics* cphysics);
 	void UnregisterListener(btRigidBody* rigidbody);
+
+	btDynamicsWorld* GetDynamicsWorld() { return m_btDynamicsWorld; }
 
 private:
 	btDefaultCollisionConfiguration* m_btCollisionConfiguration = nullptr;

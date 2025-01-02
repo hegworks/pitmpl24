@@ -2,6 +2,7 @@
 
 #include "CameraObject.h"
 #include "Common.h"
+#include "CTransform.h"
 #include "Engine.h"
 #include "GeneralCamera.h"
 #include "IGraphics.h"
@@ -12,7 +13,7 @@
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"
 #include "SharedInput.h"
-#include "SolidObject.h"
+#include "StaticObject.h"
 #include "UknittySettings.h"
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
@@ -79,7 +80,6 @@ void Game::Start()
 	m_engine = Uknitty::Engine::GetInstance();
 	m_engine->CreateAndUseDefaultCamera();
 	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
-	SolidObject* so = Uknitty::Engine::GetInstance()->CreateGameObject<SolidObject>();
 	m_engine->ValidateBeforeFirstUpdate();
 
 #pragma endregion Other Initializations
@@ -132,12 +132,27 @@ void Game::Start()
 		if(!ranOnce)
 		{
 			ranOnce = true;
+
 			Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
-			Uknitty::Model* cubeModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
-			Uknitty::ModelObject* cube = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
-			cube->Initialize(cubeModel, shaderProgram);
-			cube->SetParent(m_engine->GetMainCamera());
-			m_engine->GetMainCamera()->SetFollowTransform(cube->GetLocalTransform());
+			Uknitty::Model* crateModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+			Uknitty::Model* emptyModel = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
+			Uknitty::Model* planeModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj");
+
+			Uknitty::ModelObject* emptyObject = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+			emptyObject->Initialize(emptyModel, shaderProgram);
+			emptyObject->SetParent(m_engine->GetMainCamera());
+			m_engine->GetMainCamera()->SetFollowTransform(emptyObject->GetLocalTransform());
+
+			Uknitty::ModelObject* planeObject = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+			planeObject->Initialize(planeModel, shaderProgram);
+			planeObject->GetLocalTransform()->SetScale(glm::vec3(10, 1, 10));
+			planeObject->SetParent(m_engine->GetMainCamera());
+
+			Uknitty::StaticObject* so = m_engine->CreateGameObject<Uknitty::StaticObject>();
+			so->InitializeWithBoxShape(crateModel, shaderProgram, glm::vec3(4, 1.5, 4));
+			so->SetParent(m_engine->GetMainCamera());
+
+			so->OverridePosition(glm::vec3(2, -0.75, 2));
 		}
 
 #if 0

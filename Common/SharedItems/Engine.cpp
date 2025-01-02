@@ -1,12 +1,15 @@
 #include "Engine.h"
 
+#include "btBulletDynamicsCommon.h"
 #include "CInput.h"
 #include "CRender.h"
+#include "CTransform.h"
 #include "GameObject.h"
 #include "GeneralCamera.h"
 #include "IInput.h"
 #include "IInputKey.h"
 #include "PhysicsManager.h"
+#include "UknittySettings.h"
 #include <stdexcept>
 
 #include "glm/glm.hpp"
@@ -27,6 +30,8 @@ Engine::~Engine()
 
 void Engine::Update(float deltaTime)
 {
+	m_physicsManager->Update(deltaTime);
+
 	for(auto& [id, gameObject] : m_gameObjects)
 	{
 		if(gameObject->HasCInput())
@@ -45,6 +50,7 @@ void Engine::Update(float deltaTime)
 	}
 
 	m_mainCamera->Draw(glm::identity<glm::mat4>());
+	m_physicsManager->Draw(*m_mainCamera->GetLocalTransform()->GetMatrix());
 }
 
 void Engine::InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard)
@@ -96,6 +102,11 @@ void Engine::KeyUp(Key key)
 			gameObject->GetCInput()->OnKeyUp(key);
 		}
 	}
+}
+
+btDynamicsWorld* Engine::GetDynamicsWorld()
+{
+	return m_physicsManager->GetDynamicsWorld();
 }
 
 } // namespace Uknitty

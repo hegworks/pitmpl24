@@ -1,5 +1,6 @@
 #pragma once
 
+#include "btBulletDynamicsCommon.h"
 #include "GameObject.h"
 #include "IInputKey.h"
 #include <type_traits>
@@ -48,11 +49,13 @@ public:
 
 	void SetMainCamera(CameraObject* cameraObject);
 	CameraObject* GetMainCamera();
-
 	void CreateAndUseDefaultCamera();
 
 	void KeyDown(Key key);
 	void KeyUp(Key key);
+
+	btDynamicsWorld* GetDynamicsWorld();
+	PhysicsManager* GetPhysicsManager() { return m_physicsManager; }
 
 private:
 	GameObject::ID m_nextID = 0;

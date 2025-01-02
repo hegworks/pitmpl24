@@ -174,9 +174,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h">
       <Filter>CrossPlatform\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h">
       <Filter>ThirdParty\libtmx-parser</Filter>
     </ClInclude>
@@ -285,6 +282,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCameraCInput.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StaticObject.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -319,9 +319,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CTransform.cpp">
       <Filter>Uknitty\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp">
-      <Filter>Game\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp">
       <Filter>ThirdParty\libtmx-parser</Filter>
@@ -387,6 +384,9 @@
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CameraObject.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StaticObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>

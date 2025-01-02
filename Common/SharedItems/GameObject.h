@@ -83,7 +83,6 @@ public:
 	void AddChild(GameObject* child);
 
 	CTransform* GetLocalTransform() const { return m_localTransform; }
-	CTransform* GetWorldTransform() const { return m_worldTransform; }
 
 	CInput* AddCInput(CInput* cinput);
 	CRender* AddCRender();

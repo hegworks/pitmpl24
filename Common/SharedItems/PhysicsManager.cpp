@@ -1,6 +1,8 @@
 #include "PhysicsManager.h"
 
+#include "BTDebugDraw.h"
 #include "CollisionManager.h"
+#include "glm/glm.hpp"
 #include "UknittySettings.h"
 
 namespace Uknitty
@@ -73,6 +75,14 @@ void PhysicsManager::Update(float deltaTime)
 	{
 		m_btDynamicsWorld->contactTest(rigidbody, *m_collisionManager);
 	}
+}
+
+void PhysicsManager::Draw(glm::mat4 cameraViewProjection)
+{
+#ifdef DEBUG_DRAW_PHYSICS
+	m_btDynamicsWorld->debugDrawWorld();
+	m_btDebugDrawer->flushLines(cameraViewProjection);
+#endif // DEBUG_DRAW_PHYSICS
 }
 
 //TODO GOH use this on player

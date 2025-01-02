@@ -18,7 +18,6 @@ namespace Uknitty
 
 BTDebugDraw::BTDebugDraw()
 {
-	m_camera = SharedDependencies::GetCamera();
 	m_shaderProgram = new ShaderProgram("../Common/Assets/Shaders/BTDebugVertex.glsl", "../Common/Assets/Shaders/BTDebugFragment.glsl");
 	glGenVertexArrays(1, &m_vao);
 	glGenBuffers(1, &m_vbo);
@@ -55,7 +54,7 @@ void BTDebugDraw::drawLine(const btVector3& from, const btVector3& to, const btV
 	}
 }
 
-void BTDebugDraw::flushLines()
+void BTDebugDraw::flushLines(glm::mat4 cameraViewProjection)
 {
 	if(m_vertexData.empty()) return;
 
@@ -71,12 +70,10 @@ void BTDebugDraw::flushLines()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(1);
 
-#if 0
 	m_shaderProgram->Use();
-	m_shaderProgram->SetMat4("uMVP", m_camera->GetProjection() * m_camera->GetView() /* *glm::mat4(1) */);
+	m_shaderProgram->SetMat4("uMVP", cameraViewProjection);
 
 	glDrawArrays(GL_LINES, 0, m_vertexData.size() / 3);
-#endif
 
 	glBindVertexArray(0);
 

@@ -18,25 +18,25 @@ CPhysics::~CPhysics()
 	delete m_motionState;
 }
 
-void CPhysics::InitialzeWithBoxShape(glm::vec3 position, glm::vec3 scale, float mass)
+void CPhysics::InitialzeWithBoxShape(glm::vec3 dimensions, float mass)
 {
-	btCollisionShape* shape = new btBoxShape(btVector3(btScalar(scale.x / 2.0), btScalar(scale.y / 2.0), btScalar(scale.z / 2.0)));
-	Initialze(shape, position, scale, mass);
+	btCollisionShape* shape = new btBoxShape(btVector3(btScalar(dimensions.x / 2.0), btScalar(dimensions.y / 2.0), btScalar(dimensions.z / 2.0)));
+	Initialze(shape, dimensions, mass);
 }
 
-void CPhysics::InitialzeWithCapsuleShape(glm::vec3 position, float radius, float height, float mass)
+void CPhysics::InitialzeWithCapsuleShape(float radius, float height, float mass)
 {
 	btCollisionShape* shape = new btCapsuleShape(radius, height);
-	Initialze(shape, position, glm::vec3(radius, height, radius), mass);
+	Initialze(shape, glm::vec3(radius, height, radius), mass);
 }
 
-void CPhysics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 position, glm::vec3 scale, float mass)
+void CPhysics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 dimensions, float mass)
 {
 	m_collisionShape = btCollisionShape;
 
 	btTransform btTransform;
 	btTransform.setIdentity();
-	btTransform.setOrigin(btVector3(position.x, position.y + (scale.y / 2.0), position.z));
+	btTransform.setOrigin(btVector3(0, dimensions.y / 2.0, 0));
 	m_motionState = new btDefaultMotionState(btTransform);
 
 	btVector3 localInertia(0, 0, 0);

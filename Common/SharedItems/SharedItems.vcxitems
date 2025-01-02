@@ -65,7 +65,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedInput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SolidObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StaticObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tinyxml2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)tmxparser.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h" />
@@ -102,7 +102,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SolidObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StaticObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tinyxml2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tmxparser.cpp" />

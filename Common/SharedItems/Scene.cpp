@@ -11,7 +11,7 @@
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"
-#include "SolidObject.h"
+#include "StaticObject.h"
 #include <iostream>
 #include <stdexcept>
 #include <tmxparser.h>
