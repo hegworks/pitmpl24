@@ -29,8 +29,8 @@ struct Texture
 class Mesh
 {
 public:
-	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, ShaderProgram* shaderProgram);
-	void Draw();
+	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+	void Draw(ShaderProgram& shader);
 
 	// mesh data
 	std::vector<Vertex>       m_vertices;
@@ -40,23 +40,20 @@ public:
 private:
 	//  render data
 	unsigned int VAO, VBO, EBO;
-	ShaderProgram* m_shader = nullptr;
 
 	void SetupMesh();
 };
 
-inline Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures, ShaderProgram* shaderProgram)
+inline Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
 {
 	m_vertices = vertices;
 	m_indices = indices;
 	m_textures = textures;
 
-	m_shader = shaderProgram;
-
 	SetupMesh();
 }
 
-inline void Mesh::Draw()
+inline void Mesh::Draw(ShaderProgram& shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
@@ -70,7 +67,7 @@ inline void Mesh::Draw()
 		else if(name == "texture_specular")
 			number = std::to_string(specularNr++);
 
-		m_shader->SetInt(name + number, i);
+		shader.SetInt(name + number, i);
 		glBindTexture(GL_TEXTURE_2D, m_textures[i].m_id);
 	}
 	glBindVertexArray(VAO);
