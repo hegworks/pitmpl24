@@ -27,7 +27,7 @@ Engine::~Engine()
 
 void Engine::Update(float deltaTime)
 {
-	for(auto& gameObject : m_gameObjects)
+	for(auto& [id, gameObject] : m_gameObjects)
 	{
 		if(gameObject->HasCInput())
 		{
@@ -39,7 +39,7 @@ void Engine::Update(float deltaTime)
 		gameObject->Update(deltaTime);
 	}
 
-	for(auto& gameObject : m_gameObjects)
+	for(auto& [id, gameObject] : m_gameObjects)
 	{
 		gameObject->LateUpdate(deltaTime);
 	}
@@ -78,7 +78,7 @@ void Engine::CreateAndUseDefaultCamera()
 
 void Engine::KeyDown(Key key)
 {
-	for(auto& gameObject : m_gameObjects)
+	for(auto& [id, gameObject] : m_gameObjects)
 	{
 		if(gameObject->HasCInput())
 		{
@@ -89,7 +89,7 @@ void Engine::KeyDown(Key key)
 
 void Engine::KeyUp(Key key)
 {
-	for(auto& gameObject : m_gameObjects)
+	for(auto& [id, gameObject] : m_gameObjects)
 	{
 		if(gameObject->HasCInput())
 		{

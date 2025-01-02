@@ -15,14 +15,6 @@ SolidObject::SolidObject(Uknitty::Model* model, glm::vec3 modelDimensions, glm::
 }
 #endif
 
-SolidObject::SolidObject()
-{
-}
-
-SolidObject::~SolidObject()
-{
-}
-
 void SolidObject::OnAwake()
 {
 	std::cout << "Awake SolidObject" << std::endl;

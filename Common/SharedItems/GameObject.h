@@ -14,6 +14,16 @@ class CTransform;
 class GameObject
 {
 public:
+	using ID = unsigned long long;
+
+private:
+	ID m_id = 0;
+
+public:
+	ID GetID() const { return m_id; }
+	void SetID(ID id) { m_id = id; }
+
+public:
 	GameObject();
 	~GameObject();
 

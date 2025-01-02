@@ -8,9 +8,6 @@ class btDynamicsWorld;
 class SolidObject : public Uknitty::GameObject
 {
 public:
-	SolidObject();
-	~SolidObject();
-
 	virtual void OnAwake() override;
 
 private:

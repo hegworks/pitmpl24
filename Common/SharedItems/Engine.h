@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "IInputKey.h"
 #include <type_traits>
-#include <vector>
+#include <unordered_map>
 
 class IMouse;
 class IKeyboard;
@@ -41,6 +41,7 @@ public:
 
 	template <typename T>
 	void DestroyGameObject(T* gameObject);
+	void DestroyGameObject(GameObject::ID id);
 
 	void InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard);
 	void ValidateBeforeFirstUpdate();
@@ -54,7 +55,9 @@ public:
 	void KeyUp(Key key);
 
 private:
-	std::vector <GameObject*> m_gameObjects;
+	GameObject::ID m_nextID = 0;
+
+	std::unordered_map<GameObject::ID, GameObject*> m_gameObjects;
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
 
@@ -67,9 +70,11 @@ inline T* Engine::CreateGameObject()
 {
 	static_assert(std::is_base_of<GameObject, T>::value, "T must inherit from GameObject");
 	T* gameObject = new T();
+	int newId = m_nextID++;
+	gameObject->SetID(newId);
 	gameObject->OnAwake();
 	gameObject->OnStart();
-	m_gameObjects.push_back(gameObject);
+	m_gameObjects[newId] = gameObject;
 	return gameObject;
 }
 
@@ -83,6 +88,17 @@ inline void Engine::DestroyGameObject(T* gameObject)
 		m_gameObjects.erase(it);
 		gameObject->OnDestroy();
 		delete gameObject;
+	}
+}
+
+inline void Engine::DestroyGameObject(GameObject::ID id)
+{
+	auto it = m_gameObjects.find(id);
+	if(it != m_gameObjects.end())
+	{
+		m_gameObjects.erase(it);
+		it->second->OnDestroy();
+		delete it->second;
 	}
 }
 
