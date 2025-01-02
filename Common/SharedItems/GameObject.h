@@ -1,7 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
-#include <vector>
+#include <unordered_set>
 
 namespace Uknitty
 {
@@ -69,12 +69,15 @@ public:
 	virtual void OnDisable() {};
 	virtual void OnDestroy() {};
 
+	void SetParent(GameObject* parent);
+	void AddChild(GameObject* child);
+
 	CTransform* GetLocalTransform() const { return m_localTransform; }
 	CTransform* GetWorldTransform() const { return m_worldTransform; }
 
-	void AddCInput(CInput* cinput);
-	void AddCRender();
-	void AddCPhysics();
+	CInput* AddCInput(CInput* cinput);
+	CRender* AddCRender();
+	CPhysics* AddCPhysics();
 
 	CRender* GetCRender() const;
 	CPhysics* GetCPhysics() const;
@@ -85,11 +88,11 @@ public:
 	bool HasCInput() const { return m_input != nullptr; }
 
 private:
-	bool m_isEnabled = false;
+	bool m_isEnabled = true;
 
 #pragma region Essential (Created in constructor)
 	GameObject* m_parent = nullptr;
-	std::vector<GameObject*> m_children;
+	std::unordered_set<GameObject*> m_children;
 	CTransform* m_localTransform = nullptr;
 	CTransform* m_worldTransform = nullptr;
 #pragma endregion Essential

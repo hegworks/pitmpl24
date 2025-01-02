@@ -22,7 +22,7 @@ public:
 	virtual void OnLateUpdate(float deltaTime) override;
 	virtual void OnDestroy() override;
 
-	void SetFollowTransform(Uknitty::CTransform* followTransform) { m_followTransform = followTransform; }
+	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 
 	const float PITCH_MAX_THIRD_PERSON = 10.0f;
 	const float PITCH_MIN_THIRD_PERSON = -45.0f;

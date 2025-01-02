@@ -1,5 +1,6 @@
 #include "GeneralCamera.h"
 
+#include "CameraObject.h"
 #include "CTransform.h"
 #include "GeneralCameraCInput.h"
 #include "UknittySettings.h"
@@ -11,6 +12,12 @@ namespace Uknitty
 
 void GeneralCamera::OnLateUpdate(float deltaTime)
 {
+	if(!m_followTransform)
+	{
+		std::cerr << "No follow transform set for GeneralCamera" << std::endl;
+		return;
+	}
+
 	switch(m_cameraType)
 	{
 		case GeneralCamera::CameraType::TOP_DOWN_FOLLOW:
@@ -81,6 +88,8 @@ void GeneralCamera::OnLateUpdate(float deltaTime)
 		default:
 			throw std::runtime_error("Unknown camera type");
 	}
+
+	CameraObject::UpdateLocalTransformMatrix(m_projection * m_view);
 }
 
 void GeneralCamera::OnAwake()

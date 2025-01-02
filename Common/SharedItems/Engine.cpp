@@ -1,12 +1,16 @@
 #include "Engine.h"
 
 #include "CInput.h"
+#include "CRender.h"
 #include "GameObject.h"
 #include "GeneralCamera.h"
 #include "IInput.h"
 #include "IInputKey.h"
 #include "PhysicsManager.h"
 #include <stdexcept>
+
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Uknitty
 {
@@ -31,7 +35,16 @@ void Engine::Update(float deltaTime)
 			cinput->ProcessKeyboard(m_iKeyboard);
 			cinput->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
 		}
+
+		gameObject->Update(deltaTime);
 	}
+
+	for(auto& gameObject : m_gameObjects)
+	{
+		gameObject->LateUpdate(deltaTime);
+	}
+
+	m_mainCamera->Draw(glm::identity<glm::mat4>());
 }
 
 void Engine::InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard)

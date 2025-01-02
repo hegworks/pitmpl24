@@ -81,6 +81,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CameraObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />

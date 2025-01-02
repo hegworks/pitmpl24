@@ -12,6 +12,7 @@ class CTransform;
 class CRender
 {
 public:
+	void Initialize(Model* model, ShaderProgram* shaderProgram);
 	void Draw(glm::mat4 mvp);
 
 	Model* m_model = nullptr;

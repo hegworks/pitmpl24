@@ -6,7 +6,10 @@
 #include "GeneralCamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
+#include "Model.h"
+#include "ModelObject.h"
 #include "SceneManager.h"
+#include "ShaderProgram.h"
 #include "SharedDependencies.h"
 #include "SharedInput.h"
 #include "SolidObject.h"
@@ -76,9 +79,9 @@ void Game::Start()
 	m_engine = Uknitty::Engine::GetInstance();
 	m_engine->CreateAndUseDefaultCamera();
 	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
-	Uknitty::Engine::GetInstance()->CreateGameObject<SolidObject>();
-
+	SolidObject* so = Uknitty::Engine::GetInstance()->CreateGameObject<SolidObject>();
 	m_engine->ValidateBeforeFirstUpdate();
+
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -93,6 +96,7 @@ void Game::Start()
 #pragma endregion Timing
 
 	float degree = 0;
+	bool ranOnce = false;
 
 	while(!quitting)
 	{
@@ -124,6 +128,17 @@ void Game::Start()
 		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 
 		m_engine->Update(gameDeltaTime);
+
+		if(!ranOnce)
+		{
+			ranOnce = true;
+			Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+			Uknitty::Model* cubeModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
+			Uknitty::ModelObject* cube = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+			cube->Initialize(cubeModel, shaderProgram);
+			cube->SetParent(m_engine->GetMainCamera());
+			m_engine->GetMainCamera()->SetFollowTransform(cube->GetLocalTransform());
+		}
 
 #if 0
 		m_sceneManager->ProcessKeyboard(m_iKeyboard);

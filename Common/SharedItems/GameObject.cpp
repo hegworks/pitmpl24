@@ -35,22 +35,36 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 	}
 }
 
-void GameObject::AddCInput(CInput* cinput)
+void GameObject::SetParent(GameObject* parent)
+{
+	m_parent = parent;
+	m_parent->AddChild(this);
+}
+
+void GameObject::AddChild(GameObject* child)
+{
+	m_children.insert(child);
+}
+
+CInput* GameObject::AddCInput(CInput* cinput)
 {
 	if(m_input) throw std::runtime_error("GameObject already has Input");
 	m_input = cinput;
+	return m_input;
 }
 
-void GameObject::AddCRender()
+CRender* GameObject::AddCRender()
 {
 	if(m_render) throw std::runtime_error("GameObject already has Render");
 	m_render = new CRender();
+	return m_render;
 }
 
-void GameObject::AddCPhysics()
+CPhysics* GameObject::AddCPhysics()
 {
 	if(m_physics) throw std::runtime_error("GameObject already has Physics");
 	m_physics = new CPhysics();
+	return m_physics;
 }
 
 CRender* GameObject::GetCRender() const
