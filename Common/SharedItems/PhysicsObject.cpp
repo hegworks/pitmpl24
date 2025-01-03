@@ -23,12 +23,19 @@ void PhysicsObject::OverridePosition(glm::vec3 pos)
 
 	glm::vec3 physicsPos = pos;
 	physicsPos.y += m_modelDimensions.y / 2.0f;
+	physicsPos += m_colliderOffset;
 	GameObject::GetCPhysics()->SetPosition(physicsPos);
+}
+
+void PhysicsObject::SetColliderOffset(glm::vec3 offset)
+{
+	m_colliderOffset = offset;
+	OverridePosition(*GameObject::GetLocalTransform()->GetPosition());
 }
 
 void PhysicsObject::SetModelPosToPhysicsPos()
 {
-	GameObject::GetLocalTransform()->SetPosition(GameObject::GetCPhysics()->GetPosition());
+	GameObject::GetLocalTransform()->SetPosition(GameObject::GetCPhysics()->GetPosition() + m_colliderOffset);
 }
 
 } // namespace Uknitty

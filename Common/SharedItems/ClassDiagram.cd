@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Uknitty::Model" Collapsed="true">
-    <Position X="9.25" Y="3.5" Width="1.5" />
+    <Position X="11" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAQACAAAABAigAAACAAAEAAAAAAAASEAgAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\Model.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::ShaderProgram" Collapsed="true">
-    <Position X="11" Y="3.5" Width="1.5" />
+    <Position X="7.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAgAAAAAggAIAAAACAAAAAEEAAAAAAABAAAQAAA=</HashCode>
       <FileName>Common\SharedItems\ShaderProgram.h</FileName>
@@ -27,33 +27,33 @@
   <Class Name="Uknitty::PhysicsObject" Collapsed="true">
     <Position X="1.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQIAAABAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAQIAAABAAAAAAAAAAAAAABAAAAAAAAAgAEAA=</HashCode>
       <FileName>Common\SharedItems\PhysicsObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::CInput" Collapsed="true">
-    <Position X="7.5" Y="2.5" Width="1.5" />
+    <Position X="9.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAACAAAAAAABAAAAAAAIIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\CInput.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::CRender" Collapsed="true">
-    <Position X="11" Y="2.5" Width="1.5" />
+    <Position X="7.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAQAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\CRender.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::CPhysics" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
+    <Position X="11" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAACAYgACAAFABAAAFAAAwgIIBACgEAJAAAwAAAAAA=</HashCode>
       <FileName>Common\SharedItems\CPhysics.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::CTransform" Collapsed="true">
-    <Position X="7.5" Y="3.5" Width="1.5" />
+    <Position X="9.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAACCABOAAAAAAKBAAABAAAggQIAAAAgUAAAA=</HashCode>
       <FileName>Common\SharedItems\CTransform.h</FileName>
@@ -62,7 +62,7 @@
   <Class Name="Uknitty::GameObject" Collapsed="true">
     <Position X="2.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABQJABAAUgQAEgAEEEAgqAAKAAQAIQY5AEagAANACAA=</HashCode>
+      <HashCode>ABQJADAAUoQAEgAEEEAgqAAKAAQAIQY5CEagEANECAA=</HashCode>
       <FileName>Common\SharedItems\GameObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -83,8 +83,29 @@
   <Class Name="Uknitty::DynamicObject" Collapsed="true">
     <Position X="2.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <HashCode>AAAAAAAAACQAAAAAAAAAAQAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\DynamicObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Uknitty::GeneralCamera" Collapsed="true">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUQJBYCDQAYAhMAgQbAIIAIQChIAQAQQAEDBARAGASA=</HashCode>
+      <FileName>Common\SharedItems\GeneralCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="2.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABABAASAAAAAIACCIACBAABAABAAAAIgCQQAGCAAA=</HashCode>
+      <FileName>Common\SharedItems\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Uknitty::AssetManager" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAARAAAAAACAAAAAAAAAAAAAAgAAAAACAAABAAAAAAA=</HashCode>
+      <FileName>Common\SharedItems\AssetManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9.75" />

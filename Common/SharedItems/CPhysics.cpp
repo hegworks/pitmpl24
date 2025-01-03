@@ -26,7 +26,7 @@ void CPhysics::InitialzeWithBoxShape(glm::vec3 dimensions, float mass)
 
 void CPhysics::InitialzeWithCapsuleShape(float radius, float height, float mass)
 {
-	btCollisionShape* shape = new btCapsuleShape(radius, height);
+	btCollisionShape* shape = new btCapsuleShape(radius / 2.0, height / 2.0);
 	Initialze(shape, glm::vec3(radius, height, radius), mass);
 }
 

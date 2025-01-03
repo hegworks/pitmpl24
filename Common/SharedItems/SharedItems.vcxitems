@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AssetManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h" />
@@ -36,6 +37,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CRender.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlayerCInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
@@ -80,6 +82,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_draw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_tables.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui_widgets.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AssetManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CameraObject.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CRender.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlayerCInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />

@@ -31,7 +31,7 @@ public:
 	unsigned int ID;
 
 	// constructor reads and builds the shader
-	ShaderProgram(const char* vertexPath, const char* fragmentPath);
+	ShaderProgram(std::string vertexPath, std::string fragmentPath);
 
 	// use/activate the shader
 	void Use()
@@ -76,7 +76,7 @@ public:
 	}
 };
 
-inline ShaderProgram::ShaderProgram(const char* vertexPath, const char* fragmentPath)
+inline ShaderProgram::ShaderProgram(std::string vertexPath, std::string fragmentPath)
 {
 	// 1. retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;

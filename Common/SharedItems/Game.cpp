@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "AssetManager.h"
 #include "CameraObject.h"
 #include "Common.h"
 #include "CPhysics.h"
@@ -11,6 +12,8 @@
 #include "IInput.h"
 #include "Model.h"
 #include "ModelObject.h"
+#include "PhysicsCollisionFilters.h"
+#include "Player.h"
 #include "SceneManager.h"
 #include "ShaderProgram.h"
 #include "SharedDependencies.h"
@@ -55,7 +58,6 @@ Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 
 Game::~Game()
 {
-
 }
 
 void Game::Start()
@@ -135,7 +137,8 @@ void Game::Start()
 		{
 			ranOnce = true;
 
-			Uknitty::ShaderProgram* shaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+			Uknitty::AssetManager* assetManager = m_engine->GetAssetManager();
+			Uknitty::ShaderProgram* shaderProgram = assetManager->CreateShaderProgram("main", "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 			Uknitty::Model* crateModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
 			Uknitty::Model* emptyModel = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
 			Uknitty::Model* planeModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj");
@@ -146,24 +149,15 @@ void Game::Start()
 			emptyObject->SetParent(m_engine->GetMainCamera());
 			m_engine->GetMainCamera()->SetFollowTransform(emptyObject->GetLocalTransform());
 
-			Uknitty::ModelObject* planeObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
-			planeObject->Initialize(planeModel, shaderProgram);
-			planeObject->GetLocalTransform()->SetScale(glm::vec3(10, 1, 10));
+			Uknitty::StaticObject* planeObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+			planeObject->InitializeWithBoxShape(planeModel, shaderProgram, glm::vec3(10, 1, 10), COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+			planeObject->GetLocalTransform()->SetScale(glm::vec3(10, 0, 10));
+			planeObject->SetColliderOffset(glm::vec3(0, -1, 0));
 			planeObject->SetParent(m_engine->GetMainCamera());
 
-			Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
-			staticObject->InitializeWithBoxShape(crateModel, shaderProgram, glm::vec3(4, 1.5, 4));
-			staticObject->SetParent(m_engine->GetMainCamera());
-
-			Uknitty::DynamicObject* dynamicObject = m_engine->CreateGameObject<Uknitty::DynamicObject>();
-			dynamicObject->InitializeWithBoxShape(ballModel, shaderProgram, glm::vec3(1), 10);
-			dynamicObject->OverridePosition(glm::vec3(0, 20, 0));
-			dynamicObject->SetParent(m_engine->GetMainCamera());
-
-			Uknitty::ModelObject* childOfDynamicObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
-			childOfDynamicObject->Initialize(crateModel, shaderProgram);
-			childOfDynamicObject->GetLocalTransform()->SetPosition(glm::vec3(3, 1, 3));
-			childOfDynamicObject->SetParent(dynamicObject);
+			Player* player = m_engine->CreateGameObject<Player>();
+			player->SetParent(m_engine->GetMainCamera());
+			m_engine->GetMainCamera()->SetFollowTransform(player->GetLocalTransform());
 		}
 
 #if 0

@@ -21,11 +21,29 @@ GameObject::~GameObject()
 	delete m_worldTransform;
 }
 
+void GameObject::EnableDrawChildren()
+{
+	for(auto& gameObject : m_children)
+	{
+		gameObject->EnableDrawSelf();
+		gameObject->EnableDrawChildren();
+	}
+}
+
+void GameObject::DisableDrawChildren()
+{
+	for(auto& gameObject : m_children)
+	{
+		gameObject->DisableDrawSelf();
+		gameObject->DisableDrawChildren();
+	}
+}
+
 void GameObject::Draw(glm::mat4 parentsMVP)
 {
 	glm::mat4 transform = parentsMVP * (*m_localTransform->GetMatrix());
 	m_worldTransform->OverrideMatrix(transform);
-	if(HasCRender())
+	if(HasCRender() && m_isDrawSelfEnabled)
 	{
 		m_render->Draw(transform);
 	}

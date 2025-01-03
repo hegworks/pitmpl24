@@ -1,5 +1,6 @@
 #include "Engine.h"
 
+#include "AssetManager.h"
 #include "btBulletDynamicsCommon.h"
 #include "CInput.h"
 #include "CRender.h"
@@ -21,6 +22,7 @@ namespace Uknitty
 Engine::Engine()
 {
 	m_physicsManager = new Uknitty::PhysicsManager();
+	m_assetManager = new Uknitty::AssetManager();
 }
 
 Engine::~Engine()

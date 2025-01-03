@@ -285,7 +285,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StaticObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PlayerCInput.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AssetManager.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -390,7 +398,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StaticObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PlayerCInput.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsObject.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AssetManager.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">

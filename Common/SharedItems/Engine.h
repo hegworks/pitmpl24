@@ -15,6 +15,7 @@ namespace Uknitty
 class GameObject;
 class PhysicsManager;
 class CameraObject;
+class AssetManager;
 
 class Engine
 {
@@ -56,6 +57,7 @@ public:
 
 	btDynamicsWorld* GetDynamicsWorld();
 	PhysicsManager* GetPhysicsManager() { return m_physicsManager; }
+	AssetManager* GetAssetManager() { return m_assetManager; }
 
 private:
 	GameObject::ID m_nextID = 0;
@@ -63,6 +65,7 @@ private:
 	std::unordered_map<GameObject::ID, GameObject*> m_gameObjects;
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
+	Uknitty::AssetManager* m_assetManager = nullptr;
 
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;

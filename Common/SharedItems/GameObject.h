@@ -65,6 +65,19 @@ public:
 		OnDisable();
 	}
 
+	void EnableDrawSelf()
+	{
+		m_isDrawSelfEnabled = true;
+	}
+
+	void DisableDrawSelf()
+	{
+		m_isDrawSelfEnabled = false;
+	}
+
+	void EnableDrawChildren();
+	void DisableDrawChildren();
+
 	void Draw(glm::mat4 parentsMVP);
 
 	/// 1 time, 1st function after constructor
@@ -98,6 +111,7 @@ public:
 
 private:
 	bool m_isEnabled = true;
+	bool m_isDrawSelfEnabled = true;
 
 #pragma region Essential (Created in constructor)
 	GameObject* m_parent = nullptr;
