@@ -285,6 +285,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StaticObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -389,6 +390,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StaticObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">

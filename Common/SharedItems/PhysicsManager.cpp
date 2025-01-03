@@ -4,6 +4,7 @@
 #include "CollisionManager.h"
 #include "glm/glm.hpp"
 #include "UknittySettings.h"
+#include <iostream>
 
 namespace Uknitty
 {
@@ -68,8 +69,7 @@ void PhysicsManager::Update(float deltaTime)
 #if 0 //TODO GOH find a replacemet for this
 	if(m_isNewSceneLoading) return;
 #endif
-
-	m_btDynamicsWorld->stepSimulation(deltaTime, 10, PHYSICS_TIMESTEP);
+	m_btDynamicsWorld->stepSimulation(deltaTime, PHYSICS_MAX_SUB_STEPS, PHYSICS_TIMESTEP);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	for(auto rigidbody : m_contactTestRigidbodies)
 	{

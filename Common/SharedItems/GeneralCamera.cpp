@@ -14,7 +14,7 @@ void GeneralCamera::OnLateUpdate(float deltaTime)
 {
 	if(!m_followTransform)
 	{
-		std::cerr << "No follow transform set for GeneralCamera" << std::endl;
+		std::cerr << "WARNING::GeneralCamera follow transform is nullptr" << std::endl;
 		return;
 	}
 

@@ -1,80 +1,27 @@
 #include "DynamicObject.h"
 
+#include "CPhysics.h"
+#include "Engine.h"
 #include "glm/glm.hpp"
-#include "Model.h"
-#include "SharedDependencies.h"
 
-#if 0
-DynamicObject::~DynamicObject()
+namespace Uknitty
 {
-	m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
-	std::cout << "Removing RigidBody: " << m_model->GetStrippedFileName() << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;
-	delete m_transform;
+
+void DynamicObject::InitializeWithBoxShape(Model* model, ShaderProgram* shaderProgram, glm::vec3 modelDimensions, float mass, int collisionGroup, int collisionMask)
+{
+	ModelObject::Initialize(model, shaderProgram);
+
+	m_modelDimensions = modelDimensions;
+
+	CPhysics* cphysics = GameObject::GetCPhysics();
+	cphysics->InitialzeWithBoxShape(modelDimensions, mass);
+
+	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->addRigidBody(cphysics->GetRigidBody(), collisionGroup, collisionMask);
 }
 
-void DynamicObject::Construct(Uknitty::Model* model, glm::vec3 position, Uknitty::Physics* physics)
+void DynamicObject::OnLateUpdate(float deltaTime)
 {
-	m_iCamera = SharedDependencies::GetCamera();
-	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
-	m_shaderProgram = SharedDependencies::GetShaderProgram();
-
-	m_model = model;
-	m_physics = physics;
-
-	m_transform = new Uknitty::CTransform();
-	m_transform->SetPosition(position);
+	PhysicsObject::SetModelPosToPhysicsPos();
 }
 
-void DynamicObject::SetPosition(glm::vec3 pos)
-{
-	m_physics->SetPosition(pos);
-}
-
-void DynamicObject::Awake()
-{
-}
-
-void DynamicObject::Start()
-{
-}
-
-void DynamicObject::Update(float deltaTime)
-{
-	SetModelPosToPhysicsPos();
-}
-
-void DynamicObject::LateUpdate(float deltaTime)
-{
-}
-
-void DynamicObject::FixedUpdate()
-{
-}
-
-void DynamicObject::Destroy()
-{
-	std::cout << "Destroying DynamicObject with model: " << m_model->GetStrippedFileName() << std::endl;
-	delete this;
-}
-
-void DynamicObject::Draw()
-{
-	m_shaderProgram->Use();
-	m_shaderProgram->SetMat4("uView", m_iCamera->GetView());
-	m_shaderProgram->SetMat4("uProjection", m_iCamera->GetProjection());
-	m_shaderProgram->SetMat4("uModel", *m_transform->GetMatrix());
-	glDisable(GL_BLEND);
-	m_model->Draw();
-	m_shaderProgram->UnUse();
-}
-
-glm::vec3 DynamicObject::GetCurrentPhysicsPos()
-{
-	return Uknitty::Physics::BtVec3ToGLMVec3(m_physics->GetRigidBody()->getWorldTransform().getOrigin());
-}
-
-void DynamicObject::SetModelPosToPhysicsPos()
-{
-	m_transform->SetPosition(GetCurrentPhysicsPos());
-}
-#endif
+} // namespace Uknitty

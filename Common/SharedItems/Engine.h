@@ -73,7 +73,7 @@ inline T* Engine::CreateGameObject()
 {
 	static_assert(std::is_base_of<GameObject, T>::value, "T must inherit from GameObject");
 	T* gameObject = new T();
-	int newId = m_nextID++;
+	GameObject::ID newId = m_nextID++;
 	gameObject->SetID(newId);
 	gameObject->OnAwake();
 	gameObject->OnStart();

@@ -35,6 +35,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CRender.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CPhysics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CRender.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp" />

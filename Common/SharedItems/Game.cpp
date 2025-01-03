@@ -2,7 +2,9 @@
 
 #include "CameraObject.h"
 #include "Common.h"
+#include "CPhysics.h"
 #include "CTransform.h"
+#include "DynamicObject.h"
 #include "Engine.h"
 #include "GeneralCamera.h"
 #include "IGraphics.h"
@@ -103,7 +105,7 @@ void Game::Start()
 #pragma region Timing
 		auto time = std::chrono::system_clock::now();
 		std::chrono::duration<float> delta = time - lastTime;
-		gameDeltaTime = delta.count() * 10.0f;
+		gameDeltaTime = delta.count() * Uknitty::DELTA_TIME_SCALE;
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(first)
@@ -137,22 +139,31 @@ void Game::Start()
 			Uknitty::Model* crateModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
 			Uknitty::Model* emptyModel = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
 			Uknitty::Model* planeModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj");
+			Uknitty::Model* ballModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
 
-			Uknitty::ModelObject* emptyObject = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+			Uknitty::ModelObject* emptyObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
 			emptyObject->Initialize(emptyModel, shaderProgram);
 			emptyObject->SetParent(m_engine->GetMainCamera());
 			m_engine->GetMainCamera()->SetFollowTransform(emptyObject->GetLocalTransform());
 
-			Uknitty::ModelObject* planeObject = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+			Uknitty::ModelObject* planeObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
 			planeObject->Initialize(planeModel, shaderProgram);
 			planeObject->GetLocalTransform()->SetScale(glm::vec3(10, 1, 10));
 			planeObject->SetParent(m_engine->GetMainCamera());
 
-			Uknitty::StaticObject* so = m_engine->CreateGameObject<Uknitty::StaticObject>();
-			so->InitializeWithBoxShape(crateModel, shaderProgram, glm::vec3(4, 1.5, 4));
-			so->SetParent(m_engine->GetMainCamera());
+			Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+			staticObject->InitializeWithBoxShape(crateModel, shaderProgram, glm::vec3(4, 1.5, 4));
+			staticObject->SetParent(m_engine->GetMainCamera());
 
-			so->OverridePosition(glm::vec3(2, -0.75, 2));
+			Uknitty::DynamicObject* dynamicObject = m_engine->CreateGameObject<Uknitty::DynamicObject>();
+			dynamicObject->InitializeWithBoxShape(ballModel, shaderProgram, glm::vec3(1), 10);
+			dynamicObject->OverridePosition(glm::vec3(0, 20, 0));
+			dynamicObject->SetParent(m_engine->GetMainCamera());
+
+			Uknitty::ModelObject* childOfDynamicObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
+			childOfDynamicObject->Initialize(crateModel, shaderProgram);
+			childOfDynamicObject->GetLocalTransform()->SetPosition(glm::vec3(3, 1, 3));
+			childOfDynamicObject->SetParent(dynamicObject);
 		}
 
 #if 0

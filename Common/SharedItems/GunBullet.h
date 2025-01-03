@@ -2,6 +2,7 @@
 
 #include "DynamicObject.h"
 
+#if 0
 class GunBullet : public DynamicObject
 {
 public:
@@ -13,3 +14,4 @@ private:
 	const glm::vec3 INITIAL_POSITION = glm::vec3(0);
 	const float MASS = 1.0f;
 };
+#endif
