@@ -328,7 +328,7 @@ void Scene::CreatePathFinder()
 	m_pathFinder = new AStar::Generator();
 	m_pathFinder->setWorldSize({MAP_SCALE_X, MAP_SCALE_Z});
 	m_pathFinder->setHeuristic(AStar::Heuristic::manhattan);
-	m_pathFinder->setDiagonalMovement(true);
+	m_pathFinder->setDiagonalMovement(false);
 
 	std::vector<tmxparser::TmxLayer> layers = m_tmxMap.layerCollection;
 
@@ -364,9 +364,6 @@ void Scene::CreatePathFinder()
 
 void Scene::CreateEnemies()
 {
-#if 0
-	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj", m_shaderProgram);
-	m_models.push_back(model);
 	int debug_maxEnemiesToSpawn = DEBUG_MAX_ENEMIES_TO_SPAWN;
 	for(auto& enemy : m_enemiesPatrolPositions)
 	{
@@ -380,8 +377,8 @@ void Scene::CreateEnemies()
 		{
 			patrolPositionsVector.push_back(patrolPositionsMap.second);
 		}
-		Enemy* enemy = new Enemy(model, patrolPositionsVector, m_pathFinder);
-		m_interfaceManager->AddFlowRender(enemy);
+		Enemy* enemy = m_engine->CreateGameObject<Enemy>();
+		enemy->Initialize(patrolPositionsVector, m_pathFinder);
+		m_engine->UseDefaultParent(enemy);
 	}
-#endif
 }

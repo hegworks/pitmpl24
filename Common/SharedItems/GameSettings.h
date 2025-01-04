@@ -11,7 +11,7 @@
 
 #pragma region to use a feature, comment out its line
 #undef DEBUG_DRAW_ASTAR_COLLISIONS
-#undef DEBUG_DRAW_ASTAR_PATH
+//#undef DEBUG_DRAW_ASTAR_PATH
 #undef DEBUG_DONT_DRAW_SOLIDS
 #pragma endregion to use a feature, comment out its line
 
@@ -20,7 +20,7 @@ constexpr int TILE_SIZE = 32;
 constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
 constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
-constexpr int STARTING_MAP_ID = 0;
+constexpr int STARTING_MAP_ID = 2;
 constexpr glm::vec3 PLAYER_INITIAL_POS = glm::vec3(0, 20, 0);
 #pragma endregion Release settings
 
