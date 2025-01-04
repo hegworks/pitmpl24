@@ -53,6 +53,20 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 	}
 }
 
+void GameObject::OnDestroy()
+{
+	for(auto& gameObject : m_children)
+	{
+		gameObject->OnDestroy();
+	}
+	m_children.clear();
+
+	if(m_parent)
+	{
+		m_parent->RemoveChild(this);
+	}
+}
+
 void GameObject::SetParent(GameObject* parent)
 {
 	m_parent = parent;
@@ -62,6 +76,11 @@ void GameObject::SetParent(GameObject* parent)
 void GameObject::AddChild(GameObject* child)
 {
 	m_children.insert(child);
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+	m_children.erase(child);
 }
 
 CInput* GameObject::AddCInput(CInput* cinput)

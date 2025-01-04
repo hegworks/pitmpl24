@@ -2,6 +2,7 @@
 
 #include "CPhysics.h"
 #include "CTransform.h"
+#include "Engine.h"
 #include "GameObject.h"
 #include "GameObject.h"
 #include "ModelObject.h"
@@ -15,6 +16,13 @@ void PhysicsObject::OnAwake()
 	ModelObject::OnAwake();
 
 	GameObject::AddCPhysics();
+}
+
+void PhysicsObject::OnDestroy()
+{
+	ModelObject::OnDestroy();
+
+	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
 }
 
 void PhysicsObject::OverridePosition(glm::vec3 pos)

@@ -90,10 +90,11 @@ public:
 	virtual void OnFixedUpdate() {};
 	virtual void OnEnable() {};
 	virtual void OnDisable() {};
-	virtual void OnDestroy() {};
+	virtual void OnDestroy();
 
 	void SetParent(GameObject* parent);
 	void AddChild(GameObject* child);
+	void RemoveChild(GameObject* child);
 
 	CTransform* GetLocalTransform() const { return m_localTransform; }
 

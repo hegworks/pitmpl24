@@ -55,6 +55,21 @@ void Engine::Update(float deltaTime)
 	m_physicsManager->Draw(*m_mainCamera->GetLocalTransform()->GetMatrix());
 }
 
+void Engine::DestroyGameObject(GameObject* gameObject)
+{
+	DestroyGameObject(gameObject->GetID());
+}
+
+void Engine::DestroyGameObject(GameObject::ID id)
+{
+	if(m_gameObjects.find(id) != m_gameObjects.end())
+	{
+		m_gameObjects[id]->OnDestroy();
+		delete m_gameObjects[id];
+		m_gameObjects.erase(id);
+	}
+}
+
 void Engine::InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard)
 {
 	if(m_iMouse || m_iKeyboard) throw std::runtime_error("Input already initialized");

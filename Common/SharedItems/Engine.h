@@ -41,8 +41,7 @@ public:
 	template <typename T>
 	T* CreateGameObject();
 
-	template <typename T>
-	void DestroyGameObject(T* gameObject);
+	void DestroyGameObject(GameObject* gameObject);
 	void DestroyGameObject(GameObject::ID id);
 
 	void InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard);
@@ -85,30 +84,6 @@ inline T* Engine::CreateGameObject()
 	gameObject->OnStart();
 	m_gameObjects[newId] = gameObject;
 	return gameObject;
-}
-
-template<typename T>
-inline void Engine::DestroyGameObject(T* gameObject)
-{
-	static_assert(std::is_base_of<GameObject, T>::value, "T must inherit from GameObject");
-	auto it = std::find(m_gameObjects.begin(), m_gameObjects.end(), gameObject);
-	if(it != m_gameObjects.end())
-	{
-		m_gameObjects.erase(it);
-		gameObject->OnDestroy();
-		delete gameObject;
-	}
-}
-
-inline void Engine::DestroyGameObject(GameObject::ID id)
-{
-	auto it = m_gameObjects.find(id);
-	if(it != m_gameObjects.end())
-	{
-		m_gameObjects.erase(it);
-		it->second->OnDestroy();
-		delete it->second;
-	}
 }
 
 } // namespace Uknitty

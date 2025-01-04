@@ -10,6 +10,7 @@ class PhysicsObject : public ModelObject
 {
 public:
 	virtual void OnAwake() override;
+	virtual void OnDestroy() override;
 
 	void OverridePosition(glm::vec3 pos);
 	void SetColliderOffset(glm::vec3 offset);

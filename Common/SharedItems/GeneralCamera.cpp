@@ -102,6 +102,8 @@ void GeneralCamera::OnLateUpdate(float deltaTime)
 
 void GeneralCamera::OnDestroy()
 {
+	CameraObject::OnDestroy();
+
 	std::cout << "Destroying GeneralCamera" << std::endl;
 	delete this;
 }

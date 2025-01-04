@@ -7,6 +7,7 @@
 #include "CRender.h"
 #include "CTransform.h"
 #include "DynamicObject.h"
+#include "DynamicObject.h"
 #include "Engine.h"
 #include "GameObject.h"
 #include "GameSettings.h"
@@ -59,6 +60,8 @@ void Player::OnUpdate(float deltaTime)
 
 void Player::OnDestroy()
 {
+	Uknitty::DynamicObject::OnDestroy();
+
 	std::cout << "Destroying Player" << std::endl;
 	//m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
 	//std::cout << "Removing RigidBody: Player" << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;

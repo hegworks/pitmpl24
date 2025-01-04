@@ -14,7 +14,6 @@ class ShaderProgram;
 class Physics;
 class GeneralCamera;
 }
-
 class SceneManagerBlackboard;
 class btDynamicsWorld;
 class btCollisionObject;
@@ -35,7 +34,7 @@ private:
 	Uknitty::GeneralCamera* m_generalCamera = nullptr;
 	PlayerCInput* m_playerCInput = nullptr;
 
-	const float SPEED_WALK = 1.5f;
+	const float SPEED_WALK = 2.2f;
 	const float SPEED_ROTATION = 1.7f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.2, 2, 1.2);
 	const float MASS = 70.0f;

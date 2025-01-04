@@ -59,9 +59,6 @@ void SceneManager::ChangeScene(int mapId)
 {
 	delete m_currentScene;
 
-	//TODO GOH:
-	//m_interfaceManager->RemoveFlowInputRender(m_currentScene);
-
 	m_currentMapId = mapId;
 	LoadScene(m_currentMapId);
 }

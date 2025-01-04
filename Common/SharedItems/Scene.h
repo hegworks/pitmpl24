@@ -17,6 +17,7 @@ class CameraObject;
 class InterfaceManager;
 class Model;
 class Engine;
+class GameObject;
 }
 class GeneralCamera;
 class Player;
@@ -80,6 +81,8 @@ private:
 	std::unordered_multimap <std::string, glm::ivec2> m_staticObjectsPositions;
 	std::vector<WallData*> m_wallDatas;
 	std::vector<RoomChangeData*> m_roomChangeDatas;
+
+	std::vector<Uknitty::GameObject*> m_createdGameObjects;
 
 	/// <summary>
 	/// enemyIndex, patrolPositionIndex, patrolPosition

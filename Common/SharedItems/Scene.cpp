@@ -13,6 +13,7 @@
 #include "InterfaceManager.h"
 #include "Model.h"
 #include "ModelDataStorage.h"
+#include "ModelObject.h"
 #include "PhysicsCollisionFilters.h"
 #include "Player.h"
 #include "SceneManagerBlackboard.h"
@@ -45,6 +46,11 @@ Scene::~Scene()
 {
 	std::cout << "Destroying Scene: " << m_mapId << std::endl;
 
+	for(auto& gameObject : m_createdGameObjects)
+	{
+		m_engine->DestroyGameObject(gameObject);
+	}
+
 	for(auto& wallData : m_wallDatas)
 	{
 		delete wallData;
@@ -53,6 +59,7 @@ Scene::~Scene()
 	m_enemiesPatrolPositions.clear();
 	m_staticObjectsPositions.clear();
 	m_roomChangeDatas.clear();
+	m_createdGameObjects.clear();
 }
 
 void Scene::LoadMapDataFromFile(int mapId)
@@ -151,6 +158,7 @@ void Scene::CreateSolidObjectsFromData()
 	{
 		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(key);
 		Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+		m_createdGameObjects.push_back(staticObject);
 		staticObject->InitializeWithBoxShape(assetManager->AutoGetModel(key, modelData->m_filePath), m_shaderProgram, modelData->m_dimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
 		staticObject->OverridePosition(glm::vec3(position.x, 0, position.y));
 		m_engine->UseDefaultParent(staticObject);
@@ -160,6 +168,7 @@ void Scene::CreateSolidObjectsFromData()
 	{ // this is just a joke :D (but it also marks the center of the world)
 		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
 		Uknitty::ModelObject* modelObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		m_createdGameObjects.push_back(modelObject);
 		modelObject->Initialize(assetManager->AutoGetModel(ModelDataStorage::PIKMIN, modelData->m_filePath), m_shaderProgram);
 		modelObject->GetLocalTransform()->SetScale(glm::vec3(2));
 		modelObject->GetLocalTransform()->SetPosition(glm::vec3(0, 2, 0));
@@ -198,6 +207,7 @@ void Scene::CreateSolidObjectsFromData()
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallVerticalScale.x, 4, wallVerticalScale.z);
 					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					m_createdGameObjects.push_back(staticObject);
 					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
 					staticObject->GetLocalTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
 					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
@@ -234,6 +244,7 @@ void Scene::CreateSolidObjectsFromData()
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallHorizontalScale.x, 4, wallHorizontalScale.z);
 					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					m_createdGameObjects.push_back(staticObject);
 					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
 					staticObject->GetLocalTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
 					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
@@ -254,6 +265,7 @@ void Scene::CreateSolidObjectsFromData()
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
 					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					m_createdGameObjects.push_back(staticObject);
 					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
 					staticObject->GetLocalTransform()->SetScale(wallUniformScale);
 					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
@@ -279,6 +291,7 @@ void Scene::CreateSolidObjectsFromData()
 			glm::vec3 modelDimensions = glm::vec3(scale.x, 5, scale.z);
 
 			Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+			m_createdGameObjects.push_back(staticObject);
 			staticObject->InitializeWithBoxShape(model, m_shaderProgram, modelDimensions, COLL_GROUP_ROOMCHANGE, COLL_MASK_ROOMCHANGE);
 			staticObject->GetLocalTransform()->SetScale(scale);
 			staticObject->OverridePosition(glm::vec3(data->position.x, 0, data->position.y));
@@ -297,6 +310,7 @@ void Scene::CreateGround()
 {
 	ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::GROUND);
 	Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+	m_createdGameObjects.push_back(staticObject);
 	staticObject->InitializeWithBoxShape
 	(
 		m_engine->GetAssetManager()->AutoGetModel
