@@ -1,118 +1,58 @@
 #include "Scene.h"
 
+#include "AssetManager.h"
 #include "AStar.hpp"
 #include "btBulletDynamicsCommon.h"
-#include "GameSettings.h"
+#include "CPhysics.h"
+#include "CTransform.h"
 #include "Enemy.h"
+#include "Engine.h"
+#include "GameSettings.h"
+#include "GameSharedDependencies.h"
 #include "GunBullet.h"
 #include "InterfaceManager.h"
 #include "Model.h"
+#include "ModelDataStorage.h"
+#include "PhysicsCollisionFilters.h"
 #include "Player.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
-#include "SharedDependencies.h"
+#include "StaticObject.h"
 #include "StaticObject.h"
 #include <iostream>
 #include <stdexcept>
 #include <tmxparser.h>
 
-Scene::Scene(int mapId, Player* player)
+Scene::Scene(int mapId)
 {
-	m_btDynamicsWorld = SharedDependencies::GetDynamicsWorld();
-	m_iCamera = SharedDependencies::GetCamera();
-	m_shaderProgram = SharedDependencies::GetShaderProgram();
+	m_mapId = mapId;
+	m_player = GameSharedDependencies::GetPlayer();
+	m_modelDataStorage = GameSharedDependencies::GetModelDataStorage();
+	m_engine = Uknitty::Engine::GetInstance();
+	m_shaderProgram = m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
+
 	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 
-	m_mapId = mapId;
-	m_player = player;
-}
-
-#if 0
-void Scene::ProcessMousePosition(double xPos, double yPos)
-{
-	m_interfaceManager->ProcessMousePosition(xPos, yPos);
-}
-
-void Scene::ProcessKeyboard(IKeyboard* iKeyboard)
-{
-	m_interfaceManager->ProcessKeyboard(iKeyboard);
-}
-
-void Scene::KeyDown(Key key)
-{
-	if(key == Key::B)
-	{
-		GunBullet* gunBullet = new GunBullet();
-		gunBullet->SetPosition(m_sceneManagerBlackboard->GetPlayerGunPos());
-		m_interfaceManager->AddFlowRender(gunBullet);
-	}
-	m_interfaceManager->KeyDown(key);
-}
-
-void Scene::KeyUp(Key key)
-{
-	m_interfaceManager->KeyUp(key);
-}
-
-void Scene::Awake()
-{
-	m_interfaceManager = new Uknitty::InterfaceManager();
-}
-
-void Scene::Start()
-{
 	LoadMapDataFromFile(m_mapId);
 	LoadObjectDataFromMap();
 	CreateSolidObjectsFromData();
 	CreateGround();
 	CreatePathFinder();
 	CreateEnemies();
-
-	m_interfaceManager->Awake();
-	m_interfaceManager->Start();
 }
 
-void Scene::Update(float deltaTime)
-{
-	m_interfaceManager->Update(deltaTime);
-}
-
-void Scene::LateUpdate(float deltaTime)
-{
-	m_interfaceManager->LateUpdate(deltaTime);
-}
-
-void Scene::FixedUpdate()
-{
-	m_interfaceManager->FixedUpdate();
-}
-
-void Scene::Destroy()
+Scene::~Scene()
 {
 	std::cout << "Destroying Scene: " << m_mapId << std::endl;
-
-	m_interfaceManager->Destroy();
 
 	for(auto& wallData : m_wallDatas)
 	{
 		delete wallData;
 	}
 	m_wallDatas.clear();
-	m_crate2x4positions.clear();
-	m_crate4x4positions.clear();
-	m_tankPositions.clear();
-
-	for(Uknitty::Model* model : m_models)
-	{
-		delete model;
-	}
-
-	delete this;
-}
-
-void Scene::Draw()
-{
-	m_interfaceManager->Draw();
+	m_enemiesPatrolPositions.clear();
+	m_staticObjectsPositions.clear();
+	m_roomChangeDatas.clear();
 }
 
 void Scene::LoadMapDataFromFile(int mapId)
@@ -136,28 +76,28 @@ void Scene::LoadObjectDataFromMap()
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
 			{
-				m_crate2x4positions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				m_staticObjectsPositions.emplace(ModelDataStorage::CRATE_2x4, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
 		if(objectGroup.name == CRATE_4_X_4_OBJECTGROUP)
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
 			{
-				m_crate4x4positions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				m_staticObjectsPositions.emplace(ModelDataStorage::CRATE_4x4, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
 		if(objectGroup.name == TANK_OBJECTGROUP)
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
 			{
-				m_tankPositions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				m_staticObjectsPositions.emplace(ModelDataStorage::TANK, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
 		if(objectGroup.name == FENCE_OBJECTGROUP)
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
 			{
-				m_fencePositions.push_back(MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+				m_staticObjectsPositions.emplace(ModelDataStorage::FENCE, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
 		if(objectGroup.name == WALL_OBJECTGROUP)
@@ -206,69 +146,24 @@ void Scene::LoadObjectDataFromMap()
 
 void Scene::CreateSolidObjectsFromData()
 {
-
-#pragma region Crate2x4
+	Uknitty::AssetManager* assetManager = m_engine->GetAssetManager();
+	for(auto& [key, position] : m_staticObjectsPositions)
 	{
-		glm::vec3 modelDimensions = glm::vec3(2, 1.5, 4);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_2x4/Crate.obj", m_shaderProgram);
-		m_models.push_back(model);
-
-		for(auto& pos : m_crate2x4positions)
-		{
-			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_interfaceManager->AddRender(solidObject);
-		}
+		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(key);
+		Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+		staticObject->InitializeWithBoxShape(assetManager->AutoGetModel(key, modelData->m_filePath), m_shaderProgram, modelData->m_dimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+		staticObject->OverridePosition(glm::vec3(position.x, 0, position.y));
+		m_engine->UseDefaultParent(staticObject);
 	}
-#pragma endregion Crate2x4
-
-#pragma region Crate4x4
-	{
-		glm::vec3 modelDimensions = glm::vec3(4, 1.5, 4);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj", m_shaderProgram);
-		m_models.push_back(model);
-		for(auto& pos : m_crate4x4positions)
-		{
-			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_interfaceManager->AddRender(solidObject);
-		}
-	}
-#pragma endregion Crate4x4
-
-#pragma region Tank
-	{
-		glm::vec3 modelDimensions = glm::vec3(4, 2, 6);
-		Uknitty::Model* tankModel = new Uknitty::Model("../Common/Assets/Models/Tank/Tank.obj", m_shaderProgram);
-		m_models.push_back(tankModel);
-		for(auto& pos : m_tankPositions)
-		{
-			SolidObject* solidObject = new SolidObject(tankModel, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_interfaceManager->AddRender(solidObject);
-		}
-	}
-#pragma endregion Tank
-
-#pragma region Fence
-	{
-		glm::vec3 modelDimensions = glm::vec3(4, 4, 0.3);
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Fence/Fence2.obj", m_shaderProgram);
-		m_models.push_back(model);
-		for(auto& pos : m_fencePositions)
-		{
-			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-			m_interfaceManager->AddRender(solidObject);
-		}
-	}
-#pragma endregion Fence
 
 #pragma region Pikmin
 	{ // this is just a joke :D (but it also marks the center of the world)
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Pikmin/Pikmin.obj", m_shaderProgram);
-		m_models.push_back(model);
-		glm::vec3 modelDimensions = glm::vec3(0);
-		SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(0));
-		solidObject->GetTransform()->SetScale(glm::vec3(2));
-		solidObject->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
-		m_interfaceManager->AddRender(solidObject);
+		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
+		Uknitty::ModelObject* modelObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		modelObject->Initialize(assetManager->AutoGetModel(ModelDataStorage::PIKMIN, modelData->m_filePath), m_shaderProgram);
+		modelObject->GetLocalTransform()->SetScale(glm::vec3(2));
+		modelObject->GetLocalTransform()->SetPosition(glm::vec3(0, 2, 0));
+		m_engine->UseDefaultParent(modelObject);
 	}
 #pragma endregion Pikmin
 
@@ -279,19 +174,21 @@ void Scene::CreateSolidObjectsFromData()
 		{
 			case WallType::VERTICAL:
 			{
-
 				glm::vec3 wallVerticalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+				std::string keyPostFix = "_" + std::to_string(wallData->size.x) + "x" + std::to_string(wallData->size.y);
 
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.x == 1)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallVerticalScale.z, 1));
-					m_models.push_back(wallModel);
+					ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_1x4x1);
+					std::string key = ModelDataStorage::WALL_1x4x1 + keyPostFix;
+					wallModel = assetManager->AutoGetModel(key, modelData->m_filePath, glm::vec2(wallVerticalScale.z, 1));
 				}
 				else if(wallData->size.x == 2)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_2x4x1/Wall_2x4x1.obj", m_shaderProgram, glm::vec2(wallVerticalScale.z, 1));
-					m_models.push_back(wallModel);
+					ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_2x4x1);
+					std::string key = ModelDataStorage::WALL_1x4x1 + keyPostFix;
+					wallModel = assetManager->AutoGetModel(key, modelData->m_filePath, glm::vec2(wallVerticalScale.z, 1));
 				}
 				else
 				{
@@ -300,30 +197,34 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallVerticalScale.x, 4, wallVerticalScale.z);
-					SolidObject* wallVerticalObject = new SolidObject(wallModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
-					wallVerticalObject->GetTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
-					m_interfaceManager->AddRender(wallVerticalObject);
+					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+					staticObject->GetLocalTransform()->SetScale(glm::vec3(1, 1, wallVerticalScale.z)); // x scale is built in the loaded wallModel
+					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+					m_engine->UseDefaultParent(staticObject);
 				}
 
 			}
 
 			break;
-
 			case WallType::HORIZONTAL:
 			{
 
 				glm::vec3 wallHorizontalScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+				std::string keyPostFix = "_" + std::to_string(wallData->size.x) + "x" + std::to_string(wallData->size.y);
 
 				Uknitty::Model* wallModel = nullptr;
 				if(wallData->size.y == 1)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallHorizontalScale.x, 1));
-					m_models.push_back(wallModel);
+					ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_1x4x1);
+					std::string key = ModelDataStorage::WALL_1x4x1 + keyPostFix;
+					wallModel = assetManager->AutoGetModel(key, modelData->m_filePath, glm::vec2(wallHorizontalScale.x, 1));
 				}
 				else if(wallData->size.y == 2)
 				{
-					wallModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x2/Wall_1x4x2.obj", m_shaderProgram, glm::vec2(wallHorizontalScale.x, 1));
-					m_models.push_back(wallModel);
+					ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_1x4x2);
+					std::string key = ModelDataStorage::WALL_1x4x2 + keyPostFix;
+					wallModel = assetManager->AutoGetModel(key, modelData->m_filePath, glm::vec2(wallHorizontalScale.x, 1));
 				}
 				else
 				{
@@ -332,9 +233,11 @@ void Scene::CreateSolidObjectsFromData()
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallHorizontalScale.x, 4, wallHorizontalScale.z);
-					SolidObject* wallHorizontalObject = new SolidObject(wallModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
-					wallHorizontalObject->GetTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
-					m_interfaceManager->AddRender(wallHorizontalObject);
+					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+					staticObject->GetLocalTransform()->SetScale(glm::vec3(wallHorizontalScale.x, 1, 1)); // z scale is built in the loaded wallModel
+					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+					m_engine->UseDefaultParent(staticObject);
 				}
 
 			}
@@ -344,13 +247,17 @@ void Scene::CreateSolidObjectsFromData()
 			case WallType::UNIFORM:
 			{
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
-				Uknitty::Model* wallUniformModel = new Uknitty::Model("../Common/Assets/Models/Wall_1x4x1/Wall_1x4x1.obj", m_shaderProgram, glm::vec2(wallUniformScale.x, 1));
-				m_models.push_back(wallUniformModel);
+
+				ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_1x4x1);
+				Uknitty::Model* wallModel = assetManager->AutoGetModel(ModelDataStorage::WALL_1x4x1, modelData->m_filePath, glm::vec2(wallUniformScale.x, 1));
+
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
-					SolidObject* wallUnifromObject = new SolidObject(wallUniformModel, modelDimensions, glm::vec3(wallData->position.x, 0, wallData->position.y));
-					wallUnifromObject->GetTransform()->SetScale(wallUniformScale);
-					m_interfaceManager->AddRender(wallUnifromObject);
+					Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+					staticObject->InitializeWithBoxShape(wallModel, m_shaderProgram, modelDimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
+					staticObject->GetLocalTransform()->SetScale(wallUniformScale);
+					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
+					m_engine->UseDefaultParent(staticObject);
 				}
 			}
 
@@ -364,21 +271,23 @@ void Scene::CreateSolidObjectsFromData()
 
 #pragma region RoomChange
 	{
-		Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj", m_shaderProgram);
-		m_models.push_back(model);
+		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::EMPTY);
+		Uknitty::Model* model = assetManager->AutoGetModel(ModelDataStorage::EMPTY, modelData->m_filePath);
 		for(auto& data : m_roomChangeDatas)
 		{
 			glm::vec3 scale = glm::vec3(data->size.x, 5, data->size.y);
 			glm::vec3 modelDimensions = glm::vec3(scale.x, 5, scale.z);
-			SolidObject* solidObject = new SolidObject(model, modelDimensions, glm::vec3(data->position.x, 0, data->position.y));
-			solidObject->GetTransform()->SetScale(scale);
 
-			auto userPointerData = new Uknitty::Physics::UserPointerData();
-			userPointerData->physicsType = Uknitty::Physics::PhysicsType::ROOM_CHANGE;
+			Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+			staticObject->InitializeWithBoxShape(model, m_shaderProgram, modelDimensions, COLL_GROUP_ROOMCHANGE, COLL_MASK_ROOMCHANGE);
+			staticObject->GetLocalTransform()->SetScale(scale);
+			staticObject->OverridePosition(glm::vec3(data->position.x, 0, data->position.y));
+			m_engine->UseDefaultParent(staticObject);
+
+			auto userPointerData = new Uknitty::CPhysics::UserPointerData();
+			userPointerData->physicsType = Uknitty::CPhysics::PhysicsType::ROOM_CHANGE;
 			userPointerData->roomChangeType = data->roomChangeType;
-			solidObject->GetPhysics()->SetUserPointerData(userPointerData);
-
-			m_interfaceManager->AddRender(solidObject);
+			staticObject->GetCPhysics()->SetUserPointerData(userPointerData);
 		}
 	}
 #pragma endregion RoomChange
@@ -386,15 +295,18 @@ void Scene::CreateSolidObjectsFromData()
 
 void Scene::CreateGround()
 {
-	Uknitty::Model* plane = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj", m_shaderProgram, glm::vec2(MAP_SCALE_Z, MAP_SCALE_X));
-	m_models.push_back(plane);
-	{
-		glm::vec3 modelDimensions = glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z);
-		SolidObject* planeObject = new SolidObject(plane, modelDimensions, glm::vec3(0));
-		planeObject->GetTransform()->SetScale(glm::vec3(MAP_SCALE_X, 0, MAP_SCALE_Z));
-		planeObject->GetPhysics()->SetPosition(glm::vec3(0, -1 * modelDimensions.y / 2.0, 0));
-		m_interfaceManager->AddRender(planeObject);
-	}
+	ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::GROUND);
+	Uknitty::StaticObject* staticObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
+	staticObject->InitializeWithBoxShape
+	(
+		m_engine->GetAssetManager()->AutoGetModel
+		(
+			ModelDataStorage::GROUND, modelData->m_filePath, glm::vec2(MAP_SCALE_Z, MAP_SCALE_X)
+		), m_shaderProgram, modelData->m_dimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE
+	);
+	staticObject->SetColliderOffset(glm::vec3(0, -modelData->m_dimensions.y, 0));
+	staticObject->GetLocalTransform()->SetScale(glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z));
+	m_engine->UseDefaultParent(staticObject);
 }
 
 void Scene::CreatePathFinder()
@@ -438,6 +350,7 @@ void Scene::CreatePathFinder()
 
 void Scene::CreateEnemies()
 {
+#if 0
 	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Soldier/Soldier.obj", m_shaderProgram);
 	m_models.push_back(model);
 	int debug_maxEnemiesToSpawn = DEBUG_MAX_ENEMIES_TO_SPAWN;
@@ -456,5 +369,5 @@ void Scene::CreateEnemies()
 		Enemy* enemy = new Enemy(model, patrolPositionsVector, m_pathFinder);
 		m_interfaceManager->AddFlowRender(enemy);
 	}
-}
 #endif
+}

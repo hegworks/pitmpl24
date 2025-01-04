@@ -51,6 +51,8 @@ public:
 	void SetMainCamera(CameraObject* cameraObject);
 	CameraObject* GetMainCamera();
 	void CreateAndUseDefaultCamera();
+	void SetDefaultParent(GameObject* defaultParent);
+	void UseDefaultParent(GameObject* child);
 
 	void KeyDown(Key key);
 	void KeyUp(Key key);
@@ -66,6 +68,7 @@ private:
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
 	Uknitty::AssetManager* m_assetManager = nullptr;
+	GameObject* m_defaultParent = nullptr;
 
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;

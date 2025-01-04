@@ -3,13 +3,13 @@
 #include "AssetManager.h"
 #include "CameraObject.h"
 #include "CInput.h"
-#include "GameSettings.h"
 #include "CPhysics.h"
 #include "CRender.h"
 #include "CTransform.h"
 #include "DynamicObject.h"
 #include "Engine.h"
 #include "GameObject.h"
+#include "GameSettings.h"
 #include "GeneralCamera.h"
 #include "GeneralCamera.h"
 #include "Model.h"
@@ -19,15 +19,14 @@
 #include "RoomChangePositionType.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
-#include "SharedDependencies.h"
 #include <iostream>
 
 void Player::OnAwake()
 {
 	Uknitty::DynamicObject::OnAwake();
 
-	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->CreateModel("player", "../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->GetShaderProgram("main");
+	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
 
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
 

@@ -84,6 +84,20 @@ void Engine::CreateAndUseDefaultCamera()
 	SetMainCamera(CreateGameObject<Uknitty::GeneralCamera>());
 }
 
+void Engine::SetDefaultParent(GameObject* defaultParent)
+{
+	m_defaultParent = defaultParent;
+}
+
+void Engine::UseDefaultParent(GameObject* child)
+{
+	if(!m_defaultParent)
+	{
+		throw std::runtime_error("Default parent not set");
+	}
+	child->SetParent(m_defaultParent);
+}
+
 void Engine::KeyDown(Key key)
 {
 	for(auto& [id, gameObject] : m_gameObjects)

@@ -3,15 +3,14 @@
 #include "array"
 #include "AStar.hpp"
 #include "BTDebugDraw.h"
-#include "GameSettings.h"
 #include "CountdownTimer.h"
 #include "EnemyState.h"
+#include "GameSettings.h"
 #include "glm/glm.hpp"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
-#include "SharedDependencies.h"
 #include "UknittyMath.h"
 #include <iostream>
 

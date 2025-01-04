@@ -5,8 +5,10 @@
 #include "glm/glm.hpp"
 #include "RoomChangeType.h"
 #include "tmxparser.h"
+#include "unordered_map"
 #include <map>
 #include <string>
+#include <vector>
 
 namespace Uknitty
 {
@@ -14,16 +16,19 @@ class ShaderProgram;
 class CameraObject;
 class InterfaceManager;
 class Model;
+class Engine;
 }
 class GeneralCamera;
 class Player;
 class btDynamicsWorld;
 class SceneManagerBlackboard;
+class ModelDataStorage;
 
 class Scene
 {
 public:
-	Scene(int mapId, Player* player);
+	Scene(int mapId);
+	~Scene();
 
 private:
 	enum class WallType
@@ -47,15 +52,13 @@ private:
 		RoomChangeType roomChangeType;
 	};
 
-	GeneralCamera* m_generalCamera = nullptr;
 	Player* m_player = nullptr;
 	tmxparser::TmxMap m_tmxMap;
-	Uknitty::CameraObject* m_iCamera = nullptr;
-	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
-	Uknitty::InterfaceManager* m_interfaceManager = nullptr;
-	const btDynamicsWorld* m_btDynamicsWorld = nullptr;
 	AStar::Generator* m_pathFinder = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
+	ModelDataStorage* m_modelDataStorage = nullptr;
+	Uknitty::Engine* m_engine = nullptr;
+	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";
@@ -71,13 +74,13 @@ private:
 
 	int m_mapId = 0;
 
-	std::vector<glm::ivec2> m_crate2x4positions;
-	std::vector<glm::ivec2> m_crate4x4positions;
-	std::vector<glm::ivec2> m_tankPositions;
-	std::vector<glm::ivec2> m_fencePositions;
+	/// <summary>
+	/// key in ModelDataStorage, position
+	/// </summary>
+	std::unordered_multimap <std::string, glm::ivec2> m_staticObjectsPositions;
 	std::vector<WallData*> m_wallDatas;
-	std::vector<Uknitty::Model*> m_models;
 	std::vector<RoomChangeData*> m_roomChangeDatas;
+
 	/// <summary>
 	/// enemyIndex, patrolPositionIndex, patrolPosition
 	/// </summary>

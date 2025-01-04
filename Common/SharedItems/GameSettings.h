@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include <string>
 
 #pragma region Do NOT comment out lines here, use the next section
 #define DEBUG_DRAW_ASTAR_COLLISIONS
@@ -22,6 +23,10 @@ constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 constexpr int STARTING_MAP_ID = 0;
 constexpr glm::vec3 PLAYER_INITIAL_POS = glm::vec3(0, 20, 0);
 #pragma endregion Release settings
+
+#pragma region Shared strings
+constexpr const char* MAIN_SHADERPROGRAM = "main";
+#pragma endregion
 
 #pragma region Debug settings
 constexpr int DEBUG_MAX_ENEMIES_TO_SPAWN = 100;

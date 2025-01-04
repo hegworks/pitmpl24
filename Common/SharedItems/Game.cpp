@@ -7,6 +7,7 @@
 #include "DynamicObject.h"
 #include "Engine.h"
 #include "GameSettings.h"
+#include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
@@ -16,7 +17,6 @@
 #include "Player.h"
 #include "SceneManager.h"
 #include "ShaderProgram.h"
-#include "SharedDependencies.h"
 #include "SharedInput.h"
 #include "StaticObject.h"
 #include "UknittySettings.h"
@@ -83,8 +83,11 @@ void Game::Start()
 #pragma region Other Initializations
 	m_engine = Uknitty::Engine::GetInstance();
 	m_engine->CreateAndUseDefaultCamera();
+	m_engine->SetDefaultParent(m_engine->GetMainCamera());
 	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
 	m_engine->ValidateBeforeFirstUpdate();
+
+	m_sceneManager = new SceneManager();
 
 #pragma endregion Other Initializations
 
@@ -131,33 +134,6 @@ void Game::Start()
 		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 
 		m_engine->Update(gameDeltaTime);
-
-		if(!ranOnce)
-		{
-			ranOnce = true;
-
-			Uknitty::AssetManager* assetManager = m_engine->GetAssetManager();
-			Uknitty::ShaderProgram* shaderProgram = assetManager->CreateShaderProgram("main", "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
-			Uknitty::Model* crateModel = new Uknitty::Model("../Common/Assets/Models/Crate_4x4/Crate.obj");
-			Uknitty::Model* emptyModel = new Uknitty::Model("../Common/Assets/Models/Empty/Empty.obj");
-			Uknitty::Model* planeModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Plane/Plane.obj");
-			Uknitty::Model* ballModel = new Uknitty::Model("../Common/Assets/Models/Primitives/Sphere/Sphere.obj");
-
-			Uknitty::ModelObject* emptyObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
-			emptyObject->Initialize(emptyModel, shaderProgram);
-			emptyObject->SetParent(m_engine->GetMainCamera());
-			m_engine->GetMainCamera()->SetFollowTransform(emptyObject->GetLocalTransform());
-
-			Uknitty::StaticObject* planeObject = m_engine->CreateGameObject<Uknitty::StaticObject>();
-			planeObject->InitializeWithBoxShape(planeModel, shaderProgram, glm::vec3(10, 1, 10), COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
-			planeObject->GetLocalTransform()->SetScale(glm::vec3(10, 0, 10));
-			planeObject->SetColliderOffset(glm::vec3(0, -1, 0));
-			planeObject->SetParent(m_engine->GetMainCamera());
-
-			Player* player = m_engine->CreateGameObject<Player>();
-			player->SetParent(m_engine->GetMainCamera());
-			m_engine->GetMainCamera()->SetFollowTransform(player->GetLocalTransform());
-		}
 
 #if 0
 		m_sceneManager->ProcessKeyboard(m_iKeyboard);

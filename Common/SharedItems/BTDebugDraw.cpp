@@ -1,7 +1,6 @@
 #include "BTDebugDraw.h"
 
 #include "btBulletDynamicsCommon.h"
-#include "SharedDependencies.h"
 #include <CameraObject.h>
 #include <ShaderProgram.h>
 

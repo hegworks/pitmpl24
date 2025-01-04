@@ -9,22 +9,17 @@
 namespace Uknitty
 {
 
-Model* AssetManager::CreateModel(std::string key, std::string filePath, glm::vec2 textureCoordScale, bool shouldVerticallyFlipTexture)
+Model* AssetManager::AutoGetModel(std::string key, std::string filePath, glm::vec2 textureCoordScale, bool shouldVerticallyFlipTexture)
 {
 	if(m_models.find(key) != m_models.end())
 	{
-		throw std::runtime_error("Model with key already exists");
+		return m_models[key];
+	}
+	if(filePath == "")
+	{
+		throw std::runtime_error("Model with key does not exist and filePath is empty");
 	}
 	m_models[key] = new Model(filePath, textureCoordScale, shouldVerticallyFlipTexture);
-	return m_models[key];
-}
-
-Model* AssetManager::GetModel(std::string key)
-{
-	if(m_models.find(key) == m_models.end())
-	{
-		throw std::runtime_error("Model with key does not exist");
-	}
 	return m_models[key];
 }
 

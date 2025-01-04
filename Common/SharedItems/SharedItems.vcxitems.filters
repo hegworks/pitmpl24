@@ -246,9 +246,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GunBullet.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SharedDependencies.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
@@ -292,6 +289,12 @@
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSettings.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataStorage.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameSharedDependencies.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -406,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)AssetManager.cpp">
       <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ModelDataStorage.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

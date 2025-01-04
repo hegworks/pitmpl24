@@ -1,14 +1,13 @@
 #include "StaticObject.h"
 
-#include "GameSettings.h"
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "Engine.h"
 #include "GameObject.h"
+#include "GameSettings.h"
 #include "ModelObject.h"
 #include "PhysicsManager.h"
 #include "ShaderProgram.h"
-#include "SharedDependencies.h"
 #include <iostream>
 
 namespace Uknitty
