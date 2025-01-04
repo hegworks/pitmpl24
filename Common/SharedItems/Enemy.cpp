@@ -3,7 +3,7 @@
 #include "array"
 #include "AStar.hpp"
 #include "BTDebugDraw.h"
-#include "Common.h"
+#include "GameSettings.h"
 #include "CountdownTimer.h"
 #include "EnemyState.h"
 #include "glm/glm.hpp"

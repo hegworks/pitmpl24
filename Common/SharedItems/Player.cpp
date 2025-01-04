@@ -3,7 +3,7 @@
 #include "AssetManager.h"
 #include "CameraObject.h"
 #include "CInput.h"
-#include "Common.h"
+#include "GameSettings.h"
 #include "CPhysics.h"
 #include "CRender.h"
 #include "CTransform.h"

@@ -2,7 +2,7 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "CollisionManager.h"
-#include "Common.h"
+#include "GameSettings.h"
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
 #include "Model.h"

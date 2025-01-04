@@ -68,7 +68,6 @@ void GeneralCameraCInput::ProcessMousePosition(double xPos, double yPos)
 
 void GeneralCameraCInput::OnKeyDown(Key key)
 {
-	std::cout << "GeneralCameraCInput::OnKeyDown" << std::endl;
 	if(key == CAMERA_TYPE_SWITCH_KEY)
 	{
 		int nextCameraType = ((int)m_owner->GetCameraType() + 1) % m_owner->TOTAL_CAMERA_TYPES;

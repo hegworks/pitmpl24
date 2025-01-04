@@ -1,6 +1,6 @@
 #include "StaticObject.h"
 
-#include "Common.h"
+#include "GameSettings.h"
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "Engine.h"

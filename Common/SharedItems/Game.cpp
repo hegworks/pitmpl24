@@ -2,11 +2,11 @@
 
 #include "AssetManager.h"
 #include "CameraObject.h"
-#include "Common.h"
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "DynamicObject.h"
 #include "Engine.h"
+#include "GameSettings.h"
 #include "GeneralCamera.h"
 #include "IGraphics.h"
 #include "IInput.h"
@@ -99,7 +99,6 @@ void Game::Start()
 
 #pragma endregion Timing
 
-	float degree = 0;
 	bool ranOnce = false;
 
 	while(!quitting)

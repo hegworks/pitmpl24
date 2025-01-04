@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Common.h"
+#include "GameSettings.h"
 #include "RoomChange.h"
 
 class RoomChangeStorage;

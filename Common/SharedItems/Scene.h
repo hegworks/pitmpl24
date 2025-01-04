@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AStar.hpp"
-#include "Common.h"
+#include "GameSettings.h"
 #include "glm/glm.hpp"
 #include "RoomChangeType.h"
 #include "tmxparser.h"

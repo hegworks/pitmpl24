@@ -1,4 +1,4 @@
-#include "Common.h"
+#include "GameSettings.h"
 #include "XWindow.h"
 
 #include <EGL/egl.h>

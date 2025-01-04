@@ -10,6 +10,14 @@
 namespace Uknitty
 {
 
+void GeneralCamera::OnAwake()
+{
+	m_projection = glm::mat4(1);
+	m_view = glm::mat4(1);
+
+	GameObject::AddCInput(new GeneralCameraCInput(this));
+}
+
 void GeneralCamera::OnLateUpdate(float deltaTime)
 {
 	if(!m_followTransform)
@@ -90,16 +98,6 @@ void GeneralCamera::OnLateUpdate(float deltaTime)
 	}
 
 	CameraObject::UpdateLocalTransformMatrix(m_projection * m_view);
-}
-
-void GeneralCamera::OnAwake()
-{
-	m_projection = glm::mat4(1);
-	m_view = glm::mat4(1);
-
-	GameObject::AddCInput(new GeneralCameraCInput(this));
-
-	std::cout << "general camera created" << std::endl;
 }
 
 void GeneralCamera::OnDestroy()

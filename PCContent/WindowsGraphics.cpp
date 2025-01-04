@@ -1,6 +1,6 @@
 #include <windows.h>
 
-#include "Common.h"
+#include "GameSettings.h"
 #include "Game.h"
 #include "UknittySettings.h"
 #include "WindowsGraphics.h"

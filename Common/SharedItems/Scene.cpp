@@ -2,7 +2,7 @@
 
 #include "AStar.hpp"
 #include "btBulletDynamicsCommon.h"
-#include "Common.h"
+#include "GameSettings.h"
 #include "Enemy.h"
 #include "GunBullet.h"
 #include "InterfaceManager.h"
