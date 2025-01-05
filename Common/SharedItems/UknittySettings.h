@@ -22,9 +22,8 @@ constexpr float ASPECT_RATIO = 16.0f / 9.0f;
 #pragma endregion Screen
 
 #pragma region Physics
-constexpr float DELTA_TIME_SCALE = 10.0f; // raw deltaTime is multiplied by this value before being passed
-constexpr float PHYSICS_TIMESTEP = (1.0f / 30.0f) / DELTA_TIME_SCALE; // 1.0f/x -> x times per second
-constexpr float PHYSICS_MAX_SUB_STEPS = 5; // bullet sub-steps per frame
+//constexpr float PHYSICS_TIMESTEP = (1.0f / 30.0f); // 1.0f/x -> x times per second
+//constexpr float PHYSICS_MAX_SUB_STEPS = 5; // bullet sub-steps per frame
 constexpr float GRAVITY = -9.81f;
 
 enum class PhysicsType

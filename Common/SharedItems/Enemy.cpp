@@ -133,7 +133,9 @@ void Enemy::Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator*
 	m_patrolPositions = std::move(patrolPositions);
 	m_pathFinder = pathFinder;
 
-	Uknitty::DynamicObject::OverridePosition(m_patrolPositions[0]);
+	glm::vec3 initialPos = m_patrolPositions[0];
+	initialPos.y = MODEL_DIMENSIONS.y / 2.0;
+	Uknitty::DynamicObject::OverridePosition(initialPos);
 	m_sourcePos = {0, m_patrolPositions[0]};
 	m_targetPos = {1, m_patrolPositions[1]};
 }

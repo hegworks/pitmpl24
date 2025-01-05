@@ -109,7 +109,7 @@ void Game::Start()
 #pragma region Timing
 		auto time = std::chrono::system_clock::now();
 		std::chrono::duration<float> delta = time - lastTime;
-		gameDeltaTime = delta.count() * Uknitty::DELTA_TIME_SCALE;
+		gameDeltaTime = delta.count();
 
 		std::chrono::duration<float> elapsed = time - startTime;
 		if(first)

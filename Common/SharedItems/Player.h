@@ -36,8 +36,8 @@ private:
 	PlayerCInput* m_playerCInput = nullptr;
 	Uknitty::UserPointerData* m_userPointerData = nullptr;
 
-	const float SPEED_WALK = 2.2f;
-	const float SPEED_ROTATION = 1.7f;
+	const float SPEED_WALK = 10.0f;
+	const float SPEED_ROTATION = 20.0f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.2, 2, 1.2);
 	const float MASS = 70.0f;
 

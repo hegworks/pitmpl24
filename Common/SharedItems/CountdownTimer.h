@@ -8,7 +8,6 @@ class CountdownTimer
 public:
 	CountdownTimer(float durationSeconds)
 	{
-		durationSeconds *= 10.0f;
 		m_duration = durationSeconds;
 		m_remaining = durationSeconds;
 	}

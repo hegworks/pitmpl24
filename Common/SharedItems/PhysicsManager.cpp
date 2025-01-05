@@ -67,10 +67,7 @@ PhysicsManager::~PhysicsManager()
 
 void PhysicsManager::Update(float deltaTime)
 {
-#if 0 //TODO GOH find a replacemet for this
-	if(m_isNewSceneLoading) return;
-#endif
-	m_btDynamicsWorld->stepSimulation(deltaTime, PHYSICS_MAX_SUB_STEPS, PHYSICS_TIMESTEP);
+	m_btDynamicsWorld->stepSimulation(deltaTime, 10, 1.0f / 60.0f);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	for(auto rigidbody : m_contactTestRigidbodies)
 	{
@@ -86,7 +83,6 @@ void PhysicsManager::Draw(glm::mat4 cameraViewProjection)
 #endif // DEBUG_DRAW_PHYSICS
 }
 
-//TODO GOH use this on player
 void PhysicsManager::AddContactTestRigidbody(btRigidBody* rigidbody)
 {
 	m_contactTestRigidbodies.push_back(rigidbody);
