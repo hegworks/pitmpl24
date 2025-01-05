@@ -4,6 +4,7 @@
 #include "CPhysics.h"
 #include "CRender.h"
 #include "CTransform.h"
+#include "Engine.h"
 #include "glm/glm.hpp"
 
 namespace Uknitty
@@ -19,6 +20,19 @@ GameObject::~GameObject()
 {
 	delete m_localTransform;
 	delete m_worldTransform;
+	if(HasCInput())
+	{
+		delete m_input;
+	}
+	if(HasCRender())
+	{
+		delete m_render;
+	}
+	if(HasCPhysics())
+	{
+		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
+		delete m_physics;
+	}
 }
 
 void GameObject::EnableDrawChildren()
@@ -55,7 +69,7 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 
 void GameObject::OnDestroy()
 {
-	for(auto& gameObject : m_children)
+	for(GameObject* gameObject : m_children)
 	{
 		gameObject->OnDestroy();
 	}

@@ -25,7 +25,7 @@ public:
 
 public:
 	GameObject();
-	~GameObject();
+	virtual ~GameObject();
 
 	/// every frame, 1st function
 	void Update(float deltaTime)

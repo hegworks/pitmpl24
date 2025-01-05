@@ -4,15 +4,15 @@
 #include <string>
 
 #pragma region Do NOT comment out lines here, use the next section
+#define VISUAL_LEAK_DETECTOR
 #define DEBUG_DRAW_ASTAR_COLLISIONS
 #define DEBUG_DRAW_ASTAR_PATH
-#define DEBUG_DONT_DRAW_SOLIDS
 #pragma endregion Do NOT comment out lines here, use the next section
 
 #pragma region to use a feature, comment out its line
-//#undef DEBUG_DRAW_ASTAR_COLLISIONS
-//#undef DEBUG_DRAW_ASTAR_PATH
-#undef DEBUG_DONT_DRAW_SOLIDS
+//#undef VISUAL_LEAK_DETECTOR
+#undef DEBUG_DRAW_ASTAR_COLLISIONS
+#undef DEBUG_DRAW_ASTAR_PATH
 #pragma endregion to use a feature, comment out its line
 
 #pragma region Release settings

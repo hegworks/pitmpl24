@@ -5,6 +5,7 @@
 #include "glm/glm.hpp"
 #include "RoomChangeType.h"
 #include "tmxparser.h"
+#include "UknittySettings.h"
 #include "unordered_map"
 #include <map>
 #include <string>
@@ -51,6 +52,7 @@ private:
 		glm::vec2 position;
 		glm::ivec2 size;
 		RoomChangeType roomChangeType;
+		Uknitty::UserPointerData* userPointerData = nullptr;
 	};
 
 	Player* m_player = nullptr;
@@ -60,6 +62,7 @@ private:
 	ModelDataStorage* m_modelDataStorage = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
+	std::vector<glm::vec3>* m_patrolPositionsVector = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";

@@ -3,15 +3,16 @@
 #include "DynamicObject.h"
 #include "RoomChange.h"
 #include "RoomChangeType.h"
+#include "UknittySettings.h"
 #include <functional>
 
 namespace Uknitty
 {
 class CTransform;
+class CPhysics;
 class Model;
 class CameraObject;
 class ShaderProgram;
-class Physics;
 class GeneralCamera;
 }
 class SceneManagerBlackboard;
@@ -33,6 +34,7 @@ private:
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 	Uknitty::GeneralCamera* m_generalCamera = nullptr;
 	PlayerCInput* m_playerCInput = nullptr;
+	Uknitty::UserPointerData* m_userPointerData = nullptr;
 
 	const float SPEED_WALK = 2.2f;
 	const float SPEED_ROTATION = 1.7f;

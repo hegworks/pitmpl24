@@ -19,7 +19,12 @@
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "UknittyMath.h"
+#include "UknittySettings.h"
 #include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <type_traits>
+#include <vector>
 
 void Enemy::OnAwake()
 {
@@ -36,10 +41,10 @@ void Enemy::OnAwake()
 	m_physics->GetRigidBody()->setSpinningFriction(0.0f);
 	Uknitty::DynamicObject::SetColliderOffset(glm::vec3(0, -MODEL_DIMENSIONS.y / 2.0, 0));
 
-	auto userPointerData = new Uknitty::CPhysics::UserPointerData();
-	userPointerData->physicsType = Uknitty::CPhysics::PhysicsType::ENEMY;
-	userPointerData->name = "Enemy";
-	m_physics->SetUserPointerData(userPointerData);
+	m_userPointerData = new Uknitty::UserPointerData();
+	m_userPointerData->physicsType = Uknitty::PhysicsType::ENEMY;
+	m_userPointerData->name = "Enemy";
+	m_physics->SetUserPointerData(m_userPointerData);
 
 	m_physics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
 
@@ -117,11 +122,15 @@ void Enemy::OnDestroy()
 	Uknitty::DynamicObject::OnDestroy();
 
 	std::cout << "Destroying Enemy" << std::endl;
+
+	m_astarCurrentPathPositions.clear();
+	delete m_astarPathGenerationTimer;
+	delete m_userPointerData;
 }
 
 void Enemy::Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder)
 {
-	m_patrolPositions = patrolPositions;
+	m_patrolPositions = std::move(patrolPositions);
 	m_pathFinder = pathFinder;
 
 	Uknitty::DynamicObject::OverridePosition(m_patrolPositions[0]);
@@ -355,7 +364,8 @@ bool Enemy::IsPlayerInSight()
 		to = from + Uknitty::CPhysics::GLMVec3ToBtVec3(rotatedDir) * SIGHT_RAY_LENGTH;
 
 #ifdef DEBUG_DRAW_PHYSICS
-		m_btDynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::PINK));
+		btDynamicsWorld* dynamicsWorld = Uknitty::Engine::GetInstance()->GetDynamicsWorld();
+		dynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::PINK));
 #endif // DEBUG_DRAW_PHYSICS 
 
 		btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
@@ -370,14 +380,14 @@ bool Enemy::IsPlayerInSight()
 			btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
 
 #ifdef DEBUG_DRAW_PHYSICS 
-			m_btDynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
-			m_btDynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::Physics::GetBtColor(Uknitty::Physics::Color::CYAN));
+			dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
+			dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
 #endif // DEBUG_DRAW_PHYSICS 
 
 			if(closestResults.m_collisionObject->getUserPointer())
 			{
-				auto userPointerData = static_cast<Uknitty::CPhysics::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
-				if(userPointerData->physicsType == Uknitty::CPhysics::PhysicsType::PLAYER)
+				auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
+				if(userPointerData->physicsType == Uknitty::PhysicsType::PLAYER)
 				{
 					return true;
 				}

@@ -63,6 +63,11 @@ ModelDataStorage::ModelDataStorage()
 	};
 }
 
+ModelDataStorage::~ModelDataStorage()
+{
+	m_datas.clear();
+}
+
 ModelDataStorage::ModelData* ModelDataStorage::GetModelData(const std::string key)
 {
 	if(m_datas.find(key) == m_datas.end())

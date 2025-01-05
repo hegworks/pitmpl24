@@ -4,6 +4,8 @@
 #include "DynamicObject.h"
 #include "EnemyState.h"
 #include "glm/glm.hpp"
+#include "UknittySettings.h"
+#include <memory>
 #include <vector>
 
 namespace Uknitty
@@ -26,6 +28,7 @@ class SceneManagerBlackboard;
 class Enemy : public Uknitty::DynamicObject
 {
 public:
+	virtual ~Enemy() override = default;
 	virtual void OnAwake() override;
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnDestroy() override;
@@ -46,6 +49,7 @@ private:
 	Uknitty::CountdownTimer* m_astarPathGenerationTimer = nullptr;
 	Uknitty::CTransform* m_transform = nullptr;
 	Uknitty::CPhysics* m_physics = nullptr;
+	Uknitty::UserPointerData* m_userPointerData = nullptr;
 
 	const float SPEED_WALK = 1.5f;
 	const float SPEED_ROTATION = 1.7f;

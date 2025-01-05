@@ -13,6 +13,8 @@ class ShaderProgram;
 class AssetManager
 {
 public:
+	~AssetManager();
+
 	Model* AutoGetModel(std::string key, std::string filePath = "", glm::vec2 textureCoordScale = glm::vec2(1), bool shouldVerticallyFlipTexture = false);
 	ShaderProgram* CreateShaderProgram(std::string key, std::string vertexShaderPath, std::string fragmentShaderPath);
 	ShaderProgram* GetShaderProgram(std::string key);

@@ -135,15 +135,6 @@ void Game::Start()
 
 		m_engine->Update(gameDeltaTime);
 
-#if 0
-		m_sceneManager->ProcessKeyboard(m_iKeyboard);
-		m_sceneManager->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
-		m_sceneManager->Update(gameDeltaTime);
-		m_sceneManager->LateUpdate(gameDeltaTime);
-
-		m_sceneManager->Draw();
-#endif
-
 #pragma region imgui
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
@@ -172,7 +163,8 @@ void Game::Start()
 		++frameCount;
 	}
 
-	//m_sceneManager->Destroy();
+	delete m_sceneManager;
+	m_engine->Destroy();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui::DestroyContext();
 	m_iGraphics->Quit();

@@ -61,6 +61,7 @@ PhysicsManager::~PhysicsManager()
 	delete m_btBroadphase;
 	delete m_btDispatcher;
 	delete m_btCollisionConfiguration;
+	delete m_collisionManager;
 	m_btCollisionShapes.clear();
 }
 

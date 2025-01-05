@@ -20,9 +20,13 @@
 #include "ShaderProgram.h"
 #include "StaticObject.h"
 #include "StaticObject.h"
+#include "UknittySettings.h"
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <tmxparser.h>
+#include <type_traits>
+#include <vector>
 
 Scene::Scene(int mapId)
 {
@@ -56,10 +60,19 @@ Scene::~Scene()
 		delete wallData;
 	}
 	m_wallDatas.clear();
+
+	for(auto& roomChangeData : m_roomChangeDatas)
+	{
+		delete roomChangeData->userPointerData;
+		delete roomChangeData;
+	}
+	m_roomChangeDatas.clear();
+
 	m_enemiesPatrolPositions.clear();
 	m_staticObjectsPositions.clear();
-	m_roomChangeDatas.clear();
 	m_createdGameObjects.clear();
+
+	delete m_pathFinder;
 }
 
 void Scene::LoadMapDataFromFile(int mapId)
@@ -297,10 +310,11 @@ void Scene::CreateSolidObjectsFromData()
 			staticObject->OverridePosition(glm::vec3(data->position.x, 0, data->position.y));
 			m_engine->UseDefaultParent(staticObject);
 
-			auto userPointerData = new Uknitty::CPhysics::UserPointerData();
-			userPointerData->physicsType = Uknitty::CPhysics::PhysicsType::ROOM_CHANGE;
+			auto userPointerData = new Uknitty::UserPointerData();
+			userPointerData->physicsType = Uknitty::PhysicsType::ROOM_CHANGE;
 			userPointerData->roomChangeType = data->roomChangeType;
 			staticObject->GetCPhysics()->SetUserPointerData(userPointerData);
+			data->userPointerData = userPointerData;
 		}
 	}
 #pragma endregion RoomChange
@@ -352,6 +366,7 @@ void Scene::CreatePathFinder()
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
 						glm::vec2 pos = MAP_CENTER - glm::vec2(x + 0.5f, y + 0.5f); // 0.5 is half of the dimension of the model
 						Uknitty::ModelObject* DEBUG_OBJECT = m_engine->CreateGameObject<Uknitty::ModelObject>();
+						m_createdGameObjects.pushback(DEBUG_OBJECT);
 						DEBUG_OBJECT->Initialize(model, m_shaderProgram);
 						DEBUG_OBJECT->GetLocalTransform()->SetScale(modelDimensions);
 						DEBUG_OBJECT->GetLocalTransform()->SetPosition(glm::vec3(pos.x, 0, pos.y));
@@ -367,7 +382,7 @@ void Scene::CreatePathFinder()
 void Scene::CreateEnemies()
 {
 	int debug_maxEnemiesToSpawn = DEBUG_MAX_ENEMIES_TO_SPAWN;
-	for(auto& enemy : m_enemiesPatrolPositions)
+	for(auto& [enemyIndex, patrolPosMap] : m_enemiesPatrolPositions)
 	{
 		if(--debug_maxEnemiesToSpawn < 0)
 		{
@@ -375,12 +390,13 @@ void Scene::CreateEnemies()
 		}
 
 		std::vector<glm::vec3> patrolPositionsVector;
-		for(auto& patrolPositionsMap : enemy.second)
+		for(auto& [patrolPositionIndex, patrolPosition] : patrolPosMap)
 		{
-			patrolPositionsVector.push_back(patrolPositionsMap.second);
+			patrolPositionsVector.push_back(patrolPosition);
 		}
 		Enemy* enemy = m_engine->CreateGameObject<Enemy>();
-		enemy->Initialize(patrolPositionsVector, m_pathFinder);
+		m_createdGameObjects.push_back(enemy);
+		enemy->Initialize(std::move(patrolPositionsVector), m_pathFinder);
 		m_engine->UseDefaultParent(enemy);
 	}
 }

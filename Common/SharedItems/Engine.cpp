@@ -25,11 +25,6 @@ Engine::Engine()
 	m_assetManager = new Uknitty::AssetManager();
 }
 
-Engine::~Engine()
-{
-	delete m_physicsManager;
-}
-
 void Engine::Update(float deltaTime)
 {
 	m_physicsManager->Update(deltaTime);
@@ -53,6 +48,18 @@ void Engine::Update(float deltaTime)
 
 	m_mainCamera->Draw(glm::identity<glm::mat4>());
 	m_physicsManager->Draw(*m_mainCamera->GetLocalTransform()->GetMatrix());
+}
+
+void Engine::Destroy()
+{
+	for(auto& [id, gameObject] : m_gameObjects)
+	{
+		delete gameObject;
+	}
+	m_gameObjects.clear();
+
+	delete m_physicsManager;
+	delete m_assetManager;
 }
 
 void Engine::DestroyGameObject(GameObject* gameObject)

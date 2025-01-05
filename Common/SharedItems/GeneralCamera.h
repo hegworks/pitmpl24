@@ -20,7 +20,6 @@ public:
 
 	virtual void OnAwake() override;
 	virtual void OnLateUpdate(float deltaTime) override;
-	virtual void OnDestroy() override;
 
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 

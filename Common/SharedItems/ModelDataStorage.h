@@ -8,6 +8,7 @@ class ModelDataStorage
 {
 public:
 	ModelDataStorage();
+	~ModelDataStorage();
 
 	struct ModelData
 	{

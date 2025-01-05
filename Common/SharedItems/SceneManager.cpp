@@ -34,7 +34,10 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
+	m_engine->DestroyGameObject(m_player);
+	delete m_currentScene;
 	delete m_roomFinder;
+	delete m_modelDataStorage;
 }
 
 void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)

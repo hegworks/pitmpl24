@@ -9,6 +9,21 @@
 namespace Uknitty
 {
 
+AssetManager::~AssetManager()
+{
+	for(auto& [key, model] : m_models)
+	{
+		delete model;
+	}
+	m_models.clear();
+
+	for(auto& [key, shaderProgram] : m_shaderPrograms)
+	{
+		delete shaderProgram;
+	}
+	m_shaderPrograms.clear();
+}
+
 Model* AssetManager::AutoGetModel(std::string key, std::string filePath, glm::vec2 textureCoordScale, bool shouldVerticallyFlipTexture)
 {
 	if(m_models.find(key) != m_models.end())

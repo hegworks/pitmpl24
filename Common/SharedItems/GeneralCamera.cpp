@@ -100,12 +100,4 @@ void GeneralCamera::OnLateUpdate(float deltaTime)
 	CameraObject::UpdateLocalTransformMatrix(m_projection * m_view);
 }
 
-void GeneralCamera::OnDestroy()
-{
-	CameraObject::OnDestroy();
-
-	std::cout << "Destroying GeneralCamera" << std::endl;
-	delete this;
-}
-
 } // namespace Uknitty

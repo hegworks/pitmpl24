@@ -7,6 +7,11 @@ RoomFinder::RoomFinder(RoomChangeStorage* roomChangeStorage)
 	m_roomChangeStorage = roomChangeStorage;
 }
 
+RoomFinder::~RoomFinder()
+{
+	delete m_roomChangeStorage;
+}
+
 RoomFinder::RoomFinder()
 {
 	m_roomChangeStorage = new RoomChangeStorage();

@@ -20,6 +20,7 @@
 #include "RoomChangePositionType.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "UknittySettings.h"
 #include <iostream>
 
 void Player::OnAwake()
@@ -34,10 +35,10 @@ void Player::OnAwake()
 	cphysics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	cphysics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
 
-	auto userPointerData = new Uknitty::CPhysics::UserPointerData();
-	userPointerData->physicsType = Uknitty::CPhysics::PhysicsType::PLAYER;
-	userPointerData->name = "Player";
-	cphysics->SetUserPointerData(userPointerData);
+	m_userPointerData = new Uknitty::UserPointerData();
+	m_userPointerData->physicsType = Uknitty::PhysicsType::PLAYER;
+	m_userPointerData->name = "Player";
+	cphysics->SetUserPointerData(m_userPointerData);
 
 	cphysics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
 
@@ -62,10 +63,7 @@ void Player::OnDestroy()
 	Uknitty::DynamicObject::OnDestroy();
 
 	std::cout << "Destroying Player" << std::endl;
-	//m_btDynamicsWorld->removeRigidBody(m_physics->GetRigidBody());
-	//std::cout << "Removing RigidBody: Player" << " remaining: " << m_btDynamicsWorld->getNumCollisionObjects() << std::endl;
-	//delete m_physics;
-	//delete m_transform;
+	delete m_userPointerData;
 }
 
 void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)
@@ -102,8 +100,8 @@ void Player::OnCollision(const btCollisionObject* other)
 {
 	if(other->getUserPointer())
 	{
-		auto data = static_cast<Uknitty::CPhysics::UserPointerData*>(other->getUserPointer());
-		if(data->physicsType == Uknitty::CPhysics::PhysicsType::ROOM_CHANGE)
+		auto data = static_cast<Uknitty::UserPointerData*>(other->getUserPointer());
+		if(data->physicsType == Uknitty::PhysicsType::ROOM_CHANGE)
 		{
 			//std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
 			if(m_collidedWithRoomChangeCallback)

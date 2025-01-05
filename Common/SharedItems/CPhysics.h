@@ -2,6 +2,7 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "RoomChangeType.h" //TODO move this out of the Uknitty layer
+#include "UknittySettings.h"
 #include <functional>
 #include <glm/glm.hpp>
 #include <stdexcept>
@@ -14,24 +15,6 @@ class CPhysics
 public:
 	CPhysics();
 	~CPhysics();
-
-	//TODO move this out of the Uknitty layer, or to the UknittySettings
-	enum class PhysicsType
-	{
-		SOLID,
-		PLAYER,
-		ROOM_CHANGE,
-		ENEMY,
-	};
-
-	//TODO move this out of the Uknitty layer, or to the UknittySettings
-	struct UserPointerData
-	{
-		PhysicsType physicsType;
-		RoomChangeType roomChangeType;
-		std::string name;
-		void* extraData;  // Optional additional data
-	};
 
 	void InitialzeWithBoxShape(glm::vec3 dimensions, float mass);
 	void InitialzeWithCapsuleShape(float radius, float height, float mass);

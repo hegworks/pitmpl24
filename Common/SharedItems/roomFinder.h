@@ -10,6 +10,8 @@ class RoomFinder
 public:
 	RoomFinder();
 	RoomFinder(RoomChangeStorage* roomChangeStorage);
+	~RoomFinder();
+
 	RoomChange* FindNextRoom(RoomChangeType roomChangeType) const;
 	void SetCurrentLevelId(const int levelId) { m_currentLevelId = levelId; }
 	int GetCurrentLevelId() const { return m_currentLevelId; }

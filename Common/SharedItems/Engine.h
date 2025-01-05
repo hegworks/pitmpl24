@@ -32,11 +32,12 @@ public:
 
 private:
 	Engine();
-	~Engine();
+	~Engine() = default;
 #pragma endregion Scott Meyers Thread-Safe Singleton
 
 public:
 	void Update(float deltaTime);
+	void Destroy();
 
 	template <typename T>
 	T* CreateGameObject();
