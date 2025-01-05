@@ -333,7 +333,7 @@ void Scene::CreatePathFinder()
 	std::vector<tmxparser::TmxLayer> layers = m_tmxMap.layerCollection;
 
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
-	Uknitty::Model* model = new Uknitty::Model("../Common/Assets/Models/Primitives/Cube/Cube.obj", m_shaderProgram);
+	Uknitty::Model* model = m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::CUBE, m_modelDataStorage->GetModelData(ModelDataStorage::CUBE)->m_filePath);
 	glm::vec3 modelDimensions = glm::vec3(1, 6, 1);
 #endif // DEBUG_DRAW_ASTAR_COLLISIONS
 
@@ -351,9 +351,11 @@ void Scene::CreatePathFinder()
 
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
 						glm::vec2 pos = MAP_CENTER - glm::vec2(x + 0.5f, y + 0.5f); // 0.5 is half of the dimension of the model
-						SolidObject* DEBUG_OBJECT = new SolidObject(model, modelDimensions, glm::vec3(pos.x, 0, pos.y));
-						DEBUG_OBJECT->GetTransform()->SetScale(modelDimensions);
-						m_interfaceManager->AddRender(DEBUG_OBJECT);
+						Uknitty::ModelObject* DEBUG_OBJECT = m_engine->CreateGameObject<Uknitty::ModelObject>();
+						DEBUG_OBJECT->Initialize(model, m_shaderProgram);
+						DEBUG_OBJECT->GetLocalTransform()->SetScale(modelDimensions);
+						DEBUG_OBJECT->GetLocalTransform()->SetPosition(glm::vec3(pos.x, 0, pos.y));
+						m_engine->UseDefaultParent(DEBUG_OBJECT);
 #endif // DEBUG_DRAW_ASTAR_COLLISIONS
 					}
 				}

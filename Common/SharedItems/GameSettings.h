@@ -10,7 +10,7 @@
 #pragma endregion Do NOT comment out lines here, use the next section
 
 #pragma region to use a feature, comment out its line
-#undef DEBUG_DRAW_ASTAR_COLLISIONS
+//#undef DEBUG_DRAW_ASTAR_COLLISIONS
 //#undef DEBUG_DRAW_ASTAR_PATH
 #undef DEBUG_DONT_DRAW_SOLIDS
 #pragma endregion to use a feature, comment out its line
