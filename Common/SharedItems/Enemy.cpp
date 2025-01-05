@@ -162,7 +162,8 @@ void Enemy::OnCollision(const btCollisionObject* other)
 void Enemy::MoveTowardTargetPos()
 {
 	glm::vec3 direction = glm::normalize(m_targetPos.pos - GetCurrentFeetPos());
-	MoveInDirection(direction);
+	direction.y = 0;
+	Uknitty::DynamicObject::MoveInDirection(direction, m_moveSpeed);
 }
 
 bool Enemy::HasReachedAstarTargetPos()
@@ -185,20 +186,6 @@ void Enemy::ChangeTargetToNextPatrolPos()
 	m_sourcePos = m_targetPos;
 	m_targetPos.index = (m_targetPos.index + 1) % m_patrolPositions.size();
 	m_targetPos.pos = m_patrolPositions[m_targetPos.index];
-}
-
-/// <summary>
-/// Moves the enemy in the given direction which MUST be passed to it normalized.
-/// This function does NOT normalize the direction for you. (to prevent double normalization).
-/// </summary>
-/// <param name="direction"></param>
-void Enemy::MoveInDirection(glm::vec3 direction)
-{
-	float linearVelocityY = m_physics->GetRigidBody()->getLinearVelocity().getY();
-	m_physics->GetRigidBody()->setLinearVelocity(btVector3(direction.x * m_moveSpeed,
-														   linearVelocityY + direction.y * m_moveSpeed,
-														   direction.z * m_moveSpeed));
-	SetTransformPosToRigidBodyPos();
 }
 
 void Enemy::RotateTowardCurrentDirection()

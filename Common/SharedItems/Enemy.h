@@ -82,7 +82,6 @@ private:
 	bool HasReachedPatrolTargetPos();
 	bool HasReachedPlayerPos();
 	void ChangeTargetToNextPatrolPos();
-	void MoveInDirection(glm::vec3 direction);
 	void RotateTowardCurrentDirection();
 	void SetTransformPosToRigidBodyPos();
 	glm::vec3 GetCurrentFeetPos();
