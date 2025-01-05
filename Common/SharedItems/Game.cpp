@@ -102,8 +102,6 @@ void Game::Start()
 
 #pragma endregion Timing
 
-	bool ranOnce = false;
-
 	while(!quitting)
 	{
 #pragma region Timing
@@ -215,7 +213,7 @@ void Game::InitializeOpenGLES()
 void Game::ClearScreen()
 {
 	//glClearColor(189.0f / 256.0f, 224 / 256.0f, 254 / 256.0f, 1.0f);
-	glClearColor(0.2, 0.2, 0.2, 1.0);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

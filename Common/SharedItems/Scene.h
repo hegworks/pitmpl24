@@ -74,7 +74,7 @@ private:
 	const std::string FENCE_OBJECTGROUP = "fence";
 	const std::string ENEMY_PATROL_OBJECTGROUP = "ep";
 	const std::string ASTAR_LAYER_COLLECTION = "astar";
-	const int ASTAR_UNWALKABLE_GID = 1;
+	const unsigned int ASTAR_UNWALKABLE_GID = 1;
 
 	int m_mapId = 0;
 

@@ -72,7 +72,7 @@ void BTDebugDraw::flushLines(glm::mat4 cameraViewProjection)
 	m_shaderProgram->Use();
 	m_shaderProgram->SetMat4("uMVP", cameraViewProjection);
 
-	glDrawArrays(GL_LINES, 0, m_vertexData.size() / 3);
+	glDrawArrays(GL_LINES, 0, static_cast<int>(m_vertexData.size()) / 3);
 
 	glBindVertexArray(0);
 

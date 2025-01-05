@@ -85,8 +85,8 @@ public:
 	/// 1 time, after Awake()
 	virtual void OnStart() {};
 
-	virtual void OnUpdate(float deltaTime) {};
-	virtual void OnLateUpdate(float deltaTime) {};
+	virtual void OnUpdate([[maybe_unused]] float deltaTime) {};
+	virtual void OnLateUpdate([[maybe_unused]] float deltaTime) {};
 	virtual void OnFixedUpdate() {};
 	virtual void OnEnable() {};
 	virtual void OnDisable() {};

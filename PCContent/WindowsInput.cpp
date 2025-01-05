@@ -42,7 +42,7 @@ void WindowsMouse::ScrollCallback(GLFWwindow* /*window*/, double /*xOffset*/, do
 }
 
 
-void WindowsKeyboard::KeyCallBack(GLFWwindow* window, int key, int scancode, int action, int mods)
+void WindowsKeyboard::KeyCallBack(GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods)
 {
 	WindowsKeyboard* keyboard = static_cast<WindowsKeyboard*>(glfwGetWindowUserPointer(window));
 	if(keyboard->m_keyCallback)
@@ -56,7 +56,8 @@ void WindowsKeyboard::SetKeyCallback(const KeyCallback& callback)
 	m_keyCallback = callback;
 }
 
-WindowsKeyboard::WindowsKeyboard(GLFWwindow& window) : m_window(window) {
+WindowsKeyboard::WindowsKeyboard(GLFWwindow& window) : m_window(window)
+{
 	glfwSetWindowUserPointer(&window, this);
 
 	glfwSetKeyCallback(&window, KeyCallBack);

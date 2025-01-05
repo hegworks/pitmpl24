@@ -649,7 +649,7 @@ TmxReturn _parseLayerDataNode(tinyxml2::XMLElement* element, const TmxTilesetCol
 
 TmxReturn _parseLayerXmlTileNode(tinyxml2::XMLElement* element, const TmxTilesetCollection_t& tilesets, TmxLayerTile* outTile)
 {
-	TmxReturn error = TmxReturn::kSuccess;
+	//TmxReturn error = TmxReturn::kSuccess;
 
 	unsigned int gid = element->UnsignedAttribute("gid");
 

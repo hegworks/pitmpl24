@@ -26,7 +26,7 @@ void CPhysics::InitialzeWithBoxShape(glm::vec3 dimensions, float mass)
 
 void CPhysics::InitialzeWithCapsuleShape(float radius, float height, float mass)
 {
-	btCollisionShape* shape = new btCapsuleShape(radius / 2.0, height / 2.0);
+	btCollisionShape* shape = new btCapsuleShape(radius / 2.0f, height / 2.0f);
 	Initialze(shape, glm::vec3(radius, height, radius), mass);
 }
 
@@ -36,7 +36,7 @@ void CPhysics::Initialze(btCollisionShape* btCollisionShape, glm::vec3 dimension
 
 	btTransform btTransform;
 	btTransform.setIdentity();
-	btTransform.setOrigin(btVector3(0, dimensions.y / 2.0, 0));
+	btTransform.setOrigin(btVector3(0.0f, dimensions.y / 2.0f, 0.0f));
 	m_motionState = new btDefaultMotionState(btTransform);
 
 	btVector3 localInertia(0, 0, 0);

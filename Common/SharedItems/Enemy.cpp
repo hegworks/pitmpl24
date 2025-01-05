@@ -62,13 +62,6 @@ void Enemy::OnUpdate(float deltaTime)
 
 	DrawAstarPath();
 
-	glm::vec3 physicsPos = Uknitty::DynamicObject::GetCPhysics()->GetPosition();
-	glm::vec3 feetPos = GetCurrentFeetPos();
-	glm::vec3 targetPos = m_targetPos.pos;
-	float distanceToTarget = glm::distance(feetPos, targetPos);
-	glm::vec3 playerFeetPos = m_sceneManagerBlackboard->GetPlayerFeetPos();
-	float distanceToPlayer = glm::distance(feetPos, playerFeetPos);
-
 	switch(m_enemyState)
 	{
 		case EnemyState::PATROL:
@@ -134,7 +127,7 @@ void Enemy::Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator*
 	m_pathFinder = pathFinder;
 
 	glm::vec3 initialPos = m_patrolPositions[0];
-	initialPos.y = MODEL_DIMENSIONS.y / 2.0;
+	initialPos.y = MODEL_DIMENSIONS.y / 2.0f;
 	Uknitty::DynamicObject::OverridePosition(initialPos);
 	m_sourcePos = {0, m_patrolPositions[0]};
 	m_targetPos = {1, m_patrolPositions[1]};
@@ -145,7 +138,7 @@ void Enemy::DrawAstarPath()
 #ifdef DEBUG_DRAW_ASTAR_PATH
 	btVector3 color = Uknitty::CPhysics::GLMVec3ToBtVec3({1, 1, 0});
 
-	for(int i = m_astarCurrentPathPositions.size() - 1; i >= 0; i--)
+	for(int i = static_cast<int>(m_astarCurrentPathPositions.size()) - 1; i >= 0; i--)
 	{
 		glm::vec2 worldCoord = glm::vec2(m_astarCurrentPathPositions[i].x, m_astarCurrentPathPositions[i].z);
 		glLineWidth(2);
@@ -157,7 +150,7 @@ void Enemy::DrawAstarPath()
 #endif // DEBUG_DRAW_ASTAR_PATH
 }
 
-void Enemy::OnCollision(const btCollisionObject* other)
+void Enemy::OnCollision([[maybe_unused]] const btCollisionObject* other)
 {
 }
 
@@ -230,7 +223,7 @@ void Enemy::CalculateNewAstarPath()
 
 	ClearAstarPath();
 
-	for(int i = path.size() - ASTAR_PATH_SKIP_BEGINNING_COUNT; i >= 0; i--)
+	for(int i = static_cast<int>(path.size()) - ASTAR_PATH_SKIP_BEGINNING_COUNT; i >= 0; i--)
 	{
 		const glm::ivec2 astarCoord = {path[i].x, path[i].y};
 		glm::vec2 worldCoord = AstarCoordToWorldCoord(astarCoord);
@@ -274,8 +267,8 @@ glm::vec2 Enemy::WorldCoordToAstarCoord(glm::vec2 worldCoord)
 
 glm::vec2 Enemy::AstarCoordToWorldCoord(glm::ivec2 astarCoord)
 {
-	float x = floor(Uknitty::Math::range_to_range(0, 31, 16, -16, astarCoord.x)) + 0.5f;
-	float y = floor(Uknitty::Math::range_to_range(0, 23, 12, -12, astarCoord.y)) + 0.5f;
+	float x = floor(Uknitty::Math::range_to_range(0, 31, 16, -16, static_cast<float>(astarCoord.x))) + 0.5f;
+	float y = floor(Uknitty::Math::range_to_range(0, 23, 12, -12, static_cast<float>(astarCoord.y))) + 0.5f;
 	return {x, y};
 }
 
@@ -343,7 +336,6 @@ bool Enemy::IsPlayerInSight()
 	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos);
 	const btVector3 centeredTo = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));
 
-	int sideCounter = 0;
 	for(int i = 0; i < SIGHT_RAY_COUNT; i++)
 	{
 		btVector3 to = centeredTo;
@@ -369,7 +361,7 @@ bool Enemy::IsPlayerInSight()
 			btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
 
 #ifdef DEBUG_DRAW_PHYSICS 
-			dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
+			dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1f, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
 			dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
 #endif // DEBUG_DRAW_PHYSICS 
 

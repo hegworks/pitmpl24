@@ -18,7 +18,7 @@ void GeneralCamera::OnAwake()
 	GameObject::AddCInput(new GeneralCameraCInput(this));
 }
 
-void GeneralCamera::OnLateUpdate(float deltaTime)
+void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 {
 	if(!m_followTransform)
 	{

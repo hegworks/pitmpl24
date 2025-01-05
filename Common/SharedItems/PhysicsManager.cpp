@@ -80,7 +80,7 @@ void PhysicsManager::Update(float deltaTime)
 	}
 }
 
-void PhysicsManager::Draw(glm::mat4 cameraViewProjection)
+void PhysicsManager::Draw([[maybe_unused]] glm::mat4 cameraViewProjection)
 {
 #ifdef DEBUG_DRAW_PHYSICS
 	m_btDynamicsWorld->debugDrawWorld();

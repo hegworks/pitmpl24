@@ -7,6 +7,8 @@
 namespace Uknitty
 {
 
+class CTransform;
+
 /// <summary>
 /// NOTE: every implementation of this class, MUST call the UpdateLocalTransformMatrix function as soon as the viewProjection matrix updates.
 /// </summary>
@@ -21,7 +23,7 @@ public:
 	virtual glm::vec3 GetRight() = 0;
 
 	// optional
-	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) {};
+	virtual void SetFollowTransform([[maybe_unused]] Uknitty::CTransform* followTransform) {};
 };
 
 } // namespace Uknitty

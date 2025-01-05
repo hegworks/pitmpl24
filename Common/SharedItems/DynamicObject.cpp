@@ -31,7 +31,7 @@ void DynamicObject::InitializeWithCapsuleShape(Model* model, ShaderProgram* shad
 	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->addRigidBody(cphysics->GetRigidBody(), collisionGroup, collisionMask);
 }
 
-void DynamicObject::OnLateUpdate(float deltaTime)
+void DynamicObject::OnLateUpdate([[maybe_unused]] float deltaTime)
 {
 	PhysicsObject::SetModelPosToPhysicsPos();
 }

@@ -83,5 +83,5 @@ void SceneManager::CreatePlayer()
 
 void SceneManager::CreateShaderProgram()
 {
-	Uknitty::ShaderProgram* shaderProgram = m_engine->GetAssetManager()->CreateShaderProgram(MAIN_SHADERPROGRAM, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	m_engine->GetAssetManager()->CreateShaderProgram(MAIN_SHADERPROGRAM, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 }

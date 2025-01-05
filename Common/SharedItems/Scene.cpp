@@ -355,18 +355,18 @@ void Scene::CreatePathFinder()
 	{
 		if(layer.name == ASTAR_LAYER_COLLECTION)
 		{
-			for(int y = 0; y < layer.height; y++)
+			for(unsigned int y = 0; y < layer.height; y++)
 			{
-				for(int x = 0; x < layer.width; x++)
+				for(unsigned int x = 0; x < layer.width; x++)
 				{
 					if(layer.tiles[x + y * layer.width].gid == ASTAR_UNWALKABLE_GID)
 					{
-						m_pathFinder->addCollision({x, y});
+						m_pathFinder->addCollision({static_cast<int>(x), static_cast<int>(y)});
 
 #ifdef DEBUG_DRAW_ASTAR_COLLISIONS
 						glm::vec2 pos = MAP_CENTER - glm::vec2(x + 0.5f, y + 0.5f); // 0.5 is half of the dimension of the model
 						Uknitty::ModelObject* DEBUG_OBJECT = m_engine->CreateGameObject<Uknitty::ModelObject>();
-						m_createdGameObjects.pushback(DEBUG_OBJECT);
+						m_createdGameObjects.push_back(DEBUG_OBJECT);
 						DEBUG_OBJECT->Initialize(model, m_shaderProgram);
 						DEBUG_OBJECT->GetLocalTransform()->SetScale(modelDimensions);
 						DEBUG_OBJECT->GetLocalTransform()->SetPosition(glm::vec3(pos.x, 0, pos.y));

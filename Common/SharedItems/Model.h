@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <stb_image.h>
+#include <stdexcept>
 
 class Shader;
 struct Texture;
@@ -141,7 +142,7 @@ inline unsigned int Model::TextureFromFile(const char* path, const std::string& 
 	if(!textureData)
 	{
 		std::cout << "ERROR::STBI::LOAD at file " << fileName << std::endl;
-		return -1;
+		throw std::runtime_error("ERROR::STBI::LOAD at file " + fileName);
 	}
 
 	GLenum format;
@@ -154,7 +155,7 @@ inline unsigned int Model::TextureFromFile(const char* path, const std::string& 
 	else
 	{
 		std::cout << "ERROR::TextureFromFile::InvalidNrChannels at file " << fileName << std::endl;
-		return -1;
+		throw std::runtime_error("ERROR::TextureFromFile::InvalidNrChannels at file " + fileName);
 	}
 
 	glBindTexture(GL_TEXTURE_2D, texture);

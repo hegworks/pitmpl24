@@ -177,7 +177,7 @@ void Player::RotateGradually(glm::vec3 dir, float deltaTime)
 void Player::UpdateFeetPos()
 {
 	glm::vec3 feetPos = Uknitty::DynamicObject::GetCPhysics()->GetPosition();
-	feetPos.y -= MODEL_DIMENSIONS.y / 2.0;
+	feetPos.y -= MODEL_DIMENSIONS.y / 2.0f;
 	m_sceneManagerBlackboard->SetPlayerFeetPos(feetPos);
 }
 
