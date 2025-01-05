@@ -60,10 +60,13 @@ void SceneManager::LoadScene(int mapId)
 
 void SceneManager::ChangeScene(int mapId)
 {
-	delete m_currentScene;
+	m_engine->GetPhysicsManager()->Disable();
 
+	delete m_currentScene;
 	m_currentMapId = mapId;
 	LoadScene(m_currentMapId);
+
+	m_engine->GetPhysicsManager()->Enable();
 }
 
 void SceneManager::CreatePlayer()

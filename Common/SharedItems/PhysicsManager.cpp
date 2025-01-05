@@ -67,11 +67,16 @@ PhysicsManager::~PhysicsManager()
 
 void PhysicsManager::Update(float deltaTime)
 {
+	if(!m_isEnabled) return;
+
 	m_btDynamicsWorld->stepSimulation(deltaTime, 10, 1.0f / 60.0f);
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	for(auto rigidbody : m_contactTestRigidbodies)
 	{
-		m_btDynamicsWorld->contactTest(rigidbody, *m_collisionManager);
+		if(rigidbody && rigidbody->getMotionState())
+		{
+			m_btDynamicsWorld->contactTest(rigidbody, *m_collisionManager);
+		}
 	}
 }
 

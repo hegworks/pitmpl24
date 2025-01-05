@@ -23,6 +23,8 @@ public:
 	void RemoveContactTestRigidbody(btRigidBody* rigidbody);
 	void RegisterListener(btRigidBody* rigidbody, Uknitty::CPhysics* cphysics);
 	void UnregisterListener(btRigidBody* rigidbody);
+	void Enable() { m_isEnabled = true; }
+	void Disable() { m_isEnabled = false; }
 
 	btDynamicsWorld* GetDynamicsWorld() { return m_btDynamicsWorld; }
 
@@ -37,6 +39,8 @@ private:
 	Uknitty::BTDebugDraw* m_btDebugDrawer = nullptr;
 	Uknitty::CollisionManager* m_collisionManager = nullptr;
 	std::vector<btRigidBody*> m_contactTestRigidbodies;
+
+	bool m_isEnabled = true;
 };
 
 } // namespace Uknitty
