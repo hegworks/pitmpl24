@@ -271,9 +271,11 @@ void Scene::CreateSolidObjectsFromData()
 			case WallType::UNIFORM:
 			{
 				glm::vec3 wallUniformScale = glm::vec3(wallData->size.x, 1, wallData->size.y);
+				std::string keyPostFix = "_" + std::to_string(wallData->size.x) + "x" + std::to_string(wallData->size.y);
+				std::string key = ModelDataStorage::WALL_1x4x1 + keyPostFix;
 
 				ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::WALL_1x4x1);
-				Uknitty::Model* wallModel = assetManager->AutoGetModel(ModelDataStorage::WALL_1x4x1, modelData->m_filePath, glm::vec2(wallUniformScale.x, 1));
+				Uknitty::Model* wallModel = assetManager->AutoGetModel(key, modelData->m_filePath, glm::vec2(wallUniformScale.x, 1));
 
 				{
 					glm::vec3 modelDimensions = glm::vec3(wallUniformScale.x, 4, wallUniformScale.z);
@@ -284,6 +286,7 @@ void Scene::CreateSolidObjectsFromData()
 					staticObject->OverridePosition(glm::vec3(wallData->position.x, 0, wallData->position.y));
 					m_engine->UseDefaultParent(staticObject);
 				}
+
 			}
 
 			break;
