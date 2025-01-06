@@ -52,7 +52,6 @@ public:
 	void SetMainCamera(CameraObject* cameraObject);
 	CameraObject* GetMainCamera();
 	void CreateAndUseDefaultCamera();
-	void SetDefaultParent(GameObject* defaultParent);
 	void UseDefaultParent(GameObject* child);
 
 	void KeyDown(Key key);
@@ -68,8 +67,8 @@ private:
 	std::unordered_map<GameObject::ID, GameObject*> m_gameObjects;
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
+	GameObject* m_root = nullptr;
 	Uknitty::AssetManager* m_assetManager = nullptr;
-	GameObject* m_defaultParent = nullptr;
 
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;

@@ -83,7 +83,6 @@ void Game::Start()
 #pragma region Other Initializations
 	m_engine = Uknitty::Engine::GetInstance();
 	m_engine->CreateAndUseDefaultCamera();
-	m_engine->SetDefaultParent(m_engine->GetMainCamera());
 	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
 	m_engine->ValidateBeforeFirstUpdate();
 

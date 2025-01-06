@@ -3,7 +3,10 @@
 #include "CameraObject.h"
 #include "CTransform.h"
 #include "GeneralCameraCInput.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include "UknittySettings.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <stdexcept>
 
@@ -97,7 +100,12 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 			throw std::runtime_error("Unknown camera type");
 	}
 
-	CameraObject::UpdateLocalTransformMatrix(m_projection * m_view);
+	GameObject::GetLocalTransform()->SetPosition(m_pos);
+
+	//glm::vec3 debugOffset = m_front * 3.0f; // 2 units in front
+	GameObject::GetLocalTransform()->SetPosition(m_pos /*+ debugOffset*/);
+	glm::quat m_rotation = glm::quatLookAt(m_front, UP);
+	GameObject::GetLocalTransform()->SetRotation(glm::eulerAngles(m_rotation));
 }
 
 } // namespace Uknitty

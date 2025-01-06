@@ -15,7 +15,6 @@ class CTransform;
 class CameraObject : public Uknitty::GameObject
 {
 public:
-	void UpdateLocalTransformMatrix(glm::mat4 viewProjection);
 	virtual float GetFov() const = 0;
 	virtual glm::mat4 GetView() = 0;
 	virtual glm::mat4 GetProjection() = 0;
