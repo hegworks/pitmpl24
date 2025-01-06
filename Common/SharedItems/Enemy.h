@@ -60,8 +60,8 @@ private:
 	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
 	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
 	const float SIGHT_RAY_LENGTH = 30.0f;
-	const int SIGHT_RAY_COUNT = 3; // for symmetrical results, set this to an odd value
-	const float SIGHT_RAY_DIFFERENCE_DEGREE = 5.0f;
+	const int SIGHT_RAY_COUNT = 5; // for symmetrical results, set this to an odd value
+	const float SIGHT_RAY_DIFFERENCE_DEGREE = 3.0f;
 	const float MASS = 70.0f;
 
 	float m_moveSpeed = SPEED_WALK;

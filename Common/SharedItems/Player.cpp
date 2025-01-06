@@ -60,10 +60,10 @@ void Player::OnUpdate(float deltaTime)
 
 void Player::OnDestroy()
 {
-	Uknitty::DynamicObject::OnDestroy();
-
 	std::cout << "Destroying Player" << std::endl;
 	delete m_userPointerData;
+	
+	Uknitty::DynamicObject::OnDestroy();
 }
 
 void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)

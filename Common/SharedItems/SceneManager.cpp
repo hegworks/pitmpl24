@@ -4,6 +4,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "CollisionManager.h"
 #include "CPhysics.h"
+#include "CTransform.h"
 #include "Engine.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
@@ -79,6 +80,13 @@ void SceneManager::CreatePlayer()
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
 
 	GameSharedDependencies::SetPlayer(m_player);
+
+	ModelDataStorage::ModelData* pikminModelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
+	Uknitty::ModelObject* playerPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
+	playerPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN, pikminModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
+	playerPikmin->GetLocalTransform()->SetScale(glm::vec3(2));
+	playerPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 3, 0));
+	playerPikmin->SetParent(m_player);
 }
 
 void SceneManager::CreateShaderProgram()

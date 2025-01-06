@@ -72,8 +72,15 @@ void Engine::DestroyGameObject(GameObject::ID id)
 	if(m_gameObjects.find(id) != m_gameObjects.end())
 	{
 		m_gameObjects[id]->OnDestroy();
-		delete m_gameObjects[id];
 		m_gameObjects.erase(id);
+	}
+}
+
+void Engine::RemoveGameObject(GameObject* gameObject)
+{
+	if(m_gameObjects.find(gameObject->GetID()) != m_gameObjects.end())
+	{
+		m_gameObjects.erase(gameObject->GetID());
 	}
 }
 

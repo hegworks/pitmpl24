@@ -112,13 +112,13 @@ void Enemy::OnUpdate(float deltaTime)
 
 void Enemy::OnDestroy()
 {
-	Uknitty::DynamicObject::OnDestroy();
-
 	std::cout << "Destroying Enemy" << std::endl;
 
 	m_astarCurrentPathPositions.clear();
 	delete m_astarPathGenerationTimer;
 	delete m_userPointerData;
+
+	Uknitty::DynamicObject::OnDestroy();
 }
 
 void Enemy::Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder)

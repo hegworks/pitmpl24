@@ -20,9 +20,9 @@ void PhysicsObject::OnAwake()
 
 void PhysicsObject::OnDestroy()
 {
-	ModelObject::OnDestroy();
-
 	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
+
+	ModelObject::OnDestroy();
 }
 
 void PhysicsObject::OverridePosition(glm::vec3 pos)

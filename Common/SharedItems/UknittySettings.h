@@ -12,7 +12,7 @@ namespace Uknitty
 #pragma endregion Do NOT comment out lines here, use the next section
 
 #pragma region to use a feature, comment out its line
-#undef DEBUG_DRAW_PHYSICS
+//#undef DEBUG_DRAW_PHYSICS
 #pragma endregion to use a feature, comment out its line
 
 #pragma region Screen

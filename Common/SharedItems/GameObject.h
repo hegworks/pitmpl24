@@ -75,6 +75,11 @@ public:
 		m_isDrawSelfEnabled = false;
 	}
 
+	void Destroy()
+	{
+		OnDestroy();
+	}
+
 	void EnableDrawChildren();
 	void DisableDrawChildren();
 

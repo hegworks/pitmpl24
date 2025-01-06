@@ -44,6 +44,7 @@ public:
 
 	void DestroyGameObject(GameObject* gameObject);
 	void DestroyGameObject(GameObject::ID id);
+	void RemoveGameObject(GameObject* gameObject);
 
 	void InitializeInput(IMouse* iMouse, IKeyboard* iKeyboard);
 	void ValidateBeforeFirstUpdate();

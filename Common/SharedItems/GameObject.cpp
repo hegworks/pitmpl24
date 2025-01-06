@@ -6,6 +6,7 @@
 #include "CTransform.h"
 #include "Engine.h"
 #include "glm/glm.hpp"
+#include <unordered_set>
 
 namespace Uknitty
 {
@@ -69,7 +70,9 @@ void GameObject::Draw(glm::mat4 parentsMVP)
 
 void GameObject::OnDestroy()
 {
-	for(GameObject* gameObject : m_children)
+	std::unordered_set<GameObject*> childrenCopy = m_children;
+
+	for(GameObject* gameObject : childrenCopy)
 	{
 		gameObject->OnDestroy();
 	}
@@ -79,6 +82,9 @@ void GameObject::OnDestroy()
 	{
 		m_parent->RemoveChild(this);
 	}
+
+	Uknitty::Engine::GetInstance()->RemoveGameObject(this);
+	delete this;
 }
 
 void GameObject::SetParent(GameObject* parent)
