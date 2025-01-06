@@ -108,6 +108,8 @@ void Enemy::OnUpdate(float deltaTime)
 			}
 			break;
 	}
+
+	SetModelPosToPhysicsPos();
 }
 
 void Enemy::OnDestroy()

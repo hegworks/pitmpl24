@@ -24,8 +24,6 @@ public:
 									int collisionGroup = btBroadphaseProxy::DefaultFilter,
 									int collisionMask = btBroadphaseProxy::AllFilter);
 
-	virtual void OnLateUpdate(float deltaTime) override;
-
 	void MoveInDirection(glm::vec3 direction, float speed);
 };
 

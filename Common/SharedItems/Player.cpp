@@ -56,13 +56,14 @@ void Player::OnUpdate(float deltaTime)
 	MoveIfInput(deltaTime);
 	UpdateFeetPos();
 	CheckCameraTypeToDisableDraw();
+	SetModelPosToPhysicsPos();
 }
 
 void Player::OnDestroy()
 {
 	std::cout << "Destroying Player" << std::endl;
 	delete m_userPointerData;
-	
+
 	Uknitty::DynamicObject::OnDestroy();
 }
 
