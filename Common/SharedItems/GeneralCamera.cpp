@@ -25,40 +25,12 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 {
 	m_noFollowTransformSoNoControl = !m_followTransform;
 
-	if(!m_followTransform)
+	if(m_noFollowTransformSoNoControl)
 	{
-		// Get parent's world position and orientation
-		CTransform* parentLocalTransform = GameObject::GetParent()->GetParent()->GetLocalTransform();
-
-		glm::mat4 parentLocalTransformMat = *parentLocalTransform->GetMatrix();
-
-		m_pos = *parentLocalTransform->GetPosition();
-		m_front = parentLocalTransform->GetForward();
-
-		std::cout << "m_pos: " << m_pos.x << ", " << m_pos.y << ", " << m_pos.z << std::endl;
-
-		//GameObject::GetLocalTransform()->OverrideMatrix(parentLocalTransformMat);
-
-
-#if 0
-		// Extract position
-		m_pos = glm::vec3(parentWorldTransformMat[3]);
-
-		// Extract rotation from parent's transform
-		glm::mat4 rotationMatrix = glm::mat4(glm::mat3(parentWorldTransformMat));
-		glm::vec3 parentRotation = glm::eulerAngles(glm::quat_cast(rotationMatrix));
-
-		// Calculate front vector from parent's rotation
-		m_front.x = cos(parentRotation.y) * cos(parentRotation.x);
-		m_front.y = sin(parentRotation.x);
-		m_front.z = sin(parentRotation.y) * cos(parentRotation.x);
-		m_front = glm::normalize(m_front);
-#endif
-
-		// Update view matrix
+		CTransform* parentWorldTransform = GameObject::GetParent()->GetWorldTransform();
+		m_pos = *parentWorldTransform->GetPosition();
+		m_front = parentWorldTransform->GetForward();
 		m_view = glm::lookAt(m_pos, m_pos + m_front, UP);
-
-		// Projection remains the same
 		m_projection = glm::perspective(glm::radians(m_fov), ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
 	}
 	else
@@ -133,14 +105,14 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 			default:
 				throw std::runtime_error("Unknown camera type");
 		}
-	}
 
-	// REF: the part where I'm calculating the local rotation based on the view matrix,
-	// is written with the help of claude.ai
-	//GameObject::GetLocalTransform()->SetPosition(m_pos);
-	//glm::mat4 rotationMatrix = glm::mat4(glm::mat3(m_view)); // Extract rotation part
-	//glm::vec3 rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(rotationMatrix)));
-	//GameObject::GetLocalTransform()->SetRotation(-rotation);
+		//REF: the part where I'm calculating the local rotation based on the view matrix,
+		//is written with the help of claude.ai
+		GameObject::GetLocalTransform()->SetPosition(m_pos);
+		glm::mat4 rotationMatrix = glm::mat4(glm::mat3(m_view)); // Extract rotation part
+		glm::vec3 rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(rotationMatrix)));
+		GameObject::GetLocalTransform()->SetRotation(-rotation);
+	}
 }
 
 } // namespace Uknitty

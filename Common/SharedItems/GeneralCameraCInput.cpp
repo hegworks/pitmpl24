@@ -19,7 +19,7 @@ GeneralCameraCInput::GeneralCameraCInput(GeneralCamera* owner)
 
 void GeneralCameraCInput::ProcessMousePosition(double xPos, double yPos)
 {
-	//if(m_owner->m_noFollowTransformSoNoControl) return;
+	if(m_owner->m_noFollowTransformSoNoControl) return;
 
 	auto m_cameraType = m_owner->GetCameraType();
 	switch(m_cameraType)
@@ -70,6 +70,8 @@ void GeneralCameraCInput::ProcessMousePosition(double xPos, double yPos)
 
 void GeneralCameraCInput::OnKeyDown(Key key)
 {
+	if(m_owner->m_noFollowTransformSoNoControl) return;
+
 	if(key == CAMERA_TYPE_SWITCH_KEY)
 	{
 		int nextCameraType = ((int)m_owner->GetCameraType() + 1) % m_owner->TOTAL_CAMERA_TYPES;

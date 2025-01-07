@@ -83,7 +83,8 @@ public:
 	void EnableDrawChildren();
 	void DisableDrawChildren();
 
-	void Draw(glm::mat4 parentsMVP);
+	void Draw(glm::mat4 cameraVP);
+	void UpdateWorldTransform(glm::mat4 parentsMVP);
 
 	/// 1 time, 1st function after constructor
 	virtual void OnAwake() {};

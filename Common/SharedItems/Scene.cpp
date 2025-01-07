@@ -406,7 +406,7 @@ void Scene::CreateEnemies()
 		if(enemyIndex == 0)
 		{
 			Uknitty::GameObject* enemyCameraOffsetObject = m_engine->CreateGameObject<Uknitty::GameObject>();
-			enemyCameraOffsetObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
+			enemyCameraOffsetObject->GetLocalTransform()->SetPosition(glm::vec3(0, 2.1, -0.5));
 			enemyCameraOffsetObject->SetParent(enemy);
 
 			/*Uknitty::ModelObject* enemyPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();

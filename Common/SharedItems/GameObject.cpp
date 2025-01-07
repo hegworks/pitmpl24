@@ -54,17 +54,27 @@ void GameObject::DisableDrawChildren()
 	}
 }
 
-void GameObject::Draw(glm::mat4 parentsMVP)
+void GameObject::Draw(glm::mat4 cameraVP)
 {
-	glm::mat4 transform = parentsMVP * (*m_localTransform->GetMatrix());
-	m_worldTransform->OverrideMatrix(transform);
+	glm::mat4 worldTransform = *m_worldTransform->GetMatrix();
+	glm::mat4 drawTransform = cameraVP * worldTransform;
 	if(HasCRender() && m_isDrawSelfEnabled)
 	{
-		m_render->Draw(transform);
+		m_render->Draw(drawTransform);
 	}
 	for(auto& gameObject : m_children)
 	{
-		gameObject->Draw(transform);
+		gameObject->Draw(cameraVP);
+	}
+}
+
+void GameObject::UpdateWorldTransform(glm::mat4 parentsMVP)
+{
+	glm::mat4 worldTransform = parentsMVP * (*m_localTransform->GetMatrix());
+	m_worldTransform->OverrideMatrix(worldTransform);
+	for(auto& gameObject : m_children)
+	{
+		gameObject->UpdateWorldTransform(worldTransform);
 	}
 }
 
