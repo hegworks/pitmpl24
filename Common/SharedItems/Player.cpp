@@ -122,7 +122,7 @@ void Player::MoveIfInput(float deltaTime)
 	glm::vec3 dir = glm::vec3(0);
 
 	glm::vec3 forward = m_generalCamera->GetForward();
-	if(m_generalCamera->GetCameraType() == Uknitty::GeneralCamera::CameraType::TOP_DOWN_FOLLOW)
+	if(m_generalCamera->GetCameraType() == Uknitty::GeneralCamera::FollowType::TOP_DOWN_FOLLOW)
 	{
 		forward.x = forward.x > 0.0f ? 1.0f : 0.0f;
 		forward.y = forward.y > 0.0f ? 1.0f : 0.0f;
@@ -184,7 +184,7 @@ void Player::UpdateFeetPos()
 
 void Player::CheckCameraTypeToDisableDraw()
 {
-	bool newDrawEnabledState = m_generalCamera->GetCameraType() != Uknitty::GeneralCamera::CameraType::FIRST_PERSON;
+	bool newDrawEnabledState = m_generalCamera->GetCameraType() != Uknitty::GeneralCamera::FollowType::FIRST_PERSON;
 
 	if(m_lastDrawEnabledStated == newDrawEnabledState) return;
 

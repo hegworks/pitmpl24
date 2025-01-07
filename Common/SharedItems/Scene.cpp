@@ -415,7 +415,7 @@ void Scene::CreateEnemies()
 			enemyPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 2, 0));
 			enemyPikmin->SetParent(enemy);*/
 
-			m_engine->GetMainCamera()->SetParent(enemyCameraOffsetObject);
+			//m_engine->GetMainCamera()->SetParent(enemyCameraOffsetObject);
 		}
 	}
 }

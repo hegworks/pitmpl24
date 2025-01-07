@@ -43,13 +43,6 @@ void Engine::Update(float deltaTime)
 		gameObject->Update(deltaTime);
 	}
 
-#if 0
-	glm::vec3 cameraLocalPos = *m_mainCamera->GetLocalTransform()->GetPosition();
-	glm::vec3 cameraWorldPos = *m_mainCamera->GetWorldTransform()->GetPosition();
-	std::cout << "cameraLocalPos: " << cameraLocalPos.x << ", " << cameraLocalPos.y << ", " << cameraLocalPos.z << std::endl;
-	std::cout << "cameraWorldPos: " << cameraWorldPos.x << ", " << cameraWorldPos.y << ", " << cameraWorldPos.z << std::endl;
-#endif
-
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
 
 	for(auto& [id, gameObject] : m_gameObjects)
@@ -61,6 +54,13 @@ void Engine::Update(float deltaTime)
 	m_root->Draw(cameraVP);
 
 	m_physicsManager->Draw(cameraVP);
+
+#if 0
+	glm::vec3 cameraLocalPos = *m_mainCamera->GetLocalTransform()->GetPosition();
+	glm::vec3 cameraWorldPos = *m_mainCamera->GetWorldTransform()->GetPosition();
+	std::cout << "cameraLocalPos: " << cameraLocalPos.x << ", " << cameraLocalPos.y << ", " << cameraLocalPos.z << std::endl;
+	std::cout << "cameraWorldPos: " << cameraWorldPos.x << ", " << cameraWorldPos.y << ", " << cameraWorldPos.z << std::endl;
+#endif
 }
 
 void Engine::Destroy()

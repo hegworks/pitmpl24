@@ -72,9 +72,12 @@ void SceneManager::ChangeScene(int mapId)
 
 void SceneManager::CreatePlayer()
 {
+	Uknitty::GeneralCamera* mainCamera = static_cast<Uknitty::GeneralCamera*>(m_engine->GetMainCamera());
+
 	m_player = m_engine->CreateGameObject<Player>();
 	m_engine->UseDefaultParent(m_player);
-	//m_engine->GetMainCamera()->SetFollowTransform(m_player->GetWorldTransform());
+	m_engine->GetMainCamera()->SetFollowTransform(m_player->GetWorldTransform());
+	mainCamera->SetMode(Uknitty::GeneralCamera::Mode::FOLLOW);
 	m_engine->GetPhysicsManager()->RegisterListener(m_player->GetCPhysics()->GetRigidBody(), m_player->GetCPhysics());
 	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
@@ -82,12 +85,11 @@ void SceneManager::CreatePlayer()
 	GameSharedDependencies::SetPlayer(m_player);
 
 	ModelDataStorage::ModelData* pikminModelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
-	Uknitty::ModelObject* playerPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	playerPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN, pikminModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
-	playerPikmin->GetLocalTransform()->SetScale(glm::vec3(2));
-	playerPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 0.5, 3));
-	playerPikmin->SetParent(m_engine->GetMainCamera());
-	//playerPikmin->SetParent(m_player);
+	Uknitty::ModelObject* cameraPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
+	cameraPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN, pikminModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
+	cameraPikmin->GetLocalTransform()->SetScale(glm::vec3(2));
+	cameraPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 0.5, -3));
+	cameraPikmin->SetParent(m_engine->GetMainCamera());
 }
 
 void SceneManager::CreateShaderProgram()

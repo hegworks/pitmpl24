@@ -20,6 +20,7 @@ public:
 
 	virtual void OnAwake() override;
 	virtual void OnLateUpdate(float deltaTime) override;
+	virtual void OnUpdate(float deltaTime) override;
 
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 
@@ -29,13 +30,20 @@ public:
 	const float PITCH_MIN_FIRST_PERSON = -80.0f;
 
 	const int TOTAL_CAMERA_TYPES = 3;
-	enum class CameraType
+	enum class FollowType
 	{
 		TOP_DOWN_FOLLOW,
 		THIRD_PERSON_FOLLOW,
 		FIRST_PERSON,
 	};
-	CameraType GetCameraType() const { return m_cameraType; }
+	FollowType GetCameraType() const { return m_followType; }
+
+	enum class Mode
+	{
+		CHILD_OF_STH,
+		FOLLOW,
+	};
+	Mode GetMode() const { return m_mode; }
 
 private:
 	// settings
@@ -62,7 +70,8 @@ private:
 
 	// variables
 	Uknitty::CTransform* m_followTransform = nullptr;
-	CameraType m_cameraType = CameraType::TOP_DOWN_FOLLOW;
+	FollowType m_followType = FollowType::TOP_DOWN_FOLLOW;
+	Mode m_mode = Mode::CHILD_OF_STH;
 
 	double m_yaw = YAW_DEFAULT;
 	double m_pitch = 0;
@@ -85,8 +94,8 @@ public:
 	double GetPitch() const { return m_pitch; }
 	void SetYaw(double yaw) { m_yaw = yaw; }
 	void SetPitch(double pitch) { m_pitch = pitch; }
-	void SetCameraType(CameraType cameraType) { m_cameraType = cameraType; }
-	bool m_noFollowTransformSoNoControl = true;
+	void SetFollowType(FollowType followType) { m_followType = followType; }
+	void SetMode(Mode mode) { m_mode = mode; }
 #pragma endregion
 
 };
