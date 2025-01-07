@@ -13,10 +13,11 @@ public:
 
 	void Reset();
 	void SetPosition(glm::vec3 pos);
+	/// rotation is in degrees
 	void SetRotation(glm::vec3 rotation);
 	void SetScale(glm::vec3 scale);
 	void SetTransform(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale);
-	void OverrideMatrix(glm::mat4 mat) { m_matrix = mat; }
+	void OverrideMatrix(glm::mat4 mat);
 
 	const glm::mat4* GetMatrix() const { return &m_matrix; }
 	const glm::vec3* GetPosition() const { return &m_position; }

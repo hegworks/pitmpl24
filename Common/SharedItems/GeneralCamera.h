@@ -86,6 +86,7 @@ public:
 	void SetYaw(double yaw) { m_yaw = yaw; }
 	void SetPitch(double pitch) { m_pitch = pitch; }
 	void SetCameraType(CameraType cameraType) { m_cameraType = cameraType; }
+	bool m_noFollowTransformSoNoControl = true;
 #pragma endregion
 
 };

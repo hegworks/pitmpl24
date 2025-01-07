@@ -89,6 +89,10 @@ void GameObject::OnDestroy()
 
 void GameObject::SetParent(GameObject* parent)
 {
+	if(m_parent)
+	{
+		m_parent->RemoveChild(this);
+	}
 	m_parent = parent;
 	m_parent->AddChild(this);
 }

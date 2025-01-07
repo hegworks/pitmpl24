@@ -74,7 +74,7 @@ void SceneManager::CreatePlayer()
 {
 	m_player = m_engine->CreateGameObject<Player>();
 	m_engine->UseDefaultParent(m_player);
-	m_engine->GetMainCamera()->SetFollowTransform(m_player->GetLocalTransform());
+	//m_engine->GetMainCamera()->SetFollowTransform(m_player->GetLocalTransform());
 	m_engine->GetPhysicsManager()->RegisterListener(m_player->GetCPhysics()->GetRigidBody(), m_player->GetCPhysics());
 	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
@@ -85,8 +85,8 @@ void SceneManager::CreatePlayer()
 	Uknitty::ModelObject* playerPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
 	playerPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN, pikminModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
 	playerPikmin->GetLocalTransform()->SetScale(glm::vec3(2));
-	playerPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 3, 0));
-	playerPikmin->SetParent(m_player);
+	playerPikmin->GetLocalTransform()->SetPosition(glm::vec3(-1, 0.2, -5));
+	//playerPikmin->SetParent(m_engine->GetMainCamera());
 }
 
 void SceneManager::CreateShaderProgram()

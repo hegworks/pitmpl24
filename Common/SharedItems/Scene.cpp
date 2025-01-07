@@ -3,6 +3,7 @@
 #include "AssetManager.h"
 #include "AStar.hpp"
 #include "btBulletDynamicsCommon.h"
+#include "CameraObject.h"
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "Enemy.h"
@@ -401,5 +402,20 @@ void Scene::CreateEnemies()
 		m_createdGameObjects.push_back(enemy);
 		enemy->Initialize(std::move(patrolPositionsVector), m_pathFinder);
 		m_engine->UseDefaultParent(enemy);
+
+		if(enemyIndex == 0)
+		{
+			Uknitty::GameObject* enemyCameraOffsetObject = m_engine->CreateGameObject<Uknitty::GameObject>();
+			enemyCameraOffsetObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
+			enemyCameraOffsetObject->SetParent(enemy);
+
+			/*Uknitty::ModelObject* enemyPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
+			enemyPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN),
+									m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
+			enemyPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 2, 0));
+			enemyPikmin->SetParent(enemy);*/
+
+			m_engine->GetMainCamera()->SetParent(enemyCameraOffsetObject);
+		}
 	}
 }

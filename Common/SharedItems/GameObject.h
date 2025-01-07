@@ -97,11 +97,13 @@ public:
 	virtual void OnDisable() {};
 	virtual void OnDestroy();
 
+	GameObject* GetParent() const { return m_parent; }
 	void SetParent(GameObject* parent);
 	void AddChild(GameObject* child);
 	void RemoveChild(GameObject* child);
 
 	CTransform* GetLocalTransform() const { return m_localTransform; }
+	CTransform* GetWorldTransform() const { return m_worldTransform; }
 
 	CInput* AddCInput(CInput* cinput);
 	CRender* AddCRender();

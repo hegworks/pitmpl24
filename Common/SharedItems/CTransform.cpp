@@ -1,5 +1,6 @@
 #include "CTransform.h"
 
+#include "glm/gtc/quaternion.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -48,6 +49,28 @@ void CTransform::SetTransform(glm::vec3 position, glm::vec3 rotation, glm::vec3 
 	m_rotation = rotation;
 	m_scale = scale;
 	CalculateModelMatrix();
+}
+
+void CTransform::OverrideMatrix(glm::mat4 mat)
+{
+	m_matrix = mat;
+
+	m_position = mat[3];
+
+	// Extract scale
+	m_scale.x = glm::length(glm::vec3(mat[0]));
+	m_scale.y = glm::length(glm::vec3(mat[1]));
+	m_scale.z = glm::length(glm::vec3(mat[2]));
+
+	// Remove scale from rotation part
+	glm::mat3 rotMat(
+		glm::vec3(mat[0]) / m_scale.x,
+		glm::vec3(mat[1]) / m_scale.y,
+		glm::vec3(mat[2]) / m_scale.z
+	);
+
+	// Convert to euler angles
+	m_rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(rotMat)));
 }
 
 glm::vec3 CTransform::GetForward() const
