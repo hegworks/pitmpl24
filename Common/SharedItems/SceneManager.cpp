@@ -84,12 +84,12 @@ void SceneManager::CreatePlayer()
 
 	GameSharedDependencies::SetPlayer(m_player);
 
-	ModelDataStorage::ModelData* pikminModelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
-	Uknitty::ModelObject* cameraPikmin = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	cameraPikmin->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::PIKMIN, pikminModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
-	cameraPikmin->GetLocalTransform()->SetScale(glm::vec3(2));
-	cameraPikmin->GetLocalTransform()->SetPosition(glm::vec3(0, 0.5, -3));
-	cameraPikmin->SetParent(m_engine->GetMainCamera());
+	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
+	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();
+	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
+	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
+	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
+	cameraReticle->SetParent(m_engine->GetMainCamera());
 }
 
 void SceneManager::CreateShaderProgram()

@@ -1,6 +1,8 @@
 #include "Player.h"
 
 #include "AssetManager.h"
+#include "btBulletDynamicsCommon.h"
+#include "BTDebugDraw.h"
 #include "CameraObject.h"
 #include "CInput.h"
 #include "CPhysics.h"
@@ -49,6 +51,11 @@ void Player::OnAwake()
 	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(Uknitty::Engine::GetInstance()->GetMainCamera());
 	m_playerCInput = new PlayerCInput();
 	GameObject::AddCInput(m_playerCInput);
+	m_playerCInput->SetOnShootInput([this] { OnShootInput(); });
+
+	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
+	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
+	m_gunPosObject->SetParent(this);
 }
 
 void Player::OnUpdate(float deltaTime)
@@ -199,5 +206,52 @@ void Player::CheckCameraTypeToDisableDraw()
 	{
 		Uknitty::GameObject::DisableDrawSelf();
 		Uknitty::GameObject::DisableDrawChildren();
+	}
+}
+
+void Player::OnShootInput()
+{
+	CastGunRay();
+}
+
+void Player::CastGunRay()
+{
+	glm::vec3 fromVec = *m_generalCamera->GetWorldTransform()->GetPosition();
+	glm::vec3 camForward = m_generalCamera->GetForward();
+	glm::vec3 toVec = fromVec + camForward * 50.0f;
+
+	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(fromVec);
+	const btVector3 to = Uknitty::CPhysics::GLMVec3ToBtVec3(toVec);
+
+#ifdef DEBUG_DRAW_PHYSICS
+	btDynamicsWorld* dynamicsWorld = Uknitty::Engine::GetInstance()->GetDynamicsWorld();
+	dynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::PINK));
+#endif // DEBUG_DRAW_PHYSICS 
+
+	btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
+	closestResults.m_collisionFilterGroup = COLL_GROUP_PLAYER;
+	closestResults.m_collisionFilterMask = COLL_MASK_PLAYER;
+	//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+
+	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->rayTest(from, to, closestResults);
+
+	if(closestResults.hasHit())
+	{
+		//btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+
+#ifdef DEBUG_DRAW_PHYSICS 
+		//dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1f, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
+		//dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
+#endif // DEBUG_DRAW_PHYSICS 
+
+		if(closestResults.m_collisionObject->getUserPointer())
+		{
+			auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
+			if(userPointerData->physicsType == Uknitty::PhysicsType::ENEMY)
+			{
+				std::cout << "Player shoot enemy\n";
+				//return true;
+			}
+		}
 	}
 }

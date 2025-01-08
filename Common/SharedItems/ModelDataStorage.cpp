@@ -61,6 +61,11 @@ ModelDataStorage::ModelDataStorage()
 		"../Common/Assets/Models/Pikmin/Pikmin.obj",
 		glm::vec3(1, 1, 1)
 	};
+	m_datas[RETICLE] =
+	{
+		"../Common/Assets/Models/Reticle/Sphere.obj",
+		glm::vec3(1, 1, 1)
+	};
 }
 
 ModelDataStorage::~ModelDataStorage()
