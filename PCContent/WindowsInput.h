@@ -25,7 +25,7 @@ class WindowsMouse : public IMouse
 public:
 	WindowsMouse(GLFWwindow& window);
 
-	virtual bool GetButtonDown(MouseButtons button) const;
+	virtual bool GetButtonDown(MouseButton button) const;
 	virtual glm::vec2 GetPosition();
 	virtual float GetScrollDelta() const;
 

@@ -130,6 +130,7 @@ void Game::Start()
 		ClearScreen();
 		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 
+		ProcessMouse();
 		m_engine->Update(gameDeltaTime);
 
 #pragma region imgui
@@ -219,4 +220,29 @@ void Game::ClearScreen()
 void Game::Quit()
 {
 	quitting = true;
+}
+
+void Game::ProcessMouse()
+{
+	for(auto& mouseButton : m_mouseButtons)
+	{
+		if(m_iMouse->GetButtonDown(mouseButton))
+		{
+			// If button is pressed but not already tracked
+			if(m_mouseButtonStates.find(mouseButton) == m_mouseButtonStates.end())
+			{
+				m_mouseButtonStates.insert(mouseButton); // Track key
+				m_engine->GetInstance()->MouseButtonDown(mouseButton);
+			}
+		}
+		else
+		{
+			// If button is not pressed but is tracked
+			if(m_mouseButtonStates.find(mouseButton) != m_mouseButtonStates.end())
+			{
+				m_mouseButtonStates.erase(mouseButton); // Untrack key
+				m_engine->GetInstance()->MouseButtonUp(mouseButton);
+			}
+		}
+	}
 }

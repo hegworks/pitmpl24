@@ -10,6 +10,7 @@
 
 #include "IInputKey.h"
 #include <vector>
+#include <unordered_set>
 
 struct ImFont;
 
@@ -51,12 +52,17 @@ private:
 	void Render() {}
 	void PostRender() {}
 
+	void ProcessMouse();
+
 	IGraphics* m_iGraphics = nullptr;
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
 	SharedInput* m_sharedInput = nullptr;
 	SceneManager* m_sceneManager = nullptr;
-	Uknitty::Engine* m_engine;
+	Uknitty::Engine* m_engine = nullptr;
+
+	std::unordered_set<MouseButton> m_mouseButtonStates;
+	std::vector<MouseButton> m_mouseButtons = {MouseButton::LEFT, MouseButton::RIGHT, MouseButton::MIDDLE};
 
 	bool quitting{false};
 	float gameDeltaTime;

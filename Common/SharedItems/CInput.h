@@ -13,6 +13,8 @@ public:
 	virtual void ProcessKeyboard([[maybe_unused]] IKeyboard* iKeyboard) {};
 	virtual void OnKeyDown([[maybe_unused]] Key key) {};
 	virtual void OnKeyUp([[maybe_unused]] Key key) {};
+	virtual void OnMouseButtonUp([[maybe_unused]] MouseButton key) {};
+	virtual void OnMouseButtonDown([[maybe_unused]] MouseButton key) {};
 };
 
 } // namespace Uknitty

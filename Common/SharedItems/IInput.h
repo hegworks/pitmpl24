@@ -6,18 +6,11 @@
 
 #include "IInputKey.h"
 
-enum class MouseButtons
-{
-	LEFT,
-	RIGHT,
-	MIDDLE
-};
-
 class IMouse
 {
 
 public:
-	virtual bool GetButtonDown(MouseButtons button) const = 0;
+	virtual bool GetButtonDown(MouseButton button) const = 0;
 	virtual glm::vec2 GetPosition() = 0;
 	virtual float GetScrollDelta() const = 0;
 

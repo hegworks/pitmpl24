@@ -158,6 +158,28 @@ void Engine::KeyUp(Key key)
 	}
 }
 
+void Engine::MouseButtonDown(MouseButton mouseButton)
+{
+	for(auto& [id, gameObject] : m_gameObjects)
+	{
+		if(gameObject->HasCInput())
+		{
+			gameObject->GetCInput()->OnMouseButtonDown(mouseButton);
+		}
+	}
+}
+
+void Engine::MouseButtonUp(MouseButton mouseButton)
+{
+	for(auto& [id, gameObject] : m_gameObjects)
+	{
+		if(gameObject->HasCInput())
+		{
+			gameObject->GetCInput()->OnMouseButtonUp(mouseButton);
+		}
+	}
+}
+
 btDynamicsWorld* Engine::GetDynamicsWorld()
 {
 	return m_physicsManager->GetDynamicsWorld();

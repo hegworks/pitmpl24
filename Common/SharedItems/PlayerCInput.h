@@ -2,6 +2,7 @@
 
 #include "CInput.h"
 #include "IInputKey.h"
+#include <functional>
 
 class IKeyboard;
 
@@ -10,6 +11,8 @@ class PlayerCInput : public Uknitty::CInput
 public:
 	virtual void OnKeyDown(Key key) override;
 	virtual void OnKeyUp(Key key) override;
+	virtual void OnMouseButtonDown(MouseButton button) override;
+	virtual void OnMouseButtonUp(MouseButton button) override;
 
 	bool IsForwardInput() const { return m_isForwardKeyDown; }
 	bool IsBackwardInput() const { return m_isBackwardKeyDown; }

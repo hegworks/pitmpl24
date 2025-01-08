@@ -9,13 +9,13 @@ WindowsMouse::WindowsMouse(GLFWwindow& window) : m_window(window)
 	glfwSetScrollCallback(&window, ScrollCallback);
 }
 
-bool WindowsMouse::GetButtonDown(MouseButtons button) const
+bool WindowsMouse::GetButtonDown(MouseButton button) const
 {
 	switch(button)
 	{
-		case MouseButtons::LEFT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_LEFT);
-		case MouseButtons::RIGHT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_RIGHT);
-		case MouseButtons::MIDDLE: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_MIDDLE);
+		case MouseButton::LEFT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_LEFT);
+		case MouseButton::RIGHT: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_RIGHT);
+		case MouseButton::MIDDLE: return glfwGetMouseButton(&m_window, GLFW_MOUSE_BUTTON_MIDDLE);
 		default:
 			std::cout << "WARNING::INPUT::WINDOWS Mouse button not supported: " << static_cast<int>(button) << std::endl;
 			return false;

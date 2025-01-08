@@ -10,7 +10,7 @@ RaspMouse::RaspMouse(Display& display, Window& window) :
 	XFlush(&display); // Ensure the command is sent immediately
 }
 
-bool RaspMouse::GetButtonDown(MouseButtons button) const
+bool RaspMouse::GetButtonDown(MouseButton button) const
 {
 	int root_x;
 	int root_y;
@@ -32,15 +32,15 @@ bool RaspMouse::GetButtonDown(MouseButtons button) const
 
 	switch(button)
 	{
-		case MouseButtons::LEFT:
+		case MouseButton::LEFT:
 		{
 			return mask_return & Button1MotionMask;
 		}
-		case MouseButtons::RIGHT:
+		case MouseButton::RIGHT:
 		{
 			return mask_return & Button3MotionMask;
 		}
-		case MouseButtons::MIDDLE:
+		case MouseButton::MIDDLE:
 		{
 			return mask_return & Button2MotionMask;
 		}

@@ -56,6 +56,8 @@ public:
 
 	void KeyDown(Key key);
 	void KeyUp(Key key);
+	void MouseButtonDown(MouseButton mouseButton);
+	void MouseButtonUp(MouseButton mouseButton);
 
 	btDynamicsWorld* GetDynamicsWorld();
 	PhysicsManager* GetPhysicsManager() { return m_physicsManager; }
