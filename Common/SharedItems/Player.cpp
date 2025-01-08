@@ -10,6 +10,7 @@
 #include "CTransform.h"
 #include "DynamicObject.h"
 #include "DynamicObject.h"
+#include "Enemy.h"
 #include "Engine.h"
 #include "GameObject.h"
 #include "GameSettings.h"
@@ -256,6 +257,8 @@ void Player::CastGunRay()
 			auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
 			if(userPointerData->physicsType == Uknitty::PhysicsType::ENEMY)
 			{
+				Enemy* enemy = static_cast<Enemy*>(userPointerData->extraData);
+				enemy->OnPlayerBulletHit();
 				std::cout << "Player shoot enemy\n";
 				//return true;
 			}

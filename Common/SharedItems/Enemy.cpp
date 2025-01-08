@@ -44,12 +44,14 @@ void Enemy::OnAwake()
 	m_userPointerData = new Uknitty::UserPointerData();
 	m_userPointerData->physicsType = Uknitty::PhysicsType::ENEMY;
 	m_userPointerData->name = "Enemy";
+	m_userPointerData->extraData = this;
 	m_physics->SetUserPointerData(m_userPointerData);
 
 	m_physics->SetCollisionCallback([this](const btCollisionObject* other) { OnCollision(other); });
 
 	m_moveSpeed = SPEED_WALK;
 	m_rotationSpeed = SPEED_ROTATION;
+	m_hp = HP;
 	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(Uknitty::Engine::GetInstance()->GetMainCamera());
 	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 	m_transform = GameObject::GetLocalTransform();
@@ -150,6 +152,15 @@ void Enemy::DrawAstarPath()
 		glLineWidth(1);
 	}
 #endif // DEBUG_DRAW_ASTAR_PATH
+}
+
+void Enemy::OnPlayerBulletHit()
+{
+	m_hp--;
+	if(m_hp <= 0)
+	{
+		Destroy();
+	}
 }
 
 void Enemy::OnCollision([[maybe_unused]] const btCollisionObject* other)

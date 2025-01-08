@@ -35,6 +35,7 @@ public:
 
 	void Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder);
 	void DrawAstarPath();
+	void OnPlayerBulletHit();
 
 private:
 	struct PosData
@@ -63,6 +64,7 @@ private:
 	const int SIGHT_RAY_COUNT = 5; // for symmetrical results, set this to an odd value
 	const float SIGHT_RAY_DIFFERENCE_DEGREE = 3.0f;
 	const float MASS = 70.0f;
+	const int HP = 3;
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
@@ -73,6 +75,7 @@ private:
 	int m_astarCurrentPathIndex = 0;
 	bool m_hadReachedPlayerPos = false;
 	glm::vec3 m_lastDirection;
+	int m_hp = HP;
 
 	EnemyState m_enemyState = EnemyState::PATROL;
 
