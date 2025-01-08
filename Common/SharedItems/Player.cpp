@@ -239,6 +239,13 @@ void Player::CastGunRay()
 	{
 		//btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
 
+		// ignore hits behind the player
+		glm::vec3 playerPos = *GameObject::GetWorldTransform()->GetPosition();
+		glm::vec3 rayDirection = glm::normalize(toVec - fromVec);
+		glm::vec3 hitPointToPlayer = glm::normalize(playerPos - Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld));
+		float dotProduct = glm::dot(rayDirection, hitPointToPlayer);
+		if(dotProduct > 0.0f) return;
+
 #ifdef DEBUG_DRAW_PHYSICS 
 		//dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1f, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
 		//dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::CYAN));
