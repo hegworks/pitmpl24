@@ -96,19 +96,7 @@ void XWindow::CreateWindow()
 	eglSwapInterval(m_state.display, 0);
 
 
-	// HIDE CURSOR.
-	Cursor invisibleCursor;
-	Pixmap bitmapNoData;
-	XColor black;
-	static char noData[] = {0, 0, 0, 0, 0, 0, 0, 0};
-	black.red = black.green = black.blue = 0;
-	bitmapNoData = XCreateBitmapFromData(m_display, m_window, noData, 8, 8);
-	invisibleCursor = XCreatePixmapCursor(m_display, bitmapNoData, bitmapNoData, &black, &black, 0, 0);
-	XDefineCursor(m_display, m_window, invisibleCursor);
-	XFreeCursor(m_display, invisibleCursor);
-	XFreePixmap(m_display, bitmapNoData);
-
-	XGrabPointer(m_display, m_window, True, 0, GrabModeAsync, GrabModeAsync, m_window, None, CurrentTime);
+	HideCursor();
 }
 
 const EGLState& XWindow::GetState() const
@@ -124,4 +112,26 @@ Display& XWindow::GetDisplay()
 Window& XWindow::GetWindow()
 {
 	return m_window;
+}
+
+void XWindow::HideCursor()
+{
+	Cursor invisibleCursor;
+	Pixmap bitmapNoData;
+	XColor black;
+	static char noData[] = {0, 0, 0, 0, 0, 0, 0, 0};
+	black.red = black.green = black.blue = 0;
+	bitmapNoData = XCreateBitmapFromData(m_display, m_window, noData, 8, 8);
+	invisibleCursor = XCreatePixmapCursor(m_display, bitmapNoData, bitmapNoData, &black, &black, 0, 0);
+	XDefineCursor(m_display, m_window, invisibleCursor);
+	XFreeCursor(m_display, invisibleCursor);
+	XFreePixmap(m_display, bitmapNoData);
+
+	XGrabPointer(m_display, m_window, True, 0, GrabModeAsync, GrabModeAsync, m_window, None, CurrentTime);
+}
+
+void XWindow::ShowCursor()
+{
+	XUndefineCursor(m_display, m_window);
+	XUngrabPointer(m_display, CurrentTime);
 }

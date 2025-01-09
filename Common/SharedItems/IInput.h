@@ -10,11 +10,37 @@ class IMouse
 {
 
 public:
+	virtual ~IMouse() = default;
+
 	virtual bool GetButtonDown(MouseButton button) const = 0;
 	virtual glm::vec2 GetPosition() = 0;
 	virtual float GetScrollDelta() const = 0;
 
-	virtual ~IMouse() = default;
+	void CaptureMouseInput()
+	{
+		if(!m_isCapturingMouseInput)
+		{
+			m_isCapturingMouseInput = true;
+			OnCaptureMouseInput();
+		}
+	}
+
+	void ReleaseMouseInput()
+	{
+		if(m_isCapturingMouseInput)
+		{
+			m_isCapturingMouseInput = false;
+			OnReleaseMouseInput();
+		}
+	}
+
+	bool IsCapturingMouseInput() const { return m_isCapturingMouseInput; }
+
+protected:
+	virtual void OnCaptureMouseInput() = 0;
+	virtual void OnReleaseMouseInput() = 0;
+
+	bool m_isCapturingMouseInput = false;
 };
 
 class IKeyboard

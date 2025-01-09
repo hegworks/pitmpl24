@@ -137,6 +137,12 @@ void Game::Start()
 		m_engine->Update(gameDeltaTime);
 
 #pragma region imgui
+		if(!m_iMouse->IsCapturingMouseInput())
+		{
+			io.MousePos.x = m_iMouse->GetPosition().x;
+			io.MousePos.y = m_iMouse->GetPosition().y;
+		}
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
 		ImGui::SetNextWindowBgAlpha(0.2f);
@@ -153,8 +159,11 @@ void Game::Start()
 
 		ImGui::End();
 
+		ImGui::ShowDemoWindow();
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		// ImGui::EndFrame(); // actuall this is closed by the render
 #pragma endregion imgui
 
@@ -176,6 +185,17 @@ void Game::KeyCallback(Key key, KeyAction action)
 {
 	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();
 
+	if(key == Key::M && action == KeyAction::DOWN)
+	{
+		if(m_iMouse->IsCapturingMouseInput())
+		{
+			m_iMouse->ReleaseMouseInput();
+		}
+		else
+		{
+			m_iMouse->CaptureMouseInput();
+		}
+	}
 
 	if(action == KeyAction::DOWN)
 	{
@@ -235,7 +255,18 @@ void Game::ProcessMouse()
 			if(m_mouseButtonStates.find(mouseButton) == m_mouseButtonStates.end())
 			{
 				m_mouseButtonStates.insert(mouseButton); // Track key
-				m_engine->GetInstance()->MouseButtonDown(mouseButton);
+
+				ImGuiIO& io = ImGui::GetIO();
+
+				if(!m_iMouse->IsCapturingMouseInput())
+				{
+					io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, true);
+				}
+				else
+				{
+					if(!io.WantCaptureMouse)
+						m_engine->GetInstance()->MouseButtonDown(mouseButton);
+				}
 			}
 		}
 		else
@@ -244,7 +275,17 @@ void Game::ProcessMouse()
 			if(m_mouseButtonStates.find(mouseButton) != m_mouseButtonStates.end())
 			{
 				m_mouseButtonStates.erase(mouseButton); // Untrack key
-				m_engine->GetInstance()->MouseButtonUp(mouseButton);
+
+				ImGuiIO& io = ImGui::GetIO();
+				if(!m_iMouse->IsCapturingMouseInput())
+				{
+					io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, false);
+				}
+				else
+				{
+					if(!io.WantCaptureMouse)
+						m_engine->GetInstance()->MouseButtonUp(mouseButton);
+				}
 			}
 		}
 	}

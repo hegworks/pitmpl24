@@ -1,4 +1,5 @@
 #include "RaspMouse.h"
+
 #include <Common.h>
 #include <iostream>
 
@@ -8,6 +9,8 @@ RaspMouse::RaspMouse(Display& display, Window& window) :
 {
 	XWarpPointer(&display, None, window, 0, 0, 0, 0, SCRWIDTH / 2.0, SCRHEIGHT / 2.0);
 	XFlush(&display); // Ensure the command is sent immediately
+
+	ReleaseMouseInput();
 }
 
 bool RaspMouse::GetButtonDown(MouseButton button) const
@@ -75,19 +78,22 @@ glm::vec2 RaspMouse::GetPosition()
 	glm::ivec2 center(SCRWIDTH / 2, SCRHEIGHT / 2);
 
 	// Check if the mouse is near the edges of the window
-	if(win_x <= 1 || win_y <= 1 || win_x >= SCRWIDTH - 1 || win_y >= SCRHEIGHT - 1)
+	if(m_isCapturingMouseInput)
 	{
-		glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
+		if(win_x <= 1 || win_y <= 1 || win_x >= SCRWIDTH - 1 || win_y >= SCRHEIGHT - 1)
+		{
+			glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
 
-		// Warp pointer back to the center
-		XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, center.x, center.y);
-		XFlush(&m_display); // Ensure the warp is sent immediately
+			// Warp pointer back to the center
+			XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, center.x, center.y);
+			XFlush(&m_display); // Ensure the warp is sent immediately
 
-		// Update the offset to account for the warp
-		m_resettedPosOffset += posBeforeReset - center;
+			// Update the offset to account for the warp
+			m_resettedPosOffset += posBeforeReset - center;
 
-		// Return the "virtual" position based on the offset
-		return glm::vec2(center.x + m_resettedPosOffset.x, center.y + m_resettedPosOffset.y);
+			// Return the "virtual" position based on the offset
+			return glm::vec2(center.x + m_resettedPosOffset.x, center.y + m_resettedPosOffset.y);
+		}
 	}
 
 	// Return the adjusted mouse position
@@ -97,4 +103,16 @@ glm::vec2 RaspMouse::GetPosition()
 float RaspMouse::GetScrollDelta() const
 {
 	return 0;
+}
+
+void RaspMouse::OnCaptureMouseInput()
+{
+	m_window->HideCursor();
+	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, SCRWIDTH / 2.0, SCRHEIGHT / 2.0);
+	XFlush(&m_display); // Ensure the command is sent immediately
+}
+
+void RaspMouse::OnReleaseMouseInput()
+{
+	m_window->ShowCursor();
 }

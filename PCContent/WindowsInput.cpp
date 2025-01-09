@@ -7,6 +7,7 @@
 WindowsMouse::WindowsMouse(GLFWwindow& window) : m_window(window)
 {
 	glfwSetScrollCallback(&window, ScrollCallback);
+	ReleaseMouseInput();
 }
 
 bool WindowsMouse::GetButtonDown(MouseButton button) const
@@ -32,6 +33,16 @@ glm::vec2 WindowsMouse::GetPosition()
 float WindowsMouse::GetScrollDelta() const
 {
 	return m_scrollDelta;
+}
+
+void WindowsMouse::OnCaptureMouseInput()
+{
+	glfwSetInputMode(&m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void WindowsMouse::OnReleaseMouseInput()
+{
+	glfwSetInputMode(&m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 float WindowsMouse::m_scrollDelta{0.0f};

@@ -16,6 +16,9 @@ public:
 	Display& GetDisplay();
 	Window& GetWindow();
 
+	void HideCursor();
+	void ShowCursor();
+
 private:
 	Display* m_display = nullptr;
 	Window m_root;

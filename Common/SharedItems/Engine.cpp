@@ -37,7 +37,11 @@ void Engine::Update(float deltaTime)
 		{
 			CInput* cinput = gameObject->GetCInput();
 			cinput->ProcessKeyboard(m_iKeyboard);
-			cinput->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
+
+			if(m_iMouse->IsCapturingMouseInput())
+			{
+				cinput->ProcessMousePosition(m_iMouse->GetPosition().x, m_iMouse->GetPosition().y);
+			}
 		}
 
 		gameObject->Update(deltaTime);

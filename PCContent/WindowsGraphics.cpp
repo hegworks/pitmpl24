@@ -1,7 +1,7 @@
 #include <windows.h>
 
-#include "GameSettings.h"
 #include "Game.h"
+#include "GameSettings.h"
 #include "UknittySettings.h"
 #include "WindowsGraphics.h"
 #include <glad/glad.h>
@@ -54,7 +54,6 @@ WindowsGraphics::WindowsGraphics()
 	// Set the window to be the current context.
 	glfwMakeContextCurrent(m_window);
 	glfwSetWindowPos(m_window, 700, 100);
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Error handling for if GLAD failed to initialize.
 	if(!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress))

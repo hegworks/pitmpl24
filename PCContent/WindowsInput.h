@@ -25,9 +25,13 @@ class WindowsMouse : public IMouse
 public:
 	WindowsMouse(GLFWwindow& window);
 
-	virtual bool GetButtonDown(MouseButton button) const;
-	virtual glm::vec2 GetPosition();
-	virtual float GetScrollDelta() const;
+	virtual bool GetButtonDown(MouseButton button) const override;
+	virtual glm::vec2 GetPosition() override;
+	virtual float GetScrollDelta() const override;
+
+protected:
+	virtual void OnCaptureMouseInput() override;
+	virtual void OnReleaseMouseInput() override;
 
 private:
 	GLFWwindow& m_window;
