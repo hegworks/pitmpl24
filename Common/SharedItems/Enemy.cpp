@@ -56,11 +56,17 @@ void Enemy::OnAwake()
 	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 	m_transform = GameObject::GetLocalTransform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
+
+	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
+	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
+	m_gunPosObject->SetParent(this);
 }
 
 void Enemy::OnUpdate(float deltaTime)
 {
 	Uknitty::DynamicObject::OnUpdate(deltaTime);
+
+	Enemy::ShootGun();
 
 	DrawAstarPath();
 
@@ -86,7 +92,8 @@ void Enemy::OnUpdate(float deltaTime)
 
 			if(HasReachedPlayerPos())
 			{
-				SetTransformPosToRigidBodyPos();
+				StopMoving();
+				RotateTowardPlayer();
 				break;
 			}
 
@@ -102,7 +109,7 @@ void Enemy::OnUpdate(float deltaTime)
 			}
 
 			MoveTowardTargetPos();
-			RotateTowardCurrentDirection();
+			RotateTowardPlayer();
 
 			if(HasReachedAstarTargetPos())
 			{
@@ -389,4 +396,57 @@ bool Enemy::IsPlayerInSight()
 		}
 	}
 	return false;
+}
+
+void Enemy::ShootGun()
+{
+	const glm::vec3 gunPos = *m_gunPosObject->GetWorldTransform()->GetPosition();
+	glm::vec3 dir = m_transform->GetForward();
+	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(gunPos);
+	const btVector3 to = Uknitty::CPhysics::GLMVec3ToBtVec3(gunPos + (dir * GUN_SHOOT_RAY_LENGTH));
+
+#ifdef DEBUG_DRAW_PHYSICS
+	btDynamicsWorld* dynamicsWorld = Uknitty::Engine::GetInstance()->GetDynamicsWorld();
+	dynamicsWorld->getDebugDrawer()->drawLine(from, to, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::YELLOW));
+#endif // DEBUG_DRAW_PHYSICS 
+
+	btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
+	closestResults.m_collisionFilterGroup = COLL_GROUP_ENEMY;
+	closestResults.m_collisionFilterMask = COLL_MASK_ENEMY;
+	//closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+
+	Uknitty::Engine::GetInstance()->GetDynamicsWorld()->rayTest(from, to, closestResults);
+
+	if(closestResults.hasHit())
+	{
+		btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+
+#ifdef DEBUG_DRAW_PHYSICS 
+		dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1f, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::YELLOW));
+		dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::YELLOW));
+#endif // DEBUG_DRAW_PHYSICS 
+
+		if(closestResults.m_collisionObject->getUserPointer())
+		{
+			auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
+			if(userPointerData->physicsType == Uknitty::PhysicsType::PLAYER)
+			{
+				/*return true;*/
+			}
+		}
+	}
+	//return false;
+}
+
+void Enemy::RotateTowardPlayer()
+{
+	glm::vec3 direction = glm::normalize(m_sceneManagerBlackboard->GetPlayerFeetPos() - GetCurrentFeetPos());
+	float targetAngle = atan2(direction.x, direction.z);
+	glm::vec3 rotation = glm::vec3(0, glm::degrees(targetAngle), 0);
+	m_transform->SetRotation(rotation);
+}
+
+void Enemy::StopMoving()
+{
+	MoveInDirection(glm::vec3(0), 0);
 }

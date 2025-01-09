@@ -19,6 +19,7 @@ class BTDebugDraw;
 class CountdownTimer;
 class DynamicObject;
 class GeneralCamera;
+class GameObject;
 class CPhysics;
 }
 class btDynamicsWorld;
@@ -51,6 +52,7 @@ private:
 	Uknitty::CTransform* m_transform = nullptr;
 	Uknitty::CPhysics* m_physics = nullptr;
 	Uknitty::UserPointerData* m_userPointerData = nullptr;
+	Uknitty::GameObject* m_gunPosObject = nullptr;
 
 	const float SPEED_WALK = 3.5f;
 	const float SPEED_ROTATION = 20.0f;
@@ -61,10 +63,12 @@ private:
 	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
 	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
 	const float SIGHT_RAY_LENGTH = 30.0f;
+	const float GUN_SHOOT_RAY_LENGTH = 30.0f;
 	const int SIGHT_RAY_COUNT = 5; // for symmetrical results, set this to an odd value
 	const float SIGHT_RAY_DIFFERENCE_DEGREE = 3.0f;
 	const float MASS = 70.0f;
 	const int HP = 3;
+	const glm::vec3 GUN_POS = glm::vec3(0, 1.5, 0.5);
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
@@ -99,4 +103,7 @@ private:
 	glm::vec2 AstarCoordToWorldCoord(glm::ivec2 astarCoord); //TODO move to AStar class
 	glm::ivec2 FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord); //TODO move to AStar class
 	bool IsPlayerInSight();
+	void ShootGun();
+	void RotateTowardPlayer();
+	void StopMoving();
 };
