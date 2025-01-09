@@ -6,6 +6,7 @@
 #include "CTransform.h"
 #include "DynamicObject.h"
 #include "Engine.h"
+#include "GameManager.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
@@ -17,7 +18,6 @@
 #include "Player.h"
 #include "SceneManager.h"
 #include "ShaderProgram.h"
-#include "SharedEvents.h"
 #include "SharedInput.h"
 #include "StaticObject.h"
 #include "UknittySettings.h"
@@ -47,7 +47,6 @@
 Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 	m_sharedInput(sharedInput),
 	m_iGraphics(iGraphics)
-
 {
 	m_iMouse = m_sharedInput->GetMouse();
 	m_iKeyboard = m_sharedInput->GetKeyboard();
@@ -82,15 +81,7 @@ void Game::Start()
 #pragma endregion imgui
 
 #pragma region Other Initializations
-	m_engine = Uknitty::Engine::GetInstance();
-	m_engine->CreateAndUseDefaultCamera();
-	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
-	m_engine->ValidateBeforeFirstUpdate();
-
-	m_sharedEvents = new SharedEvents();
-	GameSharedDependencies::Set<SharedEvents>(m_sharedEvents);
-
-	m_sceneManager = new SceneManager();
+	m_gameManager = new GameManager(m_iMouse, m_iKeyboard);
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -134,7 +125,7 @@ void Game::Start()
 		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
 
 		ProcessMouse();
-		m_engine->Update(gameDeltaTime);
+		m_gameManager->Update(gameDeltaTime);
 
 #pragma region imgui
 		if(!m_iMouse->IsCapturingMouseInput())
@@ -174,7 +165,7 @@ void Game::Start()
 	}
 
 	delete m_sceneManager;
-	m_engine->Destroy();
+	delete m_gameManager;
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui::DestroyContext();
 	m_iGraphics->Quit();
@@ -199,11 +190,11 @@ void Game::KeyCallback(Key key, KeyAction action)
 
 	if(action == KeyAction::DOWN)
 	{
-		m_engine->GetInstance()->KeyDown(key);
+		m_gameManager->KeyDown(key);
 	}
 	else if(action == KeyAction::UP)
 	{
-		m_engine->GetInstance()->KeyUp(key);
+		m_gameManager->KeyUp(key);
 	}
 
 #ifdef WINDOWS_BUILD
@@ -255,18 +246,7 @@ void Game::ProcessMouse()
 			if(m_mouseButtonStates.find(mouseButton) == m_mouseButtonStates.end())
 			{
 				m_mouseButtonStates.insert(mouseButton); // Track key
-
-				ImGuiIO& io = ImGui::GetIO();
-
-				if(!m_iMouse->IsCapturingMouseInput())
-				{
-					io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, true);
-				}
-				else
-				{
-					if(!io.WantCaptureMouse)
-						m_engine->GetInstance()->MouseButtonDown(mouseButton);
-				}
+				m_gameManager->MouseButtonDown(mouseButton);
 			}
 		}
 		else
@@ -275,17 +255,7 @@ void Game::ProcessMouse()
 			if(m_mouseButtonStates.find(mouseButton) != m_mouseButtonStates.end())
 			{
 				m_mouseButtonStates.erase(mouseButton); // Untrack key
-
-				ImGuiIO& io = ImGui::GetIO();
-				if(!m_iMouse->IsCapturingMouseInput())
-				{
-					io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, false);
-				}
-				else
-				{
-					if(!io.WantCaptureMouse)
-						m_engine->GetInstance()->MouseButtonUp(mouseButton);
-				}
+				m_gameManager->MouseButtonUp(mouseButton);
 			}
 		}
 	}

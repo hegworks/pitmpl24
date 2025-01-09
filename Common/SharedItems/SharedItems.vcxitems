@@ -27,6 +27,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameplayEvents.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCameraCInput.h" />
@@ -41,7 +43,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PlayerCInput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SharedEvents.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UknittyMath.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
@@ -90,7 +91,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CameraObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameplayEvents.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCameraCInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
@@ -110,7 +113,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)RoomFinder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SharedEvents.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SharedInput.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StaticObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)stb_image.cpp" />

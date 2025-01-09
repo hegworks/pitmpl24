@@ -297,7 +297,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SharedEvents.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameplayEvents.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -416,7 +419,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DynamicObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SharedEvents.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameManager.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameplayEvents.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>

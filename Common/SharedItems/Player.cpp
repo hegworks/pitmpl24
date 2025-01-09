@@ -14,7 +14,7 @@
 #include "Engine.h"
 #include "GameObject.h"
 #include "GameSettings.h"
-#include "GeneralCamera.h"
+#include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
@@ -30,6 +30,8 @@
 void Player::OnAwake()
 {
 	Uknitty::DynamicObject::OnAwake();
+
+	GameSharedDependencies::Set<Player>(this);
 
 	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/NakedSnake.obj");
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
@@ -49,7 +51,7 @@ void Player::OnAwake()
 	Uknitty::DynamicObject::OverridePosition(PLAYER_INITIAL_POS);
 	Uknitty::DynamicObject::SetColliderOffset(glm::vec3(0, -MODEL_DIMENSIONS.y / 2.0, 0));
 
-	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
+	m_sceneManagerBlackboard = GameSharedDependencies::Get<SceneManagerBlackboard>();
 	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(Uknitty::Engine::GetInstance()->GetMainCamera());
 	m_playerCInput = new PlayerCInput();
 	GameObject::AddCInput(m_playerCInput);

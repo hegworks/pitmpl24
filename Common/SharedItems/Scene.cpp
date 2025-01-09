@@ -37,7 +37,7 @@ Scene::Scene(int mapId)
 	m_engine = Uknitty::Engine::GetInstance();
 	m_shaderProgram = m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
 
-	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
+	m_sceneManagerBlackboard = GameSharedDependencies::Get<SceneManagerBlackboard>();
 
 	LoadMapDataFromFile(m_mapId);
 	LoadObjectDataFromMap();

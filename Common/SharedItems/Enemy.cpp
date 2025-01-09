@@ -11,6 +11,7 @@
 #include "EnemyState.h"
 #include "Engine.h"
 #include "GameObject.h"
+#include "GameplayEvents.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
@@ -19,7 +20,6 @@
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
-#include "SharedEvents.h"
 #include "UknittyMath.h"
 #include "UknittySettings.h"
 #include <iostream>
@@ -55,7 +55,8 @@ void Enemy::OnAwake()
 	m_rotationSpeed = SPEED_ROTATION;
 	m_hp = HP;
 	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(Uknitty::Engine::GetInstance()->GetMainCamera());
-	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
+	m_sceneManagerBlackboard = GameSharedDependencies::Get<SceneManagerBlackboard>();
+	m_gameplayEvents = GameSharedDependencies::Get<GameplayEvents>();
 	m_transform = GameObject::GetLocalTransform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
 	m_shootTimer = new Uknitty::CountdownTimer(SHOOT_FREQUENCY_TIME);
@@ -156,16 +157,14 @@ void Enemy::Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator*
 void Enemy::DrawAstarPath()
 {
 #ifdef DEBUG_DRAW_ASTAR_PATH
-	btVector3 color = Uknitty::CPhysics::GLMVec3ToBtVec3({1, 1, 0});
+	btVector3 color = Uknitty::CPhysics::GetBtColor(Uknitty::CPhysics::Color::YELLOW);
 
 	for(int i = static_cast<int>(m_astarCurrentPathPositions.size()) - 1; i >= 0; i--)
 	{
 		glm::vec2 worldCoord = glm::vec2(m_astarCurrentPathPositions[i].x, m_astarCurrentPathPositions[i].z);
-		glLineWidth(2);
 		btVector3 lineStart = Uknitty::CPhysics::GLMVec3ToBtVec3({worldCoord.x, 0, worldCoord.y});
 		btVector3 lineEnd = Uknitty::CPhysics::GLMVec3ToBtVec3({worldCoord.x, 5, worldCoord.y});
 		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->getDebugDrawer()->drawLine(lineStart, lineEnd, color);
-		glLineWidth(1);
 	}
 #endif // DEBUG_DRAW_ASTAR_PATH
 }
@@ -440,7 +439,7 @@ void Enemy::ShootGun()
 			auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
 			if(userPointerData->physicsType == Uknitty::PhysicsType::PLAYER)
 			{
-				GameSharedDependencies::Get<SharedEvents>()->OnEnemyBulletHitPlayer();
+				m_gameplayEvents->OnEnemyBulletHitPlayer();
 				/*return true;*/
 			}
 		}

@@ -25,6 +25,7 @@ class CPhysics;
 class btDynamicsWorld;
 class btCollisionObject;
 class SceneManagerBlackboard;
+class GameplayEvents;
 
 class Enemy : public Uknitty::DynamicObject
 {
@@ -48,6 +49,7 @@ private:
 	Uknitty::GeneralCamera* m_generalCamera = nullptr;
 	AStar::Generator* m_pathFinder = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
+	GameplayEvents* m_gameplayEvents = nullptr;
 	Uknitty::CountdownTimer* m_astarPathGenerationTimer = nullptr;
 	Uknitty::CountdownTimer* m_shootTimer = nullptr;
 	Uknitty::CTransform* m_transform = nullptr;

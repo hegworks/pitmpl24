@@ -1,11 +1,14 @@
 #include "ModelDataStorage.h"
 
 #include "GameSettings.h"
+#include "GameSharedDependencies.h"
 #include <stdexcept>
 #include <string>
 
 ModelDataStorage::ModelDataStorage()
 {
+	GameSharedDependencies::Set<ModelDataStorage>(this);
+
 	m_datas[CRATE_2x4] =
 	{
 		"../Common/Assets/Models/Crate_2x4/Crate.obj",

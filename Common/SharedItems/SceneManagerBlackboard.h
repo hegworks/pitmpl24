@@ -4,22 +4,9 @@
 
 class SceneManagerBlackboard
 {
-#pragma region Scott Meyers Thread-Safe Singleton
 public:
-	static SceneManagerBlackboard* GetInstance()
-	{
-		static SceneManagerBlackboard instance;
-		return &instance;
-	}
+	SceneManagerBlackboard();
 
-	SceneManagerBlackboard(SceneManagerBlackboard const&) = delete;
-	void operator=(SceneManagerBlackboard const&) = delete;
-
-private:
-	SceneManagerBlackboard() {}
-#pragma endregion Scott Meyers Thread-Safe Singleton
-
-public:
 	void SetPlayerFeetPos(glm::vec3 pos) { m_playerFeetPos = pos; }
 	const glm::vec3 GetPlayerFeetPos() const { return m_playerFeetPos; }
 
