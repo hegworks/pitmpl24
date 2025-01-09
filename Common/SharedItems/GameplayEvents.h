@@ -7,4 +7,5 @@ public:
 
 	void OnEnemyBulletHitPlayer();
 	void OnPlayerDied();
+	void OnPressedQuit();
 };

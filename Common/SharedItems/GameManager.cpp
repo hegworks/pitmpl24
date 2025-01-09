@@ -9,6 +9,7 @@
 #include "IInput.h"
 #include "ModelDataStorage.h"
 #include "SceneManager.h"
+#include "UIManager.h"
 #include <stdexcept>
 
 GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
@@ -26,6 +27,9 @@ GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
 	new GameplayEvents();
 	new ModelDataStorage();
 	new SceneManager();
+	m_uiManager = new UIManager();
+
+	m_uiManager->ShowMainMenu();
 
 	m_gameState = GameState::MAIN_MENU;
 }
@@ -53,6 +57,9 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
 			break;
+		case GameManager::GameEvent::PRESSED_QUIT:
+			m_shouldQuit = true;
+			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");
 	}
@@ -61,6 +68,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 void GameManager::Update(float deltaTime)
 {
 	m_engine->Update(deltaTime);
+	m_uiManager->Update(deltaTime);
 }
 
 void GameManager::KeyDown(Key key)

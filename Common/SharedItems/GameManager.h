@@ -7,6 +7,7 @@ namespace Uknitty
 {
 class Engine;
 }
+class UIManager;
 
 class GameManager
 {
@@ -30,10 +31,12 @@ public:
 		PLAYER_WON,
 		PRESSED_PAUSE,
 		PRESSED_UNPAUSE,
+		PRESSED_QUIT,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);
 	void Update(float deltaTime);
+	bool ShouldQuit() const { return m_shouldQuit; }
 
 	void KeyDown(Key key);
 	void KeyUp(Key key);
@@ -44,6 +47,8 @@ private:
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
+	UIManager* m_uiManager = nullptr;
 
 	GameState m_gameState = GameState::MAIN_MENU;
+	bool m_shouldQuit = false;
 };

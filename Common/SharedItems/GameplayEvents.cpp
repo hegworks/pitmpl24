@@ -18,3 +18,8 @@ void GameplayEvents::OnPlayerDied()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PLAYER_DIED);
 }
+
+void GameplayEvents::OnPressedQuit()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PRESSED_QUIT);
+}

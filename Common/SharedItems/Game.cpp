@@ -126,6 +126,10 @@ void Game::Start()
 
 		ProcessMouse();
 		m_gameManager->Update(gameDeltaTime);
+		if(m_gameManager->ShouldQuit())
+		{
+			quitting = true;
+		}
 
 #pragma region imgui
 		if(!m_iMouse->IsCapturingMouseInput())
@@ -134,6 +138,7 @@ void Game::Start()
 			io.MousePos.y = m_iMouse->GetPosition().y;
 		}
 
+#if 0
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
 		ImGui::SetNextWindowBgAlpha(0.2f);
@@ -154,6 +159,7 @@ void Game::Start()
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
 
 		// ImGui::EndFrame(); // actuall this is closed by the render
 #pragma endregion imgui
