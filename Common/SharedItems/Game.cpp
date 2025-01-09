@@ -180,8 +180,6 @@ void Game::Start()
 #pragma region Input
 void Game::KeyCallback(Key key, KeyAction action)
 {
-	if(key == Key::ESCAPE && action == KeyAction::DOWN) Quit();
-
 	if(key == Key::M && action == KeyAction::DOWN)
 	{
 		if(m_iMouse->IsCapturingMouseInput())

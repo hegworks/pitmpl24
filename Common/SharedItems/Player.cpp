@@ -34,7 +34,7 @@ void Player::OnAwake()
 	GameSharedDependencies::Set<Player>(this);
 
 	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/NakedSnake.obj");
-	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
+	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
 
 	Uknitty::CPhysics* cphysics = GameObject::GetCPhysics();
@@ -79,6 +79,7 @@ void Player::OnDestroy()
 
 	Uknitty::Engine::GetInstance()->GetPhysicsManager()->RemoveContactTestRigidbody(GameObject::GetCPhysics()->GetRigidBody());
 	Uknitty::DynamicObject::OnDestroy();
+	GameSharedDependencies::Remove<Player>();
 }
 
 void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)

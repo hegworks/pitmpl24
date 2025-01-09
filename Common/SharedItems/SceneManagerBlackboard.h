@@ -6,6 +6,7 @@ class SceneManagerBlackboard
 {
 public:
 	SceneManagerBlackboard();
+	~SceneManagerBlackboard();
 
 	void SetPlayerFeetPos(glm::vec3 pos) { m_playerFeetPos = pos; }
 	const glm::vec3 GetPlayerFeetPos() const { return m_playerFeetPos; }

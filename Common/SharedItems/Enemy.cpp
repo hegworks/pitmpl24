@@ -33,7 +33,7 @@ void Enemy::OnAwake()
 	Uknitty::DynamicObject::OnAwake();
 
 	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("enemy", "../Common/Assets/Models/Soldier/Soldier.obj");
-	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
+	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_ENEMY, COLL_MASK_ENEMY);
 
 	m_physics = GameObject::GetCPhysics();

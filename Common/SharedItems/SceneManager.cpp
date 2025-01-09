@@ -38,6 +38,7 @@ SceneManager::~SceneManager()
 {
 	m_engine->DestroyGameObject(m_player);
 	delete GameSharedDependencies::Get<SceneManagerBlackboard>();
+	GameSharedDependencies::Remove<SceneManager>();
 	delete m_currentScene;
 	delete m_roomFinder;
 }
@@ -85,7 +86,7 @@ void SceneManager::CreatePlayer()
 
 	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
 	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM));
+	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM));
 	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
@@ -93,5 +94,5 @@ void SceneManager::CreatePlayer()
 
 void SceneManager::CreateShaderProgram()
 {
-	m_engine->GetAssetManager()->CreateShaderProgram(MAIN_SHADERPROGRAM, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 }

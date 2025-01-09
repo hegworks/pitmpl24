@@ -31,9 +31,21 @@ public:
 		auto it = m_dependencies.find(typeIdx);
 		if(it == m_dependencies.end())
 		{
-			throw std::runtime_error(std::string("Service of type ") + typeid(T).name() + " is not set");
+			throw std::runtime_error(std::string("Dependency of type ") + typeid(T).name() + " is not set");
 		}
 		return static_cast<T*>(it->second);
+	}
+
+	template<typename T>
+	static void Remove()
+	{
+		auto typeIdx = std::type_index(typeid(T));
+		auto it = m_dependencies.find(typeIdx);
+		if(it == m_dependencies.end())
+		{
+			throw std::runtime_error(std::string("Dependency of type ") + typeid(T).name() + " is not set");
+		}
+		m_dependencies.erase(it);
 	}
 
 private:

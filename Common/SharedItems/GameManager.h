@@ -32,6 +32,7 @@ public:
 		PRESSED_PAUSE,
 		PRESSED_UNPAUSE,
 		PRESSED_QUIT,
+		PRESSED_MAIN_MENU,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);

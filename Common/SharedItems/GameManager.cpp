@@ -7,6 +7,7 @@
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
 #include "IInput.h"
+#include "IInputKey.h"
 #include "ModelDataStorage.h"
 #include "SceneManager.h"
 #include "UIManager.h"
@@ -26,17 +27,19 @@ GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
 
 	new GameplayEvents();
 	new ModelDataStorage();
-	new SceneManager();
 	m_uiManager = new UIManager();
 
-	m_uiManager->ShowMainMenu();
+	m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 
 	m_gameState = GameState::MAIN_MENU;
 }
 
 GameManager::~GameManager()
 {
-	delete GameSharedDependencies::Get<SceneManager>();
+	if(m_gameState != GameState::MAIN_MENU)
+	{
+		delete GameSharedDependencies::Get<SceneManager>();
+	}
 	delete GameSharedDependencies::Get<ModelDataStorage>();
 	delete GameSharedDependencies::Get<GameplayEvents>();
 
@@ -48,14 +51,31 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 	switch(gameEvent)
 	{
 		case GameManager::GameEvent::PRESSED_START_GAME:
+			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
+			new SceneManager();
+			m_gameState = GameState::GAMEPLAY;
 			break;
 		case GameManager::GameEvent::PLAYER_DIED:
+			m_uiManager->ShowMenu(UIManager::MenuType::LOSE_MENU);
+			m_gameState = GameState::LOSE;
 			break;
 		case GameManager::GameEvent::PLAYER_WON:
+			m_uiManager->ShowMenu(UIManager::MenuType::WIN_MENU);
+			m_gameState = GameState::WIN;
 			break;
 		case GameManager::GameEvent::PRESSED_PAUSE:
+			if(m_gameState == GameState::MAIN_MENU) break;
+			m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
+			m_gameState = GameState::PAUSE;
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
+			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
+			m_gameState = GameState::GAMEPLAY;
+			break;
+		case GameEvent::PRESSED_MAIN_MENU:
+			delete GameSharedDependencies::Get<SceneManager>();
+			m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
+			m_gameState = GameState::MAIN_MENU;
 			break;
 		case GameManager::GameEvent::PRESSED_QUIT:
 			m_shouldQuit = true;
@@ -67,18 +87,33 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 
 void GameManager::Update(float deltaTime)
 {
-	m_engine->Update(deltaTime);
+	if(m_gameState == GameState::GAMEPLAY)
+	{
+		m_engine->Update(deltaTime);
+	}
+
 	m_uiManager->Update(deltaTime);
 }
 
 void GameManager::KeyDown(Key key)
 {
-	m_engine->GetInstance()->KeyDown(key);
+	if(key == Key::ESCAPE)
+	{
+		TriggerEvent(GameEvent::PRESSED_PAUSE);
+	}
+
+	if(m_gameState == GameState::GAMEPLAY)
+	{
+		m_engine->GetInstance()->KeyDown(key);
+	}
 }
 
 void GameManager::KeyUp(Key key)
 {
-	m_engine->GetInstance()->KeyUp(key);
+	if(m_gameState == GameState::GAMEPLAY)
+	{
+		m_engine->GetInstance()->KeyUp(key);
+	}
 }
 
 void GameManager::MouseButtonDown(MouseButton mouseButton)
@@ -89,7 +124,7 @@ void GameManager::MouseButtonDown(MouseButton mouseButton)
 	{
 		io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, true);
 	}
-	else if(!io.WantCaptureMouse)
+	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->GetInstance()->MouseButtonDown(mouseButton);
 	}
@@ -103,7 +138,7 @@ void GameManager::MouseButtonUp(MouseButton mouseButton)
 	{
 		io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, false);
 	}
-	else if(!io.WantCaptureMouse)
+	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->GetInstance()->MouseButtonUp(mouseButton);
 	}

@@ -8,4 +8,8 @@ public:
 	void OnEnemyBulletHitPlayer();
 	void OnPlayerDied();
 	void OnPressedQuit();
+	void OnPressedMainMenu();
+	void OnPressedPause();
+	void OnPressedUnpause();
+	void OnPressedStartGame();
 };

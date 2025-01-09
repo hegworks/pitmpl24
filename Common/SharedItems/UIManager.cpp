@@ -21,33 +21,114 @@ void UIManager::Update(float deltaTime)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui::NewFrame();
 
-	if(m_isMainMenuVisible)
+	float oldTextSize = ImGui::GetFont()->Scale;
+	ImGui::GetFont()->Scale *= 1.5f;
+	ImGui::PushFont(ImGui::GetFont());
+
+	switch(m_currentMenu)
 	{
-		static bool use_work_area = true;
-		static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
-
-		const ImGuiViewport* viewport = ImGui::GetMainViewport();
-		ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
-		ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
-
-		const ImVec2 buttonSize = ImVec2(100, 50);
-
-		if(ImGui::Begin("Main Menu", &m_isMainMenuVisible, flags))
-		{
-			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y));
-			if(ImGui::Button("Start Game", ImVec2(100, 50)))
-			{
-				std::cout << "Hello ImGui\n";
-			}
-			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetCursorPosY()));
-			if(ImGui::Button("Quit Game", ImVec2(100, 50)))
-			{
-				GameSharedDependencies::Get < GameplayEvents>()->OnPressedQuit();
-			}
-			ImGui::End();
-		}
+		case UIManager::MenuType::NONE:
+			break;
+		case UIManager::MenuType::MAIN_MENU:
+			MainMenu();
+			break;
+		case UIManager::MenuType::PAUSE_MENU:
+			PauseMenu();
+			break;
+		case UIManager::MenuType::WIN_MENU:
+			break;
+		case UIManager::MenuType::LOSE_MENU:
+			break;
+		default:
+			break;
 	}
+
+	ImGui::GetFont()->Scale = oldTextSize;
+	ImGui::PopFont();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void UIManager::MainMenu()
+{
+	static bool use_work_area = true;
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
+	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
+	ImGui::SetNextWindowBgAlpha(1);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0, 0, 0.3));
+	if(ImGui::Begin("Main Menu", &m_isMainMenuVisible, flags))
+	{
+		ImGui::PopStyleColor();
+
+		const ImVec2 buttonSize = ImVec2(150, 50);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(45, 185, 60));
+		ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(0, 0, 0));
+		ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y));
+		if(ImGui::Button("Start Game", buttonSize))
+		{
+			std::cout << "Hello ImGui\n";
+			GameSharedDependencies::Get<GameplayEvents>()->OnPressedStartGame();
+		}
+		ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetCursorPosY()));
+		if(ImGui::Button("Quit Game", buttonSize))
+		{
+			GameSharedDependencies::Get<GameplayEvents>()->OnPressedQuit();
+		}
+
+		ImGui::PopStyleColor();
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+void UIManager::PauseMenu()
+{
+	static bool use_work_area = true;
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
+	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
+	ImGui::SetNextWindowBgAlpha(0.7);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0, 0, 0.3));
+	if(ImGui::Begin("Main Menu", &m_isMainMenuVisible, flags))
+	{
+		ImGui::PopStyleColor();
+
+		const ImVec2 buttonSize = ImVec2(150, 50);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(45, 185, 60));
+		ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(0, 0, 0));
+		{
+			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y));
+			if(ImGui::Button("Resume", buttonSize))
+			{
+				std::cout << "Resume\n";
+				GameSharedDependencies::Get<GameplayEvents>()->OnPressedUnpause();
+			}
+
+			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetCursorPosY()));
+			if(ImGui::Button("Main Menu", buttonSize))
+			{
+				GameSharedDependencies::Get<GameplayEvents>()->OnPressedMainMenu();
+			}
+
+			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetCursorPosY()));
+			if(ImGui::Button("Quit Game", buttonSize))
+			{
+				GameSharedDependencies::Get<GameplayEvents>()->OnPressedQuit();
+			}
+		}
+		ImGui::PopStyleColor();
+		ImGui::PopStyleColor();
+
+		ImGui::End();
+	}
 }

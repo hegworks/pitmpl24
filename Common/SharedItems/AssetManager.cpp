@@ -38,22 +38,17 @@ Model* AssetManager::AutoGetModel(std::string key, std::string filePath, glm::ve
 	return m_models[key];
 }
 
-ShaderProgram* AssetManager::CreateShaderProgram(std::string key, std::string vertexShaderPath, std::string fragmentShaderPath)
+ShaderProgram* AssetManager::AutoGetShaderProgram(std::string key, std::string vertexShaderPath, std::string fragmentShaderPath)
 {
 	if(m_shaderPrograms.find(key) != m_shaderPrograms.end())
 	{
-		throw std::runtime_error("ShaderProgram with key already exists");
+		return m_shaderPrograms[key];
+	}
+	if(vertexShaderPath == "" || fragmentShaderPath == "")
+	{
+		throw std::runtime_error("ShaderProgram with key does not exist and vertexShaderPath or fragmentShaderPath is empty");
 	}
 	m_shaderPrograms[key] = new ShaderProgram(vertexShaderPath, fragmentShaderPath);
-	return m_shaderPrograms[key];
-}
-
-ShaderProgram* AssetManager::GetShaderProgram(std::string key)
-{
-	if(m_shaderPrograms.find(key) == m_shaderPrograms.end())
-	{
-		throw std::runtime_error("ShaderProgram with key does not exist");
-	}
 	return m_shaderPrograms[key];
 }
 
