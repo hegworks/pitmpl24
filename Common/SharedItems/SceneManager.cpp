@@ -18,6 +18,7 @@
 #include "Scene.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "SharedEvents.h"
 #include <BTDebugDraw.h>
 
 SceneManager::SceneManager()
@@ -26,7 +27,7 @@ SceneManager::SceneManager()
 	m_roomFinder = new RoomFinder();
 	m_modelDataStorage = new ModelDataStorage();
 
-	GameSharedDependencies::SetModelDataStorage(m_modelDataStorage);
+	GameSharedDependencies::Set<ModelDataStorage>(m_modelDataStorage);
 
 	CreateShaderProgram();
 	CreatePlayer();
@@ -82,7 +83,8 @@ void SceneManager::CreatePlayer()
 	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
 
-	GameSharedDependencies::SetPlayer(m_player);
+	GameSharedDependencies::Set<Player>(m_player);
+	GameSharedDependencies::Get<SharedEvents>()->SetPlayer(m_player);
 
 	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
 	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();

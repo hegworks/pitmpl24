@@ -297,6 +297,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SharedEvents.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DynamicObject.cpp">
       <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SharedEvents.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

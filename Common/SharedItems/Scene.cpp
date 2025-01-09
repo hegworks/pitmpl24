@@ -32,8 +32,8 @@
 Scene::Scene(int mapId)
 {
 	m_mapId = mapId;
-	m_player = GameSharedDependencies::GetPlayer();
-	m_modelDataStorage = GameSharedDependencies::GetModelDataStorage();
+	m_player = GameSharedDependencies::Get<Player>();
+	m_modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();
 	m_engine = Uknitty::Engine::GetInstance();
 	m_shaderProgram = m_engine->GetAssetManager()->GetShaderProgram(MAIN_SHADERPROGRAM);
 

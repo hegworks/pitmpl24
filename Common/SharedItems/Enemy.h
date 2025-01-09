@@ -49,6 +49,7 @@ private:
 	AStar::Generator* m_pathFinder = nullptr;
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
 	Uknitty::CountdownTimer* m_astarPathGenerationTimer = nullptr;
+	Uknitty::CountdownTimer* m_shootTimer = nullptr;
 	Uknitty::CTransform* m_transform = nullptr;
 	Uknitty::CPhysics* m_physics = nullptr;
 	Uknitty::UserPointerData* m_userPointerData = nullptr;
@@ -69,6 +70,7 @@ private:
 	const float MASS = 70.0f;
 	const int HP = 3;
 	const glm::vec3 GUN_POS = glm::vec3(0, 1.5, 0.5);
+	const float SHOOT_FREQUENCY_TIME = 2.0; // shoot the gun every x seconds
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;

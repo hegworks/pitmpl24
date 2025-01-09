@@ -1,43 +1,41 @@
 #pragma once
 
-#include <stdexcept>
+/*
+* REF: this class has been written using the help of claude.ai
+* But I completely know what is going on.
+*/
 
-class ModelDataStorage;
-class Player;
+#include <stdexcept>
+#include <string>
+#include <typeindex>
+#include <unordered_map>
 
 class GameSharedDependencies
 {
 public:
-	GameSharedDependencies() = default;
-	~GameSharedDependencies() = default;
+	template<typename T>
+	static void Set(T* service)
+	{
+		auto typeIdx = std::type_index(typeid(T));
+		if(m_dependencies.find(typeIdx) != m_dependencies.end())
+		{
+			throw std::runtime_error(std::string("Dependency of type ") + typeid(T).name() + " is already set");
+		}
+		m_dependencies[typeIdx] = service;
+	}
 
-#pragma region Setters
-	const static void SetModelDataStorage(ModelDataStorage* modelDataStorage)
+	template<typename T>
+	static T* Get()
 	{
-		if(!modelDataStorage) throw std::runtime_error("modelDataStorage is nullptr");
-		m_modelDataStorage = modelDataStorage;
+		auto typeIdx = std::type_index(typeid(T));
+		auto it = m_dependencies.find(typeIdx);
+		if(it == m_dependencies.end())
+		{
+			throw std::runtime_error(std::string("Service of type ") + typeid(T).name() + " is not set");
+		}
+		return static_cast<T*>(it->second);
 	}
-	const static void SetPlayer(Player* player)
-	{
-		if(!player) throw std::runtime_error("player is nullptr");
-		m_player = player;
-	}
-#pragma endregion Setters
-
-#pragma region Getters
-	static ModelDataStorage* GetModelDataStorage()
-	{
-		if(!m_modelDataStorage) throw std::runtime_error("ModelDataStorage has not been set, but something is trying to access it");
-		return const_cast<ModelDataStorage*>(m_modelDataStorage);
-	}
-	static Player* GetPlayer()
-	{
-		if(!m_player) throw std::runtime_error("Player has not been set, but something is trying to access it");
-		return const_cast<Player*>(m_player);
-	}
-#pragma endregion Getters
 
 private:
-	inline static const ModelDataStorage* m_modelDataStorage = nullptr;
-	inline static const Player* m_player = nullptr;
+	static inline std::unordered_map<std::type_index, void*> m_dependencies;
 };

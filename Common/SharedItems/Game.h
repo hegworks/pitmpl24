@@ -33,6 +33,7 @@ class IKeyboard;
 
 class Player;
 class SceneManager;
+class SharedEvents;
 
 class Game
 {
@@ -60,6 +61,7 @@ private:
 	SharedInput* m_sharedInput = nullptr;
 	SceneManager* m_sceneManager = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
+	SharedEvents* m_sharedEvents = nullptr;
 
 	std::unordered_set<MouseButton> m_mouseButtonStates;
 	std::vector<MouseButton> m_mouseButtons = {MouseButton::LEFT, MouseButton::RIGHT, MouseButton::MIDDLE};

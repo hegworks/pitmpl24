@@ -18,6 +18,7 @@
 #include "GeneralCamera.h"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
+#include "PhysicsManager.h"
 #include "PlayerCInput.h"
 #include "RoomChange.h"
 #include "RoomChangePositionType.h"
@@ -57,6 +58,8 @@ void Player::OnAwake()
 	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
 	m_gunPosObject->SetParent(this);
+
+	m_hp = HP;
 }
 
 void Player::OnUpdate(float deltaTime)
@@ -72,6 +75,7 @@ void Player::OnDestroy()
 	std::cout << "Destroying Player" << std::endl;
 	delete m_userPointerData;
 
+	Uknitty::Engine::GetInstance()->GetPhysicsManager()->RemoveContactTestRigidbody(GameObject::GetCPhysics()->GetRigidBody());
 	Uknitty::DynamicObject::OnDestroy();
 }
 
@@ -103,6 +107,16 @@ void Player::RoomChangedSetPosition(RoomChange* roomChange)
 	}
 	glm::vec3 newPos3D = glm::vec3(newPos2D.x, currentPos.y, newPos2D.y);
 	Uknitty::DynamicObject::OverridePosition(newPos3D);
+}
+
+void Player::OnEnemyBulletHit()
+{
+	m_hp--;
+	std::cout << "Player is Hit. hp: " << m_hp << std::endl;
+	if(m_hp <= 0)
+	{
+		std::cout << "Player is dead and the game is lost";
+	}
 }
 
 void Player::OnCollision(const btCollisionObject* other)
@@ -194,9 +208,9 @@ void Player::CheckCameraTypeToDisableDraw()
 {
 	bool newDrawEnabledState = m_generalCamera->GetCameraType() != Uknitty::GeneralCamera::FollowType::FIRST_PERSON;
 
-	if(m_lastDrawEnabledStated == newDrawEnabledState) return;
+	if(m_lastDrawEnabledState == newDrawEnabledState) return;
 
-	m_lastDrawEnabledStated = newDrawEnabledState;
+	m_lastDrawEnabledState = newDrawEnabledState;
 
 	if(newDrawEnabledState)
 	{

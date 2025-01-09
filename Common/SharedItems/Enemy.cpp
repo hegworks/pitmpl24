@@ -12,12 +12,14 @@
 #include "Engine.h"
 #include "GameObject.h"
 #include "GameSettings.h"
+#include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
 #include "glm/glm.hpp"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "SharedEvents.h"
 #include "UknittyMath.h"
 #include "UknittySettings.h"
 #include <iostream>
@@ -56,6 +58,7 @@ void Enemy::OnAwake()
 	m_sceneManagerBlackboard = SceneManagerBlackboard::GetInstance();
 	m_transform = GameObject::GetLocalTransform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
+	m_shootTimer = new Uknitty::CountdownTimer(SHOOT_FREQUENCY_TIME);
 
 	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
@@ -65,8 +68,6 @@ void Enemy::OnAwake()
 void Enemy::OnUpdate(float deltaTime)
 {
 	Uknitty::DynamicObject::OnUpdate(deltaTime);
-
-	Enemy::ShootGun();
 
 	DrawAstarPath();
 
@@ -89,6 +90,13 @@ void Enemy::OnUpdate(float deltaTime)
 			break;
 		case EnemyState::ALARM:
 			m_astarPathGenerationTimer->Update(deltaTime);
+			m_shootTimer->Update(deltaTime);
+
+			if(m_shootTimer->IsFinished())
+			{
+				ShootGun();
+				m_shootTimer->Reset();
+			}
 
 			if(HasReachedPlayerPos())
 			{
@@ -127,6 +135,7 @@ void Enemy::OnDestroy()
 
 	m_astarCurrentPathPositions.clear();
 	delete m_astarPathGenerationTimer;
+	delete m_shootTimer;
 	delete m_userPointerData;
 
 	Uknitty::DynamicObject::OnDestroy();
@@ -431,6 +440,7 @@ void Enemy::ShootGun()
 			auto userPointerData = static_cast<Uknitty::UserPointerData*>(closestResults.m_collisionObject->getUserPointer());
 			if(userPointerData->physicsType == Uknitty::PhysicsType::PLAYER)
 			{
+				GameSharedDependencies::Get<SharedEvents>()->OnEnemyBulletHitPlayer();
 				/*return true;*/
 			}
 		}

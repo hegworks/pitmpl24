@@ -17,6 +17,7 @@
 #include "Player.h"
 #include "SceneManager.h"
 #include "ShaderProgram.h"
+#include "SharedEvents.h"
 #include "SharedInput.h"
 #include "StaticObject.h"
 #include "UknittySettings.h"
@@ -86,8 +87,10 @@ void Game::Start()
 	m_engine->InitializeInput(m_iMouse, m_iKeyboard);
 	m_engine->ValidateBeforeFirstUpdate();
 
-	m_sceneManager = new SceneManager();
+	m_sharedEvents = new SharedEvents();
+	GameSharedDependencies::Set<SharedEvents>(m_sharedEvents);
 
+	m_sceneManager = new SceneManager();
 #pragma endregion Other Initializations
 
 #pragma region Timing

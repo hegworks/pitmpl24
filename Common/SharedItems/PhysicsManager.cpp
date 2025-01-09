@@ -73,9 +73,13 @@ void PhysicsManager::Update(float deltaTime)
 	m_btDynamicsWorld->performDiscreteCollisionDetection();
 	for(auto rigidbody : m_contactTestRigidbodies)
 	{
-		if(rigidbody && rigidbody->getMotionState())
+		if(rigidbody && rigidbody->getMass() >= 0)
 		{
 			m_btDynamicsWorld->contactTest(rigidbody, *m_collisionManager);
+		}
+		else
+		{
+			std::cerr << "WARNING::PhysicsManager a rigidbody in contact test is nullptr or has negative mass. consider removing it from the m_contactTestRigidbodies list\n";
 		}
 	}
 }
