@@ -22,6 +22,7 @@ public:
 		PAUSE,
 		WIN,
 		LOSE,
+		LOADING,
 	};
 
 	enum class GameEvent
@@ -33,6 +34,7 @@ public:
 		PRESSED_UNPAUSE,
 		PRESSED_QUIT,
 		PRESSED_MAIN_MENU,
+		SHOWED_LOADING_SCREEN,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);
@@ -52,4 +54,5 @@ private:
 
 	GameState m_gameState = GameState::MAIN_MENU;
 	bool m_shouldQuit = false;
+	bool m_hasWaitedFor1FrameToShowLoadingScreen = false;
 };

@@ -6,6 +6,7 @@
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
 #include <iostream>
+#include <stdexcept>
 
 UIManager::UIManager()
 {
@@ -41,8 +42,11 @@ void UIManager::Update(float deltaTime)
 		case UIManager::MenuType::LOSE_MENU:
 			LoseMenu();
 			break;
-		default:
+		case UIManager::MenuType::LOADING_SCREEN:
+			LoadingScreen();
 			break;
+		default:
+			throw std::runtime_error("Invalid menu type");
 	}
 
 	ImGui::GetFont()->Scale = oldTextSize;
@@ -291,6 +295,46 @@ void UIManager::WinMenu()
 			}
 
 			ImGui::PopStyleColor();
+			ImGui::PopStyleColor();
+		}
+
+		ImGui::End();
+	}
+}
+
+void UIManager::LoadingScreen()
+{
+	static bool use_work_area = true;
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
+	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
+	ImGui::SetNextWindowBgAlpha(1);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(10, 60, 10));
+	if(ImGui::Begin("Loading Screen", &m_isMainMenuVisible, flags))
+	{
+		ImGui::PopStyleColor();
+
+		const ImVec2 buttonSize = ImVec2(150, 50);
+
+		{
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(255, 255, 255));
+				std::string text = "LOADING...";
+				float oldTextSize = ImGui::GetFont()->Scale;
+				ImGui::GetFont()->Scale *= 2.0f;
+				ImGui::PushFont(ImGui::GetFont());
+				auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
+
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - textWidth / 2, ImGui::GetWindowHeight() / 2));
+				ImGui::Text(text.c_str());
+
+				ImGui::GetFont()->Scale = oldTextSize;
+				ImGui::PopFont();
+			}
+
 			ImGui::PopStyleColor();
 		}
 

@@ -13,6 +13,7 @@ public:
 		PAUSE_MENU,
 		WIN_MENU,
 		LOSE_MENU,
+		LOADING_SCREEN,
 	};
 
 	void Update(float deltaTime);
@@ -26,4 +27,5 @@ private:
 	void PauseMenu();
 	void LoseMenu();
 	void WinMenu();
+	void LoadingScreen();
 };

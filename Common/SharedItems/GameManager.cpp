@@ -52,10 +52,9 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 	switch(gameEvent)
 	{
 		case GameManager::GameEvent::PRESSED_START_GAME:
-			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
-			new SceneManager();
-			m_iMouse->CaptureMouseInput();
-			m_gameState = GameState::GAMEPLAY;
+			m_uiManager->ShowMenu(UIManager::MenuType::LOADING_SCREEN);
+			m_gameState = GameState::LOADING;
+			m_hasWaitedFor1FrameToShowLoadingScreen = false;
 			break;
 		case GameManager::GameEvent::PLAYER_DIED:
 			m_uiManager->ShowMenu(UIManager::MenuType::LOSE_MENU);
@@ -87,6 +86,12 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 		case GameManager::GameEvent::PRESSED_QUIT:
 			m_shouldQuit = true;
 			break;
+		case GameEvent::SHOWED_LOADING_SCREEN:
+			new SceneManager();
+			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
+			m_iMouse->CaptureMouseInput();
+			m_gameState = GameState::GAMEPLAY;
+			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");
 	}
@@ -94,6 +99,13 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 
 void GameManager::Update(float deltaTime)
 {
+	if(m_gameState == GameState::LOADING && m_hasWaitedFor1FrameToShowLoadingScreen)
+	{
+		TriggerEvent(GameEvent::SHOWED_LOADING_SCREEN);
+		m_hasWaitedFor1FrameToShowLoadingScreen = false;
+	}
+	m_hasWaitedFor1FrameToShowLoadingScreen = true;
+
 	if(m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->Update(deltaTime);
