@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Engine.h"
 #include "GameObject.h"
+#include "GameplayEvents.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
@@ -119,6 +120,7 @@ void Player::OnEnemyBulletHit()
 	if(m_hp <= 0)
 	{
 		std::cout << "Player is dead and the game is lost";
+		GameSharedDependencies::Get<GameplayEvents>()->OnPlayerDied();
 	}
 }
 

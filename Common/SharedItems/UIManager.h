@@ -24,4 +24,6 @@ private:
 
 	void MainMenu();
 	void PauseMenu();
+	void LoseMenu();
+	void WinMenu();
 };
