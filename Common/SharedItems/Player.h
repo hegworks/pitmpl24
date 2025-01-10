@@ -31,6 +31,8 @@ public:
 	void SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback);
 	void RoomChangedSetPosition(RoomChange* roomChange);
 	void OnEnemyBulletHit();
+	int GetMaxHp() const { return HP; }
+	int GetHP() const { return m_hp; }
 
 private:
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;

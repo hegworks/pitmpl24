@@ -5,6 +5,7 @@
 
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
+#include "Player.h"
 #include <iostream>
 #include <stdexcept>
 
@@ -44,6 +45,9 @@ void UIManager::Update(float deltaTime)
 			break;
 		case UIManager::MenuType::LOADING_SCREEN:
 			LoadingScreen();
+			break;
+		case UIManager::MenuType::HUD:
+			HUD();
 			break;
 		default:
 			throw std::runtime_error("Invalid menu type");
@@ -337,6 +341,42 @@ void UIManager::LoadingScreen()
 
 			ImGui::PopStyleColor();
 		}
+
+		ImGui::End();
+	}
+}
+
+void UIManager::HUD()
+{
+	static bool use_work_area = true;
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+
+	const float bgHeight = 50;
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(ImVec2(0, viewport->WorkSize.y - bgHeight));
+	ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x, bgHeight));
+
+	ImGui::SetNextWindowBgAlpha(0.7);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(0, 0, 0));
+	if(ImGui::Begin("HUD", &m_isMainMenuVisible, flags))
+	{
+		ImGui::PopStyleColor();
+
+		const ImVec2 hpBgSize = ImVec2(150, 50);
+		ImVec2 hpInnerSize = ImVec2(100, 50);
+
+		ImGui::SetCursorPos(ImVec2(10, 12));
+		ImGui::Text("HP");
+
+		ImGui::SameLine();
+
+		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, (ImVec4)ImColor::ImColor(0, 200, 0));
+		Player* player = GameSharedDependencies::Get<Player>();
+		float hpMax = player->GetMaxHp();
+		float hp = player->GetHP();
+		float progress = hp / hpMax;
+		ImGui::ProgressBar(progress, ImVec2(200, 0.0f));
+		ImGui::PopStyleColor();
 
 		ImGui::End();
 	}

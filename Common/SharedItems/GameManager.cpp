@@ -73,7 +73,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
-			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
+			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			m_gameState = GameState::GAMEPLAY;
 			m_iMouse->CaptureMouseInput();
 			break;
@@ -88,7 +88,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameEvent::SHOWED_LOADING_SCREEN:
 			new SceneManager();
-			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
+			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			m_iMouse->CaptureMouseInput();
 			m_gameState = GameState::GAMEPLAY;
 			break;
