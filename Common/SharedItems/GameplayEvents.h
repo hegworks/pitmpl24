@@ -12,4 +12,5 @@ public:
 	void OnPressedPause();
 	void OnPressedUnpause();
 	void OnPressedStartGame();
+	void OnPlayerWon();
 };

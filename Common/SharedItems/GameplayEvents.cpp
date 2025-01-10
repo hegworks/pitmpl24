@@ -43,3 +43,8 @@ void GameplayEvents::OnPressedStartGame()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PRESSED_START_GAME);
 }
+
+void GameplayEvents::OnPlayerWon()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PLAYER_WON);
+}

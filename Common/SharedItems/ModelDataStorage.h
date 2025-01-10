@@ -30,6 +30,7 @@ public:
 	constexpr static const char* GROUND = "ground";
 	constexpr static const char* PIKMIN = "pikmin";
 	constexpr static const char* RETICLE = "Reticle";
+	constexpr static const char* WIN = "Win";
 
 private:
 	std::unordered_map<std::string, ModelData> m_datas;

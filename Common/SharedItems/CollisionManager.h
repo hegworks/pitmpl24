@@ -10,9 +10,6 @@ class CPhysics;
 
 class CollisionManager : public btCollisionWorld::ContactResultCallback
 {
-private:
-	std::unordered_map<const btCollisionObject*, Uknitty::CPhysics*> listeners;
-
 public:
 	void RegisterListener(const btCollisionObject* obj, Uknitty::CPhysics* listener)
 	{
@@ -28,6 +25,9 @@ public:
 	virtual btScalar addSingleResult(btManifoldPoint& cp,
 									 const btCollisionObjectWrapper* colObj0Wrap, int partId0, int index0,
 									 const btCollisionObjectWrapper* colObj1Wrap, int partId1, int index1) override;
+
+private:
+	std::unordered_map<const btCollisionObject*, Uknitty::CPhysics*> listeners;
 };
 
 } // namespace Uknitty

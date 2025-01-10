@@ -32,6 +32,7 @@ enum class PhysicsType
 	PLAYER,
 	ROOM_CHANGE,
 	ENEMY,
+	WIN,
 };
 
 struct UserPointerData

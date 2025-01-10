@@ -69,6 +69,11 @@ ModelDataStorage::ModelDataStorage()
 		"../Common/Assets/Models/Reticle/Sphere.obj",
 		glm::vec3(1, 1, 1)
 	};
+	m_datas[WIN] =
+	{
+		"../Common/Assets/Models/Win/Win.obj",
+		glm::vec3(4, 4, 4)
+	};
 }
 
 ModelDataStorage::~ModelDataStorage()

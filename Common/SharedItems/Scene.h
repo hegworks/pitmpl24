@@ -72,6 +72,7 @@ private:
 	const std::string WALL_OBJECTGROUP = "wall";
 	const std::string RC_OBJECTGROUP = "rc";
 	const std::string FENCE_OBJECTGROUP = "fence";
+	const std::string WIN_OBJECTGROUP = "win";
 	const std::string ENEMY_PATROL_OBJECTGROUP = "ep";
 	const std::string ASTAR_LAYER_COLLECTION = "astar";
 	const unsigned int ASTAR_UNWALKABLE_GID = 1;

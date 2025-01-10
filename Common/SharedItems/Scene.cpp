@@ -121,6 +121,13 @@ void Scene::LoadObjectDataFromMap()
 				m_staticObjectsPositions.emplace(ModelDataStorage::FENCE, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
 			}
 		}
+		if(objectGroup.name == WIN_OBJECTGROUP)
+		{
+			for(tmxparser::TmxObject& object : objectGroup.objects)
+			{
+				m_staticObjectsPositions.emplace(ModelDataStorage::WIN, MAP_CENTER - glm::vec2(object.x / TILE_SIZE, object.y / TILE_SIZE));
+			}
+		}
 		if(objectGroup.name == WALL_OBJECTGROUP)
 		{
 			for(tmxparser::TmxObject& object : objectGroup.objects)
@@ -176,6 +183,14 @@ void Scene::CreateSolidObjectsFromData()
 		staticObject->InitializeWithBoxShape(assetManager->AutoGetModel(key, modelData->m_filePath), m_shaderProgram, modelData->m_dimensions, COLL_GROUP_OBSTACLE, COLL_MASK_OBSTACLE);
 		staticObject->OverridePosition(glm::vec3(position.x, 0, position.y));
 		m_engine->UseDefaultParent(staticObject);
+
+		if(key == ModelDataStorage::WIN)
+		{
+			auto userPointerData = new Uknitty::UserPointerData();
+			userPointerData->physicsType = Uknitty::PhysicsType::WIN;
+			userPointerData->name = "win";
+			staticObject->GetCPhysics()->SetUserPointerData(userPointerData);
+		}
 	}
 
 #pragma region Pikmin

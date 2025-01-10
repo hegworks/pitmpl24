@@ -20,7 +20,7 @@ constexpr int TILE_SIZE = 32;
 constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
 constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
-constexpr int STARTING_MAP_ID = 2;
+constexpr int STARTING_MAP_ID = 8;
 constexpr glm::vec3 PLAYER_INITIAL_POS = glm::vec3(0, 2, 0);
 #pragma endregion Release settings
 

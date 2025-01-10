@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="21">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
  <editorsettings>
   <export target="2.csv" format="csv"/>
  </editorsettings>
@@ -17,6 +17,11 @@
    <point/>
   </object>
   <object id="17" name="tank" type="Solid" x="352" y="768">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="win">
+  <object id="31" name="win" type="win" x="448" y="64">
    <point/>
   </object>
  </objectgroup>
@@ -48,7 +53,17 @@
     <property name="vhu" type="int" value="0"/>
    </properties>
   </object>
-  <object id="3" name="wall_h_2" type="solid" x="64" y="0" width="960" height="64">
+  <object id="3" name="wall_h_2" type="solid" x="64" y="0" width="320" height="64">
+   <properties>
+    <property name="vhu" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="27" name="wall_h_2" type="solid" x="512" y="0" width="512" height="64">
+   <properties>
+    <property name="vhu" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="28" name="wall_h_2" type="solid" x="512" y="64" width="512" height="64">
    <properties>
     <property name="vhu" type="int" value="1"/>
    </properties>
@@ -63,12 +78,12 @@
     <property name="vhu" type="int" value="2"/>
    </properties>
   </object>
-  <object id="4" name="wall_h_2" type="solid" x="64" y="64" width="960" height="64">
+  <object id="4" name="wall_h_2" type="solid" x="64" y="64" width="320" height="64">
    <properties>
     <property name="vhu" type="int" value="1"/>
    </properties>
   </object>
-  <object id="26" name="wall_h_1" type="solid" x="736" y="736" width="288" height="32">
+  <object id="26" name="wall_h_1" type="solid" x="736" y="736" width="288" height="32" visible="0">
    <properties>
     <property name="vhu" type="int" value="1"/>
    </properties>

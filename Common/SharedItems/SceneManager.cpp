@@ -36,6 +36,8 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
+	m_engine->GetPhysicsManager()->UnregisterListener(m_player->GetCPhysics()->GetRigidBody());
+	m_engine->GetPhysicsManager()->RemoveContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_engine->DestroyGameObject(m_player);
 	delete GameSharedDependencies::Get<SceneManagerBlackboard>();
 	GameSharedDependencies::Remove<SceneManager>();

@@ -137,9 +137,13 @@ void Player::OnCollision(const btCollisionObject* other)
 				m_collidedWithRoomChangeCallback(data->roomChangeType);
 			}
 		}
-		else
+		else if(data->physicsType == Uknitty::PhysicsType::WIN)
 		{
-			//std::cout << "Player <-----> " << data->name << std::endl;
+			//std::cout << "Player <-----> RoomChange" << static_cast<int>(data->roomChangeType) << std::endl;
+			if(m_collidedWithRoomChangeCallback)
+			{
+				GameSharedDependencies::Get<GameplayEvents>()->OnPlayerWon();
+			}
 		}
 	}
 }
