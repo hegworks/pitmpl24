@@ -68,7 +68,11 @@ void Enemy::OnAwake()
 
 void Enemy::OnUpdate(float deltaTime)
 {
-	Uknitty::DynamicObject::OnUpdate(deltaTime);
+	if(m_enemyState == EnemyState::DEAD)
+	{
+		return;
+	}
+
 
 	DrawAstarPath();
 
@@ -171,10 +175,19 @@ void Enemy::DrawAstarPath()
 
 void Enemy::OnPlayerBulletHit()
 {
+	if(m_enemyState == EnemyState::DEAD)
+	{
+		return;
+	}
+
 	m_hp--;
 	if(m_hp <= 0)
 	{
-		Destroy();
+		GameObject::GetLocalTransform()->SetRotation(glm::vec3(-90, 0, 0));
+		glm::vec3 currentPos = *GameObject::GetLocalTransform()->GetPosition();
+		GameObject::GetLocalTransform()->SetPosition(glm::vec3(currentPos.x, 0.1, currentPos.z));
+		m_enemyState = EnemyState::DEAD;
+		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
 	}
 }
 

@@ -68,7 +68,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PRESSED_PAUSE:
-			if(m_gameState == GameState::MAIN_MENU) break;
+			if(m_gameState == GameState::MAIN_MENU || m_gameState == GameState::LOSE || m_gameState == GameState::WIN) break;
 			m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
 			m_gameState = GameState::PAUSE;
 			m_iMouse->ReleaseMouseInput();
