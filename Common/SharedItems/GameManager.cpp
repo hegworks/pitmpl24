@@ -32,6 +32,7 @@ GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
 	m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 
 	m_gameState = GameState::MAIN_MENU;
+	m_iMouse->ReleaseMouseInput();
 }
 
 GameManager::~GameManager()
@@ -53,29 +54,35 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 		case GameManager::GameEvent::PRESSED_START_GAME:
 			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
 			new SceneManager();
+			m_iMouse->CaptureMouseInput();
 			m_gameState = GameState::GAMEPLAY;
 			break;
 		case GameManager::GameEvent::PLAYER_DIED:
 			m_uiManager->ShowMenu(UIManager::MenuType::LOSE_MENU);
 			m_gameState = GameState::LOSE;
+			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PLAYER_WON:
 			m_uiManager->ShowMenu(UIManager::MenuType::WIN_MENU);
 			m_gameState = GameState::WIN;
+			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PRESSED_PAUSE:
 			if(m_gameState == GameState::MAIN_MENU) break;
 			m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
 			m_gameState = GameState::PAUSE;
+			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
 			m_uiManager->ShowMenu(UIManager::MenuType::NONE);
 			m_gameState = GameState::GAMEPLAY;
+			m_iMouse->CaptureMouseInput();
 			break;
 		case GameEvent::PRESSED_MAIN_MENU:
 			delete GameSharedDependencies::Get<SceneManager>();
 			m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 			m_gameState = GameState::MAIN_MENU;
+			m_iMouse->ReleaseMouseInput();
 			break;
 		case GameManager::GameEvent::PRESSED_QUIT:
 			m_shouldQuit = true;
