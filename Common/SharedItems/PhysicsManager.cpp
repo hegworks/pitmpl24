@@ -4,7 +4,9 @@
 #include "CollisionManager.h"
 #include "glm/glm.hpp"
 #include "UknittySettings.h"
+#include <algorithm>
 #include <iostream>
+#include <vector>
 
 namespace Uknitty
 {

@@ -1,6 +1,9 @@
 #pragma once
+
 #include "IInput.h"
 #include <X11/Xlib.h>
+
+class XWindow;
 
 class RaspMouse : public IMouse
 {
@@ -20,4 +23,7 @@ protected:
 private:
 	Display& m_display;
 	Window& m_window;
+
+	void HideCursor();
+	void ShowCursor();
 };

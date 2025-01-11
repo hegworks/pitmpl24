@@ -1,13 +1,14 @@
 #include "RaspMouse.h"
 
-#include <Common.h>
+#include "UknittySettings.h"
+#include "XWindow.h"
 #include <iostream>
 
 RaspMouse::RaspMouse(Display& display, Window& window) :
 	m_display(display),
 	m_window(window)
 {
-	XWarpPointer(&display, None, window, 0, 0, 0, 0, SCRWIDTH / 2.0, SCRHEIGHT / 2.0);
+	XWarpPointer(&display, None, window, 0, 0, 0, 0, Uknitty::SCRWIDTH / 2.0, Uknitty::SCRHEIGHT / 2.0);
 	XFlush(&display); // Ensure the command is sent immediately
 
 	ReleaseMouseInput();
@@ -75,12 +76,12 @@ glm::vec2 RaspMouse::GetPosition()
 		&mask_return);
 
 	// Center of the screen
-	glm::ivec2 center(SCRWIDTH / 2, SCRHEIGHT / 2);
+	glm::ivec2 center(Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
 
 	// Check if the mouse is near the edges of the window
 	if(m_isCapturingMouseInput)
 	{
-		if(win_x <= 1 || win_y <= 1 || win_x >= SCRWIDTH - 1 || win_y >= SCRHEIGHT - 1)
+		if(win_x <= 1 || win_y <= 1 || win_x >= Uknitty::SCRWIDTH - 1 || win_y >= Uknitty::SCRHEIGHT - 1)
 		{
 			glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
 
@@ -107,12 +108,32 @@ float RaspMouse::GetScrollDelta() const
 
 void RaspMouse::OnCaptureMouseInput()
 {
-	m_window->HideCursor();
-	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, SCRWIDTH / 2.0, SCRHEIGHT / 2.0);
-	XFlush(&m_display); // Ensure the command is sent immediately
+	HideCursor();
 }
 
 void RaspMouse::OnReleaseMouseInput()
 {
-	m_window->ShowCursor();
+	ShowCursor();
+}
+
+void RaspMouse::HideCursor()
+{
+	Cursor invisibleCursor;
+	Pixmap bitmapNoData;
+	XColor black;
+	static char noData[] = {0, 0, 0, 0, 0, 0, 0, 0};
+	black.red = black.green = black.blue = 0;
+	bitmapNoData = XCreateBitmapFromData(&m_display, m_window, noData, 8, 8);
+	invisibleCursor = XCreatePixmapCursor(&m_display, bitmapNoData, bitmapNoData, &black, &black, 0, 0);
+	XDefineCursor(&m_display, m_window, invisibleCursor);
+	XFreeCursor(&m_display, invisibleCursor);
+	XFreePixmap(&m_display, bitmapNoData);
+
+	XGrabPointer(&m_display, m_window, True, 0, GrabModeAsync, GrabModeAsync, m_window, None, CurrentTime);
+}
+
+void RaspMouse::ShowCursor()
+{
+	XUndefineCursor(&m_display, m_window);
+	XUngrabPointer(&m_display, CurrentTime);
 }

@@ -2,9 +2,9 @@
 
 constexpr int ROOMCHANGE_TYPE_COUNT = 5;
 
-enum class RoomChangeType
+enum class RoomChangeType : int
 {
-	None = -1,
+	NONE = -1,
 	RC0 = 0,
 	RC1 = 1,
 	RC2 = 2,

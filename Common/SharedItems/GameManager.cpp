@@ -111,6 +111,12 @@ void GameManager::Update(float deltaTime)
 		m_engine->Update(deltaTime);
 	}
 
+	if(!m_iMouse->IsCapturingMouseInput())
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos.x = m_iMouse->GetPosition().x;
+		io.MousePos.y = m_iMouse->GetPosition().y;
+	}
 	m_uiManager->Update(deltaTime);
 }
 

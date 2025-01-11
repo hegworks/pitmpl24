@@ -78,8 +78,8 @@ void UIManager::MainMenu()
 		const ImVec2 buttonSize = ImVec2(150, 50);
 
 		{
-			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(45, 185, 60));
-			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(0, 0, 0));
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(45, 185, 60));
+			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(0, 0, 0));
 
 			{
 				std::string text = "MAIN MENU";
@@ -138,8 +138,8 @@ void UIManager::PauseMenu()
 		const ImVec2 buttonSize = ImVec2(150, 50);
 
 		{
-			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(45, 185, 60));
-			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(0, 0, 0));
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(45, 185, 60));
+			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(0, 0, 0));
 
 			{
 				std::string text = "GAME PAUSED";
@@ -198,7 +198,7 @@ void UIManager::LoseMenu()
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 	ImGui::SetNextWindowBgAlpha(1);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(190, 50, 0));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(190, 50, 0));
 	if(ImGui::Begin("Lose Menu", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -206,8 +206,8 @@ void UIManager::LoseMenu()
 		const ImVec2 buttonSize = ImVec2(150, 50);
 
 		{
-			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(45, 185, 60));
-			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(255, 255, 255));
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(45, 185, 60));
+			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
 
 			{
 				std::string text = "YOU DIED";
@@ -257,7 +257,7 @@ void UIManager::WinMenu()
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 	ImGui::SetNextWindowBgAlpha(1);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(130, 190, 0));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(130, 190, 0));
 	if(ImGui::Begin("Win Menu", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -265,8 +265,8 @@ void UIManager::WinMenu()
 		const ImVec2 buttonSize = ImVec2(150, 50);
 
 		{
-			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::ImColor(30, 30, 30));
-			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(255, 255, 255));
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor(30, 30, 30));
+			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
 
 			{
 				std::string text = "YOU WON!";
@@ -316,7 +316,7 @@ void UIManager::LoadingScreen()
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 	ImGui::SetNextWindowBgAlpha(1);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(10, 60, 10));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(10, 60, 10));
 	if(ImGui::Begin("Loading Screen", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -325,7 +325,7 @@ void UIManager::LoadingScreen()
 
 		{
 			{
-				ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor::ImColor(255, 255, 255));
+				ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
 				std::string text = "LOADING...";
 				float oldTextSize = ImGui::GetFont()->Scale;
 				ImGui::GetFont()->Scale *= 2.0f;
@@ -357,7 +357,7 @@ void UIManager::HUD()
 	ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x, bgHeight));
 
 	ImGui::SetNextWindowBgAlpha(0.7);
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::ImColor(0, 0, 0));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0, 0, 0));
 	if(ImGui::Begin("HUD", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -370,7 +370,7 @@ void UIManager::HUD()
 
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, (ImVec4)ImColor::ImColor(0, 200, 0));
+		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, (ImVec4)ImColor(0, 200, 0));
 		Player* player = GameSharedDependencies::Get<Player>();
 		float hpMax = player->GetMaxHp();
 		float hp = player->GetHP();

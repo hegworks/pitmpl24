@@ -9,7 +9,6 @@ class RoomFinder
 {
 public:
 	RoomFinder();
-	RoomFinder(RoomChangeStorage* roomChangeStorage);
 	~RoomFinder();
 
 	RoomChange* FindNextRoom(RoomChangeType roomChangeType) const;

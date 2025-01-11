@@ -132,11 +132,6 @@ void Game::Start()
 		}
 
 #pragma region imgui
-		if(!m_iMouse->IsCapturingMouseInput())
-		{
-			io.MousePos.x = m_iMouse->GetPosition().x;
-			io.MousePos.y = m_iMouse->GetPosition().y;
-		}
 
 #if 0
 		ImGui_ImplOpenGL3_NewFrame();
@@ -180,18 +175,6 @@ void Game::Start()
 #pragma region Input
 void Game::KeyCallback(Key key, KeyAction action)
 {
-	if(key == Key::M && action == KeyAction::DOWN)
-	{
-		if(m_iMouse->IsCapturingMouseInput())
-		{
-			m_iMouse->ReleaseMouseInput();
-		}
-		else
-		{
-			m_iMouse->CaptureMouseInput();
-		}
-	}
-
 	if(action == KeyAction::DOWN)
 	{
 		m_gameManager->KeyDown(key);

@@ -19,9 +19,9 @@
 constexpr int TILE_SIZE = 32;
 constexpr int MAP_SCALE_X = 32;
 constexpr int MAP_SCALE_Z = 24;
-constexpr glm::vec2 MAP_CENTER = glm::vec2(MAP_SCALE_X / 2, MAP_SCALE_Z / 2);
 constexpr int STARTING_MAP_ID = 2;
-constexpr glm::vec3 PLAYER_INITIAL_POS = glm::vec3(0, 2, 0);
+#define MAP_CENTER glm::vec2(MAP_SCALE_X / 2.0f, MAP_SCALE_Z / 2.0f)
+#define PLAYER_INITIAL_POS glm::vec3(0.0f, 2.0f, 0.0f)
 #pragma endregion Release settings
 
 #pragma region Shared strings

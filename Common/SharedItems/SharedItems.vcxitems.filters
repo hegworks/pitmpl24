@@ -112,6 +112,15 @@
     <Filter Include="Uknitty\Headers\Tools">
       <UniqueIdentifier>{dcd62520-62ee-4714-a464-288f97e5b33a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Reticle">
+      <UniqueIdentifier>{a567a672-f2d3-43d9-9d51-14a6e623ff34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Pikmin">
+      <UniqueIdentifier>{733096bc-6526-4435-8041-0c5069857488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\Empty">
+      <UniqueIdentifier>{7fe8a89d-1aae-48a5-8cc1-5484c6dce6b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -431,6 +440,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UIManager.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneManagerBlackboard.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">
@@ -667,6 +679,27 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Fence\Fence2.mtl">
       <Filter>Assets\Models\Fence</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Reticle\Sphere.mtl">
+      <Filter>Assets\Models\Reticle</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Reticle\Sphere.obj">
+      <Filter>Assets\Models\Reticle</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Pikmin\Pikmin.mtl">
+      <Filter>Assets\Models\Pikmin</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Pikmin\gltf_embedded_1.png">
+      <Filter>Assets\Models\Pikmin</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Pikmin\Pikmin.obj">
+      <Filter>Assets\Models\Pikmin</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Empty\Empty.mtl">
+      <Filter>Assets\Models\Empty</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Empty\Empty.obj">
+      <Filter>Assets\Models\Empty</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -685,6 +718,9 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Reticle\Texture.png">
+      <Filter>Assets\Models\Reticle</Filter>
     </Image>
   </ItemGroup>
 </Project>

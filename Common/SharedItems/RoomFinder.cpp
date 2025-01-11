@@ -2,19 +2,14 @@
 
 #include "RoomChangeStorage.h"
 
-RoomFinder::RoomFinder(RoomChangeStorage* roomChangeStorage)
+RoomFinder::RoomFinder()
 {
-	m_roomChangeStorage = roomChangeStorage;
+	m_roomChangeStorage = new RoomChangeStorage();
 }
 
 RoomFinder::~RoomFinder()
 {
 	delete m_roomChangeStorage;
-}
-
-RoomFinder::RoomFinder()
-{
-	m_roomChangeStorage = new RoomChangeStorage();
 }
 
 RoomChange* RoomFinder::FindNextRoom(RoomChangeType roomChangeType) const

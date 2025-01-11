@@ -42,9 +42,6 @@
     <ClCompile Include="PCContent\glad.c">
       <Filter>ThirdParty\glad</Filter>
     </ClCompile>
-    <ClCompile Include="Common\SharedItems\SceneManagerBlackboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PCContent\WindowsInput.h">
