@@ -19,10 +19,12 @@ public:
 
 	void Update(float deltaTime);
 	void ShowMenu(MenuType menuType) { m_currentMenu = menuType; }
+	void UpdateFPS(int fps);
 
 private:
 	bool m_isMainMenuVisible = false;
 	MenuType m_currentMenu = MenuType::MAIN_MENU;
+	int m_fps = 0;
 
 	void MainMenu();
 	void PauseMenu();
@@ -30,4 +32,5 @@ private:
 	void WinMenu();
 	void LoadingScreen();
 	void HUD();
+	void FPSCounter();
 };

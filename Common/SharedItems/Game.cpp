@@ -20,6 +20,7 @@
 #include "ShaderProgram.h"
 #include "SharedInput.h"
 #include "StaticObject.h"
+#include "UIManager.h"
 #include "UknittySettings.h"
 
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
@@ -82,6 +83,7 @@ void Game::Start()
 
 #pragma region Other Initializations
 	m_gameManager = new GameManager(m_iMouse, m_iKeyboard);
+	UIManager* uiManager = GameSharedDependencies::Get<UIManager>();
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -126,38 +128,11 @@ void Game::Start()
 
 		ProcessMouse();
 		m_gameManager->Update(gameDeltaTime);
+		uiManager->UpdateFPS(fps);
 		if(m_gameManager->ShouldQuit())
 		{
 			quitting = true;
 		}
-
-#pragma region imgui
-
-#if 0
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-		ImGui::SetNextWindowBgAlpha(0.2f);
-		ImGui::SetNextWindowPos(ImVec2(10, 100));
-		ImGuiWindowFlags window_flags = /*ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar  | */ ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoScrollbar;
-		ImGui::SetNextWindowSize(ImVec2(150, 50));
-
-		static bool open = true;
-		// open a new window
-		ImGui::Begin("AVG FPS", &open, window_flags);
-
-		// this can be anything
-		ImGui::Text(std::to_string((int)fps).c_str());
-
-		ImGui::End();
-
-		ImGui::ShowDemoWindow();
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-#endif
-
-		// ImGui::EndFrame(); // actuall this is closed by the render
-#pragma endregion imgui
 
 		glFlush();
 		m_iGraphics->SwapBuffer();

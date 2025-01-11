@@ -53,11 +53,18 @@ void UIManager::Update(float deltaTime)
 			throw std::runtime_error("Invalid menu type");
 	}
 
+	FPSCounter();
+
 	ImGui::GetFont()->Scale = oldTextSize;
 	ImGui::PopFont();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void UIManager::UpdateFPS(int fps)
+{
+	m_fps = fps;
 }
 
 void UIManager::MainMenu()
@@ -324,20 +331,19 @@ void UIManager::LoadingScreen()
 		const ImVec2 buttonSize = ImVec2(150, 50);
 
 		{
-			{
-				ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
-				std::string text = "LOADING...";
-				float oldTextSize = ImGui::GetFont()->Scale;
-				ImGui::GetFont()->Scale *= 2.0f;
-				ImGui::PushFont(ImGui::GetFont());
-				auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
+			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
 
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - textWidth / 2, ImGui::GetWindowHeight() / 2));
-				ImGui::Text(text.c_str());
+			std::string text = "LOADING...";
+			float oldTextSize = ImGui::GetFont()->Scale;
+			ImGui::GetFont()->Scale *= 2.0f;
+			ImGui::PushFont(ImGui::GetFont());
+			auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
 
-				ImGui::GetFont()->Scale = oldTextSize;
-				ImGui::PopFont();
-			}
+			ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - textWidth / 2, ImGui::GetWindowHeight() / 2));
+			ImGui::Text(text.c_str());
+
+			ImGui::GetFont()->Scale = oldTextSize;
+			ImGui::PopFont();
 
 			ImGui::PopStyleColor();
 		}
@@ -348,7 +354,6 @@ void UIManager::LoadingScreen()
 
 void UIManager::HUD()
 {
-	static bool use_work_area = true;
 	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
 
 	const float bgHeight = 50;
@@ -362,9 +367,6 @@ void UIManager::HUD()
 	{
 		ImGui::PopStyleColor();
 
-		const ImVec2 hpBgSize = ImVec2(150, 50);
-		ImVec2 hpInnerSize = ImVec2(100, 50);
-
 		ImGui::SetCursorPos(ImVec2(10, 12));
 		ImGui::Text("HP");
 
@@ -377,6 +379,23 @@ void UIManager::HUD()
 		float progress = hp / hpMax;
 		ImGui::ProgressBar(progress, ImVec2(200, 0.0f));
 		ImGui::PopStyleColor();
+
+		ImGui::End();
+	}
+}
+
+void UIManager::FPSCounter()
+{
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBackground;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(ImVec2(0, 0));
+	ImGui::SetNextWindowSize(ImVec2(0, 0));
+	bool trueBool = true;
+	if(ImGui::Begin("FPS Counter", &trueBool, flags))
+	{
+		ImGui::SetCursorPos(ImVec2(0, 0));
+		ImGui::Text("FPS: %d", m_fps);
 
 		ImGui::End();
 	}
