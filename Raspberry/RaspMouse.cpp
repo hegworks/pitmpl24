@@ -75,26 +75,26 @@ glm::vec2 RaspMouse::GetPosition()
 		&win_y,
 		&mask_return);
 
-	// Center of the screen
-	glm::ivec2 center(Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
-
-	// Check if the mouse is near the edges of the window
-	if(m_isCapturingMouseInput)
+	if(!m_isCapturingMouseInput)
 	{
-		if(win_x <= 1 || win_y <= 1 || win_x >= Uknitty::SCRWIDTH - 1 || win_y >= Uknitty::SCRHEIGHT - 1)
-		{
-			glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
+		return glm::vec2(win_x, win_y);
+	}
 
-			// Warp pointer back to the center
-			XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, center.x, center.y);
-			XFlush(&m_display); // Ensure the warp is sent immediately
+	glm::ivec2 center(Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
+	// Check if the mouse is near the edges of the window
+	if(win_x <= 1 || win_y <= 1 || win_x >= Uknitty::SCRWIDTH - 1 || win_y >= Uknitty::SCRHEIGHT - 1)
+	{
+		glm::ivec2 posBeforeReset = glm::ivec2(win_x, win_y);
 
-			// Update the offset to account for the warp
-			m_resettedPosOffset += posBeforeReset - center;
+		// Warp pointer back to the center
+		XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, center.x, center.y);
+		XFlush(&m_display); // Ensure the warp is sent immediately
 
-			// Return the "virtual" position based on the offset
-			return glm::vec2(center.x + m_resettedPosOffset.x, center.y + m_resettedPosOffset.y);
-		}
+		// Update the offset to account for the warp
+		m_resettedPosOffset += posBeforeReset - center;
+
+		// Return the "virtual" position based on the offset
+		return glm::vec2(center.x + m_resettedPosOffset.x, center.y + m_resettedPosOffset.y);
 	}
 
 	// Return the adjusted mouse position
@@ -108,12 +108,31 @@ float RaspMouse::GetScrollDelta() const
 
 void RaspMouse::OnCaptureMouseInput()
 {
+	// Store the mouse's original position before warping
+	int rootX, rootY, winX, winY;
+	unsigned int mask;
+	Window rootReturn, childReturn;
+	XQueryPointer(&m_display, m_window, &rootReturn, &childReturn, &rootX, &rootY, &winX, &winY, &mask);
+	m_originalMouseX = winX;
+	m_originalMouseY = winY;
+	m_resettedPosOffset = glm::ivec2(0);
+
 	HideCursor();
+
+	// Warp the mouse to the center of the screen
+	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
+	XFlush(&m_display); // Ensure the command is sent immediately
 }
 
 void RaspMouse::OnReleaseMouseInput()
 {
+	m_resettedPosOffset = glm::ivec2(0);
+
 	ShowCursor();
+
+	// Restore the original mouse position
+	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, m_originalMouseX, m_originalMouseY);
+	XFlush(&m_display); // Ensure the command is sent immediately
 }
 
 void RaspMouse::HideCursor()

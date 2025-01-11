@@ -367,7 +367,7 @@ glm::ivec2 Enemy::FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord)
 		if(!IsCoordCollisionInAstar({aCxCy.x, aCxCy.y})) return aCxCy;
 	}
 
-	throw new std::runtime_error("No uncollisioned astar coord found");
+	return glm::ivec2(0);
 }
 
 bool Enemy::IsPlayerInSight()

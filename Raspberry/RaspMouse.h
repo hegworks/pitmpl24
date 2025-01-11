@@ -24,6 +24,9 @@ private:
 	Display& m_display;
 	Window& m_window;
 
+	int m_originalMouseX = 0;
+	int m_originalMouseY = 0;
+
 	void HideCursor();
 	void ShowCursor();
 };
