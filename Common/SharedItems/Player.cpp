@@ -193,16 +193,30 @@ void Player::MoveIfInput(float deltaTime)
 
 void Player::RotateGradually(glm::vec3 dir, float deltaTime)
 {
-	// REF: these calculations for gradual rotation are from ChatGPT
-	float targetAngle = atan2(dir.x, dir.z);
-	float currentAngle = glm::radians(Uknitty::GameObject::GetLocalTransform()->GetRotation()->y);
-	float angleDifference = targetAngle - currentAngle;
+	float targetAngle = glm::degrees(atan2(dir.x, dir.z));
+	float currentAngle = Uknitty::GameObject::GetLocalTransform()->GetRotation()->y;
 
-	if(angleDifference > glm::pi<float>()) angleDifference -= 2 * glm::pi<float>();
-	if(angleDifference < -glm::pi<float>()) angleDifference += 2 * glm::pi<float>();
+	// normalize angles to [0, 360] range
+	targetAngle = fmod(targetAngle, 360.0f);
+	if(targetAngle < 0)
+	{
+		targetAngle += 360.0f;
+	}
+	currentAngle = fmod(currentAngle, 360.0f);
+	if(currentAngle < 0)
+	{
+		currentAngle += 360.0f;
+	}
 
-	float newAngle = currentAngle + glm::clamp(angleDifference, -m_rotationSpeed * deltaTime, m_rotationSpeed * deltaTime);
-	glm::vec3 rotation = glm::vec3(0, glm::degrees(newAngle), 0);
+	// find the shortest angle
+	float angleDiff = targetAngle - currentAngle;
+	if(angleDiff > 180.0f) angleDiff -= 360.0f;
+	if(angleDiff < -180.0f) angleDiff += 360.0f;
+
+	// Interpolate to the new angle
+	float newAngle = currentAngle + glm::mix(0.0f, angleDiff, 1.0);
+
+	glm::vec3 rotation = glm::vec3(0, newAngle, 0);
 	Uknitty::GameObject::GetLocalTransform()->SetRotation(rotation);
 }
 
