@@ -20,7 +20,6 @@ public:
 
 	virtual void OnAwake() override;
 	virtual void OnLateUpdate(float deltaTime) override;
-	virtual void OnUpdate(float deltaTime) override;
 
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 
@@ -87,6 +86,9 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
+
+	void FollowCamera();
+	void ChildOfSthCamera();
 
 #pragma region Used in GeneralCameraCInput
 public:

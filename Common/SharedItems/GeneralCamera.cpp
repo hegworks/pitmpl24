@@ -21,7 +21,22 @@ void GeneralCamera::OnAwake()
 	GameObject::AddCInput(new GeneralCameraCInput(this));
 }
 
-void GeneralCamera::OnUpdate([[maybe_unused]] float deltaTime)
+void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
+{
+	switch(m_mode)
+	{
+		case Mode::FOLLOW:
+			FollowCamera();
+			break;
+		case Mode::CHILD_OF_STH:
+			ChildOfSthCamera();
+			break;
+		default:
+			throw std::runtime_error("Unknown camera mode");
+	}
+}
+
+void GeneralCamera::FollowCamera()
 {
 	if(m_mode != Mode::FOLLOW)
 		return;
@@ -110,7 +125,7 @@ void GeneralCamera::OnUpdate([[maybe_unused]] float deltaTime)
 	GameObject::GetLocalTransform()->SetRotation(-rotation);
 }
 
-void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
+void GeneralCamera::ChildOfSthCamera()
 {
 	if(m_mode != Mode::CHILD_OF_STH)
 		return;

@@ -10,6 +10,7 @@
 #include "Engine.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
+#include "GeneralCamera.h"
 #include "GunBullet.h"
 #include "InterfaceManager.h"
 #include "Model.h"
@@ -431,6 +432,8 @@ void Scene::CreateEnemies()
 			enemyPikmin->SetParent(enemy);*/
 
 			//m_engine->GetMainCamera()->SetParent(enemyCameraOffsetObject);
+			//Uknitty::GeneralCamera* generalCam = static_cast<Uknitty::GeneralCamera*>(m_engine->GetMainCamera());
+			//generalCam->SetMode(Uknitty::GeneralCamera::Mode::CHILD_OF_STH);
 		}
 	}
 }

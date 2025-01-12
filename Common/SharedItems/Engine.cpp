@@ -54,6 +54,8 @@ void Engine::Update(float deltaTime)
 		gameObject->LateUpdate(deltaTime);
 	}
 
+	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
+
 	glm::mat4 cameraVP = m_mainCamera->GetProjection() * m_mainCamera->GetView();
 	m_root->Draw(cameraVP);
 
