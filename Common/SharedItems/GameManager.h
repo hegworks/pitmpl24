@@ -35,6 +35,8 @@ public:
 		PRESSED_QUIT,
 		PRESSED_MAIN_MENU,
 		SHOWED_LOADING_SCREEN,
+		PLAYER_COLLIDED_WITH_ROOM_CHANGE,
+		NEW_SCENE_LOADED,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);
@@ -55,4 +57,6 @@ private:
 	GameState m_gameState = GameState::MAIN_MENU;
 	bool m_shouldQuit = false;
 	bool m_hasWaitedFor1FrameToShowLoadingScreen = false;
+	bool m_shouldChangeRoomSoDisablePhysics = false;
+	bool m_isNewSceneLoadedSoReEnablePhysics = false;
 };

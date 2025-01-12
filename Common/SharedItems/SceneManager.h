@@ -28,6 +28,7 @@ class SceneManager
 public:
 	SceneManager();
 	~SceneManager();
+	void ChangeScene();
 
 private:
 	Scene* m_currentScene = nullptr;
@@ -42,12 +43,10 @@ private:
 	const Key CHANGE_SCENE_KEY = Key::C;
 
 	int m_currentMapId = STARTING_MAP_ID;
-	bool m_isNewSceneLoading = false;
 
 	void OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType);
 
 	void LoadScene(int mapId);
-	void ChangeScene(int mapId);
 	void CreatePlayer();
 	void CreateShaderProgram();
 };

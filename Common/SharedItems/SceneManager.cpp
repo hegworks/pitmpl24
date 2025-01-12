@@ -6,6 +6,7 @@
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "Engine.h"
+#include "GameplayEvents.h"
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
@@ -49,13 +50,13 @@ void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 {
 	std::cout << "Player collided with room change: " << static_cast<int>(roomChangeType) << std::endl;
 
-	m_isNewSceneLoading = true;
 	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
 	m_player->RoomChangedSetPosition(newRoomChange);
 	int newMapId = newRoomChange->nextRoomId;
-	ChangeScene(newMapId);
-	m_isNewSceneLoading = false;
+	m_currentMapId = newMapId;
 	m_roomFinder->SetCurrentLevelId(newMapId);
+
+	GameSharedDependencies::Get<GameplayEvents>()->OnPlayerCollidedWithRoomChange();
 }
 
 void SceneManager::LoadScene(int mapId)
@@ -63,17 +64,11 @@ void SceneManager::LoadScene(int mapId)
 	m_currentScene = new Scene(mapId);
 }
 
-void SceneManager::ChangeScene(int mapId)
+void SceneManager::ChangeScene()
 {
-	m_engine->GetPhysicsManager()->RemoveContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
-	m_engine->GetPhysicsManager()->Disable();
-
 	delete m_currentScene;
-	m_currentMapId = mapId;
 	LoadScene(m_currentMapId);
-
-	m_engine->GetPhysicsManager()->Enable();
-	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
+	GameSharedDependencies::Get<GameplayEvents>()->OnNewSceneLoaded();
 }
 
 void SceneManager::CreatePlayer()

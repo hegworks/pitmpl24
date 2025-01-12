@@ -13,4 +13,6 @@ public:
 	void OnPressedUnpause();
 	void OnPressedStartGame();
 	void OnPlayerWon();
+	void OnPlayerCollidedWithRoomChange();
+	void OnNewSceneLoaded();
 };

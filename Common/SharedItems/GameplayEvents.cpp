@@ -48,3 +48,13 @@ void GameplayEvents::OnPlayerWon()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PLAYER_WON);
 }
+
+void GameplayEvents::OnPlayerCollidedWithRoomChange()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PLAYER_COLLIDED_WITH_ROOM_CHANGE);
+}
+
+void GameplayEvents::OnNewSceneLoaded()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::NEW_SCENE_LOADED);
+}

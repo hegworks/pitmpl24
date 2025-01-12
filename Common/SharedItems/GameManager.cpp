@@ -9,6 +9,7 @@
 #include "IInput.h"
 #include "IInputKey.h"
 #include "ModelDataStorage.h"
+#include "PhysicsManager.h"
 #include "SceneManager.h"
 #include "UIManager.h"
 #include <stdexcept>
@@ -101,6 +102,12 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_iMouse->CaptureMouseInput();
 			m_gameState = GameState::GAMEPLAY;
 			break;
+		case GameEvent::PLAYER_COLLIDED_WITH_ROOM_CHANGE:
+			m_shouldChangeRoomSoDisablePhysics = true;
+			break;
+		case GameEvent::NEW_SCENE_LOADED:
+			m_isNewSceneLoadedSoReEnablePhysics = true;
+			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");
 	}
@@ -114,6 +121,20 @@ void GameManager::Update(float deltaTime)
 		m_hasWaitedFor1FrameToShowLoadingScreen = false;
 	}
 	m_hasWaitedFor1FrameToShowLoadingScreen = true;
+
+
+	if(m_shouldChangeRoomSoDisablePhysics)
+	{
+		m_engine->GetPhysicsManager()->Disable();
+		GameSharedDependencies::Get<SceneManager>()->ChangeScene();
+		m_shouldChangeRoomSoDisablePhysics = false;
+	}
+
+	if(m_isNewSceneLoadedSoReEnablePhysics)
+	{
+		m_engine->GetPhysicsManager()->Enable();
+		m_isNewSceneLoadedSoReEnablePhysics = false;
+	}
 
 	if(m_gameState == GameState::GAMEPLAY)
 	{
