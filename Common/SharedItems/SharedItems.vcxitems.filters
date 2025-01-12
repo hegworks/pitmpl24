@@ -121,6 +121,9 @@
     <Filter Include="Assets\Models\Empty">
       <UniqueIdentifier>{7fe8a89d-1aae-48a5-8cc1-5484c6dce6b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Win">
+      <UniqueIdentifier>{4176cff9-15ce-4953-8e4a-1724946ce37c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -705,6 +708,15 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x1\Wall_1x4x1.obj">
       <Filter>Assets\Models\Wall_1x4x1</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Win\Win.mtl">
+      <Filter>Assets\Models\Win</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Win\Texture.png">
+      <Filter>Assets\Models\Win</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Win\Win.obj">
+      <Filter>Assets\Models\Win</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

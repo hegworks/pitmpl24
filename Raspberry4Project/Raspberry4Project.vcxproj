@@ -148,6 +148,9 @@
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Wall_2x4x1\Wall_2x4x1.obj">
       <FileType>Document</FileType>
     </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Win\Win.obj">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <Link>
