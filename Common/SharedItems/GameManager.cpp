@@ -68,9 +68,18 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameManager::GameEvent::PRESSED_PAUSE:
 			if(m_gameState == GameState::MAIN_MENU || m_gameState == GameState::LOSE || m_gameState == GameState::WIN) break;
-			m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
-			m_gameState = GameState::PAUSE;
-			m_iMouse->ReleaseMouseInput();
+			if(m_gameState == GameState::GAMEPLAY)
+			{
+				m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
+				m_gameState = GameState::PAUSE;
+				m_iMouse->ReleaseMouseInput();
+			}
+			else if(m_gameState == GameState::PAUSE)
+			{
+				m_uiManager->ShowMenu(UIManager::MenuType::HUD);
+				m_gameState = GameState::GAMEPLAY;
+				m_iMouse->CaptureMouseInput();
+			}
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
 			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
