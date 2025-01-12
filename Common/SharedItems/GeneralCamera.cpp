@@ -1,13 +1,17 @@
 #include "GeneralCamera.h"
 
+#include "btBulletDynamicsCommon.h"
 #include "CameraObject.h"
+#include "CPhysics.h"
 #include "CTransform.h"
 #include "GeneralCameraCInput.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "UknittySettings.h"
+#include <Engine.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <PhysicsCollisionFilters.h>
 #include <stdexcept>
 
 namespace Uknitty
@@ -81,6 +85,26 @@ void GeneralCamera::FollowCamera()
 
 			// Calculate the camera position
 			m_pos = followPos - offsetDir * FOLLOW_DISTANCE_THIRD_PERSON;
+
+			{ // camera clipping
+				glm::vec3 fromVec = *m_followTransform->GetPosition() + glm::vec3(0, 1.6, 0);
+				glm::vec3 toVec = m_pos;
+
+				const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(fromVec);
+				const btVector3 to = Uknitty::CPhysics::GLMVec3ToBtVec3(toVec);
+
+				btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
+				closestResults.m_collisionFilterGroup = COLL_GROUP_CAMERA_CLIP;
+				closestResults.m_collisionFilterMask = COLL_MASK_CAMERA_CLIP;
+
+				Uknitty::Engine::GetInstance()->GetDynamicsWorld()->rayTest(from, to, closestResults);
+
+				if(closestResults.hasHit())
+				{
+					std::cout << "HIT" << std::endl;
+					m_pos = Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld + closestResults.m_hitNormalWorld * 0.2f);
+				}
+			}
 
 			// Calculate the front vector to look at the followTransform
 			m_front = glm::normalize(followPos - m_pos);
