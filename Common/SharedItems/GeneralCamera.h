@@ -66,6 +66,9 @@ private:
 	const glm::vec3 FOLLOW_OFFSET_FIRST_PERSON = glm::vec3(0, 2, 0.2);
 	const float FOLLOW_OFFSET_Y_FIRST_PERSON = 2.0f;
 	const float FOLLOW_DISTANCE_FIRST_PERSON = 0.5f;
+	const float PUSH_IN_SPEED = 5.0f;
+	const float PUSH_OUT_SPEED = 15.0f;
+	const float PUSH_OUT_THRESHOLD = 1.0f;
 
 	// variables
 	Uknitty::CTransform* m_followTransform = nullptr;
@@ -86,8 +89,10 @@ private:
 	bool m_isBackwardKeyDown = false;
 	bool m_isLeftKeyDown = false;
 	bool m_isRightKeyDown = false;
+	glm::vec3 m_clippingTargetPos = glm::vec3(0);
+	bool m_clippingHadHit = false;
 
-	void FollowCamera();
+	void FollowCamera(float deltaTime);
 	void ChildOfSthCamera();
 
 #pragma region Used in GeneralCameraCInput

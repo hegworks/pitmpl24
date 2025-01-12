@@ -30,7 +30,7 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 	switch(m_mode)
 	{
 		case Mode::FOLLOW:
-			FollowCamera();
+			FollowCamera(deltaTime);
 			break;
 		case Mode::CHILD_OF_STH:
 			ChildOfSthCamera();
@@ -40,7 +40,7 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 	}
 }
 
-void GeneralCamera::FollowCamera()
+void GeneralCamera::FollowCamera(float deltaTime)
 {
 	if(m_mode != Mode::FOLLOW)
 		return;
@@ -84,25 +84,38 @@ void GeneralCamera::FollowCamera()
 			offsetDir = glm::normalize(offsetDir);
 
 			// Calculate the camera position
-			m_pos = followPos - offsetDir * FOLLOW_DISTANCE_THIRD_PERSON;
+			glm::vec3 unclippedPos = followPos - offsetDir * FOLLOW_DISTANCE_THIRD_PERSON;
 
 			{ // camera clipping
 				glm::vec3 fromVec = *m_followTransform->GetPosition() + glm::vec3(0, 1.6, 0);
-				glm::vec3 toVec = m_pos;
-
+				glm::vec3 toVec = unclippedPos;
 				const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(fromVec);
 				const btVector3 to = Uknitty::CPhysics::GLMVec3ToBtVec3(toVec);
-
 				btCollisionWorld::ClosestRayResultCallback  closestResults = btCollisionWorld::ClosestRayResultCallback(from, to);
 				closestResults.m_collisionFilterGroup = COLL_GROUP_CAMERA_CLIP;
 				closestResults.m_collisionFilterMask = COLL_MASK_CAMERA_CLIP;
-
 				Uknitty::Engine::GetInstance()->GetDynamicsWorld()->rayTest(from, to, closestResults);
-
 				if(closestResults.hasHit())
 				{
-					std::cout << "HIT" << std::endl;
-					m_pos = Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld + closestResults.m_hitNormalWorld * 0.2f);
+					glm::vec3 destination = Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld + closestResults.m_hitNormalWorld * 0.2f);
+					m_pos = glm::mix(m_pos, destination, PUSH_IN_SPEED * deltaTime);
+					m_clippingHadHit = true;
+				}
+				else
+				{
+					if(m_clippingHadHit) // was pushed in, so pushing out
+					{
+						glm::vec3 destination = unclippedPos;
+						m_pos = glm::mix(m_pos, destination, PUSH_OUT_SPEED * deltaTime);
+						if(glm::distance(m_pos, destination) < PUSH_OUT_THRESHOLD)
+						{
+							m_clippingHadHit = false;
+						}
+					}
+					else // was never pushed in, or pushing out is finished
+					{
+						m_pos = unclippedPos;
+					}
 				}
 			}
 
