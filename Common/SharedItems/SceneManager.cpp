@@ -65,6 +65,7 @@ void SceneManager::LoadScene(int mapId)
 
 void SceneManager::ChangeScene(int mapId)
 {
+	m_engine->GetPhysicsManager()->RemoveContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_engine->GetPhysicsManager()->Disable();
 
 	delete m_currentScene;
@@ -72,6 +73,7 @@ void SceneManager::ChangeScene(int mapId)
 	LoadScene(m_currentMapId);
 
 	m_engine->GetPhysicsManager()->Enable();
+	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 }
 
 void SceneManager::CreatePlayer()
