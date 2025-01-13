@@ -34,7 +34,7 @@
   <Class Name="Uknitty::CInput" Collapsed="true">
     <Position X="13.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAABAAAAAAAIIAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAACAAAAAAABAAAAAAAIIAAAAAAAAAAAIAAA=</HashCode>
       <FileName>Common\SharedItems\CInput.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -62,7 +62,7 @@
   <Class Name="Uknitty::GameObject" Collapsed="true">
     <Position X="3.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABQJADAAUoQAEgAEEEAgqAAKAAYAIQY5CEagEANECAA=</HashCode>
+      <HashCode>AJQJADAAUoQAEgAEkEAgqAAKAAZAIQY5CEagEAdECAA=</HashCode>
       <FileName>Common\SharedItems\GameObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -76,35 +76,35 @@
   <Class Name="Uknitty::CameraObject" Collapsed="true">
     <Position X="7.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAASABAAAAAIAAAAAAIAAAAgAAAAAAAAABAAAAAAA=</HashCode>
+      <HashCode>AAAAAQABAAAAAIAAAAAAIAAAAgAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\CameraObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::DynamicObject" Collapsed="true">
     <Position X="3.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACQAAAAAAAAAAQAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAQAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\DynamicObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::GeneralCamera" Collapsed="true">
     <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AUQJBYCDQAYAhMAgQbAIIAIQChIAQAQQAEDBARAGASA=</HashCode>
+      <HashCode>AUYEBYCDYAYAhsAkQLAIIAIUChIAQAQwAEDRCRAGASA=</HashCode>
       <FileName>Common\SharedItems\GeneralCamera.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Player" Collapsed="true">
     <Position X="5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABABAASAAAAAIACCIACBAABAABAAAAIgCQQAGCAAA=</HashCode>
+      <HashCode>AAABABAASAAAAAMACCMQCBQARABAAAAA4gCQRAGCAAA=</HashCode>
       <FileName>Common\SharedItems\Player.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::AssetManager" Collapsed="true">
     <Position X="9.75" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAARAAAEAAAAAAAAAAAAAAAAAAAAAAACAAABAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAEAAAAAAAAgAAAAAAAAAAQAAACAAAAAAAAAAA=</HashCode>
       <FileName>Common\SharedItems\AssetManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -125,21 +125,21 @@
   <Class Name="Enemy" Collapsed="true">
     <Position X="2.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CCBHQQgIWCAAASMIqCCgiBAiQAGEANAEIgKAIQMGAAA=</HashCode>
+      <HashCode>CiFHQUoIWAAAASMYqCGgiBBiRAHEANAEIgKAIQMmAEA=</HashCode>
       <FileName>Common\SharedItems\Enemy.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::PhysicsManager" Collapsed="true">
     <Position X="11.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAQAAAgAAAIJggAAAAkAAIAAABAAAAAAQBAIAAQAAAE=</HashCode>
+      <HashCode>gAQAABgAAAIJggAAAAkACIAAABAAAAAAQBAoAAQAAAE=</HashCode>
       <FileName>Common\SharedItems\PhysicsManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Uknitty::Engine" Collapsed="true">
     <Position X="15" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAQwQEAAAAQAgAAAAAgSAAgABAAAAgEQBAMgVCAEAAE=</HashCode>
+      <HashCode>AAQwQEAAAAQAgAAAAAgSAAgABABAAwEQBAIhVCAEAAE=</HashCode>
       <FileName>Common\SharedItems\Engine.h</FileName>
     </TypeIdentifier>
   </Class>

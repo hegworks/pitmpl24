@@ -214,7 +214,7 @@ void Player::RotateGradually(glm::vec3 dir, float deltaTime)
 	if(angleDiff < -180.0f) angleDiff += 360.0f;
 
 	// Interpolate to the new angle
-	float newAngle = currentAngle + glm::mix(0.0f, angleDiff, 1.0);
+	float newAngle = currentAngle + glm::mix(0.0f, angleDiff, m_rotationSpeed * deltaTime);
 
 	glm::vec3 rotation = glm::vec3(0, newAngle, 0);
 	Uknitty::GameObject::GetLocalTransform()->SetRotation(rotation);
