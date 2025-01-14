@@ -411,9 +411,9 @@ void UIManager::Inventory()
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
-	ImGui::SetNextWindowBgAlpha(0.3);
+	ImGui::SetNextWindowBgAlpha(0.05);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(30, 30, 30));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0, 0, 0, 0.05));
 	if(ImGui::Begin("Inventory", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();

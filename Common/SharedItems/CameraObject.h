@@ -23,6 +23,7 @@ public:
 
 	// optional
 	virtual void SetFollowTransform([[maybe_unused]] Uknitty::CTransform* followTransform) {};
+	virtual void ResetMouseOffset() {};
 };
 
 } // namespace Uknitty

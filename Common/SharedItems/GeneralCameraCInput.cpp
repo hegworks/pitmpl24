@@ -30,11 +30,12 @@ void GeneralCameraCInput::ProcessMousePosition(double xPos, double yPos)
 		case GeneralCamera::FollowType::THIRD_PERSON_FOLLOW:
 		case GeneralCamera::FollowType::FIRST_PERSON:
 		{
-			if(m_isFirstMouse) // initially set to true
+			if(m_isFirstMouse || m_isResetMouse) // initially set to true
 			{
 				m_lastX = xPos;
 				m_lastY = yPos;
 				m_isFirstMouse = false;
+				m_isResetMouse = false;
 			}
 
 			double xOffset = xPos - m_lastX;
@@ -79,6 +80,11 @@ void GeneralCameraCInput::OnKeyDown(Key key)
 		int nextCameraType = ((int)m_owner->GetCameraType() + 1) % m_owner->TOTAL_CAMERA_TYPES;
 		m_owner->SetFollowType(static_cast<Uknitty::GeneralCamera::FollowType>(nextCameraType));
 	}
+}
+
+void GeneralCameraCInput::ResetMouseOffset()
+{
+	m_isResetMouse = true;
 }
 
 } // namespace Uknitty

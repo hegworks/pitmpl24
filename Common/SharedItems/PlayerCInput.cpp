@@ -30,3 +30,11 @@ void PlayerCInput::OnMouseButtonDown(MouseButton button)
 		}
 	}
 }
+
+void PlayerCInput::OnKeyUpAll()
+{
+	m_isForwardKeyDown = false;
+	m_isBackwardKeyDown = false;
+	m_isLeftKeyDown = false;
+	m_isRightKeyDown = false;
+}

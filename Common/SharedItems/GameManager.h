@@ -8,6 +8,7 @@ namespace Uknitty
 class Engine;
 }
 class UIManager;
+class InventoryManager;
 
 class GameManager
 {
@@ -55,6 +56,7 @@ private:
 	IKeyboard* m_iKeyboard = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
 	UIManager* m_uiManager = nullptr;
+	InventoryManager* m_inventoryManager = nullptr;
 
 	GameState m_gameState = GameState::MAIN_MENU;
 	bool m_shouldQuit = false;

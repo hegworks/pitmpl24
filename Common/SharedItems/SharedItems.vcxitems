@@ -36,6 +36,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InventoryManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModelDataStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CPhysics.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)InventoryManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelDataStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsManager.cpp" />

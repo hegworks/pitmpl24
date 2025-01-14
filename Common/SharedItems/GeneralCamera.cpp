@@ -21,8 +21,8 @@ void GeneralCamera::OnAwake()
 {
 	m_projection = glm::mat4(1);
 	m_view = glm::mat4(1);
-
-	GameObject::AddCInput(new GeneralCameraCInput(this));
+	m_cinput = new GeneralCameraCInput(this);
+	GameObject::AddCInput(m_cinput);
 }
 
 void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
@@ -38,6 +38,11 @@ void GeneralCamera::OnLateUpdate([[maybe_unused]] float deltaTime)
 		default:
 			throw std::runtime_error("Unknown camera mode");
 	}
+}
+
+void GeneralCamera::ResetMouseOffset()
+{
+	m_cinput->ResetMouseOffset();
 }
 
 void GeneralCamera::FollowCamera(float deltaTime)

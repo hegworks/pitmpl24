@@ -3,11 +3,13 @@
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
 
+#include "CameraObject.h"
 #include "Engine.h"
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
 #include "IInput.h"
 #include "IInputKey.h"
+#include "InventoryManager.h"
 #include "ModelDataStorage.h"
 #include "PhysicsManager.h"
 #include "SceneManager.h"
@@ -98,6 +100,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameEvent::SHOWED_LOADING_SCREEN:
 			new SceneManager();
+			m_inventoryManager = new InventoryManager();
 			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			m_iMouse->CaptureMouseInput();
 			m_gameState = GameState::GAMEPLAY;
@@ -112,12 +115,16 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			if(m_gameState == GameState::GAMEPLAY)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::INVENTORY);
+				m_inventoryManager->ShowInventory();
+				m_engine->KeyUpAll();
 				m_gameState = GameState::INVENTORY;
 				m_iMouse->ReleaseMouseInput();
 			}
 			else if(m_gameState == GameState::INVENTORY)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::HUD);
+				m_inventoryManager->HideInventory();
+				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_gameState = GameState::GAMEPLAY;
 				m_iMouse->CaptureMouseInput();
 			}
@@ -152,6 +159,7 @@ void GameManager::Update(float deltaTime)
 
 	if(m_gameState == GameState::GAMEPLAY || m_gameState == GameState::INVENTORY)
 	{
+		m_inventoryManager->Update(deltaTime);
 		m_engine->Update(deltaTime);
 	}
 
@@ -184,7 +192,7 @@ void GameManager::KeyDown(Key key)
 
 void GameManager::KeyUp(Key key)
 {
-	if(m_gameState == GameState::GAMEPLAY)
+	if(m_gameState == GameState::GAMEPLAY || m_gameState == GameState::INVENTORY)
 	{
 		m_engine->GetInstance()->KeyUp(key);
 	}

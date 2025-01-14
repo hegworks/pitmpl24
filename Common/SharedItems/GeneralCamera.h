@@ -7,6 +7,7 @@
 
 namespace Uknitty
 {
+class GeneralCameraCInput;
 
 class GeneralCamera : public Uknitty::CameraObject
 {
@@ -22,6 +23,7 @@ public:
 	virtual void OnLateUpdate(float deltaTime) override;
 
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
+	virtual void ResetMouseOffset() override;
 
 	const float PITCH_MAX_THIRD_PERSON = 10.0f;
 	const float PITCH_MIN_THIRD_PERSON = -45.0f;
@@ -74,6 +76,7 @@ private:
 	Uknitty::CTransform* m_followTransform = nullptr;
 	FollowType m_followType = FollowType::TOP_DOWN_FOLLOW;
 	Mode m_mode = Mode::CHILD_OF_STH;
+	GeneralCameraCInput* m_cinput = nullptr;
 
 	double m_yaw = YAW_DEFAULT;
 	double m_pitch = 0;

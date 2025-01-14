@@ -12,6 +12,7 @@ public:
 	virtual void OnKeyDown(Key key) override;
 	virtual void OnKeyUp(Key key) override;
 	virtual void OnMouseButtonDown(MouseButton button) override;
+	virtual void OnKeyUpAll() override;
 
 	bool IsForwardInput() const { return m_isForwardKeyDown; }
 	bool IsBackwardInput() const { return m_isBackwardKeyDown; }

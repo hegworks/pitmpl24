@@ -56,6 +56,7 @@ public:
 
 	void KeyDown(Key key);
 	void KeyUp(Key key);
+	void KeyUpAll();
 	void MouseButtonDown(MouseButton mouseButton);
 	void MouseButtonUp(MouseButton mouseButton);
 

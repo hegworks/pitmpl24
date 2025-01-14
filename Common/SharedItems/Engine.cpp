@@ -164,6 +164,17 @@ void Engine::KeyUp(Key key)
 	}
 }
 
+void Engine::KeyUpAll()
+{
+	for(auto& [id, gameObject] : m_gameObjects)
+	{
+		if(gameObject->HasCInput())
+		{
+			gameObject->GetCInput()->OnKeyUpAll();
+		}
+	}
+}
+
 void Engine::MouseButtonDown(MouseButton mouseButton)
 {
 	for(auto& [id, gameObject] : m_gameObjects)
