@@ -63,3 +63,13 @@ void GameplayEvents::OnSelectedInventoryItem()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PRESSED_INVENTORY);
 }
+
+void GameplayEvents::OnUsedHamburger()
+{
+	GameSharedDependencies::Get<Player>()->OnUsedHamburger();
+}
+
+void GameplayEvents::OnUsedGun()
+{
+	GameSharedDependencies::Get<Player>()->OnUsedGun();
+}

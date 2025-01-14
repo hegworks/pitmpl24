@@ -391,6 +391,9 @@ void UIManager::HUD()
 			std::string itemString = "";
 			switch(inventoryItem)
 			{
+				case InventoryManager::Item::NONE:
+					itemString = "NONE";
+					break;
 				case InventoryManager::Item::GUN:
 					itemString = "GUN";
 					break;
@@ -398,7 +401,7 @@ void UIManager::HUD()
 					itemString = "HAMBURGER";
 					break;
 				default:
-					break;
+					throw std::runtime_error("Invalid item");
 			}
 			std::string text = "EQUIPPED: " + itemString;
 			ImGui::Text(text.c_str());
@@ -484,6 +487,8 @@ void UIManager::Inventory()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 + distanceFromCenter));
 				if(ImGui::Button("##2", buttonSize))
 				{
+					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::NONE);
+					GameSharedDependencies::Get<GameplayEvents>()->OnSelectedInventoryItem();
 				}
 			}
 
@@ -491,6 +496,8 @@ void UIManager::Inventory()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 - distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
 				if(ImGui::Button("##3", buttonSize))
 				{
+					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::NONE);
+					GameSharedDependencies::Get<GameplayEvents>()->OnSelectedInventoryItem();
 				}
 			}
 

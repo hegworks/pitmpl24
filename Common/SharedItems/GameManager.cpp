@@ -43,6 +43,7 @@ GameManager::~GameManager()
 	if(m_gameState != GameState::MAIN_MENU)
 	{
 		delete GameSharedDependencies::Get<SceneManager>();
+		delete GameSharedDependencies::Get<InventoryManager>();
 	}
 	delete GameSharedDependencies::Get<ModelDataStorage>();
 	delete GameSharedDependencies::Get<GameplayEvents>();
@@ -91,6 +92,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameEvent::PRESSED_MAIN_MENU:
 			delete GameSharedDependencies::Get<SceneManager>();
+			delete GameSharedDependencies::Get<InventoryManager>();
 			m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 			m_gameState = GameState::MAIN_MENU;
 			m_iMouse->ReleaseMouseInput();
@@ -182,6 +184,11 @@ void GameManager::KeyDown(Key key)
 	if(key == Key::TAB)
 	{
 		TriggerEvent(GameEvent::PRESSED_INVENTORY);
+	}
+
+	if(key == Key::F)
+	{
+		m_inventoryManager->UseCurrentItem();
 	}
 
 	if(m_gameState == GameState::GAMEPLAY)

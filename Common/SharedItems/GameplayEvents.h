@@ -16,4 +16,6 @@ public:
 	void OnPlayerCollidedWithRoomChange();
 	void OnNewSceneLoaded();
 	void OnSelectedInventoryItem();
+	void OnUsedHamburger();
+	void OnUsedGun();
 };

@@ -124,6 +124,16 @@ void Player::OnEnemyBulletHit()
 	}
 }
 
+void Player::OnUsedHamburger()
+{
+	m_hp = HP;
+}
+
+void Player::OnUsedGun()
+{
+	OnShootInput();
+}
+
 void Player::OnCollision(const btCollisionObject* other)
 {
 	if(other->getUserPointer())
