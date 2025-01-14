@@ -74,6 +74,11 @@ ModelDataStorage::ModelDataStorage()
 		"../Common/Assets/Models/Win/Win.obj",
 		glm::vec3(4, 4, 4)
 	};
+	m_datas[INVENTORY_GUN] =
+	{
+		"../Common/Assets/Models/InventoryGun/Rifle_01.fbx",
+		glm::vec3(1, 1, 1)
+	};
 }
 
 ModelDataStorage::~ModelDataStorage()

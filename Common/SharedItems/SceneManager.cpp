@@ -89,6 +89,15 @@ void SceneManager::CreatePlayer()
 	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
+
+	{ // InventoryGun
+		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::INVENTORY_GUN);
+		Uknitty::ModelObject* inventoryGun = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		inventoryGun->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, inventoryGunModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM));
+		inventoryGun->GetLocalTransform()->SetScale(glm::vec3(1));
+		inventoryGun->GetLocalTransform()->SetPosition(glm::vec3(0, 5, 0));
+		m_engine->UseDefaultParent(inventoryGun);
+	}
 }
 
 void SceneManager::CreateShaderProgram()

@@ -15,6 +15,7 @@ public:
 		LOSE_MENU,
 		LOADING_SCREEN,
 		HUD,
+		INVENTORY,
 	};
 
 	void Update(float deltaTime);
@@ -33,4 +34,5 @@ private:
 	void LoadingScreen();
 	void HUD();
 	void FPSCounter();
+	void Inventory();
 };

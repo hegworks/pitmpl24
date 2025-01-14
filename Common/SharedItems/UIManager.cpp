@@ -49,6 +49,10 @@ void UIManager::Update(float deltaTime)
 		case UIManager::MenuType::HUD:
 			HUD();
 			break;
+		case UIManager::MenuType::INVENTORY:
+			HUD();
+			Inventory();
+			break;
 		default:
 			throw std::runtime_error("Invalid menu type");
 	}
@@ -328,8 +332,6 @@ void UIManager::LoadingScreen()
 	{
 		ImGui::PopStyleColor();
 
-		const ImVec2 buttonSize = ImVec2(150, 50);
-
 		{
 			ImGui::PushStyleColor(ImGuiCol_Text, (ImVec4)ImColor(255, 255, 255));
 
@@ -396,6 +398,80 @@ void UIManager::FPSCounter()
 	{
 		ImGui::SetCursorPos(ImVec2(0, 0));
 		ImGui::Text("FPS: %d", m_fps);
+
+		ImGui::End();
+	}
+}
+
+void UIManager::Inventory()
+{
+	static bool use_work_area = true;
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
+	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
+	ImGui::SetNextWindowBgAlpha(0.3);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(30, 30, 30));
+	if(ImGui::Begin("Inventory", &m_isMainMenuVisible, flags))
+	{
+		ImGui::PopStyleColor();
+
+		const ImVec2 buttonSize = ImVec2(150, 150);
+		const float distanceFromCenter = 150;
+
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));  // Transparent
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 1, 1, 0.1f));  // Slight hover effect
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1, 1, 1, 0.2f));  // Slight active effect
+			ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.0f);  // Border size
+
+			{
+				std::string text = "Inventory";
+				float oldTextSize = ImGui::GetFont()->Scale;
+				ImGui::GetFont()->Scale *= 1.5f;
+				ImGui::PushFont(ImGui::GetFont());
+				auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
+				auto textHeight = ImGui::CalcTextSize(text.c_str()).y;
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - textWidth / 2.0, ImGui::GetWindowHeight() / 2 - textHeight / 2.0));
+				ImGui::Text(text.c_str());
+				ImGui::GetFont()->Scale = oldTextSize;
+				ImGui::PopFont();
+			}
+
+			{
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 - distanceFromCenter));
+				if(ImGui::Button("##0", buttonSize))
+				{
+
+				}
+			}
+
+			{
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 + distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
+				if(ImGui::Button("##1", buttonSize))
+				{
+				}
+			}
+
+			{
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 + distanceFromCenter));
+				if(ImGui::Button("##2", buttonSize))
+				{
+				}
+			}
+
+			{
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 - distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
+				if(ImGui::Button("##3", buttonSize))
+				{
+				}
+			}
+
+			ImGui::PopStyleVar();
+			ImGui::PopStyleColor(3);
+		}
 
 		ImGui::End();
 	}

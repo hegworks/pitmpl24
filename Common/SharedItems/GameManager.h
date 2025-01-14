@@ -23,6 +23,7 @@ public:
 		WIN,
 		LOSE,
 		LOADING,
+		INVENTORY,
 	};
 
 	enum class GameEvent
@@ -37,6 +38,7 @@ public:
 		SHOWED_LOADING_SCREEN,
 		PLAYER_COLLIDED_WITH_ROOM_CHANGE,
 		NEW_SCENE_LOADED,
+		PRESSED_INVENTORY,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);

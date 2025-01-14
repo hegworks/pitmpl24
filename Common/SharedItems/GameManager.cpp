@@ -108,6 +108,20 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 		case GameEvent::NEW_SCENE_LOADED:
 			m_isNewSceneLoadedSoReEnablePhysics = true;
 			break;
+		case GameEvent::PRESSED_INVENTORY:
+			if(m_gameState == GameState::GAMEPLAY)
+			{
+				m_uiManager->ShowMenu(UIManager::MenuType::INVENTORY);
+				m_gameState = GameState::INVENTORY;
+				m_iMouse->ReleaseMouseInput();
+			}
+			else if(m_gameState == GameState::INVENTORY)
+			{
+				m_uiManager->ShowMenu(UIManager::MenuType::HUD);
+				m_gameState = GameState::GAMEPLAY;
+				m_iMouse->CaptureMouseInput();
+			}
+			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");
 	}
@@ -136,7 +150,7 @@ void GameManager::Update(float deltaTime)
 		m_isNewSceneLoadedSoReEnablePhysics = false;
 	}
 
-	if(m_gameState == GameState::GAMEPLAY)
+	if(m_gameState == GameState::GAMEPLAY || m_gameState == GameState::INVENTORY)
 	{
 		m_engine->Update(deltaTime);
 	}
@@ -155,6 +169,11 @@ void GameManager::KeyDown(Key key)
 	if(key == Key::ESCAPE)
 	{
 		TriggerEvent(GameEvent::PRESSED_PAUSE);
+	}
+
+	if(key == Key::TAB)
+	{
+		TriggerEvent(GameEvent::PRESSED_INVENTORY);
 	}
 
 	if(m_gameState == GameState::GAMEPLAY)
