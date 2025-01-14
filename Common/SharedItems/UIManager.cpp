@@ -5,6 +5,7 @@
 
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
+#include "InventoryManager.h"
 #include "Player.h"
 #include <iostream>
 #include <stdexcept>
@@ -382,6 +383,27 @@ void UIManager::HUD()
 		ImGui::ProgressBar(progress, ImVec2(200, 0.0f));
 		ImGui::PopStyleColor();
 
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20);
+
+		{
+			const InventoryManager::Item inventoryItem = GameSharedDependencies::Get<InventoryManager>()->GetCurrentItem();
+			std::string itemString = "";
+			switch(inventoryItem)
+			{
+				case InventoryManager::Item::GUN:
+					itemString = "GUN";
+					break;
+				case InventoryManager::Item::HAMBURGER:
+					itemString = "HAMBURGER";
+					break;
+				default:
+					break;
+			}
+			std::string text = "EQUIPPED: " + itemString;
+			ImGui::Text(text.c_str());
+		}
+
 		ImGui::End();
 	}
 }
@@ -444,7 +466,8 @@ void UIManager::Inventory()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 - distanceFromCenter));
 				if(ImGui::Button("##0", buttonSize))
 				{
-
+					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::GUN);
+					GameSharedDependencies::Get<GameplayEvents>()->OnSelectedInventoryItem();
 				}
 			}
 
@@ -452,6 +475,8 @@ void UIManager::Inventory()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 + distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
 				if(ImGui::Button("##1", buttonSize))
 				{
+					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::HAMBURGER);
+					GameSharedDependencies::Get<GameplayEvents>()->OnSelectedInventoryItem();
 				}
 			}
 

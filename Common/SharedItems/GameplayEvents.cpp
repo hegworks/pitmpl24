@@ -58,3 +58,8 @@ void GameplayEvents::OnNewSceneLoaded()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::NEW_SCENE_LOADED);
 }
+
+void GameplayEvents::OnSelectedInventoryItem()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PRESSED_INVENTORY);
+}

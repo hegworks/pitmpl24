@@ -32,6 +32,7 @@ public:
 	inline static constexpr const char* RETICLE = "Reticle";
 	inline static constexpr const char* WIN = "Win";
 	inline static constexpr const char* INVENTORY_GUN = "InventoryGun";
+	inline static constexpr const char* HAMBURGER = "Hamburger";
 
 private:
 	std::unordered_map<std::string, ModelData> m_datas;

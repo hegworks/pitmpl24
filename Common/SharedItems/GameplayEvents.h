@@ -15,4 +15,5 @@ public:
 	void OnPlayerWon();
 	void OnPlayerCollidedWithRoomChange();
 	void OnNewSceneLoaded();
+	void OnSelectedInventoryItem();
 };

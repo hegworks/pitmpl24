@@ -79,6 +79,11 @@ ModelDataStorage::ModelDataStorage()
 		"../Common/Assets/Models/InventoryGun/Rifle_01.fbx",
 		glm::vec3(1, 1, 1)
 	};
+	m_datas[HAMBURGER] =
+	{
+		"../Common/Assets/Models/Hamburger/Hamburger.fbx",
+		glm::vec3(1, 1, 1)
+	};
 }
 
 ModelDataStorage::~ModelDataStorage()
