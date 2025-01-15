@@ -35,12 +35,12 @@ public:
 	ShaderProgram(std::string vertexPath, std::string fragmentPath, ShaderType shaderType);
 
 	// use/activate the shader
-	void Use()
+	void Use() const
 	{
 		glUseProgram(ID);
 	}
 
-	void UnUse()
+	void UnUse() const
 	{
 		glUseProgram(0);
 	}
@@ -76,6 +76,10 @@ public:
 	void SetVec3(const std::string& name, glm::vec3 value) const
 	{
 		glUniform3fv(GetUniformLocation(name), 1, glm::value_ptr(value));
+	}
+	void SetVec4(const std::string& name, glm::vec4 value) const
+	{
+		glUniform4fv(GetUniformLocation(name), 1, glm::value_ptr(value));
 	}
 
 private:

@@ -96,6 +96,9 @@ void SceneManager::CreatePlayer()
 	lightSource->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
 	lightSource->SetParent(m_player);
+	lightSource->GetShaderProgram().Use();
+	lightSource->GetShaderProgram().SetVec4("uColor", glm::vec4(0, 1, 0, 1));
+	lightSource->GetShaderProgram().UnUse();
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);

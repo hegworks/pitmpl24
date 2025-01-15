@@ -37,6 +37,7 @@ private:
 
 public:
 	void Update(float deltaTime);
+	void UpdateShaders();
 	void Destroy();
 
 	template <typename T>

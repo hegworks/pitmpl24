@@ -60,6 +60,7 @@ void Engine::Update(float deltaTime)
 
 
 	//TODO update light shaders here
+	UpdateShaders();
 	//ShaderProgram* unlitShaderProgram s= m_assetManager->AutoGetShaderProgram("unlit");
 	//unlitShaderProgram->Use();
 	//unlitShaderProgram->SetMat4("uModel", glm::ve)
@@ -76,6 +77,24 @@ void Engine::Update(float deltaTime)
 	std::cout << "cameraLocalPos: " << cameraLocalPos.x << ", " << cameraLocalPos.y << ", " << cameraLocalPos.z << std::endl;
 	std::cout << "cameraWorldPos: " << cameraWorldPos.x << ", " << cameraWorldPos.y << ", " << cameraWorldPos.z << std::endl;
 #endif
+}
+
+void Engine::UpdateShaders()
+{
+	auto& shaderPrograms = m_assetManager->GetAllShaderPrograms();
+	for(auto& [shaderType, shaderProgram] : shaderPrograms)
+	{
+		switch(shaderType)
+		{
+			case ShaderType::DEFAULT:
+			case ShaderType::BULLET_PHYSICS:
+				break;
+			case ShaderType::UNLIT:
+				break;
+			default:
+				throw std::runtime_error("invalid shaderType");
+		}
+	}
 }
 
 void Engine::Destroy()

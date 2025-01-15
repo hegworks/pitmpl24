@@ -14,6 +14,7 @@ public:
 	virtual void OnAwake() override;
 
 	void Initialize(Model* model, ShaderProgram* shaderProgram);
+	const ShaderProgram& GetShaderProgram();
 };
 
 } // namespace Uknitty
