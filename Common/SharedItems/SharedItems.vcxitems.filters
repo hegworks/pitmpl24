@@ -470,6 +470,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightSource.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">

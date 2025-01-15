@@ -66,6 +66,8 @@ void Engine::Update(float deltaTime)
 	//unlitShaderProgram->SetMat4("uModel", glm::ve)
 
 
+	m_lightManager->Update(deltaTime);
+
 	glm::mat4 cameraVP = m_mainCamera->GetProjection() * m_mainCamera->GetView();
 	m_root->Draw(cameraVP);
 

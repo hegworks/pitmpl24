@@ -1,8 +1,13 @@
 #include "LightManager.h"
 
 #include "AssetManager.h"
+#include "CTransform.h"
 #include "Engine.h"
+#include "GameObject.h"
+#include "GlCheckError.h"
+#include "LightSource.h"
 #include "ShaderProgram.h"
+#include "ShaderType.h"
 #include <stdexcept>
 
 namespace Uknitty
@@ -11,6 +16,17 @@ namespace Uknitty
 Uknitty::LightManager::LightManager(AssetManager* assetManager)
 {
 	m_assetManager = assetManager;
+}
+
+void LightManager::Update(float deltaTime)
+{
+	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
+	for(auto& lightSource : m_lightSources)
+	{
+		phong->Use();
+		phong->SetVec3("uLightPos", *lightSource->GetWorldTransform()->GetPosition());
+		phong->UnUse();
+	}
 }
 
 void LightManager::SetAmbientColor(glm::vec3 color)
@@ -59,6 +75,17 @@ void LightManager::SetAmbientStrength(float strength)
 				throw std::runtime_error("invalid shaderType");
 		}
 	}
+}
+
+void LightManager::NewLightSourceCreated(LightSource* lightSource)
+{
+	m_createdLights++;
+	if(m_createdLights > MAX_LIGHTS)
+	{
+		throw std::runtime_error("Maximum number of lights reached");
+	}
+
+	m_lightSources.push_back(lightSource);
 }
 
 } // namespace Uknitty

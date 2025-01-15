@@ -112,6 +112,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)InventoryManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelDataStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PhysicsManager.cpp" />
