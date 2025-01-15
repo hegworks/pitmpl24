@@ -12,6 +12,7 @@
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
 #include "Light.h"
+#include "LightManager.h"
 #include "Model.h"
 #include "ModelDataStorage.h"
 #include "PhysicsManager.h"
@@ -92,13 +93,16 @@ void SceneManager::CreatePlayer()
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
 
-	Uknitty::ModelObject* lightSource = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	lightSource->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
+	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
+	m_engine->GetLightManager()->SetAmbientStrength(0.4f);
+
+	/*Uknitty::ModelObject* lightSource = m_engine->CreateGameObject<Uknitty::ModelObject>();
+	lightSource->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::PHONG));
 	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
 	lightSource->SetParent(m_player);
 	lightSource->GetShaderProgram().Use();
-	lightSource->GetShaderProgram().SetVec4("uColor", glm::vec4(0, 1, 0, 1));
-	lightSource->GetShaderProgram().UnUse();
+	lightSource->GetShaderProgram().SetVec4("uObjectColor", glm::vec4(0, 1, 0, 1));
+	lightSource->GetShaderProgram().UnUse();*/
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);
@@ -114,4 +118,5 @@ void SceneManager::CreateShaderProgram()
 {
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT, "../Common/Assets/Shaders/UnlitVertex.glsl", "../Common/Assets/Shaders/UnlitFragment.glsl");
+	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::PHONG, "../Common/Assets/Shaders/PhongVertex.glsl", "../Common/Assets/Shaders/PhongFragment.glsl");
 }

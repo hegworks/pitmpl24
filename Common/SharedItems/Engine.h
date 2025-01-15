@@ -16,6 +16,7 @@ class GameObject;
 class PhysicsManager;
 class CameraObject;
 class AssetManager;
+class LightManager;
 
 class Engine
 {
@@ -64,12 +65,14 @@ public:
 	btDynamicsWorld* GetDynamicsWorld();
 	PhysicsManager* GetPhysicsManager() { return m_physicsManager; }
 	AssetManager* GetAssetManager() { return m_assetManager; }
+	LightManager* GetLightManager() { return m_lightManager; }
 
 private:
 	GameObject::ID m_nextID = 0;
 
 	std::unordered_map<GameObject::ID, GameObject*> m_gameObjects;
 	Uknitty::PhysicsManager* m_physicsManager = nullptr;
+	LightManager* m_lightManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
 	GameObject* m_root = nullptr;
 	Uknitty::AssetManager* m_assetManager = nullptr;

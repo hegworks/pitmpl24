@@ -9,6 +9,7 @@
 #include "GeneralCamera.h"
 #include "IInput.h"
 #include "IInputKey.h"
+#include "LightManager.h"
 #include "PhysicsManager.h"
 #include "ShaderProgram.h"
 #include "UknittySettings.h"
@@ -25,6 +26,7 @@ Engine::Engine()
 {
 	m_physicsManager = new Uknitty::PhysicsManager();
 	m_assetManager = new Uknitty::AssetManager();
+	m_lightManager = new Uknitty::LightManager(m_assetManager);
 	m_root = CreateGameObject<GameObject>();
 }
 
@@ -57,10 +59,8 @@ void Engine::Update(float deltaTime)
 
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
 
-
-
 	//TODO update light shaders here
-	UpdateShaders();
+	//UpdateShaders();
 	//ShaderProgram* unlitShaderProgram s= m_assetManager->AutoGetShaderProgram("unlit");
 	//unlitShaderProgram->Use();
 	//unlitShaderProgram->SetMat4("uModel", glm::ve)
