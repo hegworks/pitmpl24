@@ -20,6 +20,7 @@
 #include "Player.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "ShaderType.h"
 #include "StaticObject.h"
 #include "StaticObject.h"
 #include "UknittySettings.h"
@@ -36,7 +37,7 @@ Scene::Scene(int mapId)
 	m_player = GameSharedDependencies::Get<Player>();
 	m_modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();
 	m_engine = Uknitty::Engine::GetInstance();
-	m_shaderProgram = m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM);
+	m_shaderProgram = m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT);
 
 	m_sceneManagerBlackboard = GameSharedDependencies::Get<SceneManagerBlackboard>();
 

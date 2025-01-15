@@ -15,6 +15,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <sstream>
+#include "ShaderType.h"
 #include <string>
 
 namespace Uknitty
@@ -31,7 +32,7 @@ public:
 	unsigned int ID;
 
 	// constructor reads and builds the shader
-	ShaderProgram(std::string vertexPath, std::string fragmentPath);
+	ShaderProgram(std::string vertexPath, std::string fragmentPath, ShaderType shaderType);
 
 	// use/activate the shader
 	void Use()
@@ -48,6 +49,8 @@ public:
 	{
 		glDeleteProgram(ID);
 	}
+
+	ShaderType GetShaderType() const { return m_shaderType; }
 
 	// utility uniform functions
 	GLint GetUniformLocation(const std::string& name) const
@@ -74,9 +77,12 @@ public:
 	{
 		glUniform3fv(GetUniformLocation(name), 1, glm::value_ptr(value));
 	}
+
+private:
+	ShaderType m_shaderType = ShaderType::DEFAULT;
 };
 
-inline ShaderProgram::ShaderProgram(std::string vertexPath, std::string fragmentPath)
+inline ShaderProgram::ShaderProgram(std::string vertexPath, std::string fragmentPath, ShaderType shaderType)
 {
 	// 1. retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -155,6 +161,8 @@ inline ShaderProgram::ShaderProgram(std::string vertexPath, std::string fragment
 	// delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+
+	m_shaderType = shaderType;
 }
 
 }

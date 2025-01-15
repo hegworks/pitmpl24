@@ -1,6 +1,7 @@
 #include "BTDebugDraw.h"
 
 #include "btBulletDynamicsCommon.h"
+#include "ShaderType.h"
 #include <CameraObject.h>
 #include <ShaderProgram.h>
 
@@ -17,7 +18,7 @@ namespace Uknitty
 
 BTDebugDraw::BTDebugDraw()
 {
-	m_shaderProgram = new ShaderProgram("../Common/Assets/Shaders/BTDebugVertex.glsl", "../Common/Assets/Shaders/BTDebugFragment.glsl");
+	m_shaderProgram = new ShaderProgram("../Common/Assets/Shaders/BTDebugVertex.glsl", "../Common/Assets/Shaders/BTDebugFragment.glsl", ShaderType::BULLET_PHYSICS);
 	glGenVertexArrays(1, &m_vao);
 	glGenBuffers(1, &m_vbo);
 	glGenBuffers(1, &m_colorVbo);

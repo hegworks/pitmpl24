@@ -2,6 +2,7 @@
 
 #include "Model.h"
 #include "ShaderProgram.h"
+#include "ShaderType.h"
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -38,18 +39,18 @@ Model* AssetManager::AutoGetModel(std::string key, std::string filePath, glm::ve
 	return m_models[key];
 }
 
-ShaderProgram* AssetManager::AutoGetShaderProgram(std::string key, std::string vertexShaderPath, std::string fragmentShaderPath)
+ShaderProgram* AssetManager::AutoGetShaderProgram(ShaderType shaderType, std::string vertexShaderPath, std::string fragmentShaderPath)
 {
-	if(m_shaderPrograms.find(key) != m_shaderPrograms.end())
+	if(m_shaderPrograms.find(shaderType) != m_shaderPrograms.end())
 	{
-		return m_shaderPrograms[key];
+		return m_shaderPrograms[shaderType];
 	}
 	if(vertexShaderPath == "" || fragmentShaderPath == "")
 	{
 		throw std::runtime_error("ShaderProgram with key does not exist and vertexShaderPath or fragmentShaderPath is empty");
 	}
-	m_shaderPrograms[key] = new ShaderProgram(vertexShaderPath, fragmentShaderPath);
-	return m_shaderPrograms[key];
+	m_shaderPrograms[shaderType] = new ShaderProgram(vertexShaderPath, fragmentShaderPath, shaderType);
+	return m_shaderPrograms[shaderType];
 }
 
 } // namespace Uknitty

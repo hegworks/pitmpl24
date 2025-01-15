@@ -10,6 +10,7 @@
 #include "IInput.h"
 #include "IInputKey.h"
 #include "PhysicsManager.h"
+#include "ShaderProgram.h"
 #include "UknittySettings.h"
 #include <stdexcept>
 
@@ -55,6 +56,14 @@ void Engine::Update(float deltaTime)
 	}
 
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
+
+
+
+	//TODO update light shaders here
+	//ShaderProgram* unlitShaderProgram s= m_assetManager->AutoGetShaderProgram("unlit");
+	//unlitShaderProgram->Use();
+	//unlitShaderProgram->SetMat4("uModel", glm::ve)
+
 
 	glm::mat4 cameraVP = m_mainCamera->GetProjection() * m_mainCamera->GetView();
 	m_root->Draw(cameraVP);

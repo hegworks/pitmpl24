@@ -9,6 +9,7 @@
 #include "glm/glm.hpp"
 #include "ModelDataStorage.h"
 #include "ModelObject.h"
+#include "ShaderType.h"
 #include "string"
 #include <GameSettings.h>
 #include <stdexcept>
@@ -43,7 +44,7 @@ InventoryManager::InventoryManager()
 	{
 		ModelDataStorage::ModelData* modelData = modelDataStorage->GetModelData(itemData->modelName);
 		Uknitty::ModelObject* modelObject = engine->CreateGameObject<Uknitty::ModelObject>();
-		modelObject->Initialize(assetManager->AutoGetModel(itemData->modelName, modelData->m_filePath), assetManager->AutoGetShaderProgram(MAIN_SHADERPROGRAM));
+		modelObject->Initialize(assetManager->AutoGetModel(itemData->modelName, modelData->m_filePath), assetManager->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT));
 		modelObject->GetLocalTransform()->SetScale(itemData->scale);
 		modelObject->GetLocalTransform()->SetPosition(itemData->position);
 		modelObject->SetParent(engine->GetMainCamera());

@@ -321,6 +321,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)InventoryManager.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Light.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightSource.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShaderType.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -451,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InventoryManager.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -723,6 +735,12 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Win\Win.obj">
       <Filter>Assets\Models\Win</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitFragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitVertex.glsl">
+      <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

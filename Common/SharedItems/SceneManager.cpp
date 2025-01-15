@@ -11,6 +11,7 @@
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
+#include "Light.h"
 #include "Model.h"
 #include "ModelDataStorage.h"
 #include "PhysicsManager.h"
@@ -19,6 +20,7 @@
 #include "Scene.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
+#include "ShaderType.h"
 #include <BTDebugDraw.h>
 
 SceneManager::SceneManager()
@@ -85,10 +87,15 @@ void SceneManager::CreatePlayer()
 
 	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
 	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM));
+	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT));
 	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
+
+	Uknitty::ModelObject* lightSource = m_engine->CreateGameObject<Uknitty::ModelObject>();
+	lightSource->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
+	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
+	lightSource->SetParent(m_player);
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);
@@ -102,5 +109,6 @@ void SceneManager::CreatePlayer()
 
 void SceneManager::CreateShaderProgram()
 {
-	m_engine->GetAssetManager()->AutoGetShaderProgram(MAIN_SHADERPROGRAM, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
+	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT, "../Common/Assets/Shaders/UnlitVertex.glsl", "../Common/Assets/Shaders/UnlitFragment.glsl");
 }

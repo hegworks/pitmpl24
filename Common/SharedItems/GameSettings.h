@@ -24,10 +24,6 @@ constexpr int STARTING_MAP_ID = 0;
 #define PLAYER_INITIAL_POS glm::vec3(0.0f, 2.0f, 0.0f)
 #pragma endregion Release settings
 
-#pragma region Shared strings
-constexpr const char* MAIN_SHADERPROGRAM = "main";
-#pragma endregion
-
 #pragma region Debug settings
 constexpr int DEBUG_MAX_ENEMIES_TO_SPAWN = 100;
 #pragma endregion Debug settings
