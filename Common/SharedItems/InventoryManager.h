@@ -25,6 +25,16 @@ public:
 
 	struct ItemData
 	{
+		ItemData(Item _item, const std::string& _modelName, const glm::vec3& _position, const glm::vec3& _scale)
+			: item(_item)
+			, modelName(_modelName)
+			, position(_position)
+			, scale(_scale)
+			, modelObject(nullptr)
+			, isUsed(false)
+		{
+		}
+
 		Item item;
 		std::string modelName;
 		glm::vec3 position;
