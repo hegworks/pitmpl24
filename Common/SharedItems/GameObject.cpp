@@ -60,7 +60,7 @@ void GameObject::Draw(glm::mat4 cameraVP)
 	glm::mat4 drawTransform = cameraVP * worldTransform;
 	if(HasCRender() && m_isDrawSelfEnabled)
 	{
-		m_render->UpdateShader(worldTransform);
+		m_render->UpdateShader(*m_localTransform->GetMatrix());
 		m_render->Draw(drawTransform);
 	}
 	for(auto& gameObject : m_children)

@@ -23,5 +23,5 @@ void main()
 	ioFragPos = vec3(uModel * vec4(iPos, 1.0));
 	ioModel = uModel;
 	ioTexCoord = iTexCoord;
-	ioNormal = iNormal;
+	ioNormal = normalize(mat3(transpose(inverse(uModel))) * iNormal);
 }

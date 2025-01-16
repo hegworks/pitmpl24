@@ -99,8 +99,10 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+	lightSource->Initialize(glm::vec3(0, 1, 0));
 	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
 	lightSource->SetParent(m_player);
+	lightSource->SetColor(glm::vec3(0, 1, 1));
 
 	Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
 	ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);

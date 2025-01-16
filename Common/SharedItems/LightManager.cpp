@@ -77,7 +77,7 @@ void LightManager::SetAmbientStrength(float strength)
 	}
 }
 
-void LightManager::NewLightSourceCreated(LightSource* lightSource)
+void LightManager::NewLightSourceCreated(LightSource* lightSource, glm::vec3 lightColor)
 {
 	m_createdLights++;
 	if(m_createdLights > MAX_LIGHTS)
@@ -85,7 +85,19 @@ void LightManager::NewLightSourceCreated(LightSource* lightSource)
 		throw std::runtime_error("Maximum number of lights reached");
 	}
 
+	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
+	phong->Use();
+	phong->SetVec3("uLightColor", lightColor);
+	phong->UnUse();
 	m_lightSources.push_back(lightSource);
+}
+
+void LightManager::SetLightColor(glm::vec3 Color)
+{
+	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
+	phong->Use();
+	phong->SetVec3("uLightColor", Color);
+	phong->UnUse();
 }
 
 } // namespace Uknitty

@@ -17,7 +17,8 @@ public:
 	void Update(float deltaTime);
 	void SetAmbientColor(glm::vec3 color);
 	void SetAmbientStrength(float strength);
-	void NewLightSourceCreated(LightSource* lightSource);
+	void NewLightSourceCreated(LightSource* lightSource, glm::vec3 lightColor);
+	void SetLightColor(glm::vec3 Color);
 
 private:
 	AssetManager* m_assetManager = nullptr;
