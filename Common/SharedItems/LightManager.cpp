@@ -1,6 +1,7 @@
 #include "LightManager.h"
 
 #include "AssetManager.h"
+#include "CameraObject.h"
 #include "CTransform.h"
 #include "Engine.h"
 #include "GameObject.h"
@@ -21,10 +22,12 @@ Uknitty::LightManager::LightManager(AssetManager* assetManager)
 void LightManager::Update(float deltaTime)
 {
 	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
+	glm::vec3 cameraPos = *Engine::GetInstance()->GetMainCamera()->GetWorldTransform()->GetPosition();
 	for(auto& lightSource : m_lightSources)
 	{
 		phong->Use();
 		phong->SetVec3("uLightPos", *lightSource->GetWorldTransform()->GetPosition());
+		phong->SetVec3("uViewPos", cameraPos);
 		phong->UnUse();
 	}
 }

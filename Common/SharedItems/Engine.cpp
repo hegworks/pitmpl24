@@ -81,24 +81,6 @@ void Engine::Update(float deltaTime)
 #endif
 }
 
-void Engine::UpdateShaders()
-{
-	auto& shaderPrograms = m_assetManager->GetAllShaderPrograms();
-	for(auto& [shaderType, shaderProgram] : shaderPrograms)
-	{
-		switch(shaderType)
-		{
-			case ShaderType::DEFAULT:
-			case ShaderType::BULLET_PHYSICS:
-				break;
-			case ShaderType::UNLIT:
-				break;
-			default:
-				throw std::runtime_error("invalid shaderType");
-		}
-	}
-}
-
 void Engine::Destroy()
 {
 	for(auto& [id, gameObject] : m_gameObjects)
