@@ -49,11 +49,14 @@ public:
 	void LightSourceDestroyed(LightSource* lightSource);
 	void SetLightData(LightData* lightData);
 	void SetDirectionalLightData(DirLightData* dirLightData);
+	void SetUnlitColor(glm::vec3 color);
+	DirLightData* GetDirLightData() { return m_dirLightData; }
 
 private:
 	AssetManager* m_assetManager = nullptr;
 	std::vector<LightSource*> m_lightSources;
 	ShaderProgram* m_phong = nullptr;
+	DirLightData* m_dirLightData = nullptr;
 
 	const int MAX_LIGHTS = 1;
 

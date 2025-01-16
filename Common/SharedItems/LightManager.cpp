@@ -78,6 +78,7 @@ void LightManager::SetLightData(LightData* lightData)
 
 void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
 {
+	m_dirLightData = dirLightData;
 	m_phong->Use();
 	m_phong->SetVec3(DirLightProperties::DIRECTION, dirLightData->direction);
 	m_phong->SetVec3(DirLightProperties::DIFFUSE_COLOR, dirLightData->diffuseColor);
@@ -85,6 +86,14 @@ void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
 	m_phong->SetFloat(DirLightProperties::SPECULAR_STRENGTH, dirLightData->specularStrength);
 	m_phong->SetFloat(DirLightProperties::SHININESS, dirLightData->shininess);
 	m_phong->UnUse();
+}
+
+void LightManager::SetUnlitColor(glm::vec3 color)
+{
+	ShaderProgram* unlit = m_assetManager->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT);
+	unlit->Use();
+	unlit->SetVec4("uColor", glm::vec4(color, 1));
+	unlit->UnUse();
 }
 
 } // namespace Uknitty

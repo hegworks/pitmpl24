@@ -117,10 +117,19 @@ void SceneManager::CreatePlayer()
 	lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 	lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
 	lightSourceModel->SetParent(lightSource);
+	m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
 
 	LightData* ld = lightSource->GetLightData();
 	ld->diffuseColor = glm::vec3(0, 1, 0);
 	lightSource->SetLightData(ld);
+
+	DirLightData* dirLightData = new DirLightData();
+	dirLightData->direction = glm::vec3(0, -1, 0);
+	dirLightData->diffuseColor = glm::vec3(1, 0, 0);
+	dirLightData->specularColor = glm::vec3(1, 0, 0);
+	dirLightData->specularStrength = 0.6;
+	dirLightData->shininess = 32;
+	m_engine->GetLightManager()->SetDirectionalLightData(dirLightData);
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);

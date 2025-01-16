@@ -43,22 +43,58 @@ struct DirLight
 };  
 uniform DirLight dirLight;
 
+vec3 CalcDirLight(vec3 viewDir);
+vec3 CalcLight(vec3 viewDir);
+
 void main()
 {
-    vec4 textureColor = texture(texture_diffuse1, ioTexCoord);
-    vec3 ambientColor = global.ambientStrength * global.ambientColor;
+    vec3 sum = vec3(0.0);
     vec3 viewDir = normalize(global.viewPos - ioFragPos);
+    vec4 textureColor = texture(texture_diffuse1, ioTexCoord);
 
-    // diffuse
-    vec3 lightDir = normalize(light.pos - ioFragPos);
-    float angleDifference = max(dot(ioNormal, lightDir), 0.0);
-    vec3 diffuse = angleDifference * light.diffuseColor;
-    // specular
-    vec3 reflectDir = reflect(-lightDir, ioNormal);
-    float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
-    vec3 specularColor = light.specularStrength * specular * light.specularColor;
+    vec3 ambientColor = global.ambientStrength * global.ambientColor;
+    sum += ambientColor;
 
-    vec3 result = (ambientColor + diffuse + specularColor) * vec3(textureColor);
+    sum += CalcDirLight(viewDir);
+
+    sum += CalcLight(viewDir);
+
+    vec3 result = sum * vec3(textureColor);
 
     FragColor = vec4(result, 1.0);
 }
+
+vec3 CalcDirLight(vec3 viewDir)
+{
+    vec3 sum = vec3(0.0);
+
+    vec3 lightDir = normalize(-dirLight.direction);
+    float angleDifference = max(dot(ioNormal, lightDir), 0.0);
+    vec3 diffuse = angleDifference * dirLight.diffuseColor;
+    sum += diffuse;
+
+    vec3 reflectDir = reflect(-lightDir, ioNormal);
+    float specular = pow(max(dot(viewDir, reflectDir), 0.0), dirLight.shininess);
+    vec3 specularColor = dirLight.specularStrength * specular * dirLight.specularColor;
+    sum += specularColor;
+
+    return sum;
+}
+
+vec3 CalcLight(vec3 viewDir)
+{
+    vec3 sum = vec3(0.0);
+
+    vec3 lightDir = normalize(light.pos - ioFragPos);
+    float angleDifference = max(dot(ioNormal, lightDir), 0.0);
+    vec3 diffuse = angleDifference * light.diffuseColor;
+    sum += diffuse;
+
+    vec3 reflectDir = reflect(-lightDir, ioNormal);
+    float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
+    vec3 specularColor = light.specularStrength * specular * light.specularColor;
+    sum += specularColor;
+
+    return sum;
+}
+
