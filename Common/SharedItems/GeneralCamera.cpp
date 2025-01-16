@@ -83,7 +83,6 @@ void GeneralCamera::FollowCamera(float deltaTime)
 
 			// Convert pitch and yaw to a direction vector for the offset
 			glm::vec3 offsetDir;
-
 			//								project on xz					project on x	
 			offsetDir.x = static_cast<float>(cos(glm::radians(m_pitch)) * cos(glm::radians(m_yaw)));
 			//								project on y
@@ -106,27 +105,29 @@ void GeneralCamera::FollowCamera(float deltaTime)
 				Uknitty::Engine::GetInstance()->GetDynamicsWorld()->rayTest(from, to, closestResults);
 				if(closestResults.hasHit())
 				{
-					glm::vec3 destination = Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld + closestResults.m_hitNormalWorld * 0.2f);
-					m_pos = glm::mix(m_pos, destination, PUSH_IN_SPEED * deltaTime);
+					glm::vec3 destination = Uknitty::CPhysics::BtVec3ToGLMVec3(closestResults.m_hitPointWorld + closestResults.m_hitNormalWorld);
+					float newDistance = glm::distance(destination, followPos);
+					m_followDistanceThirdPerson = glm::mix(m_followDistanceThirdPerson, newDistance, PUSH_IN_SPEED * deltaTime);
 					m_clippingHadHit = true;
 				}
 				else
 				{
 					if(m_clippingHadHit) // was pushed in, so pushing out
 					{
-						glm::vec3 destination = unclippedPos;
-						m_pos = glm::mix(m_pos, destination, PUSH_OUT_SPEED * deltaTime);
-						if(glm::distance(m_pos, destination) < PUSH_OUT_THRESHOLD)
+						m_followDistanceThirdPerson = glm::mix(m_followDistanceThirdPerson, FOLLOW_DISTANCE_THIRD_PERSON, PUSH_IN_SPEED * deltaTime);
+						if(glm::abs(m_followDistanceThirdPerson - FOLLOW_DISTANCE_THIRD_PERSON) < PUSH_OUT_THRESHOLD)
 						{
 							m_clippingHadHit = false;
 						}
 					}
 					else // was never pushed in, or pushing out is finished
 					{
-						m_pos = unclippedPos;
+						m_followDistanceThirdPerson = FOLLOW_DISTANCE_THIRD_PERSON;
 					}
 				}
 			}
+
+			m_pos = followPos - offsetDir * (glm::max(m_followDistanceThirdPerson - 1.0f, 0.5f));
 
 			// Calculate the front vector to look at the followTransform
 			m_front = glm::normalize(followPos - m_pos);
