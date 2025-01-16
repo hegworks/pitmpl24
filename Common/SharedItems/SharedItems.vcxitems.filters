@@ -333,6 +333,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LightManager.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightStructs.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">

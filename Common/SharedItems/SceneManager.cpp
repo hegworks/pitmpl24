@@ -14,6 +14,7 @@
 #include "Light.h"
 #include "LightManager.h"
 #include "LightSource.h"
+#include "LightStructs.h"
 #include "Model.h"
 #include "ModelDataStorage.h"
 #include "ModelDataStorage.h"
@@ -99,20 +100,27 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
-	lightSource->Initialize(glm::vec3(0, 1, 0));
 	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
 	lightSource->SetParent(m_player);
-	lightSource->SetColor(glm::vec3(0, 1, 1));
+	LightData* lightData = new LightData();
+	lightData->diffuseColor = glm::vec3(1, 1, 1);
+	lightData->specularColor = glm::vec3(1, 1, 1);
+	lightData->specularStrength = 0.6;
+	lightData->shininess = 32;
+	lightSource->SetLightData(lightData);
+
+	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
+	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
 	ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
 	lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 	lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
 	lightSourceModel->SetParent(lightSource);
-	lightSourceModel->GetShaderProgram().Use();
-	lightSourceModel->GetShaderProgram().SetVec4("uColor", glm::vec4(1));
-	lightSourceModel->GetShaderProgram().UnUse();
 
+	LightData* ld = lightSource->GetLightData();
+	ld->diffuseColor = glm::vec3(0, 1, 0);
+	lightSource->SetLightData(ld);
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);

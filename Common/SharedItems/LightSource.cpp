@@ -2,6 +2,7 @@
 
 #include "Engine.h"
 #include "LightManager.h"
+#include "LightStructs.h"
 
 namespace Uknitty
 {
@@ -9,18 +10,18 @@ namespace Uknitty
 void Uknitty::LightSource::OnAwake()
 {
 	m_lightManager = Engine::GetInstance()->GetLightManager();
+	m_lightManager->NewLightSourceCreated(this);
 }
 
-void LightSource::Initialize(glm::vec3 lightColor)
+void LightSource::OnDestroy()
 {
-	m_lightColor = lightColor;
-	m_lightManager->NewLightSourceCreated(this, lightColor);
+	m_lightManager->LightSourceDestroyed(this);
 }
 
-void LightSource::SetColor(glm::vec3 color)
+void LightSource::SetLightData(LightData* lightData)
 {
-	m_lightColor = color;
-	m_lightManager->SetLightColor(color);
+	m_lightData = lightData;
+	m_lightManager->SetLightData(lightData);
 }
 
 } // namespace Uknitty

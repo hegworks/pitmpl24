@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "GlCheckError.h"
 #include "LightSource.h"
+#include "LightStructs.h"
 #include "ShaderProgram.h"
 #include "ShaderType.h"
 #include <stdexcept>
@@ -17,70 +18,38 @@ namespace Uknitty
 Uknitty::LightManager::LightManager(AssetManager* assetManager)
 {
 	m_assetManager = assetManager;
+	m_phong = m_assetManager->AutoGetShaderProgram(Uknitty::ShaderType::PHONG, "../Common/Assets/Shaders/PhongVertex.glsl", "../Common/Assets/Shaders/PhongFragment.glsl");
 }
 
 void LightManager::Update(float deltaTime)
 {
-	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
 	glm::vec3 cameraPos = *Engine::GetInstance()->GetMainCamera()->GetWorldTransform()->GetPosition();
 	for(auto& lightSource : m_lightSources)
 	{
-		phong->Use();
-		phong->SetVec3("uLightPos", *lightSource->GetWorldTransform()->GetPosition());
-		phong->SetVec3("uViewPos", cameraPos);
-		phong->UnUse();
+		m_phong->Use();
+		m_phong->SetVec3(LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
+		m_phong->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
+		m_phong->UnUse();
 	}
 }
 
 void LightManager::SetAmbientColor(glm::vec3 color)
 {
 	m_ambientColor = color;
-	auto& allShaderPrograms = m_assetManager->GetAllShaderPrograms();
-	for(auto& [shaderType, shaderProgram] : allShaderPrograms)
-	{
-		switch(shaderType)
-		{
-			case ShaderType::DEFAULT:
-			case ShaderType::BULLET_PHYSICS:
-				break;
-			case ShaderType::UNLIT:
-				break;
-			case ShaderType::PHONG:
-				shaderProgram->Use();
-				shaderProgram->SetVec3("uAmbientColor", m_ambientColor);
-				shaderProgram->UnUse();
-				break;
-			default:
-				throw std::runtime_error("invalid shaderType");
-		}
-	}
+	m_phong->Use();
+	m_phong->SetVec3(GlobalProperties::AMBIENT_COLOR, m_ambientColor);
+	m_phong->UnUse();
 }
 
 void LightManager::SetAmbientStrength(float strength)
 {
 	m_ambientStrength = strength;
-	auto& allShaderPrograms = m_assetManager->GetAllShaderPrograms();
-	for(auto& [shaderType, shaderProgram] : allShaderPrograms)
-	{
-		switch(shaderType)
-		{
-			case ShaderType::DEFAULT:
-			case ShaderType::BULLET_PHYSICS:
-				break;
-			case ShaderType::UNLIT:
-				break;
-			case ShaderType::PHONG:
-				shaderProgram->Use();
-				shaderProgram->SetFloat("uAmbientStrength", m_ambientStrength);
-				shaderProgram->UnUse();
-				break;
-			default:
-				throw std::runtime_error("invalid shaderType");
-		}
-	}
+	m_phong->Use();
+	m_phong->SetFloat(GlobalProperties::AMBIENT_STRENGTH, m_ambientStrength);
+	m_phong->UnUse();
 }
 
-void LightManager::NewLightSourceCreated(LightSource* lightSource, glm::vec3 lightColor)
+void LightManager::NewLightSourceCreated(LightSource* lightSource)
 {
 	m_createdLights++;
 	if(m_createdLights > MAX_LIGHTS)
@@ -88,19 +57,34 @@ void LightManager::NewLightSourceCreated(LightSource* lightSource, glm::vec3 lig
 		throw std::runtime_error("Maximum number of lights reached");
 	}
 
-	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
-	phong->Use();
-	phong->SetVec3("uLightColor", lightColor);
-	phong->UnUse();
 	m_lightSources.push_back(lightSource);
 }
 
-void LightManager::SetLightColor(glm::vec3 Color)
+void LightManager::LightSourceDestroyed(LightSource* lightSource)
 {
-	ShaderProgram* phong = m_assetManager->AutoGetShaderProgram(ShaderType::PHONG);
-	phong->Use();
-	phong->SetVec3("uLightColor", Color);
-	phong->UnUse();
+	m_createdLights--;
+	m_lightSources.erase(std::remove(m_lightSources.begin(), m_lightSources.end(), lightSource), m_lightSources.end());
+}
+
+void LightManager::SetLightData(LightData* lightData)
+{
+	m_phong->Use();
+	m_phong->SetVec3(LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
+	m_phong->SetVec3(LightProperties::SPECULAR_COLOR, lightData->specularColor);
+	m_phong->SetFloat(LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
+	m_phong->SetFloat(LightProperties::SHININESS, lightData->shininess);
+	m_phong->UnUse();
+}
+
+void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
+{
+	m_phong->Use();
+	m_phong->SetVec3(DirLightProperties::DIRECTION, dirLightData->direction);
+	m_phong->SetVec3(DirLightProperties::DIFFUSE_COLOR, dirLightData->diffuseColor);
+	m_phong->SetVec3(DirLightProperties::SPECULAR_COLOR, dirLightData->specularColor);
+	m_phong->SetFloat(DirLightProperties::SPECULAR_STRENGTH, dirLightData->specularStrength);
+	m_phong->SetFloat(DirLightProperties::SHININESS, dirLightData->shininess);
+	m_phong->UnUse();
 }
 
 } // namespace Uknitty
