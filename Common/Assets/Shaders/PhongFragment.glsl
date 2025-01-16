@@ -30,6 +30,9 @@ struct Light
     vec3 specularColor;
     float specularStrength;
     float shininess;
+    float attConst;
+    float attLin;
+    float attQuad;
 };
 uniform Light light;
 
@@ -85,15 +88,18 @@ vec3 CalcLight(vec3 viewDir)
 {
     vec3 sum = vec3(0.0);
 
+    float distance = length(light.pos - ioFragPos);
+    float attenuation = 1.0 / (light.attConst + light.attLin * distance + light.attQuad * (distance * distance));    
+
     vec3 lightDir = normalize(light.pos - ioFragPos);
     float angleDifference = max(dot(ioNormal, lightDir), 0.0);
     vec3 diffuse = angleDifference * light.diffuseColor;
-    sum += diffuse;
+    sum += diffuse * attenuation;
 
     vec3 reflectDir = reflect(-lightDir, ioNormal);
     float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
     vec3 specularColor = light.specularStrength * specular * light.specularColor;
-    sum += specularColor;
+    sum += specularColor * attenuation;
 
     return sum;
 }

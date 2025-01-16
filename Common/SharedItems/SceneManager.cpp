@@ -103,9 +103,9 @@ void SceneManager::CreatePlayer()
 	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
 	lightSource->SetParent(m_player);
 	LightData* lightData = new LightData();
-	lightData->diffuseColor = glm::vec3(1, 1, 1);
-	lightData->specularColor = glm::vec3(1, 1, 1);
-	lightData->specularStrength = 0.6;
+	lightData->diffuseColor = glm::vec3(0, 1, 0);
+	lightData->specularColor = glm::vec3(0, 1, 0);
+	lightData->specularStrength = 0.5;
 	lightData->shininess = 32;
 	lightSource->SetLightData(lightData);
 
@@ -119,14 +119,10 @@ void SceneManager::CreatePlayer()
 	lightSourceModel->SetParent(lightSource);
 	m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
 
-	LightData* ld = lightSource->GetLightData();
-	ld->diffuseColor = glm::vec3(0, 1, 0);
-	lightSource->SetLightData(ld);
-
 	DirLightData* dirLightData = new DirLightData();
 	dirLightData->direction = glm::vec3(0, -1, 0);
-	dirLightData->diffuseColor = glm::vec3(1, 0, 0);
-	dirLightData->specularColor = glm::vec3(1, 0, 0);
+	dirLightData->diffuseColor = glm::vec3(0.5, 0, 0);
+	dirLightData->specularColor = glm::vec3(0.5, 0, 0);
 	dirLightData->specularStrength = 0.6;
 	dirLightData->shininess = 32;
 	m_engine->GetLightManager()->SetDirectionalLightData(dirLightData);

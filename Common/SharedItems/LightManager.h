@@ -31,6 +31,9 @@ public:
 		inline static const std::string SPECULAR_COLOR = "light.specularColor";
 		inline static const std::string SPECULAR_STRENGTH = "light.specularStrength";
 		inline static const std::string SHININESS = "light.shininess";
+		inline static const std::string ATT_CONST = "light.attConst";
+		inline static const std::string ATT_LIN = "light.attLin";
+		inline static const std::string ATT_QUAD = "light.attQuad";
 	};
 
 	struct DirLightProperties

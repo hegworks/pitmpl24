@@ -73,6 +73,9 @@ void LightManager::SetLightData(LightData* lightData)
 	m_phong->SetVec3(LightProperties::SPECULAR_COLOR, lightData->specularColor);
 	m_phong->SetFloat(LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
 	m_phong->SetFloat(LightProperties::SHININESS, lightData->shininess);
+	m_phong->SetFloat(LightProperties::ATT_CONST, lightData->attConst);
+	m_phong->SetFloat(LightProperties::ATT_LIN, lightData->attLin);
+	m_phong->SetFloat(LightProperties::ATT_QUAD, lightData->attQuad);
 	m_phong->UnUse();
 }
 
