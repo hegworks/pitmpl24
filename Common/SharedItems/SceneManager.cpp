@@ -100,9 +100,10 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
-	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.5, 0));
+	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 	lightSource->SetParent(m_player);
 	LightData* lightData = new LightData();
+	lightData->lightType = LightType::SPOT_LIGHT;
 	lightData->diffuseColor = glm::vec3(0, 1, 0);
 	lightData->specularColor = glm::vec3(0, 1, 0);
 	lightData->specularStrength = 0.5;
@@ -119,13 +120,13 @@ void SceneManager::CreatePlayer()
 	lightSourceModel->SetParent(lightSource);
 	m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
 
-	DirLightData* dirLightData = new DirLightData();
-	dirLightData->direction = glm::vec3(0, -1, 0);
-	dirLightData->diffuseColor = glm::vec3(0.5, 0, 0);
-	dirLightData->specularColor = glm::vec3(0.5, 0, 0);
-	dirLightData->specularStrength = 0.6;
-	dirLightData->shininess = 32;
-	m_engine->GetLightManager()->SetDirectionalLightData(dirLightData);
+	//DirLightData* dirLightData = new DirLightData();
+	//dirLightData->direction = glm::vec3(0, -1, 0);
+	//dirLightData->diffuseColor = glm::vec3(0.5, 0, 0);
+	//dirLightData->specularColor = glm::vec3(0.5, 0, 0);
+	//dirLightData->specularStrength = 0.6;
+	//dirLightData->shininess = 32;
+	//m_engine->GetLightManager()->SetDirectionalLightData(dirLightData);
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);

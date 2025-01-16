@@ -24,11 +24,20 @@ Uknitty::LightManager::LightManager(AssetManager* assetManager)
 void LightManager::Update(float deltaTime)
 {
 	glm::vec3 cameraPos = *Engine::GetInstance()->GetMainCamera()->GetWorldTransform()->GetPosition();
+
 	for(auto& lightSource : m_lightSources)
 	{
 		m_phong->Use();
+
 		m_phong->SetVec3(LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
 		m_phong->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
+
+		if(lightSource->GetLightData()->lightType == LightType::DIR_LIGHT ||
+		   lightSource->GetLightData()->lightType == LightType::SPOT_LIGHT)
+		{
+			m_phong->SetVec3(LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
+		}
+
 		m_phong->UnUse();
 	}
 }
@@ -69,27 +78,41 @@ void LightManager::LightSourceDestroyed(LightSource* lightSource)
 void LightManager::SetLightData(LightData* lightData)
 {
 	m_phong->Use();
+
+	m_phong->SetInt(LightProperties::TYPE, static_cast<int>(lightData->lightType));
+
 	m_phong->SetVec3(LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
 	m_phong->SetVec3(LightProperties::SPECULAR_COLOR, lightData->specularColor);
 	m_phong->SetFloat(LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
 	m_phong->SetFloat(LightProperties::SHININESS, lightData->shininess);
-	m_phong->SetFloat(LightProperties::ATT_CONST, lightData->attConst);
-	m_phong->SetFloat(LightProperties::ATT_LIN, lightData->attLin);
-	m_phong->SetFloat(LightProperties::ATT_QUAD, lightData->attQuad);
+
+	if(lightData->lightType == LightType::POINT_LIGHT || lightData->lightType == LightType::SPOT_LIGHT)
+	{
+		m_phong->SetFloat(LightProperties::ATT_CONST, lightData->attConst);
+		m_phong->SetFloat(LightProperties::ATT_LIN, lightData->attLin);
+		m_phong->SetFloat(LightProperties::ATT_QUAD, lightData->attQuad);
+	}
+
+	if(lightData->lightType == LightType::SPOT_LIGHT)
+	{
+		m_phong->SetFloat(LightProperties::SPOT_CUTOFF, glm::cos(glm::radians(lightData->cutOff)));
+		m_phong->SetFloat(LightProperties::SPOT_OUTER_CUTOFF, glm::cos(glm::radians(lightData->outerCutOff)));
+	}
+
 	m_phong->UnUse();
 }
 
-void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
-{
-	m_dirLightData = dirLightData;
-	m_phong->Use();
-	m_phong->SetVec3(DirLightProperties::DIRECTION, dirLightData->direction);
-	m_phong->SetVec3(DirLightProperties::DIFFUSE_COLOR, dirLightData->diffuseColor);
-	m_phong->SetVec3(DirLightProperties::SPECULAR_COLOR, dirLightData->specularColor);
-	m_phong->SetFloat(DirLightProperties::SPECULAR_STRENGTH, dirLightData->specularStrength);
-	m_phong->SetFloat(DirLightProperties::SHININESS, dirLightData->shininess);
-	m_phong->UnUse();
-}
+//void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
+//{
+//	m_dirLightData = dirLightData;
+//	m_phong->Use();
+//	m_phong->SetVec3(DirLightProperties::DIRECTION, dirLightData->direction);
+//	m_phong->SetVec3(DirLightProperties::DIFFUSE_COLOR, dirLightData->diffuseColor);
+//	m_phong->SetVec3(DirLightProperties::SPECULAR_COLOR, dirLightData->specularColor);
+//	m_phong->SetFloat(DirLightProperties::SPECULAR_STRENGTH, dirLightData->specularStrength);
+//	m_phong->SetFloat(DirLightProperties::SHININESS, dirLightData->shininess);
+//	m_phong->UnUse();
+//}
 
 void LightManager::SetUnlitColor(glm::vec3 color)
 {

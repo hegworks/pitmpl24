@@ -26,24 +26,32 @@ public:
 
 	struct LightProperties
 	{
-		inline static const std::string POS = "light.pos";
+		inline static const std::string TYPE = "light.type";
+
 		inline static const std::string DIFFUSE_COLOR = "light.diffuseColor";
 		inline static const std::string SPECULAR_COLOR = "light.specularColor";
 		inline static const std::string SPECULAR_STRENGTH = "light.specularStrength";
 		inline static const std::string SHININESS = "light.shininess";
+
+		inline static const std::string POS = "light.pos";
+		inline static const std::string DIRECTION = "light.dir";
+
 		inline static const std::string ATT_CONST = "light.attConst";
 		inline static const std::string ATT_LIN = "light.attLin";
 		inline static const std::string ATT_QUAD = "light.attQuad";
+
+		inline static const std::string SPOT_CUTOFF = "light.cutOff";
+		inline static const std::string SPOT_OUTER_CUTOFF = "light.outerCutOff";
 	};
 
-	struct DirLightProperties
-	{
-		inline static const std::string DIRECTION = "dirLight.direction";
-		inline static const std::string DIFFUSE_COLOR = "dirLight.diffuseColor";
-		inline static const std::string SPECULAR_COLOR = "dirLight.specularColor";
-		inline static const std::string SPECULAR_STRENGTH = "dirLight.specularStrength";
-		inline static const std::string SHININESS = "dirLight.shininess";
-	};
+	//struct DirLightProperties
+	//{
+	//	inline static const std::string DIRECTION = "dirLight.direction";
+	//	inline static const std::string DIFFUSE_COLOR = "dirLight.diffuseColor";
+	//	inline static const std::string SPECULAR_COLOR = "dirLight.specularColor";
+	//	inline static const std::string SPECULAR_STRENGTH = "dirLight.specularStrength";
+	//	inline static const std::string SHININESS = "dirLight.shininess";
+	//};
 
 	void Update(float deltaTime);
 	void SetAmbientColor(glm::vec3 color);
@@ -51,15 +59,15 @@ public:
 	void NewLightSourceCreated(LightSource* lightSource);
 	void LightSourceDestroyed(LightSource* lightSource);
 	void SetLightData(LightData* lightData);
-	void SetDirectionalLightData(DirLightData* dirLightData);
+	//void SetDirectionalLightData(DirLightData* dirLightData);
 	void SetUnlitColor(glm::vec3 color);
-	DirLightData* GetDirLightData() { return m_dirLightData; }
+	//DirLightData* GetDirLightData() { return m_dirLightData; }
 
 private:
 	AssetManager* m_assetManager = nullptr;
 	std::vector<LightSource*> m_lightSources;
 	ShaderProgram* m_phong = nullptr;
-	DirLightData* m_dirLightData = nullptr;
+	//DirLightData* m_dirLightData = nullptr;
 
 	const int MAX_LIGHTS = 1;
 

@@ -60,6 +60,7 @@ private:
 
 	void OnCollision(const btCollisionObject* other);
 	void MoveIfInput(float deltaTime);
+	void RotateToCameraIfFirstPerson();
 	void RotateGradually(glm::vec3 dir, float deltaTime);
 	void UpdateFeetPos();
 	void CheckCameraTypeToDisableDraw();

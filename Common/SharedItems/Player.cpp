@@ -69,6 +69,7 @@ void Player::OnAwake()
 void Player::OnUpdate(float deltaTime)
 {
 	MoveIfInput(deltaTime);
+	RotateToCameraIfFirstPerson();
 	UpdateFeetPos();
 	CheckCameraTypeToDisableDraw();
 	SetModelPosToPhysicsPos();
@@ -199,6 +200,17 @@ void Player::MoveIfInput(float deltaTime)
 	else
 	{
 		Uknitty::DynamicObject::MoveInDirection(glm::vec3(0), 0);
+	}
+}
+
+void Player::RotateToCameraIfFirstPerson()
+{
+	if(m_generalCamera->GetCameraType() == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
+	{
+		glm::vec3 cameraFront = m_generalCamera->GetForward();
+		cameraFront.y = 0;
+		glm::vec3 rotation = glm::vec3(0, glm::degrees(atan2(cameraFront.x, cameraFront.z)), 0);
+		Uknitty::GameObject::GetLocalTransform()->SetRotation(rotation);
 	}
 }
 
