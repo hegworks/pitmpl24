@@ -18,6 +18,10 @@ struct LightData
 	float specularStrength = 1.0f;
 	float shininess = 32.0f;
 
+	bool isStatic = false;
+	glm::vec3 position = glm::vec3(0, 1, 0);
+	glm::vec3 direction = glm::vec3(0, -1, 0);
+
 	float attConst = 1.0f;
 	float attLin = 0.09f;
 	float attQuad = 0.032f;

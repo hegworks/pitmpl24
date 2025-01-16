@@ -99,34 +99,57 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
-	Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
-	lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
-	lightSource->SetParent(m_player);
-	LightData* lightData = new LightData();
-	lightData->lightType = LightType::SPOT_LIGHT;
-	lightData->diffuseColor = glm::vec3(0, 1, 0);
-	lightData->specularColor = glm::vec3(0, 1, 0);
-	lightData->specularStrength = 0.5;
-	lightData->shininess = 32;
-	lightSource->SetLightData(lightData);
+	{
+		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
+		lightSource->SetParent(m_player);
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::SPOT_LIGHT;
+		lightData->diffuseColor = glm::vec3(0, 1, 0);
+		lightData->specularColor = glm::vec3(0, 1, 0);
+		lightData->specularStrength = 0.5;
+		lightData->shininess = 32;
+		lightData->isStatic = false;
+		lightSource->SetLightData(lightData);
+
+		Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
+		lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
+		lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
+		lightSourceModel->SetParent(lightSource);
+		m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
+	}
+
+	{
+		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::DIR_LIGHT;
+		lightData->isStatic = true;
+		lightData->direction = glm::vec3(0, -1, 0);
+		lightData->diffuseColor = glm::vec3(1, 0, 0);
+		lightData->specularColor = glm::vec3(1, 0, 0);
+		lightData->specularStrength = 0.5;
+		lightData->shininess = 32;
+		lightSource->SetLightData(lightData);
+	}
+
+	{
+		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
+		lightSource->SetParent(m_player);
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::POINT_LIGHT;
+		lightData->diffuseColor = glm::vec3(0, 0, 1);
+		lightData->specularColor = glm::vec3(0, 0, 1);
+		lightData->specularStrength = 1.0;
+		lightData->shininess = 128;
+		lightData->isStatic = false;
+		lightSource->SetLightData(lightData);
+	}
 
 	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
-
-	Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
-	lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
-	lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
-	lightSourceModel->SetParent(lightSource);
-	m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
-
-	//DirLightData* dirLightData = new DirLightData();
-	//dirLightData->direction = glm::vec3(0, -1, 0);
-	//dirLightData->diffuseColor = glm::vec3(0.5, 0, 0);
-	//dirLightData->specularColor = glm::vec3(0.5, 0, 0);
-	//dirLightData->specularStrength = 0.6;
-	//dirLightData->shininess = 32;
-	//m_engine->GetLightManager()->SetDirectionalLightData(dirLightData);
 
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);

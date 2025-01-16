@@ -1,5 +1,6 @@
 #version 310 es
 
+#define MAX_LIGHTS_COUNT 4
 #define POINT_LIGHT 0
 #define DIR_LIGHT 1
 #define SPOT_LIGHT 2
@@ -24,6 +25,7 @@ struct Global
     float ambientStrength;
     vec3 ambientColor;
     vec3 viewPos;
+    int lightsCount;
 };
 uniform Global global;
 
@@ -48,49 +50,11 @@ struct Light
     float cutOff;
     float outerCutOff;
 };
-uniform Light light;
+uniform Light lights[MAX_LIGHTS_COUNT];
 
-// struct PointLight
-// {
-//     vec3 diffuseColor;
-//     vec3 specularColor;
-//     float specularStrength;
-//     float shininess;
-// 
-//     vec3 pos;
-//     float attConst;
-//     float attLin;
-//     float attQuad;
-// };
-// uniform PointLight pointLight;
-// 
-// struct DirLight
-// {
-//     vec3 direction;
-// 
-//     vec3 diffuseColor;
-//     vec3 specularColor;
-//     float specularStrength;
-//     float shininess;
-// };  
-// uniform DirLight dirLight;
-// 
-// struct SpotLight
-// {
-//     vec3 pos;
-//     vec3 direction;
-//     float cutOff;
-// 
-//     vec3 diffuseColor;
-//     vec3 specularColor;
-//     float specularStrength;
-//     float shininess;
-// };  
-// uniform SpotLight spotLight;
-
-vec3 CalcPointLight(vec3 viewDir);
-vec3 CalcDirLight(vec3 viewDir);
-vec3 CalcSpotLight(vec3 viewDir);
+vec3 CalcPointLight(Light light, vec3 viewDir);
+vec3 CalcDirLight(Light light, vec3 viewDir);
+vec3 CalcSpotLight(Light light, vec3 viewDir);
 
 void main()
 {
@@ -101,17 +65,21 @@ void main()
     vec3 ambientColor = global.ambientStrength * global.ambientColor;
     sum += ambientColor;
 
-    if(light.type == POINT_LIGHT)
+    for(int i = 0; i < global.lightsCount; i++)
     {
-        sum += CalcPointLight(viewDir);
-    }
-    else if(light.type == DIR_LIGHT)
-    {
-        sum += CalcDirLight(viewDir);
-    }
-    else if(light.type == SPOT_LIGHT)
-    {
-        sum += CalcSpotLight(viewDir);
+        Light light = lights[i];
+        if(light.type == POINT_LIGHT)
+        {
+            sum += CalcPointLight(light, viewDir);
+        }
+        else if(light.type == DIR_LIGHT)
+        {
+            sum += CalcDirLight(light, viewDir);
+        }
+        else if(light.type == SPOT_LIGHT)
+        {
+            sum += CalcSpotLight(light, viewDir);
+        }
     }
 
     vec3 result = sum * vec3(textureColor);
@@ -119,7 +87,7 @@ void main()
     FragColor = vec4(result, 1.0);
 }
 
-vec3 CalcDirLight(vec3 viewDir)
+vec3 CalcDirLight(Light light, vec3 viewDir)
 {
     vec3 sum = vec3(0.0);
 
@@ -136,7 +104,7 @@ vec3 CalcDirLight(vec3 viewDir)
     return sum;
 }
 
-vec3 CalcPointLight(vec3 viewDir)
+vec3 CalcPointLight(Light light, vec3 viewDir)
 {
     vec3 sum = vec3(0.0);
 
@@ -156,7 +124,7 @@ vec3 CalcPointLight(vec3 viewDir)
     return sum;
 }
 
-vec3 CalcSpotLight(vec3 viewDir)
+vec3 CalcSpotLight(Light light, vec3 viewDir)
 {
     vec3 sum = vec3(0.0);
 

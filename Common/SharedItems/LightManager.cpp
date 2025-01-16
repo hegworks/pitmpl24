@@ -11,6 +11,7 @@
 #include "ShaderProgram.h"
 #include "ShaderType.h"
 #include <stdexcept>
+#include <string>
 
 namespace Uknitty
 {
@@ -25,17 +26,25 @@ void LightManager::Update(float deltaTime)
 {
 	glm::vec3 cameraPos = *Engine::GetInstance()->GetMainCamera()->GetWorldTransform()->GetPosition();
 
-	for(auto& lightSource : m_lightSources)
+	for(auto& [id, lightSource] : m_lightSources)
 	{
+		std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
+		LightType lightType = lightSource->GetLightData()->lightType;
+
 		m_phong->Use();
 
-		m_phong->SetVec3(LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
 		m_phong->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
 
-		if(lightSource->GetLightData()->lightType == LightType::DIR_LIGHT ||
-		   lightSource->GetLightData()->lightType == LightType::SPOT_LIGHT)
+		if(!lightSource->GetLightData()->isStatic)
 		{
-			m_phong->SetVec3(LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
+			m_phong->SetVec3(prefix + LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
+
+			if(lightType == LightType::DIR_LIGHT ||
+			   lightType == LightType::SPOT_LIGHT)
+			{
+
+				m_phong->SetVec3(prefix + LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
+			}
 		}
 
 		m_phong->UnUse();
@@ -60,59 +69,59 @@ void LightManager::SetAmbientStrength(float strength)
 
 void LightManager::NewLightSourceCreated(LightSource* lightSource)
 {
-	m_createdLights++;
-	if(m_createdLights > MAX_LIGHTS)
+	if(m_lightSources.size() + 1 > MAX_LIGHTS)
 	{
 		throw std::runtime_error("Maximum number of lights reached");
 	}
 
-	m_lightSources.push_back(lightSource);
+	m_lightSources[lightSource->GetID()] = lightSource;
+	m_idToIndex[lightSource->GetID()] = m_lightSources.size() - 1;
+
+	m_phong->Use();
+	m_phong->SetInt(GlobalProperties::LIGHTS_COUNT, m_lightSources.size());
+	m_phong->UnUse();
 }
 
 void LightManager::LightSourceDestroyed(LightSource* lightSource)
 {
-	m_createdLights--;
-	m_lightSources.erase(std::remove(m_lightSources.begin(), m_lightSources.end(), lightSource), m_lightSources.end());
+	m_lightSources.erase(lightSource->GetID());
 }
 
-void LightManager::SetLightData(LightData* lightData)
+void LightManager::SetLightData(int id, LightData* lightData)
 {
 	m_phong->Use();
 
-	m_phong->SetInt(LightProperties::TYPE, static_cast<int>(lightData->lightType));
+	std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
 
-	m_phong->SetVec3(LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
-	m_phong->SetVec3(LightProperties::SPECULAR_COLOR, lightData->specularColor);
-	m_phong->SetFloat(LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
-	m_phong->SetFloat(LightProperties::SHININESS, lightData->shininess);
+	m_phong->SetInt(prefix + LightProperties::TYPE, static_cast<int>(lightData->lightType));
+
+	m_phong->SetVec3(prefix + LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
+	m_phong->SetVec3(prefix + LightProperties::SPECULAR_COLOR, lightData->specularColor);
+	m_phong->SetFloat(prefix + LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
+	m_phong->SetFloat(prefix + LightProperties::SHININESS, lightData->shininess);
 
 	if(lightData->lightType == LightType::POINT_LIGHT || lightData->lightType == LightType::SPOT_LIGHT)
 	{
-		m_phong->SetFloat(LightProperties::ATT_CONST, lightData->attConst);
-		m_phong->SetFloat(LightProperties::ATT_LIN, lightData->attLin);
-		m_phong->SetFloat(LightProperties::ATT_QUAD, lightData->attQuad);
+		m_phong->SetFloat(prefix + LightProperties::ATT_CONST, lightData->attConst);
+		m_phong->SetFloat(prefix + LightProperties::ATT_LIN, lightData->attLin);
+		m_phong->SetFloat(prefix + LightProperties::ATT_QUAD, lightData->attQuad);
 	}
 
 	if(lightData->lightType == LightType::SPOT_LIGHT)
 	{
-		m_phong->SetFloat(LightProperties::SPOT_CUTOFF, glm::cos(glm::radians(lightData->cutOff)));
-		m_phong->SetFloat(LightProperties::SPOT_OUTER_CUTOFF, glm::cos(glm::radians(lightData->outerCutOff)));
+		m_phong->SetFloat(prefix + LightProperties::SPOT_CUTOFF, glm::cos(glm::radians(lightData->cutOff)));
+		m_phong->SetFloat(prefix + LightProperties::SPOT_OUTER_CUTOFF, glm::cos(glm::radians(lightData->outerCutOff)));
+	}
+
+	m_phong->SetVec3(prefix + LightProperties::POS, lightData->position);
+
+	if(lightData->lightType == LightType::DIR_LIGHT)
+	{
+		m_phong->SetVec3(prefix + LightProperties::DIRECTION, lightData->direction);
 	}
 
 	m_phong->UnUse();
 }
-
-//void LightManager::SetDirectionalLightData(DirLightData* dirLightData)
-//{
-//	m_dirLightData = dirLightData;
-//	m_phong->Use();
-//	m_phong->SetVec3(DirLightProperties::DIRECTION, dirLightData->direction);
-//	m_phong->SetVec3(DirLightProperties::DIFFUSE_COLOR, dirLightData->diffuseColor);
-//	m_phong->SetVec3(DirLightProperties::SPECULAR_COLOR, dirLightData->specularColor);
-//	m_phong->SetFloat(DirLightProperties::SPECULAR_STRENGTH, dirLightData->specularStrength);
-//	m_phong->SetFloat(DirLightProperties::SHININESS, dirLightData->shininess);
-//	m_phong->UnUse();
-//}
 
 void LightManager::SetUnlitColor(glm::vec3 color)
 {

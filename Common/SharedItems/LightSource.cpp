@@ -21,7 +21,7 @@ void LightSource::OnDestroy()
 void LightSource::SetLightData(LightData* lightData)
 {
 	m_lightData = lightData;
-	m_lightManager->SetLightData(lightData);
+	m_lightManager->SetLightData(GameObject::GetID(), lightData);
 }
 
 } // namespace Uknitty
