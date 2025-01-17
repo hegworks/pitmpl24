@@ -1,5 +1,7 @@
 #version 310 es
 
+// Pi
+
 precision highp float;
 
 // in
@@ -16,6 +18,7 @@ out mat4 ioModel;
 // uniform
 uniform mat4 uMVP;
 uniform mat4 uModel;
+uniform mat4 uModelNormal;
 
 void main()
 {
@@ -23,5 +26,5 @@ void main()
 	ioFragPos = vec3(uModel * vec4(iPos, 1.0));
 	ioModel = uModel;
 	ioTexCoord = iTexCoord;
-	ioNormal = normalize(mat3(transpose(inverse(uModel))) * iNormal);
+	ioNormal = normalize(mat3(uModelNormal) * iNormal);
 }

@@ -165,5 +165,4 @@ void SceneManager::CreateShaderProgram()
 {
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT, "../Common/Assets/Shaders/UnlitVertex.glsl", "../Common/Assets/Shaders/UnlitFragment.glsl");
-	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::PHONG, "../Common/Assets/Shaders/PhongVertex.glsl", "../Common/Assets/Shaders/PhongFragment.glsl");
 }

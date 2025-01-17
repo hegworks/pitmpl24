@@ -60,7 +60,8 @@ private:
 	AssetManager* m_assetManager = nullptr;
 	std::unordered_map<int, LightSource*> m_lightSources;
 	std::unordered_map<int, int> m_idToIndex;
-	ShaderProgram* m_phong = nullptr;
+	ShaderProgram* m_lit = nullptr;
+	bool m_isWindows = true;
 
 	const int MAX_LIGHTS = 4;
 

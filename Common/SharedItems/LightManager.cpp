@@ -19,7 +19,18 @@ namespace Uknitty
 Uknitty::LightManager::LightManager(AssetManager* assetManager)
 {
 	m_assetManager = assetManager;
-	m_phong = m_assetManager->AutoGetShaderProgram(Uknitty::ShaderType::PHONG, "../Common/Assets/Shaders/PhongVertex.glsl", "../Common/Assets/Shaders/PhongFragment.glsl");
+#ifdef WINDOWS_BUILD
+	m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT,
+											   "../Common/Assets/Shaders/Win/LitVertex.glsl",
+											   "../Common/Assets/Shaders/Win/LitFragment.glsl");
+	m_isWindows = true;
+#endif
+#ifdef Raspberry_BUILD
+	m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT,
+											   "../Common/Assets/Shaders/Pi/LitVertex.glsl",
+											   "../Common/Assets/Shaders/Pi/LitFragment.glsl");
+	m_isWindows = false;
+#endif
 }
 
 void LightManager::Update(float deltaTime)
@@ -31,40 +42,40 @@ void LightManager::Update(float deltaTime)
 		std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
 		LightType lightType = lightSource->GetLightData()->lightType;
 
-		m_phong->Use();
+		m_lit->Use();
 
-		m_phong->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
+		m_lit->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
 
 		if(!lightSource->GetLightData()->isStatic)
 		{
-			m_phong->SetVec3(prefix + LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
+			m_lit->SetVec3(prefix + LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
 
 			if(lightType == LightType::DIR_LIGHT ||
 			   lightType == LightType::SPOT_LIGHT)
 			{
 
-				m_phong->SetVec3(prefix + LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
+				m_lit->SetVec3(prefix + LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
 			}
 		}
 
-		m_phong->UnUse();
+		m_lit->UnUse();
 	}
 }
 
 void LightManager::SetAmbientColor(glm::vec3 color)
 {
 	m_ambientColor = color;
-	m_phong->Use();
-	m_phong->SetVec3(GlobalProperties::AMBIENT_COLOR, m_ambientColor);
-	m_phong->UnUse();
+	m_lit->Use();
+	m_lit->SetVec3(GlobalProperties::AMBIENT_COLOR, m_ambientColor);
+	m_lit->UnUse();
 }
 
 void LightManager::SetAmbientStrength(float strength)
 {
 	m_ambientStrength = strength;
-	m_phong->Use();
-	m_phong->SetFloat(GlobalProperties::AMBIENT_STRENGTH, m_ambientStrength);
-	m_phong->UnUse();
+	m_lit->Use();
+	m_lit->SetFloat(GlobalProperties::AMBIENT_STRENGTH, m_ambientStrength);
+	m_lit->UnUse();
 }
 
 void LightManager::NewLightSourceCreated(LightSource* lightSource)
@@ -77,9 +88,9 @@ void LightManager::NewLightSourceCreated(LightSource* lightSource)
 	m_lightSources[lightSource->GetID()] = lightSource;
 	m_idToIndex[lightSource->GetID()] = m_lightSources.size() - 1;
 
-	m_phong->Use();
-	m_phong->SetInt(GlobalProperties::LIGHTS_COUNT, m_lightSources.size());
-	m_phong->UnUse();
+	m_lit->Use();
+	m_lit->SetInt(GlobalProperties::LIGHTS_COUNT, m_lightSources.size());
+	m_lit->UnUse();
 }
 
 void LightManager::LightSourceDestroyed(LightSource* lightSource)
@@ -89,38 +100,44 @@ void LightManager::LightSourceDestroyed(LightSource* lightSource)
 
 void LightManager::SetLightData(int id, LightData* lightData)
 {
-	m_phong->Use();
+	m_lit->Use();
 
 	std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
 
-	m_phong->SetInt(prefix + LightProperties::TYPE, static_cast<int>(lightData->lightType));
+	m_lit->SetInt(prefix + LightProperties::TYPE, static_cast<int>(lightData->lightType));
 
-	m_phong->SetVec3(prefix + LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
-	m_phong->SetVec3(prefix + LightProperties::SPECULAR_COLOR, lightData->specularColor);
-	m_phong->SetFloat(prefix + LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
-	m_phong->SetFloat(prefix + LightProperties::SHININESS, lightData->shininess);
+	m_lit->SetVec3(prefix + LightProperties::DIFFUSE_COLOR, lightData->diffuseColor);
+	if(m_isWindows)
+	{
+		m_lit->SetVec3(prefix + LightProperties::SPECULAR_COLOR, lightData->specularColor);
+		m_lit->SetFloat(prefix + LightProperties::SPECULAR_STRENGTH, lightData->specularStrength);
+		m_lit->SetFloat(prefix + LightProperties::SHININESS, lightData->shininess);
+	}
 
 	if(lightData->lightType == LightType::POINT_LIGHT || lightData->lightType == LightType::SPOT_LIGHT)
 	{
-		m_phong->SetFloat(prefix + LightProperties::ATT_CONST, lightData->attConst);
-		m_phong->SetFloat(prefix + LightProperties::ATT_LIN, lightData->attLin);
-		m_phong->SetFloat(prefix + LightProperties::ATT_QUAD, lightData->attQuad);
+		m_lit->SetFloat(prefix + LightProperties::ATT_CONST, lightData->attConst);
+		m_lit->SetFloat(prefix + LightProperties::ATT_LIN, lightData->attLin);
+		m_lit->SetFloat(prefix + LightProperties::ATT_QUAD, lightData->attQuad);
 	}
 
 	if(lightData->lightType == LightType::SPOT_LIGHT)
 	{
-		m_phong->SetFloat(prefix + LightProperties::SPOT_CUTOFF, glm::cos(glm::radians(lightData->cutOff)));
-		m_phong->SetFloat(prefix + LightProperties::SPOT_OUTER_CUTOFF, glm::cos(glm::radians(lightData->outerCutOff)));
+		m_lit->SetFloat(prefix + LightProperties::SPOT_CUTOFF, glm::cos(glm::radians(lightData->cutOff)));
+		if(m_isWindows)
+		{
+			m_lit->SetFloat(prefix + LightProperties::SPOT_OUTER_CUTOFF, glm::cos(glm::radians(lightData->outerCutOff)));
+		}
 	}
 
-	m_phong->SetVec3(prefix + LightProperties::POS, lightData->position);
+	m_lit->SetVec3(prefix + LightProperties::POS, lightData->position);
 
 	if(lightData->lightType == LightType::DIR_LIGHT)
 	{
-		m_phong->SetVec3(prefix + LightProperties::DIRECTION, lightData->direction);
+		m_lit->SetVec3(prefix + LightProperties::DIRECTION, lightData->direction);
 	}
 
-	m_phong->UnUse();
+	m_lit->UnUse();
 }
 
 void LightManager::SetUnlitColor(glm::vec3 color)

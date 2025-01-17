@@ -124,6 +124,12 @@
     <Filter Include="Assets\Models\Win">
       <UniqueIdentifier>{4176cff9-15ce-4953-8e4a-1724946ce37c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Shaders\Pi">
+      <UniqueIdentifier>{8e0fbe37-7fe7-47be-8a21-fbc8eef5f972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Shaders\Win">
+      <UniqueIdentifier>{d858a4f9-4fdd-43f4-beaa-145aa9073176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -754,11 +760,17 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitVertex.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\PhongVertex.glsl">
-      <Filter>Assets\Shaders</Filter>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\LitFragment.glsl">
+      <Filter>Assets\Shaders\Win</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\PhongFragment.glsl">
-      <Filter>Assets\Shaders</Filter>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\LitVertex.glsl">
+      <Filter>Assets\Shaders\Win</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitFragment.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

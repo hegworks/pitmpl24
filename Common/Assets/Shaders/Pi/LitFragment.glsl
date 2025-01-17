@@ -1,5 +1,7 @@
 #version 310 es
 
+// Pi
+
 #define MAX_LIGHTS_COUNT 4
 #define POINT_LIGHT 0
 #define DIR_LIGHT 1
@@ -34,9 +36,6 @@ struct Light
     int type;
 
     vec3 diffuseColor;
-    vec3 specularColor;
-    float specularStrength;
-    float shininess;
 
     vec3 pos;
     vec3 dir;
@@ -48,7 +47,6 @@ struct Light
 
     // SpotLight
     float cutOff;
-    float outerCutOff;
 };
 uniform Light lights[MAX_LIGHTS_COUNT];
 
@@ -96,11 +94,6 @@ vec3 CalcDirLight(Light light, vec3 viewDir)
     vec3 diffuse = angleDifference * light.diffuseColor;
     sum += diffuse;
 
-    vec3 reflectDir = reflect(-lightDir, ioNormal);
-    float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
-    vec3 specularColor = light.specularStrength * specular * light.specularColor;
-    sum += specularColor;
-
     return sum;
 }
 
@@ -109,17 +102,12 @@ vec3 CalcPointLight(Light light, vec3 viewDir)
     vec3 sum = vec3(0.0);
 
     float distance = length(light.pos - ioFragPos);
-    float attenuation = 1.0 / (light.attConst + light.attLin * distance + light.attQuad * (distance * distance));    
+    float attenuation = 1.0 / (light.attConst + light.attLin * distance + light.attQuad * (distance * distance));
 
     vec3 lightDir = normalize(light.pos - ioFragPos);
     float angleDifference = max(dot(ioNormal, lightDir), 0.0);
     vec3 diffuse = angleDifference * light.diffuseColor;
     sum += diffuse * attenuation;
-
-    vec3 reflectDir = reflect(-lightDir, ioNormal);
-    float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
-    vec3 specularColor = light.specularStrength * specular * light.specularColor;
-    sum += specularColor * attenuation;
 
     return sum;
 }
@@ -129,22 +117,17 @@ vec3 CalcSpotLight(Light light, vec3 viewDir)
     vec3 sum = vec3(0.0);
 
     vec3 lightDir = normalize(light.pos - ioFragPos);
-
     float theta = dot(lightDir, normalize(-light.dir));
-    float epsilon = light.cutOff - light.outerCutOff;
-    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);  
-    
-    float distance = length(light.pos - ioFragPos);
-    float attenuation = 1.0 / (light.attConst + light.attLin * distance + light.attQuad * (distance * distance));
 
-    float angleDifference = max(dot(ioNormal, lightDir), 0.0);
-    vec3 diffuse = angleDifference * light.diffuseColor;
-    sum += diffuse * attenuation * intensity;
+    if(theta > light.cutOff)
+    {
+        float distance = length(light.pos - ioFragPos);
+        float attenuation = 1.0 / (light.attConst + light.attLin * distance + light.attQuad * (distance * distance));
 
-    vec3 reflectDir = reflect(-lightDir, ioNormal);
-    float specular = pow(max(dot(viewDir, reflectDir), 0.0), light.shininess);
-    vec3 specularColor = light.specularStrength * specular * light.specularColor;
-    sum += specularColor * attenuation * intensity;
+        float angleDifference = max(dot(ioNormal, lightDir), 0.0);
+        vec3 diffuse = angleDifference * light.diffuseColor;
+        sum += diffuse * attenuation;
+    }
 
     return sum;
 }

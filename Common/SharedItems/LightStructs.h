@@ -29,12 +29,3 @@ struct LightData
 	float cutOff = 14.0f;
 	float outerCutOff = 18.0f;
 };
-
-//struct DirLightData
-//{
-//	glm::vec3 direction;
-//	glm::vec3 diffuseColor;
-//	glm::vec3 specularColor;
-//	float specularStrength;
-//	float shininess;
-//};
