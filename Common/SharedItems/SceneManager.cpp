@@ -13,7 +13,7 @@
 #include "InterfaceManager.h"
 #include "Light.h"
 #include "LightManager.h"
-#include "LightSource.h"
+#include "LightObject.h"
 #include "LightStructs.h"
 #include "Model.h"
 #include "ModelDataStorage.h"
@@ -100,7 +100,7 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	{
-		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 		lightSource->SetParent(m_player);
 		LightData* lightData = new LightData();
@@ -121,7 +121,7 @@ void SceneManager::CreatePlayer()
 	}
 
 	{
-		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 		LightData* lightData = new LightData();
 		lightData->lightType = LightType::DIR_LIGHT;
@@ -135,7 +135,7 @@ void SceneManager::CreatePlayer()
 	}
 
 	{
-		Uknitty::LightSource* lightSource = m_engine->CreateGameObject<Uknitty::LightSource>();
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 		lightSource->SetParent(m_player);
 		LightData* lightData = new LightData();

@@ -330,9 +330,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Light.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LightSource.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderType.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
@@ -341,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)LightStructs.h">
       <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h">
+      <Filter>Game\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -479,8 +479,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LightSource.cpp">
-      <Filter>Uknitty\Source</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp">
+      <Filter>Game\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

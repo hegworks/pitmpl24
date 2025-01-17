@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "GameObject.h"
 #include "GlCheckError.h"
-#include "LightSource.h"
+#include "LightObject.h"
 #include "LightStructs.h"
 #include "ShaderProgram.h"
 #include "ShaderType.h"
@@ -78,7 +78,7 @@ void LightManager::SetAmbientStrength(float strength)
 	m_lit->UnUse();
 }
 
-void LightManager::NewLightSourceCreated(LightSource* lightSource)
+void LightManager::NewLightSourceCreated(LightObject* lightSource)
 {
 	if(m_lightSources.size() + 1 > MAX_LIGHTS)
 	{
@@ -93,7 +93,7 @@ void LightManager::NewLightSourceCreated(LightSource* lightSource)
 	m_lit->UnUse();
 }
 
-void LightManager::LightSourceDestroyed(LightSource* lightSource)
+void LightManager::LightSourceDestroyed(LightObject* lightSource)
 {
 	m_lightSources.erase(lightSource->GetID());
 }

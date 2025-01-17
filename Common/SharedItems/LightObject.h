@@ -7,7 +7,7 @@ namespace Uknitty
 {
 class LightManager;
 
-class LightSource : public GameObject
+class LightObject : public GameObject
 {
 public:
 	virtual void OnAwake() override;

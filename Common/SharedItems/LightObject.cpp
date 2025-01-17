@@ -1,4 +1,4 @@
-#include "LightSource.h"
+#include "LightObject.h"
 
 #include "Engine.h"
 #include "LightManager.h"
@@ -7,18 +7,18 @@
 namespace Uknitty
 {
 
-void Uknitty::LightSource::OnAwake()
+void Uknitty::LightObject::OnAwake()
 {
 	m_lightManager = Engine::GetInstance()->GetLightManager();
 	m_lightManager->NewLightSourceCreated(this);
 }
 
-void LightSource::OnDestroy()
+void LightObject::OnDestroy()
 {
 	m_lightManager->LightSourceDestroyed(this);
 }
 
-void LightSource::SetLightData(LightData* lightData)
+void LightObject::SetLightData(LightData* lightData)
 {
 	m_lightData = lightData;
 	m_lightManager->SetLightData(GameObject::GetID(), lightData);

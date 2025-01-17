@@ -9,7 +9,7 @@ namespace Uknitty
 {
 class Engine;
 class AssetManager;
-class LightSource;
+class LightObject;
 class ShaderProgram;
 
 class LightManager
@@ -51,14 +51,14 @@ public:
 	void Update(float deltaTime);
 	void SetAmbientColor(glm::vec3 color);
 	void SetAmbientStrength(float strength);
-	void NewLightSourceCreated(LightSource* lightSource);
-	void LightSourceDestroyed(LightSource* lightSource);
+	void NewLightSourceCreated(LightObject* lightSource);
+	void LightSourceDestroyed(LightObject* lightSource);
 	void SetLightData(int id, LightData* lightData);
 	void SetUnlitColor(glm::vec3 color);
 
 private:
 	AssetManager* m_assetManager = nullptr;
-	std::unordered_map<int, LightSource*> m_lightSources;
+	std::unordered_map<int, LightObject*> m_lightSources;
 	std::unordered_map<int, int> m_idToIndex;
 	ShaderProgram* m_lit = nullptr;
 	bool m_isWindows = true;
