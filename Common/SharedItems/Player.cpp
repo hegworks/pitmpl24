@@ -69,7 +69,6 @@ void Player::OnAwake()
 void Player::OnUpdate(float deltaTime)
 {
 	MoveIfInput(deltaTime);
-	RotateToCameraIfFirstPerson();
 	UpdateFeetPos();
 	CheckCameraTypeToDisableDraw();
 	SetModelPosToPhysicsPos();
@@ -83,6 +82,11 @@ void Player::OnDestroy()
 	Uknitty::Engine::GetInstance()->GetPhysicsManager()->RemoveContactTestRigidbody(GameObject::GetCPhysics()->GetRigidBody());
 	Uknitty::DynamicObject::OnDestroy();
 	GameSharedDependencies::Remove<Player>();
+}
+
+void Player::OnLateUpdate(float deltaTime)
+{
+	RotateToCameraIfFirstPerson();
 }
 
 void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)

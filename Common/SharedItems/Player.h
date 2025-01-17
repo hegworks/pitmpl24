@@ -27,6 +27,7 @@ public:
 	virtual void OnAwake() override;
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnDestroy() override;
+	virtual void OnLateUpdate(float deltaTime) override;
 
 	void SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback);
 	void RoomChangedSetPosition(RoomChange* roomChange);
