@@ -26,6 +26,7 @@ private:
 
 	int m_originalMouseX = 0;
 	int m_originalMouseY = 0;
+	bool m_shouldChangeGrabState = false;
 
 	void HideCursor();
 	void ShowCursor();

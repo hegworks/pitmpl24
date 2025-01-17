@@ -76,12 +76,14 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
 				m_gameState = GameState::PAUSE;
+				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_iMouse->ReleaseMouseInput();
 			}
 			else if(m_gameState == GameState::PAUSE)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 				m_gameState = GameState::GAMEPLAY;
+				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_iMouse->CaptureMouseInput();
 			}
 			break;

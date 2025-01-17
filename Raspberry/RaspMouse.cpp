@@ -57,6 +57,21 @@ bool RaspMouse::GetButtonDown(MouseButton button) const
 
 glm::vec2 RaspMouse::GetPosition()
 {
+	if(m_shouldChangeGrabState)
+	{
+		m_shouldChangeGrabState = false;
+		if(m_isCapturingMouseInput)
+		{
+			HideCursor();
+		}
+		else
+		{
+			ShowCursor();
+		}
+
+		return glm::vec2(0);
+	}
+
 	int root_x;
 	int root_y;
 	int win_x;
@@ -108,6 +123,17 @@ float RaspMouse::GetScrollDelta() const
 
 void RaspMouse::OnCaptureMouseInput()
 {
+	m_shouldChangeGrabState = true;
+
+}
+
+void RaspMouse::OnReleaseMouseInput()
+{
+	m_shouldChangeGrabState = true;
+}
+
+void RaspMouse::HideCursor()
+{
 	// Store the mouse's original position before warping
 	int rootX, rootY, winX, winY;
 	unsigned int mask;
@@ -117,26 +143,6 @@ void RaspMouse::OnCaptureMouseInput()
 	m_originalMouseY = winY;
 	m_resettedPosOffset = glm::ivec2(0);
 
-	HideCursor();
-
-	// Warp the mouse to the center of the screen
-	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
-	XFlush(&m_display); // Ensure the command is sent immediately
-}
-
-void RaspMouse::OnReleaseMouseInput()
-{
-	m_resettedPosOffset = glm::ivec2(0);
-
-	ShowCursor();
-
-	// Restore the original mouse position
-	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, m_originalMouseX, m_originalMouseY);
-	XFlush(&m_display); // Ensure the command is sent immediately
-}
-
-void RaspMouse::HideCursor()
-{
 	Cursor invisibleCursor;
 	Pixmap bitmapNoData;
 	XColor black;
@@ -149,10 +155,20 @@ void RaspMouse::HideCursor()
 	XFreePixmap(&m_display, bitmapNoData);
 
 	XGrabPointer(&m_display, m_window, True, 0, GrabModeAsync, GrabModeAsync, m_window, None, CurrentTime);
+
+	// Warp the mouse to the center of the screen
+	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, Uknitty::SCRWIDTH / 2, Uknitty::SCRHEIGHT / 2);
+	XFlush(&m_display); // Ensure the command is sent immediately
 }
 
 void RaspMouse::ShowCursor()
 {
+	m_resettedPosOffset = glm::ivec2(0);
+
 	XUndefineCursor(&m_display, m_window);
 	XUngrabPointer(&m_display, CurrentTime);
+
+	// Restore the original mouse position
+	XWarpPointer(&m_display, None, m_window, 0, 0, 0, 0, m_originalMouseX, m_originalMouseY);
+	XFlush(&m_display); // Ensure the command is sent immediately
 }
