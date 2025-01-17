@@ -42,6 +42,7 @@
 #if defined(_DEBUG) && defined(VISUAL_LEAK_DETECTOR)
 #include <vld.h>
 #endif // DEBUG
+#include "ShaderType.h"
 
 #endif
 
@@ -84,6 +85,62 @@ void Game::Start()
 #pragma region Other Initializations
 	m_gameManager = new GameManager(m_iMouse, m_iKeyboard);
 	UIManager* uiManager = GameSharedDependencies::Get<UIManager>();
+
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+
+#pragma region FrameBuffer
+	// ShaderProgram
+	Uknitty::ShaderProgram* frameBufferShaderProgram = new Uknitty::ShaderProgram("../Common/Assets/Shaders/Win/FrameBufferVertex.glsl",
+																				  "../Common/Assets/Shaders/Win/FrameBufferFragment.glsl",
+																				  Uknitty::ShaderType::FRAME_BUFFER);
+
+	// Prepare framebuffer rectangle VBO and VAO
+	unsigned int rectVAO, rectVBO;
+	glGenVertexArrays(1, &rectVAO);
+	glGenBuffers(1, &rectVBO);
+	glBindVertexArray(rectVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_screenRectangeles), &m_screenRectangeles, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	frameBufferShaderProgram->Use();
+	frameBufferShaderProgram->SetInt("uScreenTexture", 0);
+	frameBufferShaderProgram->UnUse();
+
+	// Create Frame Buffer Object
+	unsigned int FBO;
+	glGenFramebuffers(1, &FBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
+	// Create Framebuffer Texture
+	int lowResWidth = Uknitty::SCRWIDTH / 2;
+	int lowResHeight = Uknitty::SCRHEIGHT / 2;
+	unsigned int framebufferTexture;
+	glGenTextures(1, &framebufferTexture);
+	glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, lowResWidth, lowResHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
+
+	// Create Render Buffer Object
+	unsigned int RBO;
+	glGenRenderbuffers(1, &RBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, lowResWidth, lowResHeight);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+
+	// Error checking framebuffer
+	auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if(fboStatus != GL_FRAMEBUFFER_COMPLETE)
+		std::cout << "Framebuffer error: " << fboStatus << std::endl;
+#pragma endregion
+
 #pragma endregion Other Initializations
 
 #pragma region Timing
@@ -123,8 +180,10 @@ void Game::Start()
 		}
 #pragma endregion Timing
 
-		ClearScreen();
-		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
+		glBindFramebuffer(GL_FRAMEBUFFER, FBO); // Bind the custom framebuffer
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glViewport(0, 0, lowResWidth, lowResHeight);
+		glEnable(GL_DEPTH_TEST); // Enable depth testing since it's disabled when drawing the framebuffer rectangle
 
 		ProcessMouse();
 		m_gameManager->Update(gameDeltaTime);
@@ -133,6 +192,18 @@ void Game::Start()
 		{
 			quitting = true;
 		}
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0); // Bind the default framebuffer
+		glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
+		// Draw the framebuffer rectangle
+		frameBufferShaderProgram->Use();
+		glBindVertexArray(rectVAO);
+		glDisable(GL_DEPTH_TEST); // prevents framebuffer rectangle from being discarded
+		glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		frameBufferShaderProgram->UnUse();
+
+		uiManager->Update(gameDeltaTime);
 
 		glFlush();
 		m_iGraphics->SwapBuffer();
@@ -184,13 +255,6 @@ void Game::InitializeOpenGLES()
 
 	glCullFace(GL_BACK);
 	glViewport(0, 0, Uknitty::SCRWIDTH, Uknitty::SCRHEIGHT);
-}
-
-void Game::ClearScreen()
-{
-	//glClearColor(189.0f / 256.0f, 224 / 256.0f, 254 / 256.0f, 1.0f);
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Game::Quit()

@@ -9,6 +9,7 @@ enum class ShaderType
 	BULLET_PHYSICS,
 	UNLIT,
 	LIT,
+	FRAME_BUFFER,
 };
 
 } // namespace Uknitty

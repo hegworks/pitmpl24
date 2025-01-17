@@ -772,6 +772,12 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex.glsl">
       <Filter>Assets\Shaders\Pi</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\FrameBufferFragment.glsl">
+      <Filter>Assets\Shaders\Win</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\FrameBufferVertex.glsl">
+      <Filter>Assets\Shaders\Win</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">

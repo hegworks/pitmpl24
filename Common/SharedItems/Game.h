@@ -68,6 +68,18 @@ private:
 	std::unordered_set<MouseButton> m_mouseButtonStates;
 	std::vector<MouseButton> m_mouseButtons = {MouseButton::LEFT, MouseButton::RIGHT, MouseButton::MIDDLE};
 
+	inline static const float m_screenRectangeles[] =
+	{
+		// Coords    // texCoords
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f,
+
+		 1.0f,  1.0f,  1.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f
+	};
+
 	bool quitting{false};
 	float gameDeltaTime;
 	int frameCount{0};

@@ -173,7 +173,6 @@ void GameManager::Update(float deltaTime)
 		io.MousePos.x = m_iMouse->GetPosition().x;
 		io.MousePos.y = m_iMouse->GetPosition().y;
 	}
-	m_uiManager->Update(deltaTime);
 }
 
 void GameManager::KeyDown(Key key)
