@@ -19,13 +19,22 @@ InventoryManager::InventoryManager()
 {
 	GameSharedDependencies::Set<InventoryManager>(this);
 
+#ifdef WINDOWS_BUILD
+	glm::vec3 gunPos = glm::vec3(0, 0.025, -0.2);
+	glm::vec3 hamburgerPos = glm::vec3(0.027, -0.01, -0.2);
+#endif
+#ifdef Raspberry_BUILD
+	glm::vec3 gunPos = glm::vec3(0, 0.035, -0.2);
+	glm::vec3 hamburgerPos = glm::vec3(0.035, -0.01, -0.2);
+#endif // Raspberry_BUILD
+
 	m_itemDatas.push_back(
 		new ItemData
 		{
 			Item::GUN,
 			ModelDataStorage::INVENTORY_GUN,
-			glm::vec3(0, 0.04, -0.2),
-			glm::vec3(0.01)
+			gunPos,
+			glm::vec3(0.005)
 		});
 
 	m_itemDatas.push_back(
@@ -33,8 +42,8 @@ InventoryManager::InventoryManager()
 		{
 			Item::HAMBURGER,
 			ModelDataStorage::HAMBURGER,
-			glm::vec3(0.045, -0.011, -0.2),
-			glm::vec3(0.05)
+			hamburgerPos,
+			glm::vec3(0.04)
 		});
 
 	ModelDataStorage* modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();
@@ -44,7 +53,7 @@ InventoryManager::InventoryManager()
 	{
 		ModelDataStorage::ModelData* modelData = modelDataStorage->GetModelData(itemData->modelName);
 		Uknitty::ModelObject* modelObject = engine->CreateGameObject<Uknitty::ModelObject>();
-		modelObject->Initialize(assetManager->AutoGetModel(itemData->modelName, modelData->m_filePath), assetManager->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT));
+		modelObject->Initialize(assetManager->AutoGetModel(itemData->modelName, modelData->m_filePath), assetManager->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 		modelObject->GetLocalTransform()->SetScale(itemData->scale);
 		modelObject->GetLocalTransform()->SetPosition(itemData->position);
 		modelObject->SetParent(engine->GetMainCamera());
