@@ -17,6 +17,8 @@
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
+#include "LightObject.h"
+#include "LightStructs.h"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
 #include "PhysicsManager.h"
@@ -63,6 +65,17 @@ void Player::OnAwake()
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
 	m_gunPosObject->SetParent(this);
 
+	m_flashLight = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::LightObject>();
+	m_flashLight->SetParent(m_gunPosObject);
+	LightData* lightData = new LightData();
+	lightData->lightType = LightType::SPOT_LIGHT;
+	lightData->diffuseColor = glm::vec3(0, 1, 0);
+	lightData->specularColor = glm::vec3(0, 1, 0);
+	lightData->specularStrength = 5.0;
+	lightData->shininess = 512;
+	lightData->isAutoUpdate = true;
+	m_flashLight->SetLightData(lightData);
+
 	m_hp = HP;
 }
 
@@ -74,6 +87,11 @@ void Player::OnUpdate(float deltaTime)
 	SetModelPosToPhysicsPos();
 }
 
+void Player::OnLateUpdate(float deltaTime)
+{
+	SetFlashLightDirToCameraIfFirstPerson();
+}
+
 void Player::OnDestroy()
 {
 	std::cout << "Destroying Player" << std::endl;
@@ -82,11 +100,6 @@ void Player::OnDestroy()
 	Uknitty::Engine::GetInstance()->GetPhysicsManager()->RemoveContactTestRigidbody(GameObject::GetCPhysics()->GetRigidBody());
 	Uknitty::DynamicObject::OnDestroy();
 	GameSharedDependencies::Remove<Player>();
-}
-
-void Player::OnLateUpdate(float deltaTime)
-{
-	RotateToCameraIfFirstPerson();
 }
 
 void Player::SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback)
@@ -138,6 +151,31 @@ void Player::OnUsedHamburger()
 void Player::OnUsedGun()
 {
 	OnShootInput();
+}
+
+void Player::OnCameraFolowTypeChanged()
+{
+	m_cameraFollowType = m_generalCamera->GetCameraType();
+	if(m_cameraFollowType == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
+	{
+		//m_flashLight->SetParent(Uknitty::Engine::GetInstance()->GetMainCamera());
+		//m_flashLight->GetWorldTransform()->SetRotation(glm::vec3(180));
+		m_flashLight->GetLightData()->isAutoUpdate = false;
+	}
+	else
+	{
+		//m_flashLight->SetParent(m_gunPosObject);
+		m_flashLight->GetLightData()->isAutoUpdate = true;
+	}
+}
+
+void Player::SetFlashLightDirToCameraIfFirstPerson()
+{
+	if(m_cameraFollowType == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
+	{
+		m_flashLight->SetPosition(*m_generalCamera->GetWorldTransform()->GetPosition());
+		m_flashLight->SetDirection(m_generalCamera->GetForward());
+	}
 }
 
 void Player::OnCollision(const btCollisionObject* other)
@@ -204,17 +242,6 @@ void Player::MoveIfInput(float deltaTime)
 	else
 	{
 		Uknitty::DynamicObject::MoveInDirection(glm::vec3(0), 0);
-	}
-}
-
-void Player::RotateToCameraIfFirstPerson()
-{
-	if(m_generalCamera->GetCameraType() == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
-	{
-		glm::vec3 cameraFront = m_generalCamera->GetForward();
-		cameraFront.y = 0;
-		glm::vec3 rotation = glm::vec3(0, glm::degrees(atan2(cameraFront.x, cameraFront.z)), 0);
-		Uknitty::GameObject::GetLocalTransform()->SetRotation(rotation);
 	}
 }
 

@@ -11,14 +11,14 @@ enum class LightType : int
 
 struct LightData
 {
-	LightType lightType;
+	LightType lightType = LightType::POINT_LIGHT;
 
 	glm::vec3 diffuseColor = glm::vec3(1);
 	glm::vec3 specularColor = glm::vec3(1);
 	float specularStrength = 1.0f;
 	float shininess = 32.0f;
 
-	bool isStatic = false;
+	bool isAutoUpdate = true; /// should Automatically update position and rotation by LightManager based on the GameObject's WorldTransform position and rotation
 	glm::vec3 position = glm::vec3(0, 1, 0);
 	glm::vec3 direction = glm::vec3(0, -1, 0);
 

@@ -55,8 +55,12 @@ public:
 	void LightSourceDestroyed(LightObject* lightSource);
 	void SetLightData(int id, LightData* lightData);
 	void SetUnlitColor(glm::vec3 color);
+	void SetPosition(int id, glm::vec3 pos);
+	void SetDirection(int id, glm::vec3 dir);
 
 private:
+	std::string CalculatePrefix(int id);
+
 	AssetManager* m_assetManager = nullptr;
 	std::unordered_map<int, LightObject*> m_lightSources;
 	std::unordered_map<int, int> m_idToIndex;

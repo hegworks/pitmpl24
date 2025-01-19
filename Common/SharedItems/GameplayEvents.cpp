@@ -73,3 +73,8 @@ void GameplayEvents::OnUsedGun()
 {
 	GameSharedDependencies::Get<Player>()->OnUsedGun();
 }
+
+void GameplayEvents::OnCameraFolowTypeChanged()
+{
+	GameSharedDependencies::Get<Player>()->OnCameraFolowTypeChanged();
+}

@@ -52,9 +52,14 @@ void Engine::Update(float deltaTime)
 
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
 
+	// call main_camera's LateUpdate first.
+	m_mainCamera->LateUpdate(deltaTime);
 	for(auto& [id, gameObject] : m_gameObjects)
 	{
-		gameObject->LateUpdate(deltaTime);
+		if(gameObject->GetID() != m_mainCamera->GetID())
+		{
+			gameObject->LateUpdate(deltaTime);
+		}
 	}
 
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());

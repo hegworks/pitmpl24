@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DynamicObject.h"
+#include "GeneralCamera.h"
 #include "RoomChange.h"
 #include "RoomChangeType.h"
 #include "UknittySettings.h"
@@ -15,6 +16,7 @@ class CameraObject;
 class ShaderProgram;
 class GeneralCamera;
 class GameObject;
+class LightObject;
 }
 class SceneManagerBlackboard;
 class btDynamicsWorld;
@@ -26,8 +28,8 @@ class Player : public Uknitty::DynamicObject
 public:
 	virtual void OnAwake() override;
 	virtual void OnUpdate(float deltaTime) override;
-	virtual void OnDestroy() override;
 	virtual void OnLateUpdate(float deltaTime) override;
+	virtual void OnDestroy() override;
 
 	void SetCollidedWithRoomChangeCallback(std::function<void(RoomChangeType roomChangeType)> callback);
 	void RoomChangedSetPosition(RoomChange* roomChange);
@@ -36,6 +38,7 @@ public:
 	void OnUsedGun();
 	int GetMaxHp() const { return HP; }
 	int GetHP() const { return m_hp; }
+	void OnCameraFolowTypeChanged();
 
 private:
 	SceneManagerBlackboard* m_sceneManagerBlackboard = nullptr;
@@ -43,6 +46,7 @@ private:
 	PlayerCInput* m_playerCInput = nullptr;
 	Uknitty::UserPointerData* m_userPointerData = nullptr;
 	Uknitty::GameObject* m_gunPosObject = nullptr;
+	Uknitty::LightObject* m_flashLight = nullptr;
 
 	const float SPEED_WALK = 10.0f;
 	const float SPEED_ROTATION = 15.0f;
@@ -56,13 +60,14 @@ private:
 	int m_hp = HP;
 
 	bool m_lastDrawEnabledState = true;
+	Uknitty::GeneralCamera::FollowType m_cameraFollowType = Uknitty::GeneralCamera::FollowType::TOP_DOWN_FOLLOW;
 
 	std::function<void(RoomChangeType roomChangeType)> m_collidedWithRoomChangeCallback = nullptr;
 
 	void OnCollision(const btCollisionObject* other);
 	void MoveIfInput(float deltaTime);
-	void RotateToCameraIfFirstPerson();
 	void RotateGradually(glm::vec3 dir, float deltaTime);
+	void SetFlashLightDirToCameraIfFirstPerson();
 	void UpdateFeetPos();
 	void CheckCameraTypeToDisableDraw();
 	void OnShootInput();

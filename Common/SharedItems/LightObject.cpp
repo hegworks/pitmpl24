@@ -24,4 +24,16 @@ void LightObject::SetLightData(LightData* lightData)
 	m_lightManager->SetLightData(GameObject::GetID(), lightData);
 }
 
+void LightObject::SetPosition(glm::vec3 pos)
+{
+	m_lightData->position = pos;
+	m_lightManager->SetPosition(GameObject::GetID(), pos);
+}
+
+void LightObject::SetDirection(glm::vec3 dir)
+{
+	m_lightData->direction = dir;
+	m_lightManager->SetDirection(GameObject::GetID(), dir);
+}
+
 } // namespace Uknitty

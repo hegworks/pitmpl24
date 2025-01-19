@@ -39,21 +39,20 @@ void LightManager::Update(float deltaTime)
 
 	for(auto& [id, lightSource] : m_lightSources)
 	{
-		std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
+		std::string prefix = CalculatePrefix(id);
 		LightType lightType = lightSource->GetLightData()->lightType;
 
 		m_lit->Use();
 
 		m_lit->SetVec3(GlobalProperties::VIEW_POS, cameraPos);
 
-		if(!lightSource->GetLightData()->isStatic)
+		if(lightSource->GetLightData()->isAutoUpdate)
 		{
 			m_lit->SetVec3(prefix + LightProperties::POS, *lightSource->GetWorldTransform()->GetPosition());
 
 			if(lightType == LightType::DIR_LIGHT ||
 			   lightType == LightType::SPOT_LIGHT)
 			{
-
 				m_lit->SetVec3(prefix + LightProperties::DIRECTION, lightSource->GetWorldTransform()->GetForward());
 			}
 		}
@@ -102,7 +101,7 @@ void LightManager::SetLightData(int id, LightData* lightData)
 {
 	m_lit->Use();
 
-	std::string prefix = LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
+	std::string prefix = CalculatePrefix(id);
 
 	m_lit->SetInt(prefix + LightProperties::TYPE, static_cast<int>(lightData->lightType));
 
@@ -130,6 +129,12 @@ void LightManager::SetLightData(int id, LightData* lightData)
 		}
 	}
 
+	if(lightData->lightType == LightType::DIR_LIGHT ||
+	   lightData->lightType == LightType::SPOT_LIGHT)
+	{
+		m_lit->SetVec3(prefix + LightProperties::DIRECTION, lightData->direction);
+	}
+
 	m_lit->SetVec3(prefix + LightProperties::POS, lightData->position);
 
 	if(lightData->lightType == LightType::DIR_LIGHT)
@@ -146,6 +151,27 @@ void LightManager::SetUnlitColor(glm::vec3 color)
 	unlit->Use();
 	unlit->SetVec4("uColor", glm::vec4(color, 1));
 	unlit->UnUse();
+}
+
+void LightManager::SetPosition(int id, glm::vec3 pos)
+{
+	std::string prefix = CalculatePrefix(id);
+	m_lit->Use();
+	m_lit->SetVec3(prefix + LightProperties::POS, pos);
+	m_lit->UnUse();
+}
+
+void LightManager::SetDirection(int id, glm::vec3 dir)
+{
+	std::string prefix = CalculatePrefix(id);
+	m_lit->Use();
+	m_lit->SetVec3(prefix + LightProperties::DIRECTION, dir);
+	m_lit->UnUse();
+}
+
+std::string Uknitty::LightManager::CalculatePrefix(int id)
+{
+	return LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
 }
 
 } // namespace Uknitty

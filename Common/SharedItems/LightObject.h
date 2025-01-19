@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "glm/glm.hpp"
 #include "LightStructs.h"
 
 namespace Uknitty
@@ -14,6 +15,8 @@ public:
 	virtual void OnDestroy() override;
 
 	void SetLightData(LightData* lightData);
+	void SetPosition(glm::vec3 pos);
+	void SetDirection(glm::vec3 dir);
 	LightData* GetLightData() { return m_lightData; }
 
 private:

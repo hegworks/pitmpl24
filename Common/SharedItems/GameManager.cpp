@@ -7,6 +7,7 @@
 #include "Engine.h"
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
+#include "GeneralCamera.h"
 #include "IInput.h"
 #include "IInputKey.h"
 #include "InventoryManager.h"
@@ -31,6 +32,8 @@ GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
 	new GameplayEvents();
 	new ModelDataStorage();
 	m_uiManager = new UIManager();
+	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(m_engine->GetMainCamera());
+	m_lastCameraFollowType = m_generalCamera->GetCameraType();
 
 	m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 
@@ -173,6 +176,8 @@ void GameManager::Update(float deltaTime)
 		io.MousePos.x = m_iMouse->GetPosition().x;
 		io.MousePos.y = m_iMouse->GetPosition().y;
 	}
+
+	CheckGeneralCameraTypeChange();
 }
 
 void GameManager::KeyDown(Key key)
@@ -231,5 +236,14 @@ void GameManager::MouseButtonUp(MouseButton mouseButton)
 	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->GetInstance()->MouseButtonUp(mouseButton);
+	}
+}
+
+void GameManager::CheckGeneralCameraTypeChange()
+{
+	if(m_lastCameraFollowType != m_generalCamera->GetCameraType())
+	{
+		m_lastCameraFollowType = m_generalCamera->GetCameraType();
+		GameSharedDependencies::Get<GameplayEvents>()->OnCameraFolowTypeChanged();
 	}
 }

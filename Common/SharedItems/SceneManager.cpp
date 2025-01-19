@@ -100,7 +100,7 @@ void SceneManager::CreatePlayer()
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
 
 	{
-		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		/*Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 		lightSource->SetParent(m_player);
 		LightData* lightData = new LightData();
@@ -109,15 +109,15 @@ void SceneManager::CreatePlayer()
 		lightData->specularColor = glm::vec3(0, 1, 0);
 		lightData->specularStrength = 0.5;
 		lightData->shininess = 32;
-		lightData->isStatic = false;
-		lightSource->SetLightData(lightData);
+		lightData->isAutoUpdate = false;
+		lightSource->SetLightData(lightData);*/
 
-		Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		/*Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
 		ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
 		lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 		lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
 		lightSourceModel->SetParent(lightSource);
-		m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));
+		m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));*/
 	}
 
 	{
@@ -125,7 +125,7 @@ void SceneManager::CreatePlayer()
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
 		LightData* lightData = new LightData();
 		lightData->lightType = LightType::DIR_LIGHT;
-		lightData->isStatic = true;
+		lightData->isAutoUpdate = false;
 		lightData->direction = glm::vec3(0, -1, 0);
 		lightData->diffuseColor = glm::vec3(1, 0, 0);
 		lightData->specularColor = glm::vec3(1, 0, 0);
@@ -144,7 +144,7 @@ void SceneManager::CreatePlayer()
 		lightData->specularColor = glm::vec3(0, 0, 1);
 		lightData->specularStrength = 1.0;
 		lightData->shininess = 128;
-		lightData->isStatic = false;
+		lightData->isAutoUpdate = true;
 		lightSource->SetLightData(lightData);
 	}
 

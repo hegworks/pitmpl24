@@ -18,4 +18,5 @@ public:
 	void OnSelectedInventoryItem();
 	void OnUsedHamburger();
 	void OnUsedGun();
+	void OnCameraFolowTypeChanged();
 };

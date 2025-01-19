@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GeneralCamera.h"
 #include "IInput.h"
 #include "IInputKey.h"
 
@@ -52,15 +53,19 @@ public:
 	void MouseButtonUp(MouseButton mouseButton);
 
 private:
+	void CheckGeneralCameraTypeChange();
+
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
 	UIManager* m_uiManager = nullptr;
 	InventoryManager* m_inventoryManager = nullptr;
+	Uknitty::GeneralCamera* m_generalCamera = nullptr;
 
 	GameState m_gameState = GameState::MAIN_MENU;
 	bool m_shouldQuit = false;
 	bool m_hasWaitedFor1FrameToShowLoadingScreen = false;
 	bool m_shouldChangeRoomSoDisablePhysics = false;
 	bool m_isNewSceneLoadedSoReEnablePhysics = false;
+	Uknitty::GeneralCamera::FollowType m_lastCameraFollowType;
 };
