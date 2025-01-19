@@ -850,6 +850,9 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.png">
       <Filter>Assets\Models\InventoryGun</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_2x4x1\Normal.png">
+      <Filter>Assets\Models\Wall_2x4x1</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -868,6 +871,12 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x1\Normal.png">
+      <Filter>Assets\Models\Wall_1x4x1</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Normal.png">
+      <Filter>Assets\Models\Wall_1x4x2</Filter>
     </Image>
   </ItemGroup>
 </Project>
