@@ -16,9 +16,16 @@ namespace Uknitty
 #pragma endregion to use a feature, comment out its line
 
 #pragma region Screen
-constexpr int SCRWIDTH = 960;
-constexpr int SCRHEIGHT = 540;
+#ifdef WINDOWS_BUILD
+constexpr int SCRWIDTH = 1600;
+constexpr int SCRHEIGHT = 900;
+#endif // WINDOWS_BUILD
+#ifdef Raspberry_BUILD
+constexpr int SCRWIDTH = 1280;
+constexpr int SCRHEIGHT = 720;
+#endif // Raspberry_BUILD
 constexpr float ASPECT_RATIO = 16.0f / 9.0f;
+constexpr float LOW_RES_SCALE = 0.35f;
 #pragma endregion Screen
 
 #pragma region Physics

@@ -116,8 +116,14 @@ void Game::Start()
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
 	// Create Framebuffer Texture
-	int lowResWidth = Uknitty::SCRWIDTH / 2;
-	int lowResHeight = Uknitty::SCRHEIGHT / 2;
+#ifdef WINDOWS_BUILD
+	int lowResWidth = Uknitty::SCRWIDTH;
+	int lowResHeight = Uknitty::SCRHEIGHT;
+#endif // WINDOWS_BUILD
+#ifdef Raspberry_BUILD
+	int lowResWidth = Uknitty::SCRWIDTH * Uknitty::LOW_RES_SCALE;
+	int lowResHeight = Uknitty::SCRHEIGHT * Uknitty::LOW_RES_SCALE;
+#endif // Raspberry_BUILD
 	unsigned int framebufferTexture;
 	glGenTextures(1, &framebufferTexture);
 	glBindTexture(GL_TEXTURE_2D, framebufferTexture);

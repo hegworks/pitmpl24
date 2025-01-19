@@ -25,10 +25,10 @@ WindowsGraphics::WindowsGraphics()
 	CONSOLE_SCREEN_BUFFER_INFO coninfo;
 	AllocConsole();
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &coninfo);
-	coninfo.dwSize.X = 700;
+	coninfo.dwSize.X = 300;
 	coninfo.dwSize.Y = 9999;
 	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coninfo.dwSize);
-	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, 700, 1000, 0);
+	SetWindowPos(GetConsoleWindow(), HWND_TOP, 0, 0, 300, 1000, 0);
 #pragma endregion Set console size and position
 
 	// Initialize GLFW and set window properties.
@@ -53,7 +53,7 @@ WindowsGraphics::WindowsGraphics()
 
 	// Set the window to be the current context.
 	glfwMakeContextCurrent(m_window);
-	glfwSetWindowPos(m_window, 700, 100);
+	glfwSetWindowPos(m_window, 300, 100);
 
 	// Error handling for if GLAD failed to initialize.
 	if(!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress))
