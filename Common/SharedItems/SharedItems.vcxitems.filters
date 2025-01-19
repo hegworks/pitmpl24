@@ -766,12 +766,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\LitVertex.glsl">
       <Filter>Assets\Shaders\Win</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitFragment.glsl">
-      <Filter>Assets\Shaders\Pi</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex.glsl">
-      <Filter>Assets\Shaders\Pi</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\FrameBufferFragment.glsl">
       <Filter>Assets\Shaders\Win</Filter>
     </None>
@@ -826,6 +820,36 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Sphere.obj">
       <Filter>Assets\Models\LightSource</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitFragment_FullGourand.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitFragment_FullPhong.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitFragment_Hybrid.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex_FullGourand.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex_FullPhong.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\LitVertex_Hybrid.glsl">
+      <Filter>Assets\Shaders\Pi</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Texture.png">
+      <Filter>Assets\Models\LightSource</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_black.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_snow.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -844,18 +868,6 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_black.png">
-      <Filter>Assets\Models\InventoryGun</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_snow.png">
-      <Filter>Assets\Models\InventoryGun</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.png">
-      <Filter>Assets\Models\InventoryGun</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Texture.png">
-      <Filter>Assets\Models\LightSource</Filter>
     </Image>
   </ItemGroup>
 </Project>
