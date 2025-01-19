@@ -106,7 +106,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_shouldQuit = true;
 			break;
 		case GameEvent::SHOWED_LOADING_SCREEN:
-			new SceneManager();
+			m_sceneManager = new SceneManager();
 			m_inventoryManager = new InventoryManager();
 			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			m_iMouse->CaptureMouseInput();
@@ -154,7 +154,7 @@ void GameManager::Update(float deltaTime)
 	if(m_shouldChangeRoomSoDisablePhysics)
 	{
 		m_engine->GetPhysicsManager()->Disable();
-		GameSharedDependencies::Get<SceneManager>()->ChangeScene();
+		m_sceneManager->ChangeScene();
 		m_shouldChangeRoomSoDisablePhysics = false;
 	}
 
@@ -167,6 +167,7 @@ void GameManager::Update(float deltaTime)
 	if(m_gameState == GameState::GAMEPLAY || m_gameState == GameState::INVENTORY)
 	{
 		m_inventoryManager->Update(deltaTime);
+		m_sceneManager->Update(deltaTime);
 		m_engine->Update(deltaTime);
 	}
 

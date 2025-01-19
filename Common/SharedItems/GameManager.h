@@ -10,6 +10,7 @@ class Engine;
 }
 class UIManager;
 class InventoryManager;
+class SceneManager;
 
 class GameManager
 {
@@ -59,6 +60,7 @@ private:
 	IKeyboard* m_iKeyboard = nullptr;
 	Uknitty::Engine* m_engine = nullptr;
 	UIManager* m_uiManager = nullptr;
+	SceneManager* m_sceneManager = nullptr;
 	InventoryManager* m_inventoryManager = nullptr;
 	Uknitty::GeneralCamera* m_generalCamera = nullptr;
 

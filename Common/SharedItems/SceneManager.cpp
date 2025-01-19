@@ -3,6 +3,7 @@
 #include "AssetManager.h"
 #include "btBulletDynamicsCommon.h"
 #include "CollisionManager.h"
+#include "CountdownTimer.h"
 #include "CPhysics.h"
 #include "CTransform.h"
 #include "Engine.h"
@@ -20,6 +21,7 @@
 #include "ModelDataStorage.h"
 #include "PhysicsManager.h"
 #include "Player.h"
+#include "RNG.h"
 #include "RoomFinder.h"
 #include "Scene.h"
 #include "SceneManagerBlackboard.h"
@@ -35,14 +37,26 @@ SceneManager::SceneManager()
 	m_roomFinder = new RoomFinder();
 	new SceneManagerBlackboard();
 	m_modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();
+	m_pointLightFlickeringTimer = new Uknitty::CountdownTimer(0.0f);
 
+	GenerateRandomLights();
 	CreateShaderProgram();
 	CreatePlayer();
+	CreateLights();
 	LoadScene(m_roomFinder->GetCurrentLevelId());
+	ChangePointLightColorsInNewRoom();
 }
 
 SceneManager::~SceneManager()
 {
+	for(int i = 0; i < m_pointLights.size(); i++)
+	{
+		m_engine->DestroyGameObject(m_pointLights[i]);
+	}
+	m_engine->DestroyGameObject(m_centralSpotLight);
+#ifdef WINDOWS_BUILD
+	m_engine->DestroyGameObject(m_dirLight);
+#endif
 	m_engine->GetPhysicsManager()->UnregisterListener(m_player->GetCPhysics()->GetRigidBody());
 	m_engine->GetPhysicsManager()->RemoveContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_engine->DestroyGameObject(m_player);
@@ -65,9 +79,94 @@ void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 	GameSharedDependencies::Get<GameplayEvents>()->OnPlayerCollidedWithRoomChange();
 }
 
+void SceneManager::Update(float deltaTime)
+{
+	UpdateCentralSpotLight(deltaTime);
+	UpdatePointLightsFlickering(deltaTime);
+}
+
+void SceneManager::UpdateCentralSpotLight(float deltaTime)
+{
+	float rotY = (*m_centralSpotLightModel->GetLocalTransform()->GetRotation()).y;
+	rotY += deltaTime * 40;
+	m_centralSpotLightModel->GetLocalTransform()->SetRotation(glm::vec3(30, rotY, 0));
+
+	LightData* lightData = m_centralSpotLight->GetLightData();
+	lightData->diffuseColor = glm::vec3(1 + 0.5 * glm::sin(rotY / 6), 1 + 0.5 * glm::sin(rotY / 12), 1 + 0.5 * glm::sin(rotY / 18));
+	lightData->specularColor = lightData->diffuseColor;
+	m_centralSpotLight->SetLightData(lightData);
+}
+
+void SceneManager::UpdatePointLightsFlickering(float deltaTime)
+{
+	m_pointLightFlickeringTimer->Update(deltaTime);
+	if(m_pointLightFlickeringTimer->IsFinished())
+	{
+		if(m_isTimerForTurningOff)
+		{
+			float randomOffTime = Uknitty::RNG::RandomFloat(0.1f, 0.8f);
+			m_pointLightFlickeringTimer->SetNewDuration(randomOffTime);
+			m_pointLightFlickeringTimer->Reset();
+			m_isTimerForTurningOff = false;
+
+			m_flickeringLightIndex = Uknitty::RNG::RandomInt(0, m_pointLights.size() - 1);
+			LightData* lightData = m_pointLights[m_flickeringLightIndex]->GetLightData();
+			m_colorBeforeFlickering = lightData->diffuseColor;
+			lightData->diffuseColor = glm::vec3(0);
+			lightData->specularColor = glm::vec3(0);
+			m_pointLights[m_flickeringLightIndex]->SetLightData(lightData);
+		}
+		else
+		{
+			float randomOnTime = Uknitty::RNG::RandomFloat(0.1f, 2.0f);
+			m_pointLightFlickeringTimer->SetNewDuration(randomOnTime);
+			m_pointLightFlickeringTimer->Reset();
+			m_isTimerForTurningOff = true;
+
+			LightData* lightData = m_pointLights[m_flickeringLightIndex]->GetLightData();
+			lightData->diffuseColor = m_colorBeforeFlickering;
+			lightData->specularColor = m_colorBeforeFlickering;
+			m_pointLights[m_flickeringLightIndex]->SetLightData(lightData);
+		}
+	}
+}
+
+void SceneManager::ChangePointLightColorsInNewRoom()
+{
+	m_isTimerForTurningOff = true;
+	m_pointLightFlickeringTimer->Reset();
+
+	for(int i = 0; i < m_pointLights.size(); i++)
+	{
+		LightData* lightData = m_pointLights[i]->GetLightData();
+		lightData->diffuseColor = m_pointLightGenratedColors[(m_currentMapId * m_pointLights.size()) + i];
+		lightData->specularColor = lightData->diffuseColor;
+		m_pointLights[i]->SetLightData(lightData);
+	}
+}
+
 void SceneManager::LoadScene(int mapId)
 {
 	m_currentScene = new Scene(mapId);
+}
+
+void SceneManager::GenerateRandomLights()
+{
+	m_pointLightPossibleColors = {
+		glm::vec3(1, 0, 0),
+		glm::vec3(0, 1, 0),
+		glm::vec3(0, 0, 1),
+		glm::vec3(1, 1, 0),
+		glm::vec3(0, 1, 1),
+		glm::vec3(1, 0, 1),
+	};
+
+	Uknitty::RNG::RandomizeSeed();
+
+	for(int i = 0; i < m_pointLightGenratedColors.size(); i++)
+	{
+		m_pointLightGenratedColors[i] = m_pointLightPossibleColors[Uknitty::RNG::RandomInt(0, m_pointLightPossibleColors.size() - 1)];
+	}
 }
 
 void SceneManager::ChangeScene()
@@ -75,6 +174,7 @@ void SceneManager::ChangeScene()
 	delete m_currentScene;
 	LoadScene(m_currentMapId);
 	GameSharedDependencies::Get<GameplayEvents>()->OnNewSceneLoaded();
+	ChangePointLightColorsInNewRoom();
 }
 
 void SceneManager::CreatePlayer()
@@ -96,61 +196,6 @@ void SceneManager::CreatePlayer()
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
 
-	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
-	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
-
-	{
-		/*Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
-		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
-		lightSource->SetParent(m_player);
-		LightData* lightData = new LightData();
-		lightData->lightType = LightType::SPOT_LIGHT;
-		lightData->diffuseColor = glm::vec3(0, 1, 0);
-		lightData->specularColor = glm::vec3(0, 1, 0);
-		lightData->specularStrength = 0.5;
-		lightData->shininess = 32;
-		lightData->isAutoUpdate = false;
-		lightSource->SetLightData(lightData);*/
-
-		/*Uknitty::ModelObject* lightSourceModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
-		ModelDataStorage::ModelData* lightSourceModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
-		lightSourceModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, lightSourceModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
-		lightSourceModel->GetLocalTransform()->SetScale(glm::vec3(0.2));
-		lightSourceModel->SetParent(lightSource);
-		m_engine->GetLightManager()->SetUnlitColor(glm::vec3(1));*/
-	}
-
-	{
-		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
-		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
-		LightData* lightData = new LightData();
-		lightData->lightType = LightType::DIR_LIGHT;
-		lightData->isAutoUpdate = false;
-		lightData->direction = glm::vec3(0, -1, 0);
-		lightData->diffuseColor = glm::vec3(1, 0, 0);
-		lightData->specularColor = glm::vec3(1, 0, 0);
-		lightData->specularStrength = 0.5;
-		lightData->shininess = 32;
-		lightSource->SetLightData(lightData);
-	}
-
-	{
-		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
-		lightSource->GetLocalTransform()->SetPosition(glm::vec3(0, 2.0, 0));
-		lightSource->SetParent(m_player);
-		LightData* lightData = new LightData();
-		lightData->lightType = LightType::POINT_LIGHT;
-		lightData->diffuseColor = glm::vec3(0, 0, 1);
-		lightData->specularColor = glm::vec3(0, 0, 1);
-		lightData->specularStrength = 1.0;
-		lightData->shininess = 128;
-		lightData->isAutoUpdate = true;
-		lightSource->SetLightData(lightData);
-	}
-
-	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
-	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
-
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);
 		Uknitty::ModelObject* inventoryGun = m_engine->CreateGameObject<Uknitty::ModelObject>();
@@ -161,8 +206,112 @@ void SceneManager::CreatePlayer()
 	}*/
 }
 
+void SceneManager::CreateLights()
+{
+	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
+#ifdef WINDOWS_BUILD
+	m_engine->GetLightManager()->SetAmbientStrength(0.0f);
+#endif
+#ifdef Raspberry_BUILD
+	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
+#endif
+
+#ifdef WINDOWS_BUILD
+	{ // Dir light
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::DIR_LIGHT;
+		lightData->isAutoUpdate = false;
+		lightData->direction = glm::vec3(0.1, -1, 0.1);
+		lightData->diffuseColor = glm::vec3(0.05);
+		lightData->specularColor = glm::vec3(0.05);
+		lightData->specularStrength = 0.2;
+		lightData->shininess = 16;
+		lightSource->SetLightData(lightData);
+		m_dirLight = lightSource;
+	}
+#endif // WINDOWS_BUILD
+
+	{ // Central Spot light
+		ModelDataStorage::ModelData* lightModelData = m_modelDataStorage->GetModelData(ModelDataStorage::EMPTY);
+		m_centralSpotLightModel = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		m_centralSpotLightModel->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::EMPTY, lightModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::SINGLE_COLOR));
+		m_centralSpotLightModel->GetLocalTransform()->SetScale(glm::vec3(0.25));
+		m_centralSpotLightModel->GetLocalTransform()->SetPosition(glm::vec3(0, 3, 0));
+		m_engine->UseDefaultParent(m_centralSpotLightModel);
+
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::SPOT_LIGHT;
+		lightData->isAutoUpdate = true;
+		lightData->position = glm::vec3(0, 5, 0);
+		lightData->direction = glm::vec3(0.1, -1, 0);
+		lightData->diffuseColor = glm::vec3(1);
+		lightData->specularColor = glm::vec3(1);
+		lightData->cutOff = 20.0;
+		lightData->outerCutOff = 22.0;
+		lightData->specularStrength = 0.2;
+		lightData->shininess = 16;
+		lightSource->SetLightData(lightData);
+		lightSource->SetParent(m_centralSpotLightModel);
+		m_centralSpotLight = lightSource;
+	}
+
+	{ // Right Point light
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		lightSource->GetLocalTransform()->SetPosition(glm::vec3(8, 5.0, 0));
+
+#if 0 // to view the light source
+		ModelDataStorage::ModelData* lightModelData = m_modelDataStorage->GetModelData(ModelDataStorage::POINT_LIGHT);
+		Uknitty::ModelObject* lightModelObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		lightModelObject->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::POINT_LIGHT, lightModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
+		lightModelObject->GetLocalTransform()->SetScale(glm::vec3(0.25));
+		lightModelObject->SetParent(lightSource);
+#endif
+
+		m_engine->UseDefaultParent(lightSource);
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::POINT_LIGHT;
+		lightData->position = glm::vec3(8, 5.0, 0);
+		lightData->diffuseColor = glm::vec3(1, 0, 0);
+		lightData->specularColor = glm::vec3(1, 0, 0);
+		lightData->specularStrength = 1.0;
+		lightData->shininess = 32;
+		lightData->isAutoUpdate = false;
+		lightSource->SetLightData(lightData);
+		m_pointLights[0] = lightSource;
+	}
+
+	{ // Left Point light
+		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		lightSource->GetLocalTransform()->SetPosition(glm::vec3(-8, 5.0, 0));
+		m_engine->UseDefaultParent(lightSource);
+
+#if 0 // to view the light source
+		ModelDataStorage::ModelData* lightModelData = m_modelDataStorage->GetModelData(ModelDataStorage::POINT_LIGHT);
+		Uknitty::ModelObject* lightModelObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
+		lightModelObject->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::POINT_LIGHT, lightModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
+		lightModelObject->GetLocalTransform()->SetScale(glm::vec3(0.25));
+		lightModelObject->SetParent(lightSource);
+#endif
+		LightData* lightData = new LightData();
+		lightData->lightType = LightType::POINT_LIGHT;
+		lightData->position = glm::vec3(-8, 5.0, 0);
+		lightData->diffuseColor = glm::vec3(0, 1, 0);
+		lightData->specularColor = glm::vec3(0, 1, 0);
+		lightData->specularStrength = 1.0;
+		lightData->shininess = 32;
+		lightData->isAutoUpdate = false;
+		lightSource->SetLightData(lightData);
+		m_pointLights[1] = lightSource;
+	}
+}
+
 void SceneManager::CreateShaderProgram()
 {
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT, "../Common/Assets/Shaders/UnlitVertex.glsl", "../Common/Assets/Shaders/UnlitFragment.glsl");
-	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::SINGLE_COLOR, "../Common/Assets/Shaders/SingleColorVertex.glsl", "../Common/Assets/Shaders/SingleColorFragment.glsl");
+	Uknitty::ShaderProgram* singleColorShader = m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::SINGLE_COLOR, "../Common/Assets/Shaders/SingleColorVertex.glsl", "../Common/Assets/Shaders/SingleColorFragment.glsl");
+	singleColorShader->Use();
+	singleColorShader->SetVec4("uColor", glm::vec4(1));
+	singleColorShader->UnUse();
 }

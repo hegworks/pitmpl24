@@ -136,6 +136,9 @@
     <Filter Include="Assets\Models\InventoryGun">
       <UniqueIdentifier>{63f7257f-c929-47c5-8a34-d17a8b1dd8f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\LightSource">
+      <UniqueIdentifier>{ec0b704f-0f94-43af-b88f-b648808598ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -347,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h">
       <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RNG.h">
+      <Filter>Uknitty\Headers\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -814,6 +820,12 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Hamburger\burger.png">
       <Filter>Assets\Models\Hamburger</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Sphere.mtl">
+      <Filter>Assets\Models\LightSource</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Sphere.obj">
+      <Filter>Assets\Models\LightSource</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -841,6 +853,9 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.png">
       <Filter>Assets\Models\InventoryGun</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\PointLightSource\Texture.png">
+      <Filter>Assets\Models\LightSource</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -54,6 +54,11 @@ ModelDataStorage::ModelDataStorage()
 		"../Common/Assets/Models/Primitives/Cube/Cube.obj",
 		glm::vec3(1, 1, 1)
 	};
+	m_datas[SPHERE] =
+	{
+		"../Common/Assets/Models/Primitives/Sphere/Sphere.obj",
+		glm::vec3(1, 1, 1)
+	};
 	m_datas[GROUND] =
 	{
 		"../Common/Assets/Models/Primitives/Plane/Plane.obj",
@@ -82,6 +87,11 @@ ModelDataStorage::ModelDataStorage()
 	m_datas[HAMBURGER] =
 	{
 		"../Common/Assets/Models/Hamburger/Hamburger.fbx",
+		glm::vec3(1, 1, 1)
+	};
+	m_datas[POINT_LIGHT] =
+	{
+		"../Common/Assets/Models/PointLightSource/Sphere.obj",
 		glm::vec3(1, 1, 1)
 	};
 }

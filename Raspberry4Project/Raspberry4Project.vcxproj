@@ -115,6 +115,9 @@
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Pikmin\Pikmin.obj">
       <FileType>Document</FileType>
     </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\PointLightSource\Sphere.obj">
+      <FileType>Document</FileType>
+    </None>
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Primitives\Plane\Plane.obj">
       <FileType>Document</FileType>
     </None>

@@ -2,7 +2,7 @@
 
 // WINDOWS
 
-#define MAX_LIGHTS_COUNT 4
+#define MAX_LIGHTS_COUNT 5
 #define POINT_LIGHT 0
 #define DIR_LIGHT 1
 #define SPOT_LIGHT 2

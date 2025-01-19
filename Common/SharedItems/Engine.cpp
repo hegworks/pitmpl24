@@ -64,13 +64,6 @@ void Engine::Update(float deltaTime)
 
 	m_root->UpdateWorldTransform(glm::identity<glm::mat4>());
 
-	//TODO update light shaders here
-	//UpdateShaders();
-	//ShaderProgram* unlitShaderProgram s= m_assetManager->AutoGetShaderProgram("unlit");
-	//unlitShaderProgram->Use();
-	//unlitShaderProgram->SetMat4("uModel", glm::ve)
-
-
 	m_lightManager->Update(deltaTime);
 
 	glm::mat4 cameraVP = m_mainCamera->GetProjection() * m_mainCamera->GetView();

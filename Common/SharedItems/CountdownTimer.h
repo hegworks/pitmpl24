@@ -32,6 +32,11 @@ public:
 		return m_remaining;
 	}
 
+	void SetNewDuration(float durationSeconds)
+	{
+		m_duration = durationSeconds;
+	}
+
 private:
 	float m_duration;
 	float m_remaining;

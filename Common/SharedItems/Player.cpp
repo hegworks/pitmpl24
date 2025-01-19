@@ -69,11 +69,13 @@ void Player::OnAwake()
 	m_flashLight->SetParent(m_gunPosObject);
 	LightData* lightData = new LightData();
 	lightData->lightType = LightType::SPOT_LIGHT;
-	lightData->diffuseColor = glm::vec3(0, 1, 0);
-	lightData->specularColor = glm::vec3(0, 1, 0);
-	lightData->specularStrength = 5.0;
-	lightData->shininess = 512;
+	lightData->diffuseColor = glm::vec3(1);
+	lightData->specularColor = glm::vec3(1);
+	lightData->specularStrength = 0.5;
+	lightData->shininess = 32;
 	lightData->isAutoUpdate = true;
+	lightData->cutOff = 8.0;
+	lightData->outerCutOff = 10.0;
 	m_flashLight->SetLightData(lightData);
 
 	m_hp = HP;

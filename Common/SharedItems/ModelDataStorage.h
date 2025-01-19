@@ -27,9 +27,11 @@ public:
 	inline static constexpr const char* WALL_1x4x2 = "Wall_1x4x2";
 	inline static constexpr const char* EMPTY = "Empty";
 	inline static constexpr const char* CUBE = "Cube";
+	inline static constexpr const char* SPHERE = "Sphere";
 	inline static constexpr const char* GROUND = "ground";
 	inline static constexpr const char* PIKMIN = "pikmin";
 	inline static constexpr const char* RETICLE = "Reticle";
+	inline static constexpr const char* POINT_LIGHT = "PointLight";
 	inline static constexpr const char* WIN = "Win";
 	inline static constexpr const char* INVENTORY_GUN = "InventoryGun";
 	inline static constexpr const char* HAMBURGER = "Hamburger";
