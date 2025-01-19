@@ -63,7 +63,8 @@ inline void Model::Draw(ShaderProgram& shader)
 inline void Model::loadModel(std::string path)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	unsigned int flags = aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace;
+	const aiScene* scene = importer.ReadFile(path, flags);
 	if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
@@ -112,6 +113,14 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vertex.m_texCoords = glm::vec2(mesh->mTextureCoords[0][i].x * m_textureCoordScale.x, mesh->mTextureCoords[0][i].y * m_textureCoordScale.y);
 		else
 			vertex.m_texCoords = glm::vec2(0.0f, 0.0f);
+		if(mesh->mTangents)
+			vertex.m_tangent = glm::vec3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z);
+		else
+			vertex.m_tangent = glm::vec3(0.0f, 0.0f, 0.0f);
+		if(mesh->mBitangents)
+			vertex.m_bitangent = glm::vec3(mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z);
+		else
+			vertex.m_bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
 		vertices.push_back(vertex);
 	}
 	// process indices
@@ -127,6 +136,8 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 	return Mesh(vertices, indices, textures);
 }
 

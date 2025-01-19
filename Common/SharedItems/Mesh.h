@@ -17,6 +17,8 @@ struct Vertex
 	glm::vec3 m_position;
 	glm::vec3 m_normal;
 	glm::vec2 m_texCoords;
+	glm::vec3 m_tangent;
+	glm::vec3 m_bitangent;
 };
 
 struct Texture
@@ -57,6 +59,8 @@ inline void Mesh::Draw(ShaderProgram& shader)
 {
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
+	unsigned int normalNr = 1;
+	bool hasNormalMap = false;
 	for(unsigned int i = 0; i < m_textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
@@ -66,10 +70,16 @@ inline void Mesh::Draw(ShaderProgram& shader)
 			number = std::to_string(diffuseNr++);
 		else if(name == "texture_specular")
 			number = std::to_string(specularNr++);
+		else if(name == "texture_normal")
+		{
+			number = std::to_string(normalNr++);
+			hasNormalMap = true;
+		}
 
 		shader.SetInt(name + number, i);
 		glBindTexture(GL_TEXTURE_2D, m_textures[i].m_id);
 	}
+	shader.SetBool("uHasNormalMap", hasNormalMap);
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -101,6 +111,12 @@ inline void Mesh::SetupMesh()
 	// vertex texture coords
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_texCoords));
+	// vertex tangent
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_tangent));
+	// vertex bitangent
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_bitangent));
 
 	glBindVertexArray(0);
 }
