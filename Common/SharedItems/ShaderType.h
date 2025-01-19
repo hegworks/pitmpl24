@@ -5,11 +5,11 @@ namespace Uknitty
 
 enum class ShaderType
 {
-	DEFAULT,
-	BULLET_PHYSICS,
 	UNLIT,
 	LIT,
+	SINGLE_COLOR,
 	FRAME_BUFFER,
+	BULLET_PHYSICS,
 };
 
 } // namespace Uknitty

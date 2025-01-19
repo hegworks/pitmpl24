@@ -11,14 +11,10 @@ layout (location = 2) in vec2 iTexCoord;
 out vec2 ioTexCoord;
 
 // uniform
-uniform mat4 uModel;
-uniform mat4 uView;
-uniform mat4 uProjection;
 uniform mat4 uMVP;
 
 void main()
 {
-   // gl_Position = uProjection * uView * uModel * vec4(iPos, 1.0);
    gl_Position = uMVP * vec4(iPos, 1.0);
    ioTexCoord = iTexCoord;
 }

@@ -91,7 +91,7 @@ void SceneManager::CreatePlayer()
 
 	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
 	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT));
+	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
 	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
 	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
 	cameraReticle->SetParent(m_engine->GetMainCamera());
@@ -163,6 +163,6 @@ void SceneManager::CreatePlayer()
 
 void SceneManager::CreateShaderProgram()
 {
-	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::DEFAULT, "../Common/Assets/Shaders/Vertex.glsl", "../Common/Assets/Shaders/Fragment.glsl");
 	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT, "../Common/Assets/Shaders/UnlitVertex.glsl", "../Common/Assets/Shaders/UnlitFragment.glsl");
+	m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::SINGLE_COLOR, "../Common/Assets/Shaders/SingleColorVertex.glsl", "../Common/Assets/Shaders/SingleColorFragment.glsl");
 }

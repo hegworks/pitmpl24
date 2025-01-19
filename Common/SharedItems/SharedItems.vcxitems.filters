@@ -130,6 +130,12 @@
     <Filter Include="Assets\Shaders\Win">
       <UniqueIdentifier>{d858a4f9-4fdd-43f4-beaa-145aa9073176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Hamburger">
+      <UniqueIdentifier>{6aca66e3-01b6-41e9-9527-e0cb8290b9cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Models\InventoryGun">
+      <UniqueIdentifier>{63f7257f-c929-47c5-8a34-d17a8b1dd8f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -484,12 +490,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Fragment.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Vertex.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.mtl">
       <Filter>Assets\Models\Primitives\Cube</Filter>
     </None>
@@ -754,12 +754,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Win\Win.obj">
       <Filter>Assets\Models\Win</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitFragment.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitVertex.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Win\LitFragment.glsl">
       <Filter>Assets\Shaders\Win</Filter>
     </None>
@@ -784,6 +778,42 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\FrameBufferVertex.glsl">
       <Filter>Assets\Shaders\Pi</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\SingleColorFragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\SingleColorVertex.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitFragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\UnlitVertex.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Hamburger\burgers.mat">
+      <Filter>Assets\Models\Hamburger</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Hamburger\Hamburger.fbx">
+      <Filter>Assets\Models\Hamburger</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Rifle_01.fbx">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\SampleSceneMaterial.mat">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_black.mat">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_snow.mat">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.mat">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Hamburger\burger.png">
+      <Filter>Assets\Models\Hamburger</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -802,6 +832,15 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_black.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_snow.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\InventoryGun\Texture_tan.png">
+      <Filter>Assets\Models\InventoryGun</Filter>
     </Image>
   </ItemGroup>
 </Project>

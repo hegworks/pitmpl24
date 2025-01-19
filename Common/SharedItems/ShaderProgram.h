@@ -83,7 +83,7 @@ public:
 	}
 
 private:
-	ShaderType m_shaderType = ShaderType::DEFAULT;
+	ShaderType m_shaderType = ShaderType::LIT;
 };
 
 inline ShaderProgram::ShaderProgram(std::string vertexPath, std::string fragmentPath, ShaderType shaderType)
