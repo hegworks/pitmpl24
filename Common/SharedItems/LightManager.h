@@ -67,12 +67,7 @@ private:
 	ShaderProgram* m_lit = nullptr;
 	bool m_isWindows = true;
 
-#ifdef WINDOWS_BUILD
 	const int MAX_LIGHTS = 5;
-#endif
-#ifdef Raspberry_BUILD
-	const int MAX_LIGHTS = 4;
-#endif
 
 	glm::vec3 m_ambientColor = glm::vec3(1.0);
 	float m_ambientStrength = 1.0;
