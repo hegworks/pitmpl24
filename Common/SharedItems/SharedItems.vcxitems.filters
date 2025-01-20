@@ -145,6 +145,9 @@
     <Filter Include="Uknitty\Headers\Animation">
       <UniqueIdentifier>{98ac59e4-5306-4c8a-bc33-1d782165232d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Models\Agent">
+      <UniqueIdentifier>{01e3b0ff-598e-4cf7-9930-775d4154039d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -883,6 +886,21 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Normal.png">
       <Filter>Assets\Models\Wall_1x4x1</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Agent.fbx">
+      <Filter>Assets\Models\Agent</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Idle.fbx">
+      <Filter>Assets\Models\Agent</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Kick.fbx">
+      <Filter>Assets\Models\Agent</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Sneak.fbx">
+      <Filter>Assets\Models\Agent</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Body_D.png">
+      <Filter>Assets\Models\Agent</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -901,6 +919,9 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
+    </Image>
+    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Weapon_D.png">
+      <Filter>Assets\Models\Agent</Filter>
     </Image>
   </ItemGroup>
 </Project>

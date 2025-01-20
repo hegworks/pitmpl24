@@ -3,11 +3,15 @@
 #include "assimp_glm_helpers.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtx/quaternion.hpp"
 #include <assimp/scene.h>
 #include <cassert>
 #include <string>
 #include <vector>
+
+#ifdef Raspberry_BUILD
+#define GLM_ENABLE_EXPERIMENTAL
+#endif // Raspberry_BUILD
+#include "glm/gtx/quaternion.hpp"
 
 namespace Uknitty
 {

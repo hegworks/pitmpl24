@@ -29,13 +29,13 @@ Uknitty::LightManager::LightManager(AssetManager* assetManager)
 #ifdef Raspberry_BUILD
 	m_isWindows = false;
 
-	{ // keep only one of these 3 lines in the #if 1
+	{ // keep one and only one of these 3 lines in the #if 1
 #if 1
-		m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT, "../Common/Assets/Shaders/Pi/LitVertex_Hybrid.glsl", "../Common/Assets/Shaders/Pi/LitFragment_Hybrid.glsl");
+		m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT, "../Common/Assets/Shaders/Pi/LitVertex_FullPhong.glsl", "../Common/Assets/Shaders/Pi/LitFragment_FullPhong.glsl");
 #endif // 1
 #if 0
+		m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT, "../Common/Assets/Shaders/Pi/LitVertex_Hybrid.glsl", "../Common/Assets/Shaders/Pi/LitFragment_Hybrid.glsl");
 		m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT, "../Common/Assets/Shaders/Pi/LitVertex_FullGourand.glsl", "../Common/Assets/Shaders/Pi/LitFragment_FullGourand.glsl");
-		m_lit = assetManager->AutoGetShaderProgram(Uknitty::ShaderType::LIT, "../Common/Assets/Shaders/Pi/LitVertex_FullPhong.glsl", "../Common/Assets/Shaders/Pi/LitFragment_FullPhong.glsl");
 #endif // 0
 	}
 

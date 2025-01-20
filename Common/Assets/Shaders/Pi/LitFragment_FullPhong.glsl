@@ -13,7 +13,6 @@ precision highp float;
 in vec2 ioTexCoord;
 in vec3 ioNormal;
 in vec3 ioFragPos;
-in mat4 ioModel;
 in mat3 ioTBN;
 
 // out

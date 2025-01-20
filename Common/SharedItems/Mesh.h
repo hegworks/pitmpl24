@@ -16,15 +16,15 @@ constexpr int MAX_BONE_INFLUENCE = 4;
 
 struct Vertex
 {
-	glm::vec3 m_position;
-	glm::vec3 m_normal;
-	glm::vec2 m_texCoords;
+	glm::vec3 m_position = glm::vec3(0);
+	glm::vec3 m_normal = glm::vec3(0);
+	glm::vec2 m_texCoords = glm::vec2(0);
 
-	glm::vec3 m_tangent;
-	glm::vec3 m_bitangent;
+	glm::vec3 m_tangent = glm::vec3(0);
+	glm::vec3 m_bitangent = glm::vec3(0);
 
-	int m_boneIDs[MAX_BONE_INFLUENCE]; // bone indicies which will influence this vertex
-	float m_weights[MAX_BONE_INFLUENCE]; // weights from each bone
+	int m_boneIDs[MAX_BONE_INFLUENCE] = {-1,-1,-1,-1}; // bone indicies which will influence this vertex
+	float m_weights[MAX_BONE_INFLUENCE] = {0,0,0,0}; // weights from each bone
 };
 
 struct Texture
