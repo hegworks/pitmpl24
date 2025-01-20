@@ -139,6 +139,12 @@
     <Filter Include="Assets\Models\LightSource">
       <UniqueIdentifier>{ec0b704f-0f94-43af-b88f-b648808598ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty\assimp">
+      <UniqueIdentifier>{59939576-55ea-4578-8b0d-15148f6dcaae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Uknitty\Headers\Animation">
+      <UniqueIdentifier>{98ac59e4-5306-4c8a-bc33-1d782165232d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -353,6 +359,24 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RNG.h">
       <Filter>Uknitty\Headers\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)assimp_glm_helpers.h">
+      <Filter>ThirdParty\assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h">
+      <Filter>Uknitty\Headers\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h">
+      <Filter>Uknitty\Headers\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Bone.h">
+      <Filter>Uknitty\Headers\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AssimpNodeData.h">
+      <Filter>Uknitty\Headers\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BoneInfo.h">
+      <Filter>Uknitty\Headers\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,9 +22,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_rectpack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_textedit.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\ImGui-master\imstb_truetype.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AssetManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AssimpNodeData.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)assimp_glm_helpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AStar.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Bone.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BoneInfo.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h" />

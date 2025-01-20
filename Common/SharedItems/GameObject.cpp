@@ -1,5 +1,6 @@
 #include "GameObject.h"
 
+#include "Animator.h"
 #include "CInput.h"
 #include "CPhysics.h"
 #include "CRender.h"
@@ -36,6 +37,18 @@ GameObject::~GameObject()
 	}
 }
 
+void GameObject::Update(float deltaTime)
+{
+	if(m_isEnabled)
+	{
+		OnUpdate(deltaTime);
+		if(HasCAnimator())
+		{
+			m_animator->UpdateAnimation(deltaTime);
+		}
+	}
+}
+
 void GameObject::EnableDrawChildren()
 {
 	for(auto& gameObject : m_children)
@@ -60,6 +73,10 @@ void GameObject::Draw(glm::mat4 cameraVP)
 	glm::mat4 drawTransform = cameraVP * worldTransform;
 	if(HasCRender() && m_isDrawSelfEnabled)
 	{
+		if(HasCAnimator())
+		{
+			m_render->UpdateBonesInShader(m_animator->GetFinalBoneMatrices());
+		}
 		m_render->UpdateShader(*m_localTransform->GetMatrix());
 		m_render->Draw(drawTransform);
 	}
@@ -69,9 +86,9 @@ void GameObject::Draw(glm::mat4 cameraVP)
 	}
 }
 
-void GameObject::UpdateWorldTransform(glm::mat4 parentsMVP)
+void GameObject::UpdateWorldTransform(glm::mat4 parentsModel)
 {
-	glm::mat4 worldTransform = parentsMVP * (*m_localTransform->GetMatrix());
+	glm::mat4 worldTransform = parentsModel * (*m_localTransform->GetMatrix());
 	m_worldTransform->OverrideMatrix(worldTransform);
 	for(auto& gameObject : m_children)
 	{
@@ -139,6 +156,13 @@ CPhysics* GameObject::AddCPhysics()
 	return m_physics;
 }
 
+SkeletalAnimation::Animator* GameObject::AddCAnimator()
+{
+	if(m_animator) throw std::runtime_error("GameObject already has Animator");
+	m_animator = new SkeletalAnimation::Animator();
+	return m_animator;
+}
+
 CRender* GameObject::GetCRender() const
 {
 	if(!m_render) throw std::runtime_error("GameObject does not have Render");
@@ -155,6 +179,12 @@ CInput* GameObject::GetCInput() const
 {
 	if(!m_input) throw std::runtime_error("GameObject does not have Input");
 	return m_input;
+}
+
+SkeletalAnimation::Animator* GameObject::GetCAnimator() const
+{
+	if(!m_animator) throw std::runtime_error("GameObject does not have Animator");
+	return m_animator;
 }
 
 } // namespace Uknitty

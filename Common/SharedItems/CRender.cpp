@@ -3,6 +3,8 @@
 #include "Model.h"
 #include "ShaderProgram.h"
 #include "ShaderType.h"
+#include <string>
+#include <vector>
 
 namespace Uknitty
 {
@@ -22,13 +24,26 @@ void CRender::Draw(glm::mat4 mvp)
 	m_shaderProgram->UnUse();
 }
 
-void CRender::UpdateShader(glm::mat4 modelMatrix)
+void CRender::UpdateShader(glm::mat4 modelMatrix) const
 {
 	if(m_shaderProgram->GetShaderType() == ShaderType::LIT)
 	{
 		m_shaderProgram->Use();
 		m_shaderProgram->SetMat4("uModel", modelMatrix);
 		m_shaderProgram->SetMat4("uModelNormal", glm::transpose(glm::inverse(modelMatrix)));
+		m_shaderProgram->UnUse();
+	}
+}
+
+void CRender::UpdateBonesInShader(std::vector<glm::mat4>* transforms) const
+{
+	if(m_shaderProgram->GetShaderType() == ShaderType::LIT)
+	{
+		m_shaderProgram->Use();
+		for(int i = 0; i < transforms->size(); i++)
+		{
+			m_shaderProgram->SetMat4("uFinalBonesMatrices[" + std::to_string(i) + "]", (*transforms)[i]);
+		}
 		m_shaderProgram->UnUse();
 	}
 }

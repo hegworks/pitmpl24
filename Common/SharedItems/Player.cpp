@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "Animation.h"
+#include "Animator.h"
 #include "AssetManager.h"
 #include "btBulletDynamicsCommon.h"
 #include "BTDebugDraw.h"
@@ -37,7 +39,7 @@ void Player::OnAwake()
 
 	GameSharedDependencies::Set<Player>(this);
 
-	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/NakedSnake.obj");
+	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/Agent/Agent.fbx");
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
 
@@ -77,6 +79,12 @@ void Player::OnAwake()
 	lightData->cutOff = 8.0;
 	lightData->outerCutOff = 10.0;
 	m_flashLight->SetLightData(lightData);
+
+	Uknitty::SkeletalAnimation::Animation* animation = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/Agent/Agent.fbx", model);
+	Uknitty::SkeletalAnimation::Animator* animator = GameObject::AddCAnimator();
+	animator->Initialize(animation);
+
+	//GameObject::GetLocalTransform()->SetScale(glm::vec3(0.01f));
 
 	m_hp = HP;
 }

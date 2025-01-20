@@ -12,13 +12,19 @@
 namespace Uknitty
 {
 
+constexpr int MAX_BONE_INFLUENCE = 4;
+
 struct Vertex
 {
 	glm::vec3 m_position;
 	glm::vec3 m_normal;
 	glm::vec2 m_texCoords;
+
 	glm::vec3 m_tangent;
 	glm::vec3 m_bitangent;
+
+	int m_boneIDs[MAX_BONE_INFLUENCE]; // bone indicies which will influence this vertex
+	float m_weights[MAX_BONE_INFLUENCE]; // weights from each bone
 };
 
 struct Texture
@@ -117,6 +123,12 @@ inline void Mesh::SetupMesh()
 	// vertex bitangent
 	glEnableVertexAttribArray(4);
 	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_bitangent));
+	// bone ids
+	glEnableVertexAttribArray(5);
+	glVertexAttribIPointer(5, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_boneIDs)); // notice the I in glVertexAttribPointer
+	// bone weights
+	glEnableVertexAttribArray(6);
+	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_weights));
 
 	glBindVertexArray(0);
 }

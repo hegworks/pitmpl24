@@ -1,15 +1,18 @@
 #pragma once
 
+#include "assimp_glm_helpers.h"
+#include "BoneInfo.h"
 #include "Mesh.h"
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#include <string>
-#include <vector>
-
+#include <cassert>
 #include <iostream>
+#include <map>
 #include <stb_image.h>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 class Shader;
 struct Texture;
@@ -39,11 +42,26 @@ public:
 	std::string GetDirectory() const { return m_directory; }
 	std::string GetStrippedFileName() const;
 
+#pragma region Bone
+	std::map<std::string, SkeletalAnimation::BoneInfo>& GetBoneInfoMap() { return m_boneInfoMap; }
+	int& GetBoneCounter() { return m_boneCounter; }
+#pragma endregion
+
+
 private:
 	// model data
 	std::vector<Mesh> meshes;
 	std::string m_directory;
 	std::vector<Texture> textures_loaded;
+
+#pragma region Bone
+	std::map<std::string, SkeletalAnimation::BoneInfo> m_boneInfoMap; // maps bone name to bone info
+	int m_boneCounter = 0; // id of the next bone that we will add to m_boneInfoMap
+
+	void SetVertexBoneDataToDefault(Vertex& vertex);
+	void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
+#pragma endregion
 
 	void loadModel(std::string path);
 	void processNode(aiNode* node, const aiScene* scene);
@@ -107,6 +125,9 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		// process vertex positions, normals and texture coordinates
 		Vertex vertex;
+
+		SetVertexBoneDataToDefault(vertex);
+
 		vertex.m_position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 		vertex.m_normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 		if(mesh->mTextureCoords[0])
@@ -138,6 +159,9 @@ inline Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
 	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+
+	ExtractBoneWeightForVertices(vertices, mesh, scene);
+
 	return Mesh(vertices, indices, textures);
 }
 
@@ -224,4 +248,60 @@ inline std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
 	return textures;
 }
 
+inline void Model::SetVertexBoneDataToDefault(Vertex& vertex)
+{
+	for(int i = 0; i < MAX_BONE_INFLUENCE; i++)
+	{
+		vertex.m_boneIDs[i] = -1;
+		vertex.m_weights[i] = 0.0f;
+	}
 }
+
+// Set the bone data to the vertex. If there is an empty slot, set the boneID and weight to that slot.
+inline void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+{
+	for(int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+	{
+		if(vertex.m_boneIDs[i] < 0)
+		{
+			vertex.m_weights[i] = weight;
+			vertex.m_boneIDs[i] = boneID;
+			break;
+		}
+	}
+}
+
+inline void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+{
+	for(unsigned int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+	{
+		int boneID = -1;
+		std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+		if(m_boneInfoMap.find(boneName) == m_boneInfoMap.end()) // if the bone is not found in the map, add new bone infos
+		{
+			SkeletalAnimation::BoneInfo newBoneInfo;
+			newBoneInfo.id = m_boneCounter;
+			newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(mesh->mBones[boneIndex]->mOffsetMatrix);
+			m_boneInfoMap[boneName] = newBoneInfo;
+			boneID = m_boneCounter;
+			m_boneCounter++;
+		}
+		else // bone found, meaning it also influences vertices of mesh out of its scope
+		{
+			boneID = m_boneInfoMap[boneName].id;
+		}
+		assert(boneID != -1);
+
+		aiVertexWeight* weights = mesh->mBones[boneIndex]->mWeights;
+		int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+		for(int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+		{
+			int vertexId = weights[weightIndex].mVertexId;
+			float weight = weights[weightIndex].mWeight;
+			assert(vertexId <= vertices.size());
+			SetVertexBoneData(vertices[vertexId], boneID, weight);
+		}
+	}
+}
+
+} // namespace Uknitty

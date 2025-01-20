@@ -11,6 +11,11 @@ class CRender;
 class CPhysics;
 class CTransform;
 
+namespace SkeletalAnimation
+{
+class Animator;
+}
+
 class GameObject
 {
 public:
@@ -28,13 +33,8 @@ public:
 	virtual ~GameObject();
 
 	/// every frame, 1st function
-	void Update(float deltaTime)
-	{
-		if(m_isEnabled)
-		{
-			OnUpdate(deltaTime);
-		}
-	};
+	void Update(float deltaTime);
+
 	/// every frame, after Update()
 	void LateUpdate(float deltaTime)
 	{
@@ -84,7 +84,7 @@ public:
 	void DisableDrawChildren();
 
 	void Draw(glm::mat4 cameraVP);
-	void UpdateWorldTransform(glm::mat4 parentsMVP);
+	void UpdateWorldTransform(glm::mat4 parentsModel);
 
 	/// 1 time, 1st function after constructor
 	virtual void OnAwake() {};
@@ -109,14 +109,17 @@ public:
 	CInput* AddCInput(CInput* cinput);
 	CRender* AddCRender();
 	CPhysics* AddCPhysics();
+	SkeletalAnimation::Animator* AddCAnimator();
 
 	CRender* GetCRender() const;
 	CPhysics* GetCPhysics() const;
 	CInput* GetCInput() const;
+	SkeletalAnimation::Animator* GetCAnimator() const;
 
 	bool HasCRender() const { return m_render != nullptr; }
 	bool HasCPhysics() const { return m_physics != nullptr; }
 	bool HasCInput() const { return m_input != nullptr; }
+	bool HasCAnimator() const { return m_animator != nullptr; }
 
 private:
 	bool m_isEnabled = true;
@@ -133,6 +136,7 @@ private:
 	CInput* m_input = nullptr;
 	CRender* m_render = nullptr;
 	CPhysics* m_physics = nullptr;
+	SkeletalAnimation::Animator* m_animator = nullptr;
 #pragma endregion Optional
 
 };
