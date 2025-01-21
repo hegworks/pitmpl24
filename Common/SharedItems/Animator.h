@@ -77,7 +77,7 @@ inline void Animator::UpdateAnimation(float deltaTime)
 		}
 		else
 		{
-			m_currentTime = m_currentTime - m_currentAnimation->GetDuration();
+			m_currentTime = fmod(m_currentTime, m_currentAnimation->GetDuration());
 		}
 	}
 
