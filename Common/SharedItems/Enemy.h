@@ -72,7 +72,7 @@ private:
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.0, 2, 1.0);
 	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching astar target position
 	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching patrol target position
-	const float PLAYER_DISTANCE_THRESHOLD = 4.0f; // deadzone for reaching player position
+	const float PLAYER_DISTANCE_THRESHOLD = 7.0f; // deadzone for reaching player position
 	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
 	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
 	const float SIGHT_RAY_LENGTH = 30.0f;
