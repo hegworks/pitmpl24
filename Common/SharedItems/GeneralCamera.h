@@ -62,7 +62,7 @@ private:
 	//const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
 	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 35, -4);
 
-	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 2.0f;
+	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 1.6f;
 	const float FOLLOW_DISTANCE_THIRD_PERSON = 6.0f;
 
 	const glm::vec3 FOLLOW_OFFSET_FIRST_PERSON = glm::vec3(0, 2, 0.2);

@@ -95,7 +95,7 @@ void GeneralCamera::FollowCamera(float deltaTime)
 			glm::vec3 unclippedPos = followPos - offsetDir * FOLLOW_DISTANCE_THIRD_PERSON;
 
 			{ // camera clipping
-				glm::vec3 fromVec = *m_followTransform->GetPosition() + glm::vec3(0, 1.6, 0);
+				glm::vec3 fromVec = *m_followTransform->GetPosition() + glm::vec3(0, FOLLOW_OFFSET_Y_THIRD_PERSON, 0);
 				glm::vec3 toVec = unclippedPos;
 				const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(fromVec);
 				const btVector3 to = Uknitty::CPhysics::GLMVec3ToBtVec3(toVec);
