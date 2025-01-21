@@ -85,7 +85,7 @@ void Player::OnAwake()
 	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/WalkForward.fbx", model);
 	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/Death.fbx", model);
 	m_animator = GameObject::AddCAnimator();
-	m_animator->Initialize(m_walkAnim);
+	m_animator->Initialize(m_idleAnim);
 
 	//GameObject::GetLocalTransform()->SetScale(glm::vec3(0.01f));
 
