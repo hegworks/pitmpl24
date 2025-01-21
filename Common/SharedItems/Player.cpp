@@ -39,7 +39,7 @@ void Player::OnAwake()
 
 	GameSharedDependencies::Set<Player>(this);
 
-	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/Agent/Agent.fbx");
+	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/new.fbx");
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
 
@@ -80,9 +80,12 @@ void Player::OnAwake()
 	lightData->outerCutOff = 10.0;
 	m_flashLight->SetLightData(lightData);
 
-	Uknitty::SkeletalAnimation::Animation* animation = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/Agent/Agent.fbx", model);
-	Uknitty::SkeletalAnimation::Animator* animator = GameObject::AddCAnimator();
-	animator->Initialize(animation);
+	//m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/TPoseWithSkin.fbx", model);
+	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/RifleAimingIdle.fbx", model);
+	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/WalkForward.fbx", model);
+	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/Death.fbx", model);
+	m_animator = GameObject::AddCAnimator();
+	m_animator->Initialize(m_walkAnim);
 
 	//GameObject::GetLocalTransform()->SetScale(glm::vec3(0.01f));
 

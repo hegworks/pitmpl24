@@ -86,7 +86,7 @@ void Game::Start()
 	m_gameManager = new GameManager(m_iMouse, m_iKeyboard);
 	UIManager* uiManager = GameSharedDependencies::Get<UIManager>();
 
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 #pragma region FrameBuffer
 	// ShaderProgram

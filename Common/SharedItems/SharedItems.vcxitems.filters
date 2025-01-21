@@ -901,6 +901,7 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Body_D.png">
       <Filter>Assets\Models\Agent</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Weapon_D.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -919,9 +920,6 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Weapon_D.png">
-      <Filter>Assets\Models\Agent</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -210,7 +210,7 @@ void SceneManager::CreateLights()
 {
 	m_engine->GetLightManager()->SetAmbientColor(glm::vec3(1.0));
 #ifdef WINDOWS_BUILD
-	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
+	m_engine->GetLightManager()->SetAmbientStrength(0.4f);
 #endif
 #ifdef Raspberry_BUILD
 	m_engine->GetLightManager()->SetAmbientStrength(0.1f);
