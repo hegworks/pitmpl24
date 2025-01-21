@@ -19,4 +19,5 @@ public:
 	void OnUsedHamburger();
 	void OnUsedGun();
 	void OnCameraFolowTypeChanged();
+	void OnOneEnemyAlarmed();
 };

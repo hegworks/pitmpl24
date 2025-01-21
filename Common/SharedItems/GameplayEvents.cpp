@@ -78,3 +78,8 @@ void GameplayEvents::OnCameraFolowTypeChanged()
 {
 	GameSharedDependencies::Get<Player>()->OnCameraFolowTypeChanged();
 }
+
+void GameplayEvents::OnOneEnemyAlarmed()
+{
+	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::ONE_ENEMY_ALARMED);
+}

@@ -42,6 +42,7 @@ public:
 		PLAYER_COLLIDED_WITH_ROOM_CHANGE,
 		NEW_SCENE_LOADED,
 		PRESSED_INVENTORY,
+		ONE_ENEMY_ALARMED,
 	};
 
 	void TriggerEvent(GameEvent gameEvent);

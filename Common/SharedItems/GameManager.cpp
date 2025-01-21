@@ -136,6 +136,9 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 				m_iMouse->CaptureMouseInput();
 			}
 			break;
+		case GameEvent::ONE_ENEMY_ALARMED:
+			m_sceneManager->AlarmCurrentScene();
+			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");
 	}

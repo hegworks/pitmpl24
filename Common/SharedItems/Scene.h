@@ -25,12 +25,15 @@ class Player;
 class btDynamicsWorld;
 class SceneManagerBlackboard;
 class ModelDataStorage;
+class Enemy;
 
 class Scene
 {
 public:
 	Scene(int mapId);
 	~Scene();
+
+	void EnterAlarmState();
 
 private:
 	enum class WallType
@@ -78,6 +81,7 @@ private:
 	const unsigned int ASTAR_UNWALKABLE_GID = 1;
 
 	int m_mapId = 0;
+	bool m_isInAlarmState = false;
 
 	/// <summary>
 	/// key in ModelDataStorage, position
@@ -87,6 +91,7 @@ private:
 	std::vector<RoomChangeData*> m_roomChangeDatas;
 
 	std::vector<Uknitty::GameObject*> m_createdGameObjects;
+	std::vector<Enemy*> m_enemies;
 
 	/// <summary>
 	/// enemyIndex, patrolPositionIndex, patrolPosition

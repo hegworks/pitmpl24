@@ -35,6 +35,7 @@ public:
 
 	void ChangeScene();
 	void Update(float deltaTime);
+	void AlarmCurrentScene();
 
 private:
 	Scene* m_currentScene = nullptr;
@@ -57,8 +58,11 @@ private:
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Maps/";
 	const std::string FRAGMENT_SHADER_PATH = "../Common/Assets/Maps/";
 	const Key CHANGE_SCENE_KEY = Key::C;
+	const float CENTRAL_SPOTLIGHT_ROT_SPEED = 50.0f;
+	const float CENTRAL_SPOTLIGHT_ROT_SPEED_ALARMED = 250.0f;
 
 	int m_currentMapId = STARTING_MAP_ID;
+	bool m_isCurrentSceneInAlarmState = false;
 
 	void OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType);
 	void UpdateCentralSpotLight(float deltaTime);

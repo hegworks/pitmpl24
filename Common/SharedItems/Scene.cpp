@@ -405,6 +405,7 @@ void Scene::CreateEnemies()
 		}
 		Enemy* enemy = m_engine->CreateGameObject<Enemy>();
 		m_createdGameObjects.push_back(enemy);
+		m_enemies.push_back(enemy);
 		enemy->Initialize(std::move(patrolPositionsVector), m_pathFinder);
 		m_engine->UseDefaultParent(enemy);
 
@@ -424,5 +425,19 @@ void Scene::CreateEnemies()
 			//Uknitty::GeneralCamera* generalCam = static_cast<Uknitty::GeneralCamera*>(m_engine->GetMainCamera());
 			//generalCam->SetMode(Uknitty::GeneralCamera::Mode::CHILD_OF_STH);
 		}
+	}
+}
+
+void Scene::EnterAlarmState()
+{
+	if(m_isInAlarmState)
+	{
+		return;
+	}
+
+	m_isInAlarmState = true;
+	for(auto& enemy : m_enemies)
+	{
+		enemy->EnterAlarmState();
 	}
 }

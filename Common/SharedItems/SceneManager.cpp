@@ -87,14 +87,34 @@ void SceneManager::Update(float deltaTime)
 	UpdatePointLightsFlickering(deltaTime);
 }
 
+void SceneManager::AlarmCurrentScene()
+{
+	m_currentScene->EnterAlarmState();
+	m_isCurrentSceneInAlarmState = true;
+}
+
 void SceneManager::UpdateCentralSpotLight(float deltaTime)
 {
 	float rotY = (*m_centralSpotLightModel->GetLocalTransform()->GetRotation()).y;
-	rotY += deltaTime * 40;
+	if(m_isCurrentSceneInAlarmState)
+	{
+		rotY += CENTRAL_SPOTLIGHT_ROT_SPEED_ALARMED * deltaTime;
+	}
+	else
+	{
+		rotY += CENTRAL_SPOTLIGHT_ROT_SPEED * deltaTime;
+	}
 	m_centralSpotLightModel->GetLocalTransform()->SetRotation(glm::vec3(30, rotY, 0));
 
 	LightData* lightData = m_centralSpotLight->GetLightData();
-	lightData->diffuseColor = glm::vec3(1 + 0.5 * glm::sin(rotY / 6), 1 + 0.5 * glm::sin(rotY / 12), 1 + 0.5 * glm::sin(rotY / 18));
+	if(m_isCurrentSceneInAlarmState)
+	{
+		lightData->diffuseColor = glm::vec3(10, 0, 0);
+	}
+	else
+	{
+		lightData->diffuseColor = glm::vec3(1 + 0.5 * glm::sin(rotY / 6), 1 + 0.5 * glm::sin(rotY / 12), 1 + 0.5 * glm::sin(rotY / 18));
+	}
 	lightData->specularColor = lightData->diffuseColor;
 	m_centralSpotLight->SetLightData(lightData);
 }
@@ -183,6 +203,7 @@ void SceneManager::GenerateRandomLights()
 void SceneManager::ChangeScene()
 {
 	delete m_currentScene;
+	m_isCurrentSceneInAlarmState = false;
 	LoadScene(m_currentMapId);
 	GameSharedDependencies::Get<GameplayEvents>()->OnNewSceneLoaded();
 	ChangePointLightColorsInNewRoom();

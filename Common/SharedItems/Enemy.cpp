@@ -100,7 +100,7 @@ void Enemy::OnUpdate(float deltaTime)
 			}
 			if(IsPlayerInSight())
 			{
-				m_enemyState = EnemyState::ALARM;
+				EnterAlarmState();
 			}
 			break;
 		case EnemyState::ALARM:
@@ -190,7 +190,7 @@ void Enemy::OnPlayerBulletHit()
 		return;
 	}
 
-	m_enemyState = EnemyState::ALARM;
+	EnterAlarmState();
 
 	m_hp--;
 	if(m_hp <= 0)
@@ -199,6 +199,17 @@ void Enemy::OnPlayerBulletHit()
 		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
 		m_animator->PlayAnimation(m_deathAnim, true);
 	}
+}
+
+void Enemy::EnterAlarmState()
+{
+	if(m_enemyState == EnemyState::DEAD || m_enemyState == EnemyState::ALARM)
+	{
+		return;
+	}
+
+	m_enemyState = EnemyState::ALARM;
+	m_gameplayEvents->OnOneEnemyAlarmed();
 }
 
 void Enemy::OnCollision([[maybe_unused]] const btCollisionObject* other)

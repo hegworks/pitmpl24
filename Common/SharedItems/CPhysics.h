@@ -1,7 +1,6 @@
 #pragma once
 
 #include "btBulletDynamicsCommon.h"
-#include "RoomChangeType.h" //TODO move this out of the Uknitty layer
 #include "UknittySettings.h"
 #include <functional>
 #include <glm/glm.hpp>

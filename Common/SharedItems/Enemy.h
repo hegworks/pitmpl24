@@ -43,6 +43,8 @@ public:
 	void Initialize(std::vector<glm::vec3> patrolPositions, AStar::Generator* pathFinder);
 	void DrawAstarPath();
 	void OnPlayerBulletHit();
+	/// this function should only be called from other classes.
+	void EnterAlarmState();
 
 private:
 	struct PosData
@@ -69,19 +71,19 @@ private:
 	const float SPEED_WALK = 3.5f;
 	const float SPEED_ROTATION = 20.0f;
 	const glm::vec3 SCALE = glm::vec3(1.2f);
-	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.0, 2, 1.0);
+	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.0, 2.1, 1.0);
 	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching astar target position
 	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching patrol target position
-	const float PLAYER_DISTANCE_THRESHOLD = 7.0f; // deadzone for reaching player position
+	const float PLAYER_DISTANCE_THRESHOLD = 6.0f; // deadzone for reaching player position
 	const float ASTAR_PATH_GENERATION_DURATION = 0.5f; // generate new path every x seconds
 	const int ASTAR_PATH_SKIP_BEGINNING_COUNT = 3; // skip first x nodes of the path
 	const float SIGHT_RAY_LENGTH = 30.0f;
 	const float GUN_SHOOT_RAY_LENGTH = 30.0f;
-	const int SIGHT_RAY_COUNT = 5; // for symmetrical results, set this to an odd value
+	const int SIGHT_RAY_COUNT = 7; // for symmetrical results, set this to an odd value
 	const float SIGHT_RAY_DIFFERENCE_DEGREE = 3.0f;
 	const float MASS = 70.0f;
 	const int HP = 3;
-	const glm::vec3 GUN_POS = glm::vec3(0, 1.5, 0.5);
+	const glm::vec3 GUN_POS = glm::vec3(0, 1.0, 0.5);
 	const float SHOOT_FREQUENCY_TIME = 2.0; // shoot the gun every x seconds
 
 	float m_moveSpeed = SPEED_WALK;
