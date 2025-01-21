@@ -65,6 +65,7 @@ private:
 	void UpdatePointLightsFlickering(float deltaTime);
 	void ChangePointLightColorsInNewRoom();
 	void LoadScene(int mapId);
+	void LoadAllScenes();
 	void GenerateRandomLights();
 	void CreatePlayer();
 	void CreateLights();

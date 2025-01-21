@@ -22,6 +22,7 @@
 #include "PhysicsManager.h"
 #include "Player.h"
 #include "RNG.h"
+#include "RoomChangeStorage.h"
 #include "RoomFinder.h"
 #include "Scene.h"
 #include "SceneManagerBlackboard.h"
@@ -43,6 +44,7 @@ SceneManager::SceneManager()
 	CreateShaderProgram();
 	CreatePlayer();
 	CreateLights();
+	LoadAllScenes();
 	LoadScene(m_roomFinder->GetCurrentLevelId());
 	ChangePointLightColorsInNewRoom();
 }
@@ -148,6 +150,15 @@ void SceneManager::ChangePointLightColorsInNewRoom()
 void SceneManager::LoadScene(int mapId)
 {
 	m_currentScene = new Scene(mapId);
+}
+
+void SceneManager::LoadAllScenes()
+{
+	for(int i = 0; i < TOTAL_LEVEL_MAPS; i++)
+	{
+		Scene* scene = new Scene(i);
+		delete scene;
+	}
 }
 
 void SceneManager::GenerateRandomLights()
