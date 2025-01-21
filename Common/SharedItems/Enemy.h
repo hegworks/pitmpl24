@@ -68,7 +68,8 @@ private:
 
 	const float SPEED_WALK = 3.5f;
 	const float SPEED_ROTATION = 20.0f;
-	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(0.8, 2, 0.8);
+	const glm::vec3 SCALE = glm::vec3(1.2f);
+	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1.0, 2, 1.0);
 	const float ASTAR_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching astar target position
 	const float PATROL_TARGET_DISTANCE_THRESHOLD = 0.2f; // deadzone for reaching patrol target position
 	const float PLAYER_DISTANCE_THRESHOLD = 4.0f; // deadzone for reaching player position

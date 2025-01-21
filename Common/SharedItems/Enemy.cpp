@@ -39,6 +39,8 @@ void Enemy::OnAwake()
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_ENEMY, COLL_MASK_ENEMY);
 
+	GameObject::GetLocalTransform()->SetScale(SCALE);
+
 	m_physics = GameObject::GetCPhysics();
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
 	m_physics->GetRigidBody()->setAngularFactor(btVector3(0, 0, 0)); // lock rotation
@@ -381,7 +383,7 @@ bool Enemy::IsPlayerInSight()
 {
 	const glm::vec3 headPos = GetHeadPos();
 	glm::vec3 dir = m_transform->GetForward();
-	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos);
+	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos + (dir * 0.1f));
 	const btVector3 centeredTo = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));
 
 	for(int i = 0; i < SIGHT_RAY_COUNT; i++)
