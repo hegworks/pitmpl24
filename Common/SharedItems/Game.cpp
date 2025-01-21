@@ -191,6 +191,11 @@ void Game::Start()
 				frames = 0;
 			}
 		}
+
+		if(gameDeltaTime > 0.2f)
+		{
+			gameDeltaTime = 0.02f;
+		}
 #pragma endregion Timing
 
 		glBindFramebuffer(GL_FRAMEBUFFER, FBO); // Bind the custom framebuffer
