@@ -80,7 +80,7 @@ private:
 	const float SIGHT_RAY_LENGTH = 30.0f;
 	const float GUN_SHOOT_RAY_LENGTH = 30.0f;
 	const int SIGHT_RAY_COUNT = 7; // for symmetrical results, set this to an odd value
-	const float SIGHT_RAY_DIFFERENCE_DEGREE = 4.0f;
+	const float SIGHT_RAY_DIFFERENCE_DEGREE = 6.0f;
 	const float MASS = 70.0f;
 	const int HP = 3;
 	const glm::vec3 GUN_POS = glm::vec3(0, 1.0, 0.5);
