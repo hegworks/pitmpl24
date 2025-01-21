@@ -40,6 +40,7 @@ private:
 	float m_deltaTime;
 	bool m_isPlayOnceMode = false;
 	bool m_hasPlayedOnce = false;
+	const int MAX_BONES = 30;
 };
 
 inline void Animator::Initialize(Animation* animation)
@@ -47,9 +48,9 @@ inline void Animator::Initialize(Animation* animation)
 	m_currentTime = 0.0;
 	m_currentAnimation = animation;
 
-	m_finalBoneMatrices.reserve(100);
+	m_finalBoneMatrices.reserve(MAX_BONES);
 
-	for(int i = 0; i < 100; i++)
+	for(int i = 0; i < MAX_BONES; i++)
 		m_finalBoneMatrices.push_back(glm::mat4(1.0f));
 }
 
