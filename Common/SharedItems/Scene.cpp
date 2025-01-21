@@ -195,18 +195,6 @@ void Scene::CreateSolidObjectsFromData()
 		}
 	}
 
-#pragma region Pikmin
-	{ // this is just a joke :D (but it also marks the center of the world)
-		ModelDataStorage::ModelData* modelData = m_modelDataStorage->GetModelData(ModelDataStorage::PIKMIN);
-		Uknitty::ModelObject* modelObject = m_engine->CreateGameObject<Uknitty::ModelObject>();
-		m_createdGameObjects.push_back(modelObject);
-		modelObject->Initialize(assetManager->AutoGetModel(ModelDataStorage::PIKMIN, modelData->m_filePath), m_shaderProgram);
-		modelObject->GetLocalTransform()->SetScale(glm::vec3(2));
-		modelObject->GetLocalTransform()->SetPosition(glm::vec3(0, 2, 0));
-		m_engine->UseDefaultParent(modelObject);
-	}
-#pragma endregion Pikmin
-
 #pragma region Wall
 	for(auto& wallData : m_wallDatas)
 	{
