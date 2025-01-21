@@ -190,6 +190,8 @@ void Enemy::OnPlayerBulletHit()
 		return;
 	}
 
+	m_enemyState = EnemyState::ALARM;
+
 	m_hp--;
 	if(m_hp <= 0)
 	{
