@@ -16,10 +16,7 @@ UIManager::UIManager()
 	GameSharedDependencies::Set<UIManager>(this);
 
 	m_redScreenEffectTimer = new Uknitty::CountdownTimer(0);
-}
-
-UIManager::~UIManager()
-{
+	m_hitMarkerEffectTimer = new Uknitty::CountdownTimer(0);
 }
 
 void UIManager::Update(float deltaTime)
@@ -61,6 +58,8 @@ void UIManager::Update(float deltaTime)
 			throw std::runtime_error("Invalid menu type");
 	}
 
+	m_hitMarkerEffectTimer->Update(deltaTime);
+	UpdateHitMarkerEffect();
 	m_redScreenEffectTimer->Update(deltaTime);
 	UpdateRedScreenEffect();
 
@@ -82,6 +81,12 @@ void UIManager::PlayRedScreenEffect()
 {
 	m_redScreenEffectTimer->SetNewDuration(RED_SCREEN_EFFECT_DURATION);
 	m_redScreenEffectTimer->Reset();
+}
+
+void UIManager::PlayHitMarkerEffect()
+{
+	m_hitMarkerEffectTimer->SetNewDuration(HIT_MARKER_EFFECT_DURATION);
+	m_hitMarkerEffectTimer->Reset();
 }
 
 void UIManager::MainMenu()
@@ -549,6 +554,30 @@ void UIManager::UpdateRedScreenEffect()
 		if(ImGui::Begin("Red Screen Effect", &trueBool, flags))
 		{
 			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+	}
+}
+
+void UIManager::UpdateHitMarkerEffect()
+{
+	if(!m_hitMarkerEffectTimer->IsFinished())
+	{
+		static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->WorkPos);
+		ImGui::SetNextWindowSize(viewport->WorkSize);
+		ImGui::SetNextWindowBgAlpha(0);
+		bool trueBool = true;
+		if(ImGui::Begin("Hit Marker Effect", &trueBool, flags))
+		{
+			ImDrawList* drawList = ImGui::GetWindowDrawList();
+			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+			float size = 15;
+			float thickness = 3;
+			ImU32 color = ImColor(255, 255, 255);
+			drawList->AddLine(ImVec2(center.x - size, center.y - size), ImVec2(center.x + size, center.y + size), color, thickness);
+			drawList->AddLine(ImVec2(center.x - size, center.y + size), ImVec2(center.x + size, center.y - size), color, thickness);
 			ImGui::End();
 		}
 	}

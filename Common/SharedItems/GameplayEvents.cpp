@@ -16,6 +16,11 @@ void GameplayEvents::OnEnemyBulletHitPlayer()
 	GameSharedDependencies::Get<UIManager>()->PlayRedScreenEffect();
 }
 
+void GameplayEvents::OnPlayerBulletHitEnemy()
+{
+	GameSharedDependencies::Get<UIManager>()->PlayHitMarkerEffect();
+}
+
 void GameplayEvents::OnPlayerDied()
 {
 	GameSharedDependencies::Get<GameManager>()->TriggerEvent(GameManager::GameEvent::PLAYER_DIED);

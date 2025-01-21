@@ -191,6 +191,7 @@ void Enemy::OnPlayerBulletHit()
 	}
 
 	EnterAlarmState();
+	GameSharedDependencies::Get<GameplayEvents>()->OnPlayerBulletHitEnemy();
 
 	m_hp--;
 	if(m_hp <= 0)

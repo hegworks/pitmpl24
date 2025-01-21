@@ -6,6 +6,7 @@ public:
 	GameplayEvents();
 
 	void OnEnemyBulletHitPlayer();
+	void OnPlayerBulletHitEnemy();
 	void OnPlayerDied();
 	void OnPressedQuit();
 	void OnPressedMainMenu();
