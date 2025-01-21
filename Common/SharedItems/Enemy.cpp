@@ -1,5 +1,7 @@
 #include "Enemy.h"
 
+#include "Animation.h"
+#include "Animator.h"
 #include "array"
 #include "AssetManager.h"
 #include "AStar.hpp"
@@ -33,7 +35,7 @@ void Enemy::OnAwake()
 {
 	Uknitty::DynamicObject::OnAwake();
 
-	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("enemy", "../Common/Assets/Models/Soldier/Soldier.obj");
+	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("enemy", "../Common/Assets/Models/Soldier/Idle.fbx");
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_ENEMY, COLL_MASK_ENEMY);
 
@@ -65,6 +67,12 @@ void Enemy::OnAwake()
 	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
 	m_gunPosObject->SetParent(this);
+
+	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/Soldier/Idle.fbx", model);
+	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/Soldier/WalkForward.fbx", model);
+	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/Soldier/Death.fbx", model);
+	m_animator = GameObject::AddCAnimator();
+	m_animator->Initialize(m_idleAnim);
 }
 
 void Enemy::OnUpdate(float deltaTime)

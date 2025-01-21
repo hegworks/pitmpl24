@@ -21,6 +21,11 @@ class DynamicObject;
 class GeneralCamera;
 class GameObject;
 class CPhysics;
+namespace SkeletalAnimation
+{
+class Animation;
+class Animator;
+}
 }
 class btDynamicsWorld;
 class btCollisionObject;
@@ -56,6 +61,10 @@ private:
 	Uknitty::CPhysics* m_physics = nullptr;
 	Uknitty::UserPointerData* m_userPointerData = nullptr;
 	Uknitty::GameObject* m_gunPosObject = nullptr;
+	Uknitty::SkeletalAnimation::Animator* m_animator = nullptr;
+	Uknitty::SkeletalAnimation::Animation* m_idleAnim = nullptr;
+	Uknitty::SkeletalAnimation::Animation* m_walkAnim = nullptr;
+	Uknitty::SkeletalAnimation::Animation* m_deathAnim = nullptr;
 
 	const float SPEED_WALK = 3.5f;
 	const float SPEED_ROTATION = 20.0f;
