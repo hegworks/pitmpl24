@@ -403,8 +403,20 @@ void UIManager::HUD()
 				default:
 					throw std::runtime_error("Invalid item");
 			}
-			std::string text = "EQUIPPED: " + itemString;
+			std::string text = "  EQUIPPED: " + itemString;
 			ImGui::Text(text.c_str());
+
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(500);
+			ImGui::Text("    USE->F");
+			ImGui::SameLine();
+			ImGui::Text("    AIM->RMB");
+			ImGui::SameLine();
+			ImGui::Text("    SHOOT->LMB");
+			ImGui::SameLine();
+			ImGui::Text("    INVENTORY->TAB");
+			ImGui::SameLine();
+			ImGui::Text("    PAUSE->ESC");
 		}
 
 		ImGui::End();
