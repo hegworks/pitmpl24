@@ -3,6 +3,7 @@
  <editorsettings>
   <export target="2.csv" format="csv"/>
  </editorsettings>
+ <tileset firstgid="1" source="tileset.tsx"/>
  <imagelayer id="3" name="Image Layer 1">
   <image source="6.png" width="1024" height="768"/>
  </imagelayer>

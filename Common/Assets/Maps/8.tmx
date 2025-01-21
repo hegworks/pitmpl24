@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="32">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="36">
  <editorsettings>
   <export target="2.csv" format="csv"/>
  </editorsettings>
+ <tileset firstgid="1" source="tileset.tsx"/>
  <imagelayer id="3" name="Image Layer 1">
   <image source="8.png" width="1024" height="768"/>
  </imagelayer>
@@ -83,7 +84,7 @@
     <property name="vhu" type="int" value="1"/>
    </properties>
   </object>
-  <object id="26" name="wall_h_1" type="solid" x="736" y="736" width="288" height="32" visible="0">
+  <object id="26" name="wall_h_1" type="solid" x="736" y="736" width="288" height="32">
    <properties>
     <property name="vhu" type="int" value="1"/>
    </properties>
@@ -101,4 +102,70 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup color="#00ff00" id="5" name="ep" class="0">
+  <object id="17" name="0" type="0" x="672" y="576">
+   <point/>
+  </object>
+  <object id="19" name="1" type="0" x="928" y="576">
+   <point/>
+  </object>
+  <object id="20" name="2" type="0" x="928" y="672">
+   <point/>
+  </object>
+  <object id="21" name="3" type="0" x="672" y="672">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ffff00" id="8" name="ep" class="1">
+  <object id="26" name="0" type="1" x="544" y="576">
+   <point/>
+  </object>
+  <object id="25" name="1" type="1" x="128" y="576">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#55ffff" id="5" name="ep" class="2">
+  <object id="32" name="0" type="2" x="96" y="512">
+   <point/>
+  </object>
+  <object id="33" name="1" type="2" x="96" y="224">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ff55ff" id="6" name="ep" class="3">
+  <object id="34" name="0" type="3" x="224" y="224">
+   <point/>
+  </object>
+  <object id="35" name="1" type="3" x="960" y="224">
+   <point/>
+  </object>
+ </objectgroup>
+ <layer id="9" name="astar" width="32" height="24">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,
+1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
 </map>
