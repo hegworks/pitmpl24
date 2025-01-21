@@ -80,7 +80,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#ffff00" id="8" name="ep">
-  <object id="26" name="0" type="1" x="96" y="224">
+  <object id="26" name="0" type="1" x="128" y="224">
    <point/>
   </object>
   <object id="25" name="1" type="1" x="544" y="224">

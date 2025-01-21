@@ -114,9 +114,11 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameEvent::PLAYER_COLLIDED_WITH_ROOM_CHANGE:
 			m_shouldChangeRoomSoDisablePhysics = true;
+			m_uiManager->ShowMenu(UIManager::MenuType::LOADING_SCREEN);
 			break;
 		case GameEvent::NEW_SCENE_LOADED:
 			m_isNewSceneLoadedSoReEnablePhysics = true;
+			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			break;
 		case GameEvent::PRESSED_INVENTORY:
 			if(m_gameState == GameState::GAMEPLAY)

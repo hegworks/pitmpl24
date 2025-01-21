@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="30">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="39">
  <editorsettings>
   <export target="2.csv" format="csv"/>
  </editorsettings>
@@ -57,6 +57,11 @@
     <property name="vhu" type="int" value="0"/>
    </properties>
   </object>
+  <object id="38" name="wall_v_2" type="solid" x="864" y="384" width="64" height="128">
+   <properties>
+    <property name="vhu" type="int" value="0"/>
+   </properties>
+  </object>
   <object id="17" name="wall_v_2" type="solid" x="0" y="0" width="32" height="768">
    <properties>
     <property name="vhu" type="int" value="0"/>
@@ -110,7 +115,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#00ff00" id="5" name="ep">
+ <objectgroup color="#00ff00" id="5" name="ep" class="0">
   <object id="17" name="0" type="0" x="224" y="480">
    <point/>
   </object>
@@ -136,6 +141,32 @@
    <point/>
   </object>
  </objectgroup>
+ <objectgroup color="#ffff00" id="4" name="ep" class="1">
+  <object id="30" name="0" type="1" x="800" y="448">
+   <point/>
+  </object>
+  <object id="31" name="1" type="1" x="224" y="448">
+   <point/>
+  </object>
+  <object id="32" name="2" type="1" x="224" y="64">
+   <point/>
+  </object>
+  <object id="33" name="3" type="1" x="800" y="64">
+   <point/>
+  </object>
+  <object id="34" name="4" type="1" x="800" y="704">
+   <point/>
+  </object>
+  <object id="35" name="5" type="1" x="224" y="704">
+   <point/>
+  </object>
+  <object id="36" name="6" type="1" x="224" y="64">
+   <point/>
+  </object>
+  <object id="37" name="7" type="1" x="800" y="64">
+   <point/>
+  </object>
+ </objectgroup>
  <layer id="9" name="astar" width="32" height="24">
   <data encoding="csv">
 1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,
@@ -150,10 +181,10 @@
 1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,
 1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,
 1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,
-1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,
 1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,
 1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,
 1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,

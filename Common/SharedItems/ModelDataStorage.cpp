@@ -2,6 +2,7 @@
 
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
+#include "glm/glm.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -12,17 +13,17 @@ ModelDataStorage::ModelDataStorage()
 	m_datas[CRATE_2x4] =
 	{
 		"../Common/Assets/Models/Crate_2x4/Crate.obj",
-		glm::vec3(2, 1.5, 4)
+		glm::vec3(2, 1, 4)
 	};
 	m_datas[CRATE_4x4] =
 	{
 		"../Common/Assets/Models/Crate_4x4/Crate.obj",
-		glm::vec3(4, 1.5, 4)
+		glm::vec3(4, 1, 4)
 	};
 	m_datas[TANK] =
 	{
 		"../Common/Assets/Models/Tank/Tank.obj",
-		glm::vec3(4, 2, 6)
+		glm::vec3(6, 3, 7)
 	};
 	m_datas[FENCE] =
 	{

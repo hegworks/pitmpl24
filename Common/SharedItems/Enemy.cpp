@@ -265,9 +265,9 @@ glm::vec3 Enemy::GetCurrentFeetPos()
 	return Uknitty::DynamicObject::GetCPhysics()->GetPosition() - glm::vec3(0, MODEL_DIMENSIONS.y / 2.0, 0);
 }
 
-glm::vec3 Enemy::GetHeadPos()
+glm::vec3 Enemy::GetEyePos()
 {
-	return Uknitty::DynamicObject::GetCPhysics()->GetPosition() + glm::vec3(0, MODEL_DIMENSIONS.y / 2.0, 0);
+	return Uknitty::DynamicObject::GetCPhysics()->GetPosition() + glm::vec3(0, (MODEL_DIMENSIONS.y / 2.0) - 0.5f, 0);
 }
 
 void Enemy::CalculateNewAstarPath()
@@ -394,7 +394,7 @@ glm::ivec2 Enemy::FindUncollisionedAstarCoord(glm::vec2 rawWorldCoord)
 
 bool Enemy::IsPlayerInSight()
 {
-	const glm::vec3 headPos = GetHeadPos();
+	const glm::vec3 headPos = GetEyePos();
 	glm::vec3 dir = m_transform->GetForward();
 	const btVector3 from = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos + (dir * 0.1f));
 	const btVector3 centeredTo = Uknitty::CPhysics::GLMVec3ToBtVec3(headPos + (dir * SIGHT_RAY_LENGTH));

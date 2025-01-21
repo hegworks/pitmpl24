@@ -103,40 +103,29 @@
   </object>
  </objectgroup>
  <objectgroup color="#00ff00" id="5" name="ep" class="0">
-  <object id="17" name="0" type="0" x="672" y="576">
+  <object id="17" name="0" type="0" x="800" y="704">
    <point/>
   </object>
-  <object id="19" name="1" type="0" x="928" y="576">
+  <object id="19" name="1" type="0" x="672" y="576">
    <point/>
   </object>
-  <object id="20" name="2" type="0" x="928" y="672">
-   <point/>
-  </object>
-  <object id="21" name="3" type="0" x="672" y="672">
-   <point/>
-  </object>
- </objectgroup>
- <objectgroup color="#ffff00" id="8" name="ep" class="1">
-  <object id="26" name="0" type="1" x="544" y="576">
-   <point/>
-  </object>
-  <object id="25" name="1" type="1" x="128" y="576">
+  <object id="21" name="2" type="0" x="928" y="576">
    <point/>
   </object>
  </objectgroup>
  <objectgroup color="#55ffff" id="5" name="ep" class="2">
-  <object id="32" name="0" type="2" x="96" y="512">
+  <object id="32" name="0" type="2" x="96" y="576">
    <point/>
   </object>
-  <object id="33" name="1" type="2" x="96" y="224">
+  <object id="33" name="1" type="2" x="96" y="192">
    <point/>
   </object>
  </objectgroup>
  <objectgroup color="#ff55ff" id="6" name="ep" class="3">
-  <object id="34" name="0" type="3" x="224" y="224">
+  <object id="34" name="0" type="3" x="896" y="224">
    <point/>
   </object>
-  <object id="35" name="1" type="3" x="960" y="224">
+  <object id="35" name="1" type="3" x="256" y="224">
    <point/>
   </object>
  </objectgroup>
