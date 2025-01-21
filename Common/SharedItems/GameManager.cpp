@@ -223,6 +223,11 @@ void GameManager::MouseButtonDown(MouseButton mouseButton)
 	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->GetInstance()->MouseButtonDown(mouseButton);
+
+		if(mouseButton == MouseButton::RIGHT)
+		{
+			m_generalCamera->SetFollowType(Uknitty::GeneralCamera::FollowType::FIRST_PERSON);
+		}
 	}
 }
 
@@ -237,6 +242,11 @@ void GameManager::MouseButtonUp(MouseButton mouseButton)
 	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
 		m_engine->GetInstance()->MouseButtonUp(mouseButton);
+
+		if(mouseButton == MouseButton::RIGHT)
+		{
+			m_generalCamera->SetFollowType(Uknitty::GeneralCamera::FollowType::THIRD_PERSON_FOLLOW);
+		}
 	}
 }
 

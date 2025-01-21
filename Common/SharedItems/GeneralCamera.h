@@ -25,6 +25,7 @@ public:
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 	virtual void ResetMouseOffset() override;
 
+
 	const float PITCH_MAX_THIRD_PERSON = 10.0f;
 	const float PITCH_MIN_THIRD_PERSON = -45.0f;
 	const float PITCH_MAX_FIRST_PERSON = 80.0f;
@@ -71,6 +72,7 @@ private:
 	const float PUSH_IN_SPEED = 15.0f;
 	const float PUSH_OUT_SPEED = 10.0f;
 	const float PUSH_OUT_THRESHOLD = 0.1f;
+	const float MODE_SWITCH_LERP_DURATION = 0.3f;
 
 	// variables
 	Uknitty::CTransform* m_followTransform = nullptr;
@@ -81,6 +83,7 @@ private:
 	double m_yaw = YAW_DEFAULT;
 	double m_pitch = 0;
 	float m_fov = FOV_DEFAULT;
+	float m_modeSwitchLerpElapsed = 0;
 
 	glm::mat4 m_view;
 	glm::mat4 m_projection;
@@ -95,6 +98,10 @@ private:
 	glm::vec3 m_clippingTargetPos = glm::vec3(0);
 	bool m_clippingHadHit = false;
 	float m_followDistanceThirdPerson = FOLLOW_DISTANCE_THIRD_PERSON;
+	bool m_wasInThirdPerson = false;
+	bool m_wasInFirstPerson = false;
+	glm::vec3 m_lastPosInFirstPerson;
+	glm::vec3 m_lastPosInThirdPerson;
 
 	void FollowCamera(float deltaTime);
 	void ChildOfSthCamera();

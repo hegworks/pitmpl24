@@ -127,7 +127,25 @@ void GeneralCamera::FollowCamera(float deltaTime)
 				}
 			}
 
-			m_pos = followPos - offsetDir * (glm::max(m_followDistanceThirdPerson - 1.0f, 0.5f));
+			glm::vec3 clippedPos = followPos - offsetDir * (glm::max(m_followDistanceThirdPerson - 1.0f, 0.5f));
+
+			{ // lerping from first person to third person
+				if(m_wasInFirstPerson)
+				{
+					m_modeSwitchLerpElapsed += deltaTime;
+					m_pos = glm::mix(m_lastPosInFirstPerson, clippedPos, m_modeSwitchLerpElapsed / MODE_SWITCH_LERP_DURATION);
+					if(m_modeSwitchLerpElapsed > MODE_SWITCH_LERP_DURATION)
+					{
+						m_wasInFirstPerson = false;
+						m_modeSwitchLerpElapsed = 0;
+						m_pos = clippedPos;
+					}
+				}
+				else
+				{
+					m_pos = clippedPos;
+				}
+			}
 
 			// Calculate the front vector to look at the followTransform
 			m_front = glm::normalize(followPos - m_pos);
@@ -137,6 +155,9 @@ void GeneralCamera::FollowCamera(float deltaTime)
 
 			// Update the projection matrix
 			m_projection = glm::perspective(glm::radians(m_fov), ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
+
+			m_wasInThirdPerson = true;
+			m_lastPosInThirdPerson = m_pos;
 		}
 		break;
 		case GeneralCamera::FollowType::FIRST_PERSON:
@@ -144,7 +165,26 @@ void GeneralCamera::FollowCamera(float deltaTime)
 			// Position the camera at the followTransform's position
 			glm::vec3 followPos = *m_followTransform->GetPosition();
 			followPos.y += FOLLOW_OFFSET_Y_FIRST_PERSON; //TODO remove FOLLOW_OFFSET_Y_FIRST_PERSON and apply it directly to followTransform
-			m_pos = followPos;
+
+			glm::vec3 destinationPos = followPos;
+
+			{ // lerping from third person to first person
+				if(m_wasInThirdPerson)
+				{
+					m_modeSwitchLerpElapsed += deltaTime;
+					m_pos = glm::mix(m_lastPosInThirdPerson, destinationPos, m_modeSwitchLerpElapsed / MODE_SWITCH_LERP_DURATION);
+					if(m_modeSwitchLerpElapsed > MODE_SWITCH_LERP_DURATION)
+					{
+						m_wasInThirdPerson = false;
+						m_modeSwitchLerpElapsed = 0;
+						m_pos = destinationPos;
+					}
+				}
+				else
+				{
+					m_pos = destinationPos;
+				}
+			}
 
 			// Calculate the front vector based on yaw and pitch
 			glm::vec3 direction;
@@ -161,6 +201,9 @@ void GeneralCamera::FollowCamera(float deltaTime)
 
 			// Update the projection matrix
 			m_projection = glm::perspective(glm::radians(m_fov), ASPECT_RATIO, NEAR_PLANE, FAR_PLANE);
+
+			m_wasInFirstPerson = true;
+			m_lastPosInFirstPerson = m_pos;
 		}
 		break;
 		default:
