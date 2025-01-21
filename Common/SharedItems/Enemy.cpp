@@ -82,7 +82,6 @@ void Enemy::OnUpdate(float deltaTime)
 		return;
 	}
 
-
 	DrawAstarPath();
 
 	switch(m_enemyState)
@@ -192,11 +191,9 @@ void Enemy::OnPlayerBulletHit()
 	m_hp--;
 	if(m_hp <= 0)
 	{
-		GameObject::GetLocalTransform()->SetRotation(glm::vec3(-90, 0, 0));
-		glm::vec3 currentPos = *GameObject::GetLocalTransform()->GetPosition();
-		GameObject::GetLocalTransform()->SetPosition(glm::vec3(currentPos.x, 0.1, currentPos.z));
 		m_enemyState = EnemyState::DEAD;
 		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
+		m_animator->PlayAnimation(m_deathAnim, true);
 	}
 }
 
@@ -209,6 +206,7 @@ void Enemy::MoveTowardTargetPos()
 	glm::vec3 direction = glm::normalize(m_targetPos.pos - GetCurrentFeetPos());
 	direction.y = 0;
 	Uknitty::DynamicObject::MoveInDirection(direction, m_moveSpeed);
+	m_animator->PlayAnimation(m_walkAnim);
 }
 
 bool Enemy::HasReachedAstarTargetPos()
@@ -480,4 +478,5 @@ void Enemy::RotateTowardPlayer()
 void Enemy::StopMoving()
 {
 	MoveInDirection(glm::vec3(0), 0);
+	m_animator->PlayAnimation(m_idleAnim);
 }

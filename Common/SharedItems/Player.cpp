@@ -251,10 +251,12 @@ void Player::MoveIfInput(float deltaTime)
 		dir = glm::normalize(dir);
 		Uknitty::DynamicObject::MoveInDirection(dir, m_moveSpeed);
 		RotateGradually(dir, deltaTime);
+		m_animator->PlayAnimation(m_walkAnim);
 	}
 	else
 	{
 		Uknitty::DynamicObject::MoveInDirection(glm::vec3(0), 0);
+		m_animator->PlayAnimation(m_idleAnim);
 	}
 }
 

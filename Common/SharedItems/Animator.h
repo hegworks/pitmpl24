@@ -28,7 +28,7 @@ public:
 	/// </summary>
 	void Initialize(Animation* animation);
 	void UpdateAnimation(float deltaTime);
-	void PlayAnimation(Animation* pAnimation);
+	void PlayAnimation(Animation* animation, bool once = false);
 	void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
 
 	std::vector<glm::mat4>* GetFinalBoneMatrices() { return &m_finalBoneMatrices; }
@@ -38,6 +38,8 @@ private:
 	Animation* m_currentAnimation = nullptr;
 	float m_currentTime;
 	float m_deltaTime;
+	bool m_isPlayOnceMode = false;
+	bool m_hasPlayedOnce = false;
 };
 
 inline void Animator::Initialize(Animation* animation)
@@ -54,18 +56,45 @@ inline void Animator::Initialize(Animation* animation)
 inline void Animator::UpdateAnimation(float deltaTime)
 {
 	m_deltaTime = deltaTime;
-	if(m_currentAnimation)
+
+	if(!m_currentAnimation)
 	{
-		m_currentTime += m_currentAnimation->GetTicksPerSecond() * deltaTime;
-		m_currentTime = fmod(m_currentTime, m_currentAnimation->GetDuration());
-		CalculateBoneTransform(&m_currentAnimation->GetRootNode(), glm::mat4(1.0f));
+		return;
 	}
+
+	if(m_isPlayOnceMode && m_hasPlayedOnce)
+	{
+		return;
+	}
+
+	m_currentTime += m_currentAnimation->GetTicksPerSecond() * deltaTime;
+	if(m_currentTime >= m_currentAnimation->GetDuration())
+	{
+		if(m_isPlayOnceMode)
+		{
+			m_currentTime = m_currentAnimation->GetDuration() - 0.01f;
+			m_hasPlayedOnce = true;
+		}
+		else
+		{
+			m_currentTime = m_currentTime - m_currentAnimation->GetDuration();
+		}
+	}
+
+	CalculateBoneTransform(&m_currentAnimation->GetRootNode(), glm::mat4(1.0f));
 }
 
-inline void Animator::PlayAnimation(Animation* animation)
+inline void Animator::PlayAnimation(Animation* animation, bool once)
 {
+	if(animation == m_currentAnimation)
+	{
+		return;
+	}
+
 	m_currentAnimation = animation;
 	m_currentTime = 0.0f;
+	m_isPlayOnceMode = once;
+	m_hasPlayedOnce = false;
 }
 
 inline void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform)
