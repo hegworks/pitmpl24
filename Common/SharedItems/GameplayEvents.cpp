@@ -3,6 +3,7 @@
 #include "GameManager.h"
 #include "GameSharedDependencies.h"
 #include "Player.h"
+#include "UIManager.h"
 
 GameplayEvents::GameplayEvents()
 {
@@ -12,6 +13,7 @@ GameplayEvents::GameplayEvents()
 void GameplayEvents::OnEnemyBulletHitPlayer()
 {
 	GameSharedDependencies::Get<Player>()->OnEnemyBulletHit();
+	GameSharedDependencies::Get<UIManager>()->PlayRedScreenEffect();
 }
 
 void GameplayEvents::OnPlayerDied()

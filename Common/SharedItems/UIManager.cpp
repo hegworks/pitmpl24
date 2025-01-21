@@ -3,6 +3,7 @@
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
 
+#include "CountdownTimer.h"
 #include "GameplayEvents.h"
 #include "GameSharedDependencies.h"
 #include "InventoryManager.h"
@@ -13,6 +14,8 @@
 UIManager::UIManager()
 {
 	GameSharedDependencies::Set<UIManager>(this);
+
+	m_redScreenEffectTimer = new Uknitty::CountdownTimer(0);
 }
 
 UIManager::~UIManager()
@@ -58,6 +61,9 @@ void UIManager::Update(float deltaTime)
 			throw std::runtime_error("Invalid menu type");
 	}
 
+	m_redScreenEffectTimer->Update(deltaTime);
+	UpdateRedScreenEffect();
+
 	FPSCounter();
 
 	ImGui::GetFont()->Scale = oldTextSize;
@@ -70,6 +76,12 @@ void UIManager::Update(float deltaTime)
 void UIManager::UpdateFPS(int fps)
 {
 	m_fps = fps;
+}
+
+void UIManager::PlayRedScreenEffect()
+{
+	m_redScreenEffectTimer->SetNewDuration(RED_SCREEN_EFFECT_DURATION);
+	m_redScreenEffectTimer->Reset();
 }
 
 void UIManager::MainMenu()
@@ -518,5 +530,26 @@ void UIManager::Inventory()
 		}
 
 		ImGui::End();
+	}
+}
+
+void UIManager::UpdateRedScreenEffect()
+{
+	if(!m_redScreenEffectTimer->IsFinished())
+	{
+		static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->WorkPos);
+		ImGui::SetNextWindowSize(viewport->WorkSize);
+
+		ImGui::SetNextWindowBgAlpha(1.0f - m_redScreenEffectTimer->GetProgress());
+		ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(255, 0, 0));
+
+		bool trueBool = true;
+		if(ImGui::Begin("Red Screen Effect", &trueBool, flags))
+		{
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
 	}
 }

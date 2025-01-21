@@ -32,6 +32,11 @@ public:
 		return m_remaining;
 	}
 
+	float GetProgress() const
+	{
+		return 1.0f - (m_remaining / m_duration);
+	}
+
 	void SetNewDuration(float durationSeconds)
 	{
 		m_duration = durationSeconds;

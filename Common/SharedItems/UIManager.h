@@ -1,5 +1,10 @@
 #pragma once
 
+namespace Uknitty
+{
+class CountdownTimer;
+}
+
 class UIManager
 {
 public:
@@ -21,11 +26,15 @@ public:
 	void Update(float deltaTime);
 	void ShowMenu(MenuType menuType) { m_currentMenu = menuType; }
 	void UpdateFPS(int fps);
+	void PlayRedScreenEffect();
 
 private:
+	const float RED_SCREEN_EFFECT_DURATION = 0.35f;
+
 	bool m_isMainMenuVisible = false;
 	MenuType m_currentMenu = MenuType::MAIN_MENU;
 	int m_fps = 0;
+	Uknitty::CountdownTimer* m_redScreenEffectTimer = nullptr;
 
 	void MainMenu();
 	void PauseMenu();
@@ -35,4 +44,5 @@ private:
 	void HUD();
 	void FPSCounter();
 	void Inventory();
+	void UpdateRedScreenEffect();
 };
