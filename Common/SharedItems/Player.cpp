@@ -171,13 +171,10 @@ void Player::OnCameraFolowTypeChanged()
 	m_cameraFollowType = m_generalCamera->GetCameraType();
 	if(m_cameraFollowType == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
 	{
-		//m_flashLight->SetParent(Uknitty::Engine::GetInstance()->GetMainCamera());
-		//m_flashLight->GetWorldTransform()->SetRotation(glm::vec3(180));
 		m_flashLight->GetLightData()->isAutoUpdate = false;
 	}
 	else
 	{
-		//m_flashLight->SetParent(m_gunPosObject);
 		m_flashLight->GetLightData()->isAutoUpdate = true;
 	}
 }
@@ -304,12 +301,18 @@ void Player::CheckCameraTypeToDisableDraw()
 
 	m_lastDrawEnabledState = newDrawEnabledState;
 
-	if(newDrawEnabledState)
+	if(newDrawEnabledState) // switched to third person
 	{
 		Uknitty::GameObject::EnableDrawSelf();
 		Uknitty::GameObject::EnableDrawChildren();
+
+		// Update the player's rotation to look in the direction of the camera
+		glm::vec3 direction = m_generalCamera->GetForward();
+		float targetAngle = atan2(direction.x, direction.z);
+		glm::vec3 rotation = glm::vec3(0, glm::degrees(targetAngle), 0);
+		Uknitty::GameObject::GetLocalTransform()->SetRotation(rotation);
 	}
-	else
+	else // switched to first person
 	{
 		Uknitty::GameObject::DisableDrawSelf();
 		Uknitty::GameObject::DisableDrawChildren();
