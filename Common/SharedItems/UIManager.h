@@ -28,6 +28,8 @@ public:
 	void UpdateFPS(int fps);
 	void PlayRedScreenEffect();
 	void PlayHitMarkerEffect();
+	void ShowReticle();
+	void HideReticle();
 
 private:
 	const float RED_SCREEN_EFFECT_DURATION = 0.35f;
@@ -38,6 +40,7 @@ private:
 	int m_fps = 0;
 	Uknitty::CountdownTimer* m_redScreenEffectTimer = nullptr;
 	Uknitty::CountdownTimer* m_hitMarkerEffectTimer = nullptr;
+	bool m_shouldShowReticle = false;
 
 	void MainMenu();
 	void PauseMenu();
@@ -47,6 +50,7 @@ private:
 	void HUD();
 	void FPSCounter();
 	void Inventory();
+	void Reticle();
 	void UpdateRedScreenEffect();
 	void UpdateHitMarkerEffect();
 };

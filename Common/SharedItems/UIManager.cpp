@@ -60,6 +60,9 @@ void UIManager::Update(float deltaTime)
 
 	m_hitMarkerEffectTimer->Update(deltaTime);
 	UpdateHitMarkerEffect();
+
+	Reticle();
+
 	m_redScreenEffectTimer->Update(deltaTime);
 	UpdateRedScreenEffect();
 
@@ -87,6 +90,16 @@ void UIManager::PlayHitMarkerEffect()
 {
 	m_hitMarkerEffectTimer->SetNewDuration(HIT_MARKER_EFFECT_DURATION);
 	m_hitMarkerEffectTimer->Reset();
+}
+
+void UIManager::ShowReticle()
+{
+	m_shouldShowReticle = true;
+}
+
+void UIManager::HideReticle()
+{
+	m_shouldShowReticle = false;
 }
 
 void UIManager::MainMenu()
@@ -538,6 +551,30 @@ void UIManager::Inventory()
 	}
 }
 
+void UIManager::Reticle()
+{
+	if(!m_shouldShowReticle)
+	{
+		return;
+	}
+
+	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
+	const ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowBgAlpha(0);
+	bool trueBool = true;
+	if(ImGui::Begin("Reticle", &trueBool, flags))
+	{
+		ImDrawList* drawList = ImGui::GetWindowDrawList();
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		float size = 5;
+		ImU32 color = ImColor(255, 0, 0);
+		drawList->AddCircleFilled(center, size, color);
+		ImGui::End();
+	}
+}
+
 void UIManager::UpdateRedScreenEffect()
 {
 	if(!m_redScreenEffectTimer->IsFinished())
@@ -563,7 +600,7 @@ void UIManager::UpdateHitMarkerEffect()
 {
 	if(!m_hitMarkerEffectTimer->IsFinished())
 	{
-		static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+		static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs;
 		const ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->WorkPos);
 		ImGui::SetNextWindowSize(viewport->WorkSize);

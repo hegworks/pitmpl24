@@ -221,13 +221,6 @@ void SceneManager::CreatePlayer()
 	m_engine->GetPhysicsManager()->AddContactTestRigidbody(m_player->GetCPhysics()->GetRigidBody());
 	m_player->SetCollidedWithRoomChangeCallback([this](RoomChangeType roomChangeType) { OnPlayerCollidedWithRoomChange(roomChangeType); });
 
-	ModelDataStorage::ModelData* camraReticleModelData = m_modelDataStorage->GetModelData(ModelDataStorage::RETICLE);
-	Uknitty::ModelObject* cameraReticle = m_engine->CreateGameObject<Uknitty::ModelObject>();
-	cameraReticle->Initialize(m_engine->GetAssetManager()->AutoGetModel(ModelDataStorage::RETICLE, camraReticleModelData->m_filePath), m_engine->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::UNLIT));
-	cameraReticle->GetLocalTransform()->SetScale(glm::vec3(0.001f));
-	cameraReticle->GetLocalTransform()->SetPosition(glm::vec3(0, 0, -0.1));
-	cameraReticle->SetParent(m_engine->GetMainCamera());
-
 	/*{
 		ModelDataStorage::ModelData* inventoryGunModelData = m_modelDataStorage->GetModelData(ModelDataStorage::HAMBURGER);
 		Uknitty::ModelObject* inventoryGun = m_engine->CreateGameObject<Uknitty::ModelObject>();

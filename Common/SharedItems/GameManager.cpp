@@ -78,6 +78,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			if(m_gameState == GameState::GAMEPLAY)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::PAUSE_MENU);
+				MouseButtonUp(MouseButton::RIGHT);
 				m_gameState = GameState::PAUSE;
 				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_iMouse->ReleaseMouseInput();
@@ -124,6 +125,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			if(m_gameState == GameState::GAMEPLAY)
 			{
 				m_uiManager->ShowMenu(UIManager::MenuType::INVENTORY);
+				MouseButtonUp(MouseButton::RIGHT);
 				m_inventoryManager->ShowInventory();
 				m_engine->KeyUpAll();
 				m_gameState = GameState::INVENTORY;
@@ -223,7 +225,10 @@ void GameManager::MouseButtonDown(MouseButton mouseButton)
 
 	if(!m_iMouse->IsCapturingMouseInput())
 	{
-		io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, true);
+		if(mouseButton == MouseButton::LEFT)
+			io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, true);
+		else if(mouseButton == MouseButton::RIGHT)
+			io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Right, true);
 	}
 	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
@@ -232,6 +237,7 @@ void GameManager::MouseButtonDown(MouseButton mouseButton)
 		if(mouseButton == MouseButton::RIGHT)
 		{
 			m_generalCamera->SetFollowType(Uknitty::GeneralCamera::FollowType::FIRST_PERSON);
+			m_uiManager->ShowReticle();
 		}
 	}
 }
@@ -242,7 +248,10 @@ void GameManager::MouseButtonUp(MouseButton mouseButton)
 
 	if(!m_iMouse->IsCapturingMouseInput())
 	{
-		io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, false);
+		if(mouseButton == MouseButton::LEFT)
+			io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Left, false);
+		else if(mouseButton == MouseButton::RIGHT)
+			io.AddMouseButtonEvent(ImGuiMouseButton_::ImGuiMouseButton_Right, false);
 	}
 	else if(!io.WantCaptureMouse && m_gameState == GameState::GAMEPLAY)
 	{
@@ -251,6 +260,7 @@ void GameManager::MouseButtonUp(MouseButton mouseButton)
 		if(mouseButton == MouseButton::RIGHT)
 		{
 			m_generalCamera->SetFollowType(Uknitty::GeneralCamera::FollowType::THIRD_PERSON_FOLLOW);
+			m_uiManager->HideReticle();
 		}
 	}
 }
