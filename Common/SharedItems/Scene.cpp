@@ -434,28 +434,56 @@ void Scene::CreateEnemies()
 
 void Scene::GeneratePerlinTexture()
 {
-	m_perlinObject = m_engine->CreateGameObject<Uknitty::GameObject>();
-	m_createdGameObjects.push_back(m_perlinObject);
-	m_engine->UseDefaultParent(m_perlinObject);
+	{ // perlin mesh
+		m_perlinMeshObject = m_engine->CreateGameObject<Uknitty::GameObject>();
+		m_createdGameObjects.push_back(m_perlinMeshObject);
+		m_engine->UseDefaultParent(m_perlinMeshObject);
 
-	m_perlinNoiseManager = new PerlinNoiseManager();
-	Uknitty::ShaderProgram* perlinShaderProgram = m_perlinNoiseManager->GetShaderProgram();
+		m_perlinNoiseManager = new PerlinNoiseManager();
+		Uknitty::ShaderProgram* perlinShaderProgram = m_perlinNoiseManager->GetShaderProgram();
 
-	m_perlinCRender = new PerlinCRender(perlinShaderProgram);
-	m_perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 1);
-	unsigned int perlinTextureId = m_perlinNoiseManager->GetTextureId();
-	unsigned int perlinVAO = m_perlinNoiseManager->GetVAO();
+		m_perlinMeshCRender = new PerlinCRender(perlinShaderProgram);
+		m_perlinNoiseManager->GenerateNewPerlinNoiseMesh(15, 2);
+		unsigned int perlinVAO = m_perlinNoiseManager->GetMeshVAO();
+		unsigned int perlinIndexCout = m_perlinNoiseManager->GetIndexCount();
 
-	m_perlinCRender->SetTextureId(perlinTextureId);
-	m_perlinCRender->SetVAO(perlinVAO);
-	m_perlinObject->AddCustomCRender(m_perlinCRender);
-	m_perlinObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
-	m_perlinObject->GetLocalTransform()->SetScale(glm::vec3(2.0));
+		m_perlinMeshCRender->SetIndexCount(perlinIndexCout);
+		m_perlinMeshCRender->SetVAO(perlinVAO);
+		m_perlinMeshCRender->SetIsMeshTrueIsTextureFalse(true);
+		m_perlinMeshObject->AddCustomCRender(m_perlinMeshCRender);
+		m_perlinMeshObject->GetLocalTransform()->SetPosition(glm::vec3(-5, 0, 0));
+		m_perlinMeshObject->GetLocalTransform()->SetScale(glm::vec3(0.3));
+	}
+
+//#if 0
+	{ // perlin texture
+		m_perlinTextureObject = m_engine->CreateGameObject<Uknitty::GameObject>();
+		m_createdGameObjects.push_back(m_perlinTextureObject);
+		m_engine->UseDefaultParent(m_perlinTextureObject);
+
+		Uknitty::ShaderProgram* perlinShaderProgram = m_perlinNoiseManager->GetShaderProgram();
+
+		m_perlinTextureCRender = new PerlinCRender(perlinShaderProgram);
+		m_perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 2);
+		unsigned int perlinTextureId = m_perlinNoiseManager->GetTextureId();
+		unsigned int perlinVAO = m_perlinNoiseManager->GetTextureVAO();
+
+		m_perlinTextureCRender->SetTextureId(perlinTextureId);
+		m_perlinTextureCRender->SetVAO(perlinVAO);
+		m_perlinTextureCRender->SetIsMeshTrueIsTextureFalse(false);
+		m_perlinTextureObject->AddCustomCRender(m_perlinTextureCRender);
+		m_perlinTextureObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1.0, 0));
+		m_perlinTextureObject->GetLocalTransform()->SetScale(glm::vec3(1.0));
+	}
+//#endif
 }
 
 void Scene::UpdatePerlinTexture(float deltaTime)
 {
-	m_perlinNoiseManager->Update(deltaTime);
+	if(m_perlinNoiseManager)
+	{
+		m_perlinNoiseManager->Update(deltaTime);
+	}
 }
 
 void Scene::EnterAlarmState()

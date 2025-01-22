@@ -22,10 +22,13 @@ public:
 		float texCoord[2];
 	};
 
-	void GenerateNewPerlinNoiseTexture(const int width, const int height, const int octaves);
+	void GenerateNewPerlinNoiseTexture(const int gridSize, const int octaves);
+	void GenerateNewPerlinNoiseMesh(const int gridSize, const int octaves);
 	Uknitty::ShaderProgram* GetShaderProgram() const { return m_shaderProgram; }
 	unsigned int GetTextureId() const { return m_textureId; }
-	unsigned int GetVAO() const { return m_vao; }
+	unsigned int GetTextureVAO() const { return m_textureVAO; }
+	unsigned int GetMeshVAO() const { return m_meshVAO; }
+	unsigned int GetIndexCount() const { return m_indexCount; }
 
 private:
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
@@ -34,7 +37,8 @@ private:
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Shaders/PerlinVertex.glsl";
 
 	unsigned int m_textureId = 0;
-	unsigned int m_vao = 0;
-	unsigned int m_vbo = 0;
+	unsigned int m_meshVAO = 0;
+	unsigned int m_textureVAO = 0;
 	float m_time = 0;
+	int m_indexCount = 0;
 };

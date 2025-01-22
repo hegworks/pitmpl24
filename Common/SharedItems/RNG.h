@@ -11,19 +11,19 @@ namespace RNG
 
 using uint = uint32_t;
 
-static uint32_t seed;
+inline static uint32_t seed = 0x123;
 
-inline void RandomizeSeed()
+inline static void RandomizeSeed()
 {
 	seed = std::random_device{}();
 }
 
-inline void SetSeed(uint32_t newSeed)
+inline static void SetSeed(uint32_t newSeed)
 {
 	seed = newSeed;
 }
 
-inline uint RandomUInt()
+inline static uint RandomUInt()
 {
 	seed ^= seed << 13;
 	seed ^= seed >> 17;
@@ -31,25 +31,25 @@ inline uint RandomUInt()
 	return seed;
 }
 
-inline float RandomFloat()
+inline static float RandomFloat()
 {
 	return RandomUInt() * 2.3283064365387e-10f;
 }
 
-inline int RandomInt(int min, int max)
+inline static int RandomInt(int min, int max)
 {
 	return min + (RandomUInt() % (max - min + 1));
 }
 
-inline float RandomFloat(float min, float max)
+inline static float RandomFloat(float min, float max)
 {
 	return min + (RandomFloat() * (max - min));
 }
 
 #pragma region Perlin
 // Perlin noise implementation - https://stackoverflow.com/questions/29711668/perlin-noise-generation
-static int numX = 512, numY = 512, numOctaves = 7, primeIndex = 0;
-static float persistence = 0.5f;
+static int numOctaves = 7, primeIndex = 0;
+static float persistence = 0.8f;
 static int primes[10][3] =
 {
 	{ 995615039, 600173719, 701464987 },
@@ -64,7 +64,7 @@ static int primes[10][3] =
 	{ 997169939, 842027887, 423882827 }
 };
 
-inline float Noise(const int i, const int x, const int y)
+inline static float Noise(const int i, const int x, const int y)
 {
 	int n = x + y * 57;
 	n = (n << 13) ^ n;
@@ -73,7 +73,7 @@ inline float Noise(const int i, const int x, const int y)
 	return 1.0f - (float)t / 1073741824.0f;
 }
 
-inline float SmoothedNoise(const int i, const int x, const int y)
+inline static float SmoothedNoise(const int i, const int x, const int y)
 {
 	const float corners = (Noise(i, x - 1, y - 1) + Noise(i, x + 1, y - 1) + Noise(i, x - 1, y + 1) + Noise(i, x + 1, y + 1)) / 16;
 	const float sides = (Noise(i, x - 1, y) + Noise(i, x + 1, y) + Noise(i, x, y - 1) + Noise(i, x, y + 1)) / 8;
@@ -81,13 +81,13 @@ inline float SmoothedNoise(const int i, const int x, const int y)
 	return corners + sides + center;
 }
 
-inline float Interpolate(const float a, const float b, const float x)
+inline static float Interpolate(const float a, const float b, const float x)
 {
 	const float ft = x * 3.1415927f, f = (1 - cosf(ft)) * 0.5f;
 	return a * (1 - f) + b * f;
 }
 
-inline float InterpolatedNoise(const int i, const float x, const float y)
+inline static float InterpolatedNoise(const int i, const float x, const float y)
 {
 	const int integer_X = (int)x, integer_Y = (int)y;
 	const float fractional_X = x - integer_X, fractional_Y = y - integer_Y;
@@ -100,9 +100,9 @@ inline float InterpolatedNoise(const int i, const float x, const float y)
 	return Interpolate(i1, i2, fractional_Y);
 }
 
-inline float noise2D(const float x, const float y)
+inline static float noise2D(const float x, const float y)
 {
-	float total = 0, frequency = (float)(2 << numOctaves), amplitude = 1;
+	float total = 0, frequency = (float)(2 << numOctaves), amplitude = 5;
 	for(int i = 0; i < numOctaves; ++i)
 	{
 		frequency /= 2, amplitude *= persistence;
@@ -111,7 +111,7 @@ inline float noise2D(const float x, const float y)
 	return total / frequency;
 }
 
-inline float noise3D(const float x, const float y, const float z)
+inline static float noise3D(const float x, const float y, const float z)
 {
 	float noise = 0.0f;
 	float frequency = 5; // (float)(2 << numOctaves);

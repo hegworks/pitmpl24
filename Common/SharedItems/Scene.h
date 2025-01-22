@@ -70,8 +70,10 @@ private:
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	std::vector<glm::vec3>* m_patrolPositionsVector = nullptr;
 	PerlinNoiseManager* m_perlinNoiseManager = nullptr;
-	Uknitty::GameObject* m_perlinObject = nullptr;
-	PerlinCRender* m_perlinCRender = nullptr;
+	Uknitty::GameObject* m_perlinTextureObject = nullptr;
+	Uknitty::GameObject* m_perlinMeshObject = nullptr;
+	PerlinCRender* m_perlinTextureCRender = nullptr;
+	PerlinCRender* m_perlinMeshCRender = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";

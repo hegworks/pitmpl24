@@ -35,6 +35,7 @@ SceneManager::SceneManager()
 	GameSharedDependencies::Set<SceneManager>(this);
 
 	m_engine = Uknitty::Engine::GetInstance();
+	Uknitty::RNG::RandomizeSeed();
 	m_roomFinder = new RoomFinder();
 	new SceneManagerBlackboard();
 	m_modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();
@@ -44,7 +45,7 @@ SceneManager::SceneManager()
 	CreateShaderProgram();
 	CreatePlayer();
 	CreateLights();
-	LoadAllScenes();
+	//LoadAllScenes();
 	LoadScene(m_roomFinder->GetCurrentLevelId());
 	ChangePointLightColorsInNewRoom();
 }
