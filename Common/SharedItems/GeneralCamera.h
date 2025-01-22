@@ -25,7 +25,6 @@ public:
 	virtual void SetFollowTransform(Uknitty::CTransform* followTransform) override { m_followTransform = followTransform; }
 	virtual void ResetMouseOffset() override;
 
-
 	const float PITCH_MAX_THIRD_PERSON = 10.0f;
 	const float PITCH_MIN_THIRD_PERSON = -45.0f;
 	const float PITCH_MAX_FIRST_PERSON = 80.0f;
@@ -60,8 +59,7 @@ private:
 	const float NEAR_PLANE = 0.1f;
 	const float FAR_PLANE = 1000.0f;
 
-	//const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 12, -8);
-	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 35, -4);
+	const glm::vec3 FOLLOW_OFFSET_TOPDOWN = glm::vec3(0, 30, -15);
 
 	const float FOLLOW_OFFSET_Y_THIRD_PERSON = 1.6f;
 	const float FOLLOW_DISTANCE_THIRD_PERSON = 6.0f;

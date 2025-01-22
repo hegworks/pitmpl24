@@ -77,8 +77,14 @@ void GeneralCameraCInput::OnKeyDown(Key key)
 
 	if(key == CAMERA_TYPE_SWITCH_KEY)
 	{
-		int nextCameraType = ((int)m_owner->GetCameraType() + 1) % m_owner->TOTAL_CAMERA_TYPES;
-		m_owner->SetFollowType(static_cast<Uknitty::GeneralCamera::FollowType>(nextCameraType));
+		if(m_owner->GetCameraType() == Uknitty::GeneralCamera::FollowType::TOP_DOWN_FOLLOW)
+		{
+			m_owner->SetFollowType(Uknitty::GeneralCamera::FollowType::THIRD_PERSON_FOLLOW);
+		}
+		else if(m_owner->GetCameraType() == Uknitty::GeneralCamera::FollowType::THIRD_PERSON_FOLLOW)
+		{
+			m_owner->SetFollowType(Uknitty::GeneralCamera::FollowType::TOP_DOWN_FOLLOW);
+		}
 	}
 }
 
