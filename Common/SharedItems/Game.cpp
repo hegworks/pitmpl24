@@ -16,6 +16,7 @@
 #include "ModelObject.h"
 #include "PhysicsCollisionFilters.h"
 #include "Player.h"
+#include "RNG.h"
 #include "SceneManager.h"
 #include "ShaderProgram.h"
 #include "SharedInput.h"
@@ -85,6 +86,8 @@ void Game::Start()
 #pragma region Other Initializations
 	m_gameManager = new GameManager(m_iMouse, m_iKeyboard);
 	UIManager* uiManager = GameSharedDependencies::Get<UIManager>();
+
+	Uknitty::RNG::RandomizeSeed();
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 

@@ -10,6 +10,7 @@ enum class ShaderType
 	SINGLE_COLOR,
 	FRAME_BUFFER,
 	BULLET_PHYSICS,
+	PERLIN,
 };
 
 } // namespace Uknitty

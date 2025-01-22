@@ -16,8 +16,11 @@
 #include "Model.h"
 #include "ModelDataStorage.h"
 #include "ModelObject.h"
+#include "PerlinCRender.h"
+#include "PerlinNoiseManager.h"
 #include "PhysicsCollisionFilters.h"
 #include "Player.h"
+#include "RNG.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "ShaderType.h"
@@ -47,6 +50,7 @@ Scene::Scene(int mapId)
 	CreateGround();
 	CreatePathFinder();
 	CreateEnemies();
+	if(m_mapId == PERLIN_MAP_ID) GeneratePerlinTexture();
 }
 
 Scene::~Scene()
@@ -426,6 +430,26 @@ void Scene::CreateEnemies()
 			//generalCam->SetMode(Uknitty::GeneralCamera::Mode::CHILD_OF_STH);
 		}
 	}
+}
+
+void Scene::GeneratePerlinTexture()
+{
+	Uknitty::GameObject* perlinObject = m_engine->CreateGameObject<Uknitty::GameObject>();
+	m_createdGameObjects.push_back(perlinObject);
+	m_engine->UseDefaultParent(perlinObject);
+
+	PerlinNoiseManager* perlinNoiseManager = new PerlinNoiseManager();
+	Uknitty::ShaderProgram* perlinShaderProgram = perlinNoiseManager->GetShaderProgram();
+
+	PerlinCRender* perlinCRender = new PerlinCRender(perlinShaderProgram);
+	perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 4);
+	unsigned int perlinTextureId = perlinNoiseManager->GetTextureId();
+	unsigned int perlinVAO = perlinNoiseManager->GetVAO();
+
+	perlinCRender->SetTextureId(perlinTextureId);
+	perlinCRender->SetVAO(perlinVAO);
+	perlinObject->AddCustomCRender(perlinCRender);
+	perlinObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
 }
 
 void Scene::EnterAlarmState()

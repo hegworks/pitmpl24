@@ -381,6 +381,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BoneInfo.h">
       <Filter>Uknitty\Headers\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PerlinCRender.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PerlinNoiseManager.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -520,6 +526,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp">
       <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PerlinCRender.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PerlinNoiseManager.cpp">
+      <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -902,6 +914,12 @@
       <Filter>Assets\Models\Agent</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Weapon_D.png" />
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\PerlinFragment.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\PerlinVertex.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">

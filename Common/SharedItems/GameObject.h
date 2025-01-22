@@ -108,6 +108,7 @@ public:
 
 	CInput* AddCInput(CInput* cinput);
 	CRender* AddCRender();
+	CRender* AddCustomCRender(CRender* crender);
 	CPhysics* AddCPhysics();
 	SkeletalAnimation::Animator* AddCAnimator();
 

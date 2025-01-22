@@ -192,8 +192,6 @@ void SceneManager::GenerateRandomLights()
 		glm::vec3(1, 0, 1),
 	};
 
-	Uknitty::RNG::RandomizeSeed();
-
 	for(int i = 0; i < m_pointLightGenratedColors.size(); i++)
 	{
 		m_pointLightGenratedColors[i] = m_pointLightPossibleColors[Uknitty::RNG::RandomInt(0, m_pointLightPossibleColors.size() - 1)];

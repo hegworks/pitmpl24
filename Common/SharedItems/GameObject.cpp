@@ -149,6 +149,13 @@ CRender* GameObject::AddCRender()
 	return m_render;
 }
 
+CRender* GameObject::AddCustomCRender(CRender* crender)
+{
+	if(m_render) throw std::runtime_error("GameObject already has Render");
+	m_render = crender;
+	return m_render;
+}
+
 CPhysics* GameObject::AddCPhysics()
 {
 	if(m_physics) throw std::runtime_error("GameObject already has Physics");

@@ -79,6 +79,7 @@ private:
 	const std::string ENEMY_PATROL_OBJECTGROUP = "ep";
 	const std::string ASTAR_LAYER_COLLECTION = "astar";
 	const unsigned int ASTAR_UNWALKABLE_GID = 1;
+	const int PERLIN_MAP_ID = 0;
 
 	int m_mapId = 0;
 	bool m_isInAlarmState = false;
@@ -104,5 +105,6 @@ private:
 	void CreateGround();
 	void CreatePathFinder();
 	void CreateEnemies();
+	void GeneratePerlinTexture();
 };
 
