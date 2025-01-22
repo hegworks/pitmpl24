@@ -394,6 +394,11 @@ void UIManager::HUD()
 	ImGui::SetNextWindowPos(ImVec2(0, viewport->WorkSize.y - bgHeight));
 	ImGui::SetNextWindowSize(ImVec2(viewport->WorkSize.x, bgHeight));
 
+	float fontScale = viewport->WorkSize.x / 1600.0f; // 1600 is the width of the window where the font size shouldn't change
+	float oldFontScale = ImGui::GetFont()->Scale;
+	ImGui::GetFont()->Scale = oldFontScale * fontScale;
+	ImGui::PushFont(ImGui::GetFont());
+
 	ImGui::SetNextWindowBgAlpha(0.7);
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0, 0, 0));
 	if(ImGui::Begin("HUD", &m_isMainMenuVisible, flags))
@@ -433,21 +438,26 @@ void UIManager::HUD()
 				default:
 					throw std::runtime_error("Invalid item");
 			}
-			std::string text = "  EQUIPPED: " + itemString;
+			std::string text = " EQUIPPED:" + itemString;
 			ImGui::Text(text.c_str());
 
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(500);
-			ImGui::Text("    USE->F");
+			ImGui::Text("     USE->F");
 			ImGui::SameLine();
-			ImGui::Text("    AIM->RMB");
+			ImGui::Text("     AIM->RMB");
 			ImGui::SameLine();
-			ImGui::Text("    SHOOT->LMB");
+			ImGui::Text("     SHOOT->LMB");
 			ImGui::SameLine();
-			ImGui::Text("    INVENTORY->TAB");
+			ImGui::Text("     INVENTORY->TAB");
+			ImGui::SameLine();
+			ImGui::Text("    TACTICAL VIEW->V");
 			ImGui::SameLine();
 			ImGui::Text("    PAUSE->ESC");
 		}
+
+		ImGui::GetFont()->Scale = oldFontScale;
+		ImGui::PopFont();
 
 		ImGui::End();
 	}
@@ -612,7 +622,7 @@ void UIManager::UpdateHitMarkerEffect()
 			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 			float size = 15;
 			float thickness = 3;
-			ImU32 color = ImColor(255, 255, 255);
+			ImU32 color = ImColor(255, 0, 0);
 			drawList->AddLine(ImVec2(center.x - size, center.y - size), ImVec2(center.x + size, center.y + size), color, thickness);
 			drawList->AddLine(ImVec2(center.x - size, center.y + size), ImVec2(center.x + size, center.y - size), color, thickness);
 			ImGui::End();
