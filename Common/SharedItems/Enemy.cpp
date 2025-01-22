@@ -303,6 +303,11 @@ void Enemy::ClearAstarPath()
 
 void Enemy::ChangeTargetToNextAstarPos()
 {
+	if(m_astarCurrentPathPositions.size() == 0)
+	{
+		return;
+	}
+
 	m_astarCurrentPathIndex = (m_astarCurrentPathIndex + 1) % m_astarCurrentPathPositions.size();
 	m_targetPos.pos = m_astarCurrentPathPositions[m_astarCurrentPathIndex];
 }
