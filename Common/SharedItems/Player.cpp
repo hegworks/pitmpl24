@@ -321,7 +321,10 @@ void Player::CheckCameraTypeToDisableDraw()
 
 void Player::OnShootInput()
 {
-	CastGunRay();
+	if(m_generalCamera->GetCameraType() == Uknitty::GeneralCamera::FollowType::FIRST_PERSON)
+	{
+		CastGunRay();
+	}
 }
 
 void Player::CastGunRay()
