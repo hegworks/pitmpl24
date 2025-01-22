@@ -13,6 +13,8 @@ public:
 	PerlinNoiseManager();
 	~PerlinNoiseManager() = default;
 
+	void Update(float deltaTime);
+
 	// Vertex data for a quad
 	struct Vertex
 	{
@@ -30,8 +32,10 @@ private:
 
 	const std::string FRAGMENT_SHADER_PATH = "../Common/Assets/Shaders/PerlinFragment.glsl";
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Shaders/PerlinVertex.glsl";
+	const float SPEED = 10.0f;
 
 	unsigned int m_textureId = 0;
 	unsigned int m_vao = 0;
 	unsigned int m_vbo = 0;
+	float m_time = 0;
 };

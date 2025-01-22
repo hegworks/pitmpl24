@@ -26,6 +26,8 @@ class btDynamicsWorld;
 class SceneManagerBlackboard;
 class ModelDataStorage;
 class Enemy;
+class PerlinNoiseManager;
+class PerlinCRender;
 
 class Scene
 {
@@ -34,6 +36,7 @@ public:
 	~Scene();
 
 	void EnterAlarmState();
+	void Update(float deltaTime);
 
 private:
 	enum class WallType
@@ -66,6 +69,9 @@ private:
 	Uknitty::Engine* m_engine = nullptr;
 	Uknitty::ShaderProgram* m_shaderProgram = nullptr;
 	std::vector<glm::vec3>* m_patrolPositionsVector = nullptr;
+	PerlinNoiseManager* m_perlinNoiseManager = nullptr;
+	Uknitty::GameObject* m_perlinObject = nullptr;
+	PerlinCRender* m_perlinCRender = nullptr;
 
 	const std::string MAPS_PATH = "../Common/Assets/Maps/";
 	const std::string MAPS_EXTENTION = ".tmx";
@@ -106,5 +112,6 @@ private:
 	void CreatePathFinder();
 	void CreateEnemies();
 	void GeneratePerlinTexture();
+	void UpdatePerlinTexture(float deltaTime);
 };
 

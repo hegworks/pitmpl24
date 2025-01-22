@@ -434,22 +434,34 @@ void Scene::CreateEnemies()
 
 void Scene::GeneratePerlinTexture()
 {
-	Uknitty::GameObject* perlinObject = m_engine->CreateGameObject<Uknitty::GameObject>();
-	m_createdGameObjects.push_back(perlinObject);
-	m_engine->UseDefaultParent(perlinObject);
+	m_perlinObject = m_engine->CreateGameObject<Uknitty::GameObject>();
+	m_createdGameObjects.push_back(m_perlinObject);
+	m_engine->UseDefaultParent(m_perlinObject);
 
-	PerlinNoiseManager* perlinNoiseManager = new PerlinNoiseManager();
-	Uknitty::ShaderProgram* perlinShaderProgram = perlinNoiseManager->GetShaderProgram();
+	m_perlinNoiseManager = new PerlinNoiseManager();
+	Uknitty::ShaderProgram* perlinShaderProgram = m_perlinNoiseManager->GetShaderProgram();
 
-	PerlinCRender* perlinCRender = new PerlinCRender(perlinShaderProgram);
-	perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 4);
-	unsigned int perlinTextureId = perlinNoiseManager->GetTextureId();
-	unsigned int perlinVAO = perlinNoiseManager->GetVAO();
+	m_perlinCRender = new PerlinCRender(perlinShaderProgram);
+	m_perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 1);
+	unsigned int perlinTextureId = m_perlinNoiseManager->GetTextureId();
+	unsigned int perlinVAO = m_perlinNoiseManager->GetVAO();
 
-	perlinCRender->SetTextureId(perlinTextureId);
-	perlinCRender->SetVAO(perlinVAO);
-	perlinObject->AddCustomCRender(perlinCRender);
-	perlinObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
+	m_perlinCRender->SetTextureId(perlinTextureId);
+	m_perlinCRender->SetVAO(perlinVAO);
+	m_perlinObject->AddCustomCRender(m_perlinCRender);
+	m_perlinObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1, 0));
+	m_perlinObject->GetLocalTransform()->SetScale(glm::vec3(2.0));
+}
+
+void Scene::UpdatePerlinTexture(float deltaTime)
+{
+	m_perlinNoiseManager->Update(deltaTime);
+	m_perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 1);
+	unsigned int perlinTextureId = m_perlinNoiseManager->GetTextureId();
+	unsigned int perlinVAO = m_perlinNoiseManager->GetVAO();
+
+	m_perlinCRender->SetTextureId(perlinTextureId);
+	m_perlinCRender->SetVAO(perlinVAO);
 }
 
 void Scene::EnterAlarmState()
@@ -463,5 +475,13 @@ void Scene::EnterAlarmState()
 	for(auto& enemy : m_enemies)
 	{
 		enemy->EnterAlarmState();
+	}
+}
+
+void Scene::Update(float deltaTime)
+{
+	if(m_mapId == PERLIN_MAP_ID)
+	{
+		UpdatePerlinTexture(deltaTime);
 	}
 }

@@ -85,6 +85,10 @@ void SceneManager::Update(float deltaTime)
 {
 	UpdateCentralSpotLight(deltaTime);
 	UpdatePointLightsFlickering(deltaTime);
+	if(m_currentScene)
+	{
+		m_currentScene->Update(deltaTime);
+	}
 }
 
 void SceneManager::AlarmCurrentScene()
