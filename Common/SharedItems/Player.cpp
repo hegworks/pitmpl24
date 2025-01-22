@@ -83,6 +83,7 @@ void Player::OnAwake()
 	//m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/TPoseWithSkin.fbx", model);
 	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/RifleAimingIdle.fbx", model);
 	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/WalkForward.fbx", model);
+	m_walkAnim->SetSpeedScale(1.5f);
 	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/Death.fbx", model);
 	m_animator = GameObject::AddCAnimator();
 	m_animator->Initialize(m_idleAnim);

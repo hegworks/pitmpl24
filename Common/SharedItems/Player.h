@@ -57,7 +57,7 @@ private:
 	Uknitty::SkeletalAnimation::Animation* m_walkAnim = nullptr;
 	Uknitty::SkeletalAnimation::Animation* m_deathAnim = nullptr;
 
-	const float SPEED_WALK = 10.0f;
+	const float SPEED_WALK = 6.0f;
 	const float SPEED_ROTATION = 15.0f;
 	const glm::vec3 MODEL_DIMENSIONS = glm::vec3(1, 2, 1);
 	const float MASS = 70.0f;

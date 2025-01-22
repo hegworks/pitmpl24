@@ -32,10 +32,11 @@ public:
 
 	Bone* FindBone(const std::string& name);
 
-	float GetTicksPerSecond() const { return m_ticksPerSecond; }
+	float GetTicksPerSecond() const { return m_ticksPerSecond * m_speedScale; }
 	float GetDuration() const { return m_duration; }
 	const AssimpNodeData& GetRootNode() { return m_rootNode; }
 	const std::map<std::string, BoneInfo>& GetBoneInfoMap() { return m_boneInfoMap; }
+	void SetSpeedScale(float speedScale) { m_speedScale = speedScale; }
 
 private:
 	/// <summary>
@@ -50,6 +51,7 @@ private:
 
 	float m_duration; // how long the animation is
 	int m_ticksPerSecond; // speed of the animation
+	float m_speedScale = 1.0f;
 	std::vector<Bone> m_bones;
 	AssimpNodeData m_rootNode;
 	std::map<std::string, BoneInfo> m_boneInfoMap;

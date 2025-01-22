@@ -210,6 +210,7 @@ void Enemy::EnterAlarmState()
 	}
 
 	m_enemyState = EnemyState::ALARM;
+	m_moveSpeed = SPEED_WALK_ALARM;
 	m_gameplayEvents->OnOneEnemyAlarmed();
 }
 
