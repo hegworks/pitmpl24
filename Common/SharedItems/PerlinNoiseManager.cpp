@@ -37,6 +37,9 @@ PerlinNoiseManager::PerlinNoiseManager()
 void PerlinNoiseManager::Update(float deltaTime)
 {
 	m_time += deltaTime;
+	m_shaderProgram->Use();
+	m_shaderProgram->SetFloat("uTime", m_time);
+	m_shaderProgram->UnUse();
 }
 
 void PerlinNoiseManager::GenerateNewPerlinNoiseTexture(const int width, const int height, const int octaves)
@@ -51,7 +54,7 @@ void PerlinNoiseManager::GenerateNewPerlinNoiseTexture(const int width, const in
 	{
 		for(int x = 0; x < width; x++)
 		{
-			float noiseValue = Uknitty::RNG::noise2D(x + m_time * SPEED, y + m_time * SPEED);
+			float noiseValue = Uknitty::RNG::noise2D(x + m_time, y + m_time);
 			noiseValue = (noiseValue + 1.0f) * 0.5f;
 
 			unsigned char pixelValue = static_cast<unsigned char>(noiseValue * 255);

@@ -456,12 +456,6 @@ void Scene::GeneratePerlinTexture()
 void Scene::UpdatePerlinTexture(float deltaTime)
 {
 	m_perlinNoiseManager->Update(deltaTime);
-	m_perlinNoiseManager->GenerateNewPerlinNoiseTexture(512, 512, 1);
-	unsigned int perlinTextureId = m_perlinNoiseManager->GetTextureId();
-	unsigned int perlinVAO = m_perlinNoiseManager->GetVAO();
-
-	m_perlinCRender->SetTextureId(perlinTextureId);
-	m_perlinCRender->SetVAO(perlinVAO);
 }
 
 void Scene::EnterAlarmState()
