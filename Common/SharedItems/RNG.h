@@ -50,6 +50,7 @@ inline static float RandomFloat(float min, float max)
 // Perlin noise implementation - https://stackoverflow.com/questions/29711668/perlin-noise-generation
 static int numOctaves = 7, primeIndex = 0;
 static float persistence = 0.8f;
+static float m_amplitude = 1.0f;
 static int primes[10][3] =
 {
 	{ 995615039, 600173719, 701464987 },
@@ -102,7 +103,7 @@ inline static float InterpolatedNoise(const int i, const float x, const float y)
 
 inline static float noise2D(const float x, const float y)
 {
-	float total = 0, frequency = (float)(2 << numOctaves), amplitude = 5;
+	float total = 0, frequency = (float)(2 << numOctaves), amplitude = m_amplitude;
 	for(int i = 0; i < numOctaves; ++i)
 	{
 		frequency /= 2, amplitude *= persistence;

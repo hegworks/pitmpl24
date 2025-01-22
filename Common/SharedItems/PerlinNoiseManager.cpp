@@ -24,6 +24,7 @@ void PerlinNoiseManager::Update(float deltaTime)
 void PerlinNoiseManager::GenerateNewPerlinNoiseTexture(const int gridSize, const int octaves)
 {
 	Uknitty::RNG::numOctaves = octaves;
+	Uknitty::RNG::m_amplitude = 1;
 
 	// Create vertex data for a quad
 	Vertex vertices[] = {
@@ -91,6 +92,7 @@ void PerlinNoiseManager::GenerateNewPerlinNoiseTexture(const int gridSize, const
 void PerlinNoiseManager::GenerateNewPerlinNoiseMesh(const int gridSize, const int octaves)
 {
 	Uknitty::RNG::numOctaves = octaves;
+	Uknitty::RNG::m_amplitude = 5;
 
 	// Generate indices
 	std::vector<unsigned int> indices;
