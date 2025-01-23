@@ -925,6 +925,9 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\2.fbx">
       <Filter>Assets\Models\NakedSnake</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\3.fbx">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
