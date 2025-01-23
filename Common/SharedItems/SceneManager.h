@@ -3,6 +3,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "GameSettings.h"
 #include "IInputKey.h"
+#include "LightStructs.h"
 #include "RoomChangeType.h"
 #include <array>
 #include <string>
@@ -54,6 +55,8 @@ private:
 	bool m_isTimerForTurningOff = true;
 	int m_flickeringLightIndex = 0;
 	glm::vec3 m_colorBeforeFlickering = glm::vec3(0);
+	std::vector<LightData*> m_createdLightDatas;
+	std::vector<Uknitty::LightObject*> m_createdLightObjects;
 
 	const std::string VERTEX_SHADER_PATH = "../Common/Assets/Maps/";
 	const std::string FRAGMENT_SHADER_PATH = "../Common/Assets/Maps/";

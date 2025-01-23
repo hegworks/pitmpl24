@@ -19,6 +19,12 @@ UIManager::UIManager()
 	m_hitMarkerEffectTimer = new Uknitty::CountdownTimer(0);
 }
 
+UIManager::~UIManager()
+{
+	delete m_redScreenEffectTimer;
+	delete m_hitMarkerEffectTimer;
+}
+
 void UIManager::Update(float deltaTime)
 {
 	ImGui_ImplOpenGL3_NewFrame();

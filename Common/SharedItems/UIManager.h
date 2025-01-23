@@ -9,7 +9,7 @@ class UIManager
 {
 public:
 	UIManager();
-	~UIManager() = default;
+	~UIManager();
 
 	enum class MenuType
 	{

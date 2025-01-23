@@ -35,6 +35,10 @@ GameObject::~GameObject()
 		Uknitty::Engine::GetInstance()->GetDynamicsWorld()->removeRigidBody(GameObject::GetCPhysics()->GetRigidBody());
 		delete m_physics;
 	}
+	if(HasCAnimator())
+	{
+		delete m_animator;
+	}
 }
 
 void GameObject::Update(float deltaTime)

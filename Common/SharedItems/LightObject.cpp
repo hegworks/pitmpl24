@@ -1,6 +1,7 @@
 #include "LightObject.h"
 
 #include "Engine.h"
+#include "GameObject.h"
 #include "LightManager.h"
 #include "LightStructs.h"
 
@@ -16,6 +17,8 @@ void Uknitty::LightObject::OnAwake()
 void LightObject::OnDestroy()
 {
 	m_lightManager->LightSourceDestroyed(this);
+
+	GameObject::OnDestroy();
 }
 
 void LightObject::SetLightData(LightData* lightData)

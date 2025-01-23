@@ -89,6 +89,7 @@ void Engine::Destroy()
 
 	delete m_physicsManager;
 	delete m_assetManager;
+	delete m_lightManager;
 }
 
 void Engine::DestroyGameObject(GameObject* gameObject)

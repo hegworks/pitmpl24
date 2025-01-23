@@ -57,6 +57,8 @@ Scene::~Scene()
 {
 	std::cout << "Destroying Scene: " << m_mapId << std::endl;
 
+	delete m_perlinNoiseManager;
+
 	for(auto& gameObject : m_createdGameObjects)
 	{
 		m_engine->DestroyGameObject(gameObject);
@@ -455,7 +457,6 @@ void Scene::GeneratePerlinTexture()
 		m_perlinMeshObject->GetLocalTransform()->SetScale(glm::vec3(0.3f));
 	}
 
-//#if 0
 	{ // perlin texture
 		m_perlinTextureObject = m_engine->CreateGameObject<Uknitty::GameObject>();
 		m_createdGameObjects.push_back(m_perlinTextureObject);
@@ -475,7 +476,6 @@ void Scene::GeneratePerlinTexture()
 		m_perlinTextureObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1.0, 0));
 		m_perlinTextureObject->GetLocalTransform()->SetScale(glm::vec3(1.0));
 	}
-//#endif
 }
 
 void Scene::UpdatePerlinTexture(float deltaTime)

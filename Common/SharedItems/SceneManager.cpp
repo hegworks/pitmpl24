@@ -66,6 +66,15 @@ SceneManager::~SceneManager()
 	GameSharedDependencies::Remove<SceneManager>();
 	delete m_currentScene;
 	delete m_roomFinder;
+	delete m_pointLightFlickeringTimer;
+	for(auto& lightData : m_createdLightDatas)
+	{
+		delete lightData;
+	}
+	for(auto& lightObjects : m_createdLightObjects)
+	{
+		m_engine->DestroyGameObject(lightObjects);
+	}
 }
 
 void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
@@ -135,7 +144,7 @@ void SceneManager::UpdatePointLightsFlickering(float deltaTime)
 			m_pointLightFlickeringTimer->Reset();
 			m_isTimerForTurningOff = false;
 
-			m_flickeringLightIndex = Uknitty::RNG::RandomInt(0,static_cast<int>( m_pointLights.size()) - 1);
+			m_flickeringLightIndex = Uknitty::RNG::RandomInt(0, static_cast<int>(m_pointLights.size()) - 1);
 			LightData* lightData = m_pointLights[m_flickeringLightIndex]->GetLightData();
 			m_colorBeforeFlickering = lightData->diffuseColor;
 			lightData->diffuseColor = glm::vec3(0);
@@ -246,7 +255,9 @@ void SceneManager::CreateLights()
 #ifdef WINDOWS_BUILD
 	{ // Dir light
 		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		m_createdLightObjects.push_back(lightSource);
 		LightData* lightData = new LightData();
+		m_createdLightDatas.push_back(lightData);
 		lightData->lightType = LightType::DIR_LIGHT;
 		lightData->isAutoUpdate = false;
 		lightData->direction = glm::vec3(0.1, -1, 0.1);
@@ -268,7 +279,9 @@ void SceneManager::CreateLights()
 		m_engine->UseDefaultParent(m_centralSpotLightModel);
 
 		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		m_createdLightObjects.push_back(lightSource);
 		LightData* lightData = new LightData();
+		m_createdLightDatas.push_back(lightData);
 		lightData->lightType = LightType::SPOT_LIGHT;
 		lightData->isAutoUpdate = true;
 		lightData->position = glm::vec3(0, 5, 0);
@@ -286,6 +299,7 @@ void SceneManager::CreateLights()
 
 	{ // Right Point light
 		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		m_createdLightObjects.push_back(lightSource);
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(8, 5.0, 0));
 
 #if 0 // to view the light source
@@ -298,6 +312,7 @@ void SceneManager::CreateLights()
 
 		m_engine->UseDefaultParent(lightSource);
 		LightData* lightData = new LightData();
+		m_createdLightDatas.push_back(lightData);
 		lightData->lightType = LightType::POINT_LIGHT;
 		lightData->position = glm::vec3(8, 5.0, 0);
 		lightData->diffuseColor = glm::vec3(1, 0, 0);
@@ -311,6 +326,7 @@ void SceneManager::CreateLights()
 
 	{ // Left Point light
 		Uknitty::LightObject* lightSource = m_engine->CreateGameObject<Uknitty::LightObject>();
+		m_createdLightObjects.push_back(lightSource);
 		lightSource->GetLocalTransform()->SetPosition(glm::vec3(-8, 5.0, 0));
 		m_engine->UseDefaultParent(lightSource);
 
@@ -322,6 +338,7 @@ void SceneManager::CreateLights()
 		lightModelObject->SetParent(lightSource);
 #endif
 		LightData* lightData = new LightData();
+		m_createdLightDatas.push_back(lightData);
 		lightData->lightType = LightType::POINT_LIGHT;
 		lightData->position = glm::vec3(-8, 5.0, 0);
 		lightData->diffuseColor = glm::vec3(0, 1, 0);

@@ -9,7 +9,7 @@ class CTransform
 {
 public:
 	CTransform();
-	~CTransform();
+	~CTransform() = default;
 
 	void Reset();
 	void SetPosition(glm::vec3 pos);

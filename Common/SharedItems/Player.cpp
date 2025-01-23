@@ -81,6 +81,7 @@ void Player::OnAwake()
 	m_flashLight = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::LightObject>();
 	m_flashLight->SetParent(m_gunPosObject);
 	LightData* lightData = new LightData();
+	m_flashLightData = lightData;
 	lightData->lightType = LightType::SPOT_LIGHT;
 	lightData->diffuseColor = glm::vec3(1);
 	lightData->specularColor = glm::vec3(1);
@@ -91,15 +92,11 @@ void Player::OnAwake()
 	lightData->outerCutOff = 10.0;
 	m_flashLight->SetLightData(lightData);
 
-	//m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/TPoseWithSkin.fbx", model);
 	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/0.fbx", model);
 	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/1.fbx", model);
 	m_walkAnim->SetSpeedScale(1.5f);
-	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/0.fbx", model);
 	m_animator = GameObject::AddCAnimator();
 	m_animator->Initialize(m_idleAnim);
-
-	//GameObject::GetLocalTransform()->SetScale(glm::vec3(0.01f));
 
 	m_hp = HP;
 }
@@ -121,7 +118,11 @@ void Player::OnDestroy()
 {
 	std::cout << "Destroying Player" << std::endl;
 	delete m_userPointerData;
+	delete m_walkAnim;
+	delete m_idleAnim;
+	delete m_flashLightData;
 
+	Uknitty::Engine::GetInstance()->DestroyGameObject(m_flashLight);
 	Uknitty::Engine::GetInstance()->GetPhysicsManager()->RemoveContactTestRigidbody(GameObject::GetCPhysics()->GetRigidBody());
 	Uknitty::DynamicObject::OnDestroy();
 	GameSharedDependencies::Remove<Player>();

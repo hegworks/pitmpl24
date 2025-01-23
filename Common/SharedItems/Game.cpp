@@ -231,6 +231,8 @@ void Game::Start()
 
 	delete m_sceneManager;
 	delete m_gameManager;
+	frameBufferShaderProgram->Delete();
+	delete frameBufferShaderProgram;
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui::DestroyContext();
 	m_iGraphics->Quit();

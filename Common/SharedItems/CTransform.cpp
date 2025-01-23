@@ -12,10 +12,6 @@ CTransform::CTransform()
 	Reset();
 }
 
-CTransform::~CTransform()
-{
-}
-
 void CTransform::Reset()
 {
 	m_position = glm::vec3(0);

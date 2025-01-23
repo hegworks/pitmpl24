@@ -2,6 +2,7 @@
 
 #include "DynamicObject.h"
 #include "GeneralCamera.h"
+#include "LightStructs.h"
 #include "RoomChange.h"
 #include "RoomChangeType.h"
 #include "UknittySettings.h"
@@ -56,7 +57,7 @@ private:
 	Uknitty::SkeletalAnimation::Animator* m_animator = nullptr;
 	Uknitty::SkeletalAnimation::Animation* m_idleAnim = nullptr;
 	Uknitty::SkeletalAnimation::Animation* m_walkAnim = nullptr;
-	Uknitty::SkeletalAnimation::Animation* m_deathAnim = nullptr;
+	LightData* m_flashLightData = nullptr;
 
 	const float SPEED_WALK = 6.0f;
 	const float SPEED_ROTATION = 15.0f;

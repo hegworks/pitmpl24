@@ -48,6 +48,7 @@ GameManager::~GameManager()
 		delete GameSharedDependencies::Get<SceneManager>();
 		delete GameSharedDependencies::Get<InventoryManager>();
 	}
+	delete m_uiManager;
 	delete GameSharedDependencies::Get<ModelDataStorage>();
 	delete GameSharedDependencies::Get<GameplayEvents>();
 
