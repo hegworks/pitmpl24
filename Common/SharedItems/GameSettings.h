@@ -10,7 +10,7 @@
 #pragma endregion Do NOT comment out lines here, use the next section
 
 #pragma region to use a feature, comment out its line
-//#undef VISUAL_LEAK_DETECTOR
+#undef VISUAL_LEAK_DETECTOR
 #undef DEBUG_DRAW_ASTAR_COLLISIONS
 #undef DEBUG_DRAW_ASTAR_PATH
 #pragma endregion to use a feature, comment out its line

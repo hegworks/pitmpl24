@@ -928,6 +928,7 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Ground\Plane.obj">
       <Filter>Assets\Models\Ground</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Ground\Texture.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Cube\Cube.obj">
@@ -946,9 +947,6 @@
     </Image>
     <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Primitives\Sphere\Texture.png">
       <Filter>Assets\Models\Primitives\Sphere</Filter>
-    </Image>
-    <Image Include="$(MSBuildThisFileDirectory)..\Assets\Models\Ground\Texture.png">
-      <Filter>Assets\Models\Ground</Filter>
     </Image>
   </ItemGroup>
 </Project>
