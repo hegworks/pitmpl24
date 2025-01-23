@@ -12,6 +12,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #endif // Raspberry_BUILD
 #include "glm/gtx/quaternion.hpp"
+#include <stdexcept>
 
 namespace Uknitty
 {
@@ -131,7 +132,7 @@ inline Bone::Bone(const std::string& name, int id, const aiNodeAnim* channel) :
 	for(int positionIndex = 0; positionIndex < m_numPositions; ++positionIndex)
 	{
 		aiVector3D aiPosition = channel->mPositionKeys[positionIndex].mValue;
-		float timeStamp = channel->mPositionKeys[positionIndex].mTime;
+		float timeStamp = static_cast<float>(channel->mPositionKeys[positionIndex].mTime);
 		KeyPosition data;
 		data.position = AssimpGLMHelpers::GetGLMVec(aiPosition);
 		data.timeStamp = timeStamp;
@@ -142,7 +143,7 @@ inline Bone::Bone(const std::string& name, int id, const aiNodeAnim* channel) :
 	for(int rotationIndex = 0; rotationIndex < m_numRotations; ++rotationIndex)
 	{
 		aiQuaternion aiOrientation = channel->mRotationKeys[rotationIndex].mValue;
-		float timeStamp = channel->mRotationKeys[rotationIndex].mTime;
+		float timeStamp = static_cast<float>(channel->mRotationKeys[rotationIndex].mTime);
 		KeyRotation data;
 		data.orientation = AssimpGLMHelpers::GetGLMQuat(aiOrientation);
 		data.timeStamp = timeStamp;
@@ -153,7 +154,7 @@ inline Bone::Bone(const std::string& name, int id, const aiNodeAnim* channel) :
 	for(int keyIndex = 0; keyIndex < m_numScales; ++keyIndex)
 	{
 		aiVector3D scale = channel->mScalingKeys[keyIndex].mValue;
-		float timeStamp = channel->mScalingKeys[keyIndex].mTime;
+		float timeStamp = static_cast<float>(channel->mScalingKeys[keyIndex].mTime);
 		KeyScale data;
 		data.scale = AssimpGLMHelpers::GetGLMVec(scale);
 		data.timeStamp = timeStamp;
@@ -176,7 +177,7 @@ inline int Bone::GetPositionIndex(float animationTime)
 		if(animationTime < m_positions[index + 1].timeStamp)
 			return index;
 	}
-	assert(0);
+	throw std::runtime_error("Error: Position index at animationTIme not found");
 }
 
 inline int Bone::GetRotationIndex(float animationTime)
@@ -186,7 +187,7 @@ inline int Bone::GetRotationIndex(float animationTime)
 		if(animationTime < m_rotations[index + 1].timeStamp)
 			return index;
 	}
-	assert(0);
+	throw std::runtime_error("Error: Rotation index at animationTIme not found");
 }
 
 inline int Bone::GetScaleIndex(float animationTime)
@@ -196,7 +197,7 @@ inline int Bone::GetScaleIndex(float animationTime)
 		if(animationTime < m_scales[index + 1].timeStamp)
 			return index;
 	}
-	assert(0);
+	throw std::runtime_error("Error: Scale index at animationTIme not found");
 }
 
 inline float Bone::GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime)

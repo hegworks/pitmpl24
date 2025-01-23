@@ -12,7 +12,6 @@
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
 #include "InterfaceManager.h"
-#include "Light.h"
 #include "LightManager.h"
 #include "LightObject.h"
 #include "LightStructs.h"
@@ -136,7 +135,7 @@ void SceneManager::UpdatePointLightsFlickering(float deltaTime)
 			m_pointLightFlickeringTimer->Reset();
 			m_isTimerForTurningOff = false;
 
-			m_flickeringLightIndex = Uknitty::RNG::RandomInt(0, m_pointLights.size() - 1);
+			m_flickeringLightIndex = Uknitty::RNG::RandomInt(0,static_cast<int>( m_pointLights.size()) - 1);
 			LightData* lightData = m_pointLights[m_flickeringLightIndex]->GetLightData();
 			m_colorBeforeFlickering = lightData->diffuseColor;
 			lightData->diffuseColor = glm::vec3(0);
@@ -199,7 +198,7 @@ void SceneManager::GenerateRandomLights()
 
 	for(int i = 0; i < m_pointLightGenratedColors.size(); i++)
 	{
-		m_pointLightGenratedColors[i] = m_pointLightPossibleColors[Uknitty::RNG::RandomInt(0, m_pointLightPossibleColors.size() - 1)];
+		m_pointLightGenratedColors[i] = m_pointLightPossibleColors[Uknitty::RNG::RandomInt(0, static_cast<int>(m_pointLightPossibleColors.size()) - 1)];
 	}
 }
 
@@ -251,9 +250,9 @@ void SceneManager::CreateLights()
 		lightData->lightType = LightType::DIR_LIGHT;
 		lightData->isAutoUpdate = false;
 		lightData->direction = glm::vec3(0.1, -1, 0.1);
-		lightData->diffuseColor = glm::vec3(0.05);
-		lightData->specularColor = glm::vec3(0.05);
-		lightData->specularStrength = 0.2;
+		lightData->diffuseColor = glm::vec3(0.05f);
+		lightData->specularColor = glm::vec3(0.05f);
+		lightData->specularStrength = 0.2f;
 		lightData->shininess = 16;
 		lightSource->SetLightData(lightData);
 		m_dirLight = lightSource;
@@ -278,7 +277,7 @@ void SceneManager::CreateLights()
 		lightData->specularColor = glm::vec3(1);
 		lightData->cutOff = 20.0;
 		lightData->outerCutOff = 22.0;
-		lightData->specularStrength = 0.2;
+		lightData->specularStrength = 0.2f;
 		lightData->shininess = 16;
 		lightSource->SetLightData(lightData);
 		lightSource->SetParent(m_centralSpotLightModel);

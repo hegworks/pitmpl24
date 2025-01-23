@@ -11,6 +11,7 @@ class Engine;
 class AssetManager;
 class LightObject;
 class ShaderProgram;
+class GameObject;
 
 class LightManager
 {
@@ -53,17 +54,17 @@ public:
 	void SetAmbientStrength(float strength);
 	void NewLightSourceCreated(LightObject* lightSource);
 	void LightSourceDestroyed(LightObject* lightSource);
-	void SetLightData(int id, LightData* lightData);
+	void SetLightData(unsigned long long id, LightData* lightData);
 	void SetUnlitColor(glm::vec3 color);
-	void SetPosition(int id, glm::vec3 pos);
-	void SetDirection(int id, glm::vec3 dir);
+	void SetPosition(unsigned long long id, glm::vec3 pos);
+	void SetDirection(unsigned long long id, glm::vec3 dir);
 
 private:
-	std::string CalculatePrefix(int id);
+	std::string CalculatePrefix(unsigned long long id);
 
 	AssetManager* m_assetManager = nullptr;
-	std::unordered_map<int, LightObject*> m_lightSources;
-	std::unordered_map<int, int> m_idToIndex;
+	std::unordered_map<unsigned long long, LightObject*> m_lightSources;
+	std::unordered_map<unsigned long long, int> m_idToIndex;
 	ShaderProgram* m_lit = nullptr;
 	bool m_isWindows = true;
 

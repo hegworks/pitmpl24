@@ -34,7 +34,7 @@ InventoryManager::InventoryManager()
 			Item::GUN,
 			ModelDataStorage::INVENTORY_GUN,
 			gunPos,
-			glm::vec3(0.005)
+			glm::vec3(0.005f)
 		});
 
 	m_itemDatas.push_back(
@@ -43,7 +43,7 @@ InventoryManager::InventoryManager()
 			Item::HAMBURGER,
 			ModelDataStorage::HAMBURGER,
 			hamburgerPos,
-			glm::vec3(0.04)
+			glm::vec3(0.04f)
 		});
 
 	ModelDataStorage* modelDataStorage = GameSharedDependencies::Get<ModelDataStorage>();

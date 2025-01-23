@@ -112,7 +112,7 @@ void UIManager::MainMenu()
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 	ImGui::SetNextWindowBgAlpha(1);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0, 0, 0.3));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.3f));
 	if(ImGui::Begin("Main Menu", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -172,7 +172,7 @@ void UIManager::PauseMenu()
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 	ImGui::SetNextWindowBgAlpha(1);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0, 0, 0.3));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.3f));
 	if(ImGui::Begin("Pause Menu", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -399,7 +399,7 @@ void UIManager::HUD()
 	ImGui::GetFont()->Scale = oldFontScale * fontScale;
 	ImGui::PushFont(ImGui::GetFont());
 
-	ImGui::SetNextWindowBgAlpha(0.7);
+	ImGui::SetNextWindowBgAlpha(0.7f);
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0, 0, 0));
 	if(ImGui::Begin("HUD", &m_isMainMenuVisible, flags))
 	{
@@ -412,9 +412,9 @@ void UIManager::HUD()
 
 		ImGui::PushStyleColor(ImGuiCol_PlotHistogram, (ImVec4)ImColor(0, 200, 0));
 		Player* player = GameSharedDependencies::Get<Player>();
-		float hpMax = player->GetMaxHp();
-		float hp = player->GetHP();
-		float progress = hp / hpMax;
+		int hpMax = player->GetMaxHp();
+		int hp = player->GetHP();
+		float progress = static_cast<float>(hp) / static_cast<float>(hpMax);
 		ImGui::ProgressBar(progress, ImVec2(200, 0.0f));
 		ImGui::PopStyleColor();
 
@@ -467,7 +467,6 @@ void UIManager::FPSCounter()
 {
 	static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBackground;
 
-	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::SetNextWindowSize(ImVec2(0, 0));
 	bool trueBool = true;
@@ -488,9 +487,9 @@ void UIManager::Inventory()
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
 	ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
-	ImGui::SetNextWindowBgAlpha(0.05);
+	ImGui::SetNextWindowBgAlpha(0.05f);
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0, 0, 0, 0.05));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.0f, 0.0f, 0.0f, 0.05f));
 	if(ImGui::Begin("Inventory", &m_isMainMenuVisible, flags))
 	{
 		ImGui::PopStyleColor();
@@ -511,14 +510,14 @@ void UIManager::Inventory()
 				ImGui::PushFont(ImGui::GetFont());
 				auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
 				auto textHeight = ImGui::CalcTextSize(text.c_str()).y;
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - textWidth / 2.0, ImGui::GetWindowHeight() / 2 - textHeight / 2.0));
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2.0f - textWidth / 2.0f, ImGui::GetWindowHeight() / 2.0f - textHeight / 2.0f));
 				ImGui::Text(text.c_str());
 				ImGui::GetFont()->Scale = oldTextSize;
 				ImGui::PopFont();
 			}
 
 			{
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 - distanceFromCenter));
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2.0f - buttonSize.x / 2.0f, ImGui::GetWindowHeight() / 2.0f - buttonSize.y / 2.0f - distanceFromCenter));
 				if(ImGui::Button("##0", buttonSize))
 				{
 					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::GUN);
@@ -527,7 +526,7 @@ void UIManager::Inventory()
 			}
 
 			{
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 + distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2.0f - buttonSize.x / 2.0f + distanceFromCenter, ImGui::GetWindowHeight() / 2.0f - buttonSize.y / 2.0f));
 				if(ImGui::Button("##1", buttonSize))
 				{
 					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::HAMBURGER);
@@ -536,7 +535,7 @@ void UIManager::Inventory()
 			}
 
 			{
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0 + distanceFromCenter));
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2.0f - buttonSize.x / 2.0f, ImGui::GetWindowHeight() / 2.0f - buttonSize.y / 2.0f + distanceFromCenter));
 				if(ImGui::Button("##2", buttonSize))
 				{
 					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::NONE);
@@ -545,7 +544,7 @@ void UIManager::Inventory()
 			}
 
 			{
-				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2 - distanceFromCenter, ImGui::GetWindowHeight() / 2 - buttonSize.y / 2.0));
+				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2.0f - buttonSize.x / 2.0f - distanceFromCenter, ImGui::GetWindowHeight() / 2.0f - buttonSize.y / 2.0f));
 				if(ImGui::Button("##3", buttonSize))
 				{
 					GameSharedDependencies::Get<InventoryManager>()->SetCurrentItem(InventoryManager::Item::NONE);

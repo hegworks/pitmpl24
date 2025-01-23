@@ -112,7 +112,7 @@ void Player::OnUpdate(float deltaTime)
 	SetModelPosToPhysicsPos();
 }
 
-void Player::OnLateUpdate(float deltaTime)
+void Player::OnLateUpdate([[maybe_unused]] float deltaTime)
 {
 	SetFlashLightDirToCameraIfFirstPerson();
 }

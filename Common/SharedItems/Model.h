@@ -271,7 +271,7 @@ inline void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
 	}
 }
 
-inline void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+inline void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, [[maybe_unused]] const aiScene* scene)
 {
 	for(unsigned int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
 	{

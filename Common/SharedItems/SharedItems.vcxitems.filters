@@ -345,9 +345,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)InventoryManager.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Light.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ShaderType.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
@@ -517,9 +514,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InventoryManager.cpp">
       <Filter>Game\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp">
-      <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp">
       <Filter>Uknitty\Source</Filter>

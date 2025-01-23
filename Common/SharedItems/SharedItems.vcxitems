@@ -155,7 +155,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InventoryManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Light.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LightManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LightStructs.h" />
@@ -232,7 +231,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BTDebugDraw.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CPhysics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InventoryManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModelObject.cpp" />

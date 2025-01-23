@@ -132,7 +132,9 @@ void PerlinNoiseManager::GenerateNewPerlinNoiseMesh(const int gridSize, const in
 	{
 		for(int x = 0; x < gridSize; x++)
 		{
-			float noiseValue = Uknitty::RNG::noise2D(z, x);
+			float zFloat = static_cast<float>(z);
+			float xFloat = static_cast<float>(x);
+			float noiseValue = Uknitty::RNG::noise2D(zFloat, xFloat);
 			float height = Uknitty::Math::range_to_range(-1.0, 1.0, 0, 2.5, noiseValue);
 			Vertex vertex;
 			vertex.position[0] = static_cast<float>(x) - gridSize / 2.0f;

@@ -50,7 +50,7 @@ private:
 	void ReadMissingBones(const aiAnimation* animation, Model& model);
 
 	float m_duration; // how long the animation is
-	int m_ticksPerSecond; // speed of the animation
+	float m_ticksPerSecond; // speed of the animation
 	float m_speedScale = 1.0f;
 	std::vector<Bone> m_bones;
 	AssimpNodeData m_rootNode;
@@ -63,8 +63,8 @@ inline Animation::Animation(const std::string& animationPath, Model* model)
 	const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
 	assert(scene && scene->mRootNode); // make sure the animation exists
 	auto animation = scene->mAnimations[0];
-	m_duration = animation->mDuration;
-	m_ticksPerSecond = animation->mTicksPerSecond;
+	m_duration = static_cast<float>(animation->mDuration);
+	m_ticksPerSecond = static_cast<float>(animation->mTicksPerSecond);
 	ReadHeirarchyData(m_rootNode, scene->mRootNode);
 	ReadMissingBones(animation, *model);
 }
@@ -111,7 +111,7 @@ inline void Animation::ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src
 	dest.transformation = AssimpGLMHelpers::ConvertMatrixToGLMFormat(src->mTransformation);
 	dest.childrenCount = src->mNumChildren;
 
-	for(int i = 0; i < src->mNumChildren; i++)
+	for(unsigned int i = 0; i < src->mNumChildren; i++)
 	{
 		AssimpNodeData newData;
 		ReadHeirarchyData(newData, src->mChildren[i]);

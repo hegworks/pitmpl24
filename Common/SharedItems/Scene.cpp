@@ -452,7 +452,7 @@ void Scene::GeneratePerlinTexture()
 		m_perlinMeshCRender->SetIsMeshTrueIsTextureFalse(true);
 		m_perlinMeshObject->AddCustomCRender(m_perlinMeshCRender);
 		m_perlinMeshObject->GetLocalTransform()->SetPosition(glm::vec3(-5, 0, 0));
-		m_perlinMeshObject->GetLocalTransform()->SetScale(glm::vec3(0.3));
+		m_perlinMeshObject->GetLocalTransform()->SetScale(glm::vec3(0.3f));
 	}
 
 //#if 0

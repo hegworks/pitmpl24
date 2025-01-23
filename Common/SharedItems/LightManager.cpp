@@ -42,7 +42,7 @@ Uknitty::LightManager::LightManager(AssetManager* assetManager)
 #endif // Raspberry_BUILD
 }
 
-void LightManager::Update(float deltaTime)
+void LightManager::Update([[maybe_unused]] float deltaTime)
 {
 	glm::vec3 cameraPos = *Engine::GetInstance()->GetMainCamera()->GetWorldTransform()->GetPosition();
 
@@ -94,10 +94,10 @@ void LightManager::NewLightSourceCreated(LightObject* lightSource)
 	}
 
 	m_lightSources[lightSource->GetID()] = lightSource;
-	m_idToIndex[lightSource->GetID()] = m_lightSources.size() - 1;
+	m_idToIndex[lightSource->GetID()] = static_cast<int>(m_lightSources.size()) - 1;
 
 	m_lit->Use();
-	m_lit->SetInt(GlobalProperties::LIGHTS_COUNT, m_lightSources.size());
+	m_lit->SetInt(GlobalProperties::LIGHTS_COUNT, static_cast<int>(m_lightSources.size()));
 	m_lit->UnUse();
 }
 
@@ -106,7 +106,7 @@ void LightManager::LightSourceDestroyed(LightObject* lightSource)
 	m_lightSources.erase(lightSource->GetID());
 }
 
-void LightManager::SetLightData(int id, LightData* lightData)
+void LightManager::SetLightData(unsigned long long id, LightData* lightData)
 {
 	m_lit->Use();
 
@@ -162,7 +162,7 @@ void LightManager::SetUnlitColor(glm::vec3 color)
 	unlit->UnUse();
 }
 
-void LightManager::SetPosition(int id, glm::vec3 pos)
+void LightManager::SetPosition(unsigned long long id, glm::vec3 pos)
 {
 	std::string prefix = CalculatePrefix(id);
 	m_lit->Use();
@@ -170,7 +170,7 @@ void LightManager::SetPosition(int id, glm::vec3 pos)
 	m_lit->UnUse();
 }
 
-void LightManager::SetDirection(int id, glm::vec3 dir)
+void LightManager::SetDirection(unsigned long long id, glm::vec3 dir)
 {
 	std::string prefix = CalculatePrefix(id);
 	m_lit->Use();
@@ -178,7 +178,7 @@ void LightManager::SetDirection(int id, glm::vec3 dir)
 	m_lit->UnUse();
 }
 
-std::string Uknitty::LightManager::CalculatePrefix(int id)
+std::string Uknitty::LightManager::CalculatePrefix(unsigned long long id)
 {
 	return LIGHTS_ARRAY + "[" + std::to_string(m_idToIndex[id]) + "].";
 }
