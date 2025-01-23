@@ -25,7 +25,7 @@ constexpr int SCRWIDTH = 1280;
 constexpr int SCRHEIGHT = 720;
 #endif // Raspberry_BUILD
 constexpr float ASPECT_RATIO = 16.0f / 9.0f;
-constexpr float LOW_RES_SCALE = 0.35f;
+constexpr float LOW_RES_SCALE = 0.25f;
 #pragma endregion Screen
 
 #pragma region Physics
