@@ -16,7 +16,6 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\0.fbx" />
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\1.fbx" />
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\2.fbx" />
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\3.fbx" />
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\TPoseWithSkin.fbx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</ExcludedFromBuild>

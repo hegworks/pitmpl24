@@ -922,9 +922,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\0.fbx">
       <Filter>Assets\Models\NakedSnake</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\2.fbx">
-      <Filter>Assets\Models\NakedSnake</Filter>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\3.fbx">
       <Filter>Assets\Models\NakedSnake</Filter>
     </None>

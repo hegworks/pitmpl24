@@ -62,7 +62,7 @@ ModelDataStorage::ModelDataStorage()
 	};
 	m_datas[GROUND] =
 	{
-		"../Common/Assets/Models/Primitives/Plane/Plane.obj",
+		"../Common/Assets/Models/Ground/Plane.obj",
 		glm::vec3(MAP_SCALE_X, 1, MAP_SCALE_Z)
 	};
 	m_datas[PIKMIN] =
