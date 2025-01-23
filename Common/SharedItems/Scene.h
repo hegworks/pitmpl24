@@ -113,7 +113,7 @@ private:
 	void CreateGround();
 	void CreatePathFinder();
 	void CreateEnemies();
-	void GeneratePerlinTexture();
+	void GeneratePerlin();
 	void UpdatePerlinTexture(float deltaTime);
 };
 

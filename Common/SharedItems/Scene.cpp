@@ -50,7 +50,7 @@ Scene::Scene(int mapId)
 	CreateGround();
 	CreatePathFinder();
 	CreateEnemies();
-	if(m_mapId == PERLIN_MAP_ID) GeneratePerlinTexture();
+	if(m_mapId == PERLIN_MAP_ID) GeneratePerlin();
 }
 
 Scene::~Scene()
@@ -434,7 +434,7 @@ void Scene::CreateEnemies()
 	}
 }
 
-void Scene::GeneratePerlinTexture()
+void Scene::GeneratePerlin()
 {
 	{ // perlin mesh
 		m_perlinMeshObject = m_engine->CreateGameObject<Uknitty::GameObject>();
@@ -453,7 +453,7 @@ void Scene::GeneratePerlinTexture()
 		m_perlinMeshCRender->SetVAO(perlinVAO);
 		m_perlinMeshCRender->SetIsMeshTrueIsTextureFalse(true);
 		m_perlinMeshObject->AddCustomCRender(m_perlinMeshCRender);
-		m_perlinMeshObject->GetLocalTransform()->SetPosition(glm::vec3(-5, 0, 0));
+		m_perlinMeshObject->GetLocalTransform()->SetPosition(glm::vec3(-12, 0, -4));
 		m_perlinMeshObject->GetLocalTransform()->SetScale(glm::vec3(0.3f));
 	}
 
@@ -473,7 +473,7 @@ void Scene::GeneratePerlinTexture()
 		m_perlinTextureCRender->SetVAO(perlinVAO);
 		m_perlinTextureCRender->SetIsMeshTrueIsTextureFalse(false);
 		m_perlinTextureObject->AddCustomCRender(m_perlinTextureCRender);
-		m_perlinTextureObject->GetLocalTransform()->SetPosition(glm::vec3(0, 1.0, 0));
+		m_perlinTextureObject->GetLocalTransform()->SetPosition(glm::vec3(-9, 1.0, -6));
 		m_perlinTextureObject->GetLocalTransform()->SetScale(glm::vec3(1.0));
 	}
 }
