@@ -26,7 +26,7 @@ uniform mat4 uMVP;
 uniform mat4 uModel;
 uniform mat4 uModelNormal; // transposed inverse of uModel
 
-const int MAX_BONES = 30;
+const int MAX_BONES = 100;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 uFinalBonesMatrices[MAX_BONES];
 

@@ -145,9 +145,6 @@
     <Filter Include="Uknitty\Headers\Animation">
       <UniqueIdentifier>{98ac59e4-5306-4c8a-bc33-1d782165232d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Models\Agent">
-      <UniqueIdentifier>{01e3b0ff-598e-4cf7-9930-775d4154039d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -892,22 +889,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Wall_1x4x2\Normal.png">
       <Filter>Assets\Models\Wall_1x4x1</Filter>
     </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Agent.fbx">
-      <Filter>Assets\Models\Agent</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Idle.fbx">
-      <Filter>Assets\Models\Agent</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Kick.fbx">
-      <Filter>Assets\Models\Agent</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\Sneak.fbx">
-      <Filter>Assets\Models\Agent</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Body_D.png">
-      <Filter>Assets\Models\Agent</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Agent\M-FF_iOS_HERO_Daisy_Johnson_Quake_Agents_Of_S.H.I.E.L.D_Weapon_D.png" />
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\PerlinFragment.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
@@ -919,6 +900,30 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\Assets\Shaders\Pi\FrameBufferFragment.glsl">
       <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\Death.fbx">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\Idle.fbx">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\Soldier\WalkForward.fbx">
+      <Filter>Assets\Models\Soldier</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\TPoseWithSkin.fbx">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\Texture_black.png">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\1.fbx">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\0.fbx">
+      <Filter>Assets\Models\NakedSnake</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\Assets\Models\NakedSnake\2.fbx">
+      <Filter>Assets\Models\NakedSnake</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

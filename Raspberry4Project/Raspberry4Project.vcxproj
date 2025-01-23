@@ -136,6 +136,9 @@
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Reticle\Sphere.obj">
       <FileType>Document</FileType>
     </None>
+    <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Soldier\Player\NakedSnake.obj">
+      <FileType>Document</FileType>
+    </None>
     <None Update="D:\dev\Perforce\Hesam246126\Year1\BlockB\pitmpl24\Common\SharedItems\..\Assets\Models\Soldier\Soldier.obj">
       <FileType>Document</FileType>
     </None>

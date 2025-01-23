@@ -22,6 +22,8 @@
 #include "LightObject.h"
 #include "LightStructs.h"
 #include "Model.h"
+#include "ModelDataStorage.h"
+#include "ModelObject.h"
 #include "PhysicsCollisionFilters.h"
 #include "PhysicsManager.h"
 #include "PlayerCInput.h"
@@ -39,7 +41,7 @@ void Player::OnAwake()
 
 	GameSharedDependencies::Set<Player>(this);
 
-	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/TPoseWithSkin.fbx");
+	Uknitty::Model* model = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel("player", "../Common/Assets/Models/NakedSnake/3.fbx");
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_PLAYER, COLL_MASK_PLAYER);
 
@@ -67,6 +69,15 @@ void Player::OnAwake()
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
 	m_gunPosObject->SetParent(this);
 
+	ModelDataStorage::ModelData* gunModelData = GameSharedDependencies::Get<ModelDataStorage>()->GetModelData(ModelDataStorage::INVENTORY_GUN);
+	Uknitty::ModelObject* gunObject = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::ModelObject>();
+	gunObject->Initialize(Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetModel(ModelDataStorage::INVENTORY_GUN, gunModelData->m_filePath), shaderProgram);
+	gunObject->GetLocalTransform()->SetScale(glm::vec3(0.1f));
+	gunObject->GetLocalTransform()->SetPosition(GUN_MODEL_POS_IDLE);
+	gunObject->GetLocalTransform()->SetRotation(glm::vec3(0, 20, 0));
+	gunObject->SetParent(this);
+	m_gunModelObject = gunObject;
+
 	m_flashLight = Uknitty::Engine::GetInstance()->CreateGameObject<Uknitty::LightObject>();
 	m_flashLight->SetParent(m_gunPosObject);
 	LightData* lightData = new LightData();
@@ -81,10 +92,10 @@ void Player::OnAwake()
 	m_flashLight->SetLightData(lightData);
 
 	//m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/TPoseWithSkin.fbx", model);
-	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/RifleAimingIdle.fbx", model);
-	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/WalkForward.fbx", model);
+	m_idleAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/0.fbx", model);
+	m_walkAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/1.fbx", model);
 	m_walkAnim->SetSpeedScale(1.5f);
-	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/Death.fbx", model);
+	m_deathAnim = new Uknitty::SkeletalAnimation::Animation("../Common/Assets/Models/NakedSnake/0.fbx", model);
 	m_animator = GameObject::AddCAnimator();
 	m_animator->Initialize(m_idleAnim);
 
@@ -250,11 +261,13 @@ void Player::MoveIfInput(float deltaTime)
 		Uknitty::DynamicObject::MoveInDirection(dir, m_moveSpeed);
 		RotateGradually(dir, deltaTime);
 		m_animator->PlayAnimation(m_walkAnim);
+		m_gunModelObject->GetLocalTransform()->SetPosition(GUN_MODEL_POS_WALK);
 	}
 	else
 	{
 		Uknitty::DynamicObject::MoveInDirection(glm::vec3(0), 0);
 		m_animator->PlayAnimation(m_idleAnim);
+		m_gunModelObject->GetLocalTransform()->SetPosition(GUN_MODEL_POS_IDLE);
 	}
 }
 

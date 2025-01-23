@@ -40,7 +40,7 @@ private:
 	float m_deltaTime;
 	bool m_isPlayOnceMode = false;
 	bool m_hasPlayedOnce = false;
-	const int MAX_BONES = 30;
+	const int MAX_BONES = 100;
 };
 
 inline void Animator::Initialize(Animation* animation)
