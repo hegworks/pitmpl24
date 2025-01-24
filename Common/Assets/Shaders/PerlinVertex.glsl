@@ -24,12 +24,13 @@ void main()
 		vec3 wavePos = iPos;
 		float waveHeight = 0.5 * sin(iPos.x + uTime * 2.0) * sin(iPos.z + uTime * 1.5);
 		wavePos.y += waveHeight;
+		ioPos = wavePos;
 		gl_Position = uMVP * vec4(wavePos, 1.0);
 	}
 	else
 	{
+		ioPos = iPos;
 		gl_Position = uMVP * vec4(iPos, 1.0);
 	}
 	ioTexCoord = iTexCoord;
-	ioPos = iPos;
 }
