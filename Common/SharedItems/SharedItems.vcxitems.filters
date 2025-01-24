@@ -354,9 +354,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LightStructs.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RNG.h">
       <Filter>Uknitty\Headers\Tools</Filter>
     </ClInclude>
@@ -383,6 +380,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PerlinNoiseManager.h">
       <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h">
+      <Filter>Uknitty\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -518,13 +518,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LightManager.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp">
-      <Filter>Game\Source</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PerlinCRender.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PerlinNoiseManager.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>
