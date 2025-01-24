@@ -46,6 +46,7 @@
 #include "ShaderType.h"
 
 #endif
+#include <stdexcept>
 
 Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 	m_sharedInput(sharedInput),
@@ -151,7 +152,7 @@ void Game::Start()
 	// Error checking framebuffer
 	auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if(fboStatus != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "Framebuffer error: " << fboStatus << std::endl;
+		throw std::runtime_error("Framebuffer is not complete");
 #pragma endregion
 
 #pragma endregion Other Initializations

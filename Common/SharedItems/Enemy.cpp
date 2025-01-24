@@ -146,8 +146,6 @@ void Enemy::OnUpdate(float deltaTime)
 
 void Enemy::OnDestroy()
 {
-	std::cout << "Destroying Enemy" << std::endl;
-
 	m_astarCurrentPathPositions.clear();
 	delete m_astarPathGenerationTimer;
 	delete m_shootTimer;

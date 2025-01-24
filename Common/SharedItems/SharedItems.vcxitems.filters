@@ -219,9 +219,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TmxParserHelper.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)InterfaceManager.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
@@ -276,9 +273,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsCollisionFilters.h">
       <Filter>Game\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GunBullet.h">
-      <Filter>Game\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
@@ -286,9 +280,6 @@
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CRender.h">
-      <Filter>Uknitty\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PhysicsManager.h">
@@ -452,16 +443,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp">
       <Filter>ThirdParty\aStar</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp">
-      <Filter>Game\Source</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)CRender.cpp">
-      <Filter>Uknitty\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp">

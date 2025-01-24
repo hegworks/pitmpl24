@@ -11,7 +11,6 @@
 #include "GameSettings.h"
 #include "GameSharedDependencies.h"
 #include "GeneralCamera.h"
-#include "InterfaceManager.h"
 #include "LightManager.h"
 #include "LightObject.h"
 #include "LightStructs.h"
@@ -79,8 +78,6 @@ SceneManager::~SceneManager()
 
 void SceneManager::OnPlayerCollidedWithRoomChange(RoomChangeType roomChangeType)
 {
-	std::cout << "Player collided with room change: " << static_cast<int>(roomChangeType) << std::endl;
-
 	RoomChange* newRoomChange = m_roomFinder->FindNextRoom(roomChangeType);
 	m_player->RoomChangedSetPosition(newRoomChange);
 	int newMapId = newRoomChange->nextRoomId;

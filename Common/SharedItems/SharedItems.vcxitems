@@ -143,14 +143,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)base64.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Bone.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BoneInfo.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CSGNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Engine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameplayEvents.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameSharedDependencies.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GeneralCameraCInput.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GunBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CountdownTimer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DynamicObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CInput.h" />
@@ -184,7 +182,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInput.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IInputKey.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)InterfaceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Model.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CPhysics.h" />
@@ -216,13 +213,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AStar.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)base64.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CameraObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CSGNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Engine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameplayEvents.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GeneralCameraCInput.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GunBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DynamicObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Enemy.cpp" />

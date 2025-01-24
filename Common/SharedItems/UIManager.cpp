@@ -147,7 +147,6 @@ void UIManager::MainMenu()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2));
 				if(ImGui::Button("Start Game", buttonSize))
 				{
-					std::cout << "Hello ImGui\n";
 					GameSharedDependencies::Get<GameplayEvents>()->OnPressedStartGame();
 				}
 			}
@@ -207,7 +206,6 @@ void UIManager::PauseMenu()
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() / 2 - buttonSize.x / 2, ImGui::GetWindowHeight() / 2));
 				if(ImGui::Button("Resume", buttonSize))
 				{
-					std::cout << "Resume\n";
 					GameSharedDependencies::Get<GameplayEvents>()->OnPressedUnpause();
 				}
 			}

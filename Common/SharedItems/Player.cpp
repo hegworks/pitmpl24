@@ -161,10 +161,8 @@ void Player::RoomChangedSetPosition(RoomChange* roomChange)
 void Player::OnEnemyBulletHit()
 {
 	m_hp--;
-	std::cout << "Player is Hit. hp: " << m_hp << std::endl;
 	if(m_hp <= 0)
 	{
-		std::cout << "Player is dead and the game is lost";
 		GameSharedDependencies::Get<GameplayEvents>()->OnPlayerDied();
 	}
 }
