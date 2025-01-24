@@ -402,7 +402,7 @@ void UIManager::HUD()
 
 	float fontScale = viewport->WorkSize.x / 1600.0f; // 1600 is the width of the window where the font size shouldn't change
 	float oldFontScale = ImGui::GetFont()->Scale;
-	ImGui::GetFont()->Scale = oldFontScale * fontScale;
+	ImGui::GetFont()->Scale = oldFontScale * fontScale * 0.85f;
 	ImGui::PushFont(ImGui::GetFont());
 
 	ImGui::SetNextWindowBgAlpha(0.7f);
@@ -625,7 +625,7 @@ void UIManager::UpdateHitMarkerEffect()
 		{
 			ImDrawList* drawList = ImGui::GetWindowDrawList();
 			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-			float size = 15;
+			float size = 20.0f * (1.0f - m_hitMarkerEffectTimer->GetProgress());
 			float thickness = 3;
 			ImU32 color = ImColor(255, 0, 0);
 			drawList->AddLine(ImVec2(center.x - size, center.y - size), ImVec2(center.x + size, center.y + size), color, thickness);
