@@ -90,9 +90,9 @@ void GameObject::Draw(glm::mat4 cameraVP)
 	}
 }
 
-void GameObject::UpdateWorldTransform(glm::mat4 parentsModel)
+void GameObject::UpdateWorldTransform(glm::mat4 parentsWorldTransform)
 {
-	glm::mat4 worldTransform = parentsModel * (*m_localTransform->GetMatrix());
+	glm::mat4 worldTransform = parentsWorldTransform * (*m_localTransform->GetMatrix());
 	m_worldTransform->OverrideMatrix(worldTransform);
 	for(auto& gameObject : m_children)
 	{
