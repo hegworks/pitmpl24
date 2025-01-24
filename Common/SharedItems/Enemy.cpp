@@ -150,6 +150,9 @@ void Enemy::OnDestroy()
 	delete m_astarPathGenerationTimer;
 	delete m_shootTimer;
 	delete m_userPointerData;
+	delete m_idleAnim;
+	delete m_walkAnim;
+	delete m_deathAnim;
 
 	Uknitty::DynamicObject::OnDestroy();
 }
