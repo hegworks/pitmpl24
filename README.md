@@ -9,3 +9,6 @@
 # Other notes
 - when low on HP, open inventory by pressing tab, select HAMBURGER, use F to eat it and replenish HP
 - enjoy the game
+
+# Visual Leak Detector
+- to enable VLD, open the file GameSettings.h, comment out line 13 (#undef VISUAL_LEAK_DETECTOR), compile.
