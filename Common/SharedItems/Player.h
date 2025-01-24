@@ -66,7 +66,7 @@ private:
 	const glm::vec3 GUN_POS = glm::vec3(0, 1.7, 0);
 	const int HP = 5;
 	const glm::vec3 GUN_MODEL_POS_IDLE = glm::vec3(-0.15, 1.5, 0.15);
-	const glm::vec3 GUN_MODEL_POS_WALK = glm::vec3(-0.15, 1.3, 0.15);
+	const glm::vec3 GUN_MODEL_POS_WALK = glm::vec3(-0.2, 1.25, 0.15);
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
