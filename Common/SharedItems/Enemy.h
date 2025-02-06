@@ -85,7 +85,8 @@ private:
 	const float MASS = 70.0f;
 	const int HP = 3;
 	const glm::vec3 GUN_POS = glm::vec3(0, 1.0, 0.5);
-	const float SHOOT_FREQUENCY_TIME = 2.0; // shoot the gun every x seconds
+	const float SHOOT_FREQUENCY_TIME_MIN = 1.5f; // shoot the gun every x ranged random seconds
+	const float SHOOT_FREQUENCY_TIME_MAX = 2.5f; // shoot the gun every x ranged random seconds
 
 	float m_moveSpeed = SPEED_WALK;
 	float m_rotationSpeed = SPEED_ROTATION;
@@ -123,4 +124,5 @@ private:
 	void ShootGun();
 	void RotateTowardPlayer();
 	void StopMoving();
+	float GetRandomShootTime() const;
 };

@@ -20,6 +20,7 @@
 #include "glm/glm.hpp"
 #include "Model.h"
 #include "PhysicsCollisionFilters.h"
+#include "RNG.h"
 #include "SceneManagerBlackboard.h"
 #include "ShaderProgram.h"
 #include "ShaderType.h"
@@ -64,7 +65,7 @@ void Enemy::OnAwake()
 	m_gameplayEvents = GameSharedDependencies::Get<GameplayEvents>();
 	m_transform = GameObject::GetLocalTransform();
 	m_astarPathGenerationTimer = new Uknitty::CountdownTimer(ASTAR_PATH_GENERATION_DURATION);
-	m_shootTimer = new Uknitty::CountdownTimer(SHOOT_FREQUENCY_TIME);
+	m_shootTimer = new Uknitty::CountdownTimer(GetRandomShootTime());
 
 	m_gunPosObject = Uknitty::Engine::GetInstance()->CreateGameObject<GameObject>();
 	m_gunPosObject->GetLocalTransform()->SetPosition(GUN_POS);
@@ -110,6 +111,7 @@ void Enemy::OnUpdate(float deltaTime)
 			if(m_shootTimer->IsFinished())
 			{
 				ShootGun();
+				m_shootTimer->SetNewDuration(GetRandomShootTime());
 				m_shootTimer->Reset();
 			}
 
@@ -504,4 +506,9 @@ void Enemy::StopMoving()
 {
 	MoveInDirection(glm::vec3(0), 0);
 	m_animator->PlayAnimation(m_idleAnim);
+}
+
+float Enemy::GetRandomShootTime() const
+{
+	return Uknitty::RNG::RandomFloat(SHOOT_FREQUENCY_TIME_MIN, SHOOT_FREQUENCY_TIME_MAX);
 }
