@@ -112,11 +112,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);WINDOWS_BUILD</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Common\Audio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(PlatformName)/assimp-vc143-mtd.lib;glfw3.lib;opengl32.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(PlatformName)/assimp-vc143-mtd.lib;glfw3.lib;opengl32.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;Audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Common\Audio\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
