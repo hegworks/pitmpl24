@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 #include "AssetManager.h"
+#include "AudioPlayer.h"
 #include "btBulletDynamicsCommon.h"
 #include "CInput.h"
 #include "CRender.h"
@@ -27,6 +28,7 @@ Engine::Engine()
 	m_physicsManager = new Uknitty::PhysicsManager();
 	m_assetManager = new Uknitty::AssetManager();
 	m_lightManager = new Uknitty::LightManager(m_assetManager);
+	m_audioPlayer = new Uknitty::AudioPlayer();
 	m_root = CreateGameObject<GameObject>();
 }
 

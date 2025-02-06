@@ -39,7 +39,7 @@ void Enemy::OnAwake()
 	Uknitty::ShaderProgram* shaderProgram = Uknitty::Engine::GetInstance()->GetAssetManager()->AutoGetShaderProgram(Uknitty::ShaderType::LIT);
 	Uknitty::DynamicObject::InitializeWithCapsuleShape(model, shaderProgram, MODEL_DIMENSIONS.x, MODEL_DIMENSIONS.y, MASS, COLL_GROUP_ENEMY, COLL_MASK_ENEMY);
 
-	GameObject::GetLocalTransform()->SetScale(SCALE); 
+	GameObject::GetLocalTransform()->SetScale(SCALE);
 
 	m_physics = GameObject::GetCPhysics();
 	m_physics->GetRigidBody()->setActivationState(DISABLE_DEACTIVATION);
@@ -488,6 +488,8 @@ void Enemy::ShootGun()
 		}
 	}
 	//return false;
+
+	GameSharedDependencies::Get<GameplayEvents>()->OnEnemyShotGun();
 }
 
 void Enemy::RotateTowardPlayer()

@@ -389,4 +389,6 @@ void Player::CastGunRay()
 			}
 		}
 	}
+
+	GameSharedDependencies::Get<GameplayEvents>()->OnPlayerShotGun();
 }

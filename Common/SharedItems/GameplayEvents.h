@@ -7,6 +7,8 @@ public:
 
 	void OnEnemyBulletHitPlayer();
 	void OnPlayerBulletHitEnemy();
+	void OnPlayerShotGun();
+	void OnEnemyShotGun();
 	void OnPlayerDied();
 	void OnPressedQuit();
 	void OnPressedMainMenu();

@@ -3,6 +3,7 @@
 #include "ImGui-master/backends/imgui_impl_opengl3.h"
 #include "ImGui-master/imgui.h"
 
+#include "AudioManager.h"
 #include "CameraObject.h"
 #include "Engine.h"
 #include "GameplayEvents.h"
@@ -32,6 +33,7 @@ GameManager::GameManager(IMouse* iMouse, IKeyboard* iKeyboard)
 	new GameplayEvents();
 	new ModelDataStorage();
 	m_uiManager = new UIManager();
+	m_audioManager = new AudioManager();
 	m_generalCamera = static_cast<Uknitty::GeneralCamera*>(m_engine->GetMainCamera());
 	m_lastCameraFollowType = m_generalCamera->GetCameraType();
 
@@ -63,16 +65,19 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_uiManager->ShowMenu(UIManager::MenuType::LOADING_SCREEN);
 			m_gameState = GameState::LOADING;
 			m_hasWaitedFor1FrameToShowLoadingScreen = false;
+			m_audioManager->OnLevelNormal();
 			break;
 		case GameManager::GameEvent::PLAYER_DIED:
 			m_uiManager->ShowMenu(UIManager::MenuType::LOSE_MENU);
 			m_gameState = GameState::LOSE;
 			m_iMouse->ReleaseMouseInput();
+			m_audioManager->OnPause();
 			break;
 		case GameManager::GameEvent::PLAYER_WON:
 			m_uiManager->ShowMenu(UIManager::MenuType::WIN_MENU);
 			m_gameState = GameState::WIN;
 			m_iMouse->ReleaseMouseInput();
+			m_audioManager->OnPause();
 			break;
 		case GameManager::GameEvent::PRESSED_PAUSE:
 			if(m_gameState == GameState::MAIN_MENU || m_gameState == GameState::LOSE || m_gameState == GameState::WIN) break;
@@ -83,6 +88,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 				m_gameState = GameState::PAUSE;
 				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_iMouse->ReleaseMouseInput();
+				m_audioManager->OnPause();
 			}
 			else if(m_gameState == GameState::PAUSE)
 			{
@@ -90,12 +96,14 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 				m_gameState = GameState::GAMEPLAY;
 				m_engine->GetMainCamera()->ResetMouseOffset();
 				m_iMouse->CaptureMouseInput();
+				m_audioManager->OnResume();
 			}
 			break;
 		case GameManager::GameEvent::PRESSED_UNPAUSE:
 			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
 			m_gameState = GameState::GAMEPLAY;
 			m_iMouse->CaptureMouseInput();
+			m_audioManager->OnResume();
 			break;
 		case GameEvent::PRESSED_MAIN_MENU:
 			delete GameSharedDependencies::Get<SceneManager>();
@@ -103,6 +111,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_uiManager->ShowMenu(UIManager::MenuType::MAIN_MENU);
 			m_gameState = GameState::MAIN_MENU;
 			m_iMouse->ReleaseMouseInput();
+			m_audioManager->OnMainMenu();
 			break;
 		case GameManager::GameEvent::PRESSED_QUIT:
 			m_shouldQuit = true;
@@ -121,6 +130,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 		case GameEvent::NEW_SCENE_LOADED:
 			m_isNewSceneLoadedSoReEnablePhysics = true;
 			m_uiManager->ShowMenu(UIManager::MenuType::HUD);
+			m_audioManager->OnLevelNormal();
 			break;
 		case GameEvent::PRESSED_INVENTORY:
 			if(m_gameState == GameState::GAMEPLAY)
@@ -143,6 +153,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			break;
 		case GameEvent::ONE_ENEMY_ALARMED:
 			m_sceneManager->AlarmCurrentScene();
+			m_audioManager->OnLevelAlert();
 			break;
 		default:
 			throw std::runtime_error("Invalid gameEvent");

@@ -42,6 +42,17 @@ enum class PhysicsType
 	WIN,
 };
 
+enum class AudioType
+{
+	BGM_Slow,
+	BGM_Fast,
+	PlayerHurt,
+	EnemyHurt0,
+	EnemyHurt1,
+	PlayerGunShot,
+	EnemyGunShot,
+};
+
 struct UserPointerData
 {
 	PhysicsType physicsType;

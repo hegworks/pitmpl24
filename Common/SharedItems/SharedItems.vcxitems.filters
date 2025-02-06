@@ -148,6 +148,9 @@
     <Filter Include="Assets\Models\Ground">
       <UniqueIdentifier>{f8948414-5fa8-47ce-9ac9-c509e5f5b1f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uknitty\Headers\Audio">
+      <UniqueIdentifier>{b8413181-27ce-41f0-8337-792cfce645da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CameraObject.h">
@@ -375,6 +378,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)LightObject.h">
       <Filter>Uknitty\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioManager.h">
+      <Filter>Game\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioPlayer.h">
+      <Filter>Uknitty\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\ImGui-master\imgui.cpp">
@@ -510,6 +519,12 @@
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LightObject.cpp">
+      <Filter>Uknitty\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioManager.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioPlayer.cpp">
       <Filter>Uknitty\Source</Filter>
     </ClCompile>
   </ItemGroup>

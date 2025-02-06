@@ -1,5 +1,6 @@
 #include "GameplayEvents.h"
 
+#include "AudioManager.h"
 #include "GameManager.h"
 #include "GameSharedDependencies.h"
 #include "Player.h"
@@ -14,11 +15,23 @@ void GameplayEvents::OnEnemyBulletHitPlayer()
 {
 	GameSharedDependencies::Get<Player>()->OnEnemyBulletHit();
 	GameSharedDependencies::Get<UIManager>()->PlayRedScreenEffect();
+	GameSharedDependencies::Get<AudioManager>()->OnPlayerHurt();
 }
 
 void GameplayEvents::OnPlayerBulletHitEnemy()
 {
 	GameSharedDependencies::Get<UIManager>()->PlayHitMarkerEffect();
+	GameSharedDependencies::Get<AudioManager>()->OnEnemyHurt();
+}
+
+void GameplayEvents::OnPlayerShotGun()
+{
+	GameSharedDependencies::Get<AudioManager>()->OnPlayerShotGun();
+}
+
+void GameplayEvents::OnEnemyShotGun()
+{
+	GameSharedDependencies::Get<AudioManager>()->OnEnemyShotGun();
 }
 
 void GameplayEvents::OnPlayerDied()

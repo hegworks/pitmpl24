@@ -17,6 +17,7 @@ class PhysicsManager;
 class CameraObject;
 class AssetManager;
 class LightManager;
+class AudioPlayer;
 
 class Engine
 {
@@ -65,16 +66,19 @@ public:
 	PhysicsManager* GetPhysicsManager() { return m_physicsManager; }
 	AssetManager* GetAssetManager() { return m_assetManager; }
 	LightManager* GetLightManager() { return m_lightManager; }
+	AudioPlayer* GetAudioPlayer() { return m_audioPlayer; }
 
 private:
 	GameObject::ID m_nextID = 0;
 
 	std::unordered_map<GameObject::ID, GameObject*> m_gameObjects;
-	Uknitty::PhysicsManager* m_physicsManager = nullptr;
+	PhysicsManager* m_physicsManager = nullptr;
 	LightManager* m_lightManager = nullptr;
 	CameraObject* m_mainCamera = nullptr;
 	GameObject* m_root = nullptr;
-	Uknitty::AssetManager* m_assetManager = nullptr;
+	AssetManager* m_assetManager = nullptr;
+	AudioPlayer* m_audioPlayer = nullptr;
+
 
 	IMouse* m_iMouse = nullptr;
 	IKeyboard* m_iKeyboard = nullptr;
