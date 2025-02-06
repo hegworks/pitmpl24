@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UknittySettings.h"
-#include <unordered_map>
+#include <array>
 
 namespace Uknitty
 {
@@ -19,17 +19,17 @@ public:
 	void OnEnemyShotGun();
 	void OnLevelAlert();
 	void OnLevelNormal();
+	void OnStartGame();
 	void OnPause();
 	void OnResume();
 	void OnMainMenu();
 
+
 private:
 	Uknitty::AudioPlayer* m_audioPlayer = nullptr;
 
-	const int TOTAL_ENEMY_HURT_SOUNDS = 2;
-	const float BGM_SLOW_LENGTH = 200;
-	const float BGM_FAST_LENGTH = 100;
-	const Uknitty::AudioType ENMEY_HURT_TYPES[2] = {Uknitty::AudioType::EnemyHurt0, Uknitty::AudioType::EnemyHurt1};
+	const std::array<Uknitty::AudioType, 2> ENEMY_HURT_TYPES = {Uknitty::AudioType::EnemyHurt0, Uknitty::AudioType::EnemyHurt1};
+	const float BGM_ALERT_PITCH = 3.0f;
 
 	int m_lastEnemyHurtAudioIndex = 0;
 	Uknitty::AudioType m_lastBGMPlaying = Uknitty::AudioType::BGM_Slow;

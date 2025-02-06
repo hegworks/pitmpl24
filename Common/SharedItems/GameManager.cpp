@@ -65,7 +65,7 @@ void GameManager::TriggerEvent(GameEvent gameEvent)
 			m_uiManager->ShowMenu(UIManager::MenuType::LOADING_SCREEN);
 			m_gameState = GameState::LOADING;
 			m_hasWaitedFor1FrameToShowLoadingScreen = false;
-			m_audioManager->OnLevelNormal();
+			m_audioManager->OnStartGame();
 			break;
 		case GameManager::GameEvent::PLAYER_DIED:
 			m_uiManager->ShowMenu(UIManager::MenuType::LOSE_MENU);

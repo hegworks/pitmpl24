@@ -30,8 +30,8 @@ void AudioManager::OnPlayerHurt()
 
 void AudioManager::OnEnemyHurt()
 {
-	m_lastEnemyHurtAudioIndex = (m_lastEnemyHurtAudioIndex + 1) % TOTAL_ENEMY_HURT_SOUNDS;
-	m_audioPlayer->ReplayOverlapped(ENMEY_HURT_TYPES[m_lastEnemyHurtAudioIndex]);
+	m_lastEnemyHurtAudioIndex = (m_lastEnemyHurtAudioIndex + 1) % ENEMY_HURT_TYPES.size();
+	m_audioPlayer->ReplayOverlapped(ENEMY_HURT_TYPES[m_lastEnemyHurtAudioIndex]);
 }
 
 void AudioManager::OnPlayerShotGun()
@@ -46,40 +46,31 @@ void AudioManager::OnEnemyShotGun()
 
 void AudioManager::OnLevelAlert()
 {
-	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Slow);
-	m_audioPlayer->Play(Uknitty::AudioType::BGM_Fast);
-	m_lastBGMPlaying = Uknitty::AudioType::BGM_Fast;
+	m_audioPlayer->SetPitch(Uknitty::AudioType::BGM_Slow, BGM_ALERT_PITCH);
 }
 
 void AudioManager::OnLevelNormal()
 {
-	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Fast);
+	m_audioPlayer->SetPitch(Uknitty::AudioType::BGM_Slow, 1.0f);
+}
+
+void AudioManager::OnStartGame()
+{
 	m_audioPlayer->Play(Uknitty::AudioType::BGM_Slow);
-	m_lastBGMPlaying = Uknitty::AudioType::BGM_Slow;
 }
 
 void AudioManager::OnPause()
 {
 	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Slow);
-	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Fast);
 }
 
 void AudioManager::OnResume()
 {
-	if(m_lastBGMPlaying == Uknitty::AudioType::BGM_Slow)
-	{
-		m_audioPlayer->Play(Uknitty::AudioType::BGM_Slow);
-	}
-	else
-	{
-		m_audioPlayer->Play(Uknitty::AudioType::BGM_Fast);
-	}
+	m_audioPlayer->Play(Uknitty::AudioType::BGM_Slow);
 }
 
 void AudioManager::OnMainMenu()
 {
-	m_audioPlayer->Replay(Uknitty::AudioType::BGM_Slow);
+	m_audioPlayer->Seek(Uknitty::AudioType::BGM_Slow, 0);
 	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Slow);
-	m_audioPlayer->Replay(Uknitty::AudioType::BGM_Fast);
-	m_audioPlayer->Stop(Uknitty::AudioType::BGM_Fast);
 }
