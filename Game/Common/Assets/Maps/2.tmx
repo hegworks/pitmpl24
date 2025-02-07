@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-up" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="34">
+ <editorsettings>
+  <export target="2.csv" format="csv"/>
+ </editorsettings>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <imagelayer id="3" name="Image Layer 1">
+  <image source="2.png" width="1024" height="768"/>
+ </imagelayer>
+ <objectgroup id="3" name="tank">
+  <object id="54" name="tank" type="Solid" x="352" y="352">
+   <point/>
+  </object>
+  <object id="10" name="tank" type="Solid" x="736" y="352">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="crate4x4">
+  <object id="56" name="crate_4" type="Solid" x="192" y="704">
+   <point/>
+  </object>
+  <object id="5" name="crate_4" type="Solid" x="320" y="704">
+   <point/>
+  </object>
+  <object id="6" name="crate_4" type="Solid" x="448" y="704">
+   <point/>
+  </object>
+  <object id="7" name="crate_4" type="Solid" x="576" y="704">
+   <point/>
+  </object>
+  <object id="8" name="crate_4" type="Solid" x="704" y="704">
+   <point/>
+  </object>
+  <object id="9" name="crate_4" type="Solid" x="832" y="704">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="crate2x4">
+  <object id="48" name="crate_2" type="Solid" x="864" y="320">
+   <point/>
+  </object>
+  <object id="50" name="crate_2" type="Solid" x="480" y="320">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="wall">
+  <object id="27" name="wall_v_2" type="solid" x="128" y="0" width="64" height="448">
+   <properties>
+    <property name="vhu" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="1" name="wall_v_2" type="solid" x="0" y="0" width="64" height="448">
+   <properties>
+    <property name="vhu" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="2" name="wall_v_2" type="solid" x="64" y="0" width="64" height="448">
+   <properties>
+    <property name="vhu" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="3" name="wall_h_2" type="solid" x="192" y="0" width="832" height="64">
+   <properties>
+    <property name="vhu" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="11" name="wall_u_2" type="solid" x="0" y="448" width="64" height="64">
+   <properties>
+    <property name="vhu" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="13" name="wall_u_2" type="solid" x="64" y="448" width="64" height="64">
+   <properties>
+    <property name="vhu" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="14" name="wall_u_2" type="solid" x="128" y="448" width="64" height="64">
+   <properties>
+    <property name="vhu" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="4" name="wall_h_2" type="solid" x="192" y="64" width="832" height="64">
+   <properties>
+    <property name="vhu" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="26" name="wall_h_1" type="solid" x="0" y="736" width="1024" height="32">
+   <properties>
+    <property name="vhu" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="14" name="rc">
+  <object id="75" name="rc1" type="rc" x="1024" y="128" width="32" height="608">
+   <properties>
+    <property name="RoomChangeType" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="74" name="rc0" type="rc" x="-32" y="512" width="32" height="224">
+   <properties>
+    <property name="RoomChangeType" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00ff00" id="5" name="ep">
+  <object id="17" name="0" type="0" x="608" y="544">
+   <point/>
+  </object>
+  <object id="19" name="1" type="0" x="608" y="224">
+   <point/>
+  </object>
+  <object id="20" name="2" type="0" x="928" y="224">
+   <point/>
+  </object>
+  <object id="21" name="3" type="0" x="928" y="544">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ffff00" id="8" name="ep">
+  <object id="26" name="0" type="1" x="544" y="544">
+   <point/>
+  </object>
+  <object id="25" name="1" type="1" x="544" y="224">
+   <point/>
+  </object>
+  <object id="24" name="2" type="1" x="224" y="224">
+   <point/>
+  </object>
+  <object id="23" name="3" type="1" x="224" y="544">
+   <point/>
+  </object>
+ </objectgroup>
+ <layer id="9" name="astar" width="32" height="24">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
+0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
+0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+</map>
