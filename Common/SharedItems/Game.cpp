@@ -47,6 +47,8 @@
 
 #endif
 #include <stdexcept>
+#include <iostream>
+#include <filesystem>
 
 Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 	m_sharedInput(sharedInput),
@@ -58,6 +60,8 @@ Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 	m_sharedInput->GetKeyboard()->SetKeyCallback(
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
+
+	std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
 }
 
 Game::~Game()
@@ -251,7 +255,7 @@ void Game::KeyCallback(Key key, KeyAction action)
 		m_gameManager->KeyUp(key);
 	}
 
-#ifdef WINDOWS_BUILD
+#if defined(_DEBUG) && defined(WINDOWS_BUILD)
 	if(key == Key::Z && action == KeyAction::DOWN)
 	{
 		m_isWireframeMode = !m_isWireframeMode;
