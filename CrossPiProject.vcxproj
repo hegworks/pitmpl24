@@ -74,12 +74,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>PCContent;PCContent\include;PCContent\include\glm;PCContent\include\bullet;PCContent]\include\GLFW;PCContent\include\glad;Common;C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win64;PCContent\lib;PCContent\lib\x64\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win64;PCContent\lib\x64\Debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>PCContent;PCContent\include;PCContent\include\glm;PCContent\include\bullet;PCContent]\include\GLFW;PCContent\include\glad;Common;$(IncludePath)</IncludePath>
-    <LibraryPath>PCContent\lib\x64\Release;PCContent\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>PCContent\lib\x64\Release;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -121,8 +121,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(PlatformName)/assimp-vc143-mtd.lib;glfw3.lib;opengl32.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;Audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Common\Audio\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;opengl32.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;Audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)PCContent\lib\x64\$(Configuration);$(SolutionDir)Common\Audio\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,8 +141,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Common\Audio\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(PlatformName)/assimp-vc143-mtd.lib;glfw3.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;Audio.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)PCContent\lib\x64\$(Configuration);$(SolutionDir)Common\Audio\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mt.lib;glfw3.lib;kernel32.lib;BulletCollision.lib;BulletSoftBody.lib;BulletDynamics.lib;LinearMath.lib;Audio.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
