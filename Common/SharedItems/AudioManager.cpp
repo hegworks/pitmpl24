@@ -56,6 +56,7 @@ void AudioManager::OnLevelNormal()
 
 void AudioManager::OnStartGame()
 {
+	m_audioPlayer->SetPitch(Uknitty::AudioType::BGM_Slow, 1.0f);
 	m_audioPlayer->Play(Uknitty::AudioType::BGM_Slow);
 }
 
