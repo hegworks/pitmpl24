@@ -3,6 +3,11 @@ Raspberry4Project/obj/ARM64/
 Windows/x64/
 bin/
 !assimp-vc143-mtd.dll
+!assimp-vc143-mt.dll
+!ReleasedGame/
+!ReleasedGame/Windows.exe
+!ReleasedGame/imgui.ini
+!ReleasedGame/Windows.lib
 
 # Prerequisites
 *.d
