@@ -61,7 +61,10 @@ Game::Game(SharedInput* sharedInput, IGraphics* iGraphics) :
 		[this](Key key, KeyAction action) { KeyCallback(key, action); }
 	);
 
+#if 0
 	std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
+#endif
+
 }
 
 Game::~Game()
@@ -71,12 +74,6 @@ Game::~Game()
 void Game::Start()
 {
 	InitializeOpenGLES();
-
-	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
-	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
-	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
-	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
-	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 #pragma region imgui
 	// imgui setup setup for ES3.x, use #verion 100 for GLES2.0 

@@ -26,11 +26,21 @@ int main()
 	glfwSwapInterval(1); // stop the windows build updating without vblank so its the same speed as pi
 
 	SharedInput* sharedInput = new SharedInput(new WindowsKeyboard(WinGraphics->Window()), new WindowsMouse(WinGraphics->Window()));
+
+	printf
+	(
+		"BUAS Year 1 Block B\n"
+		"Game Programming Project\n"
+		"Made by Hesam Ghadimi\n"
+	);
+
+#if 0
 	printf("This cross project was partly inspired by BUas Student Ferri de Lange\n");
 	printf("This GPU supplied by  :%s\n", glGetString(GL_VENDOR));
 	printf("This GPU supports GL  :%s\n", glGetString(GL_VERSION));
 	printf("This GPU Renders with :%s\n", glGetString(GL_RENDERER));
 	printf("This GPU Shaders are  :%s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+#endif
 
 	Game* game = new Game(sharedInput, WinGraphics);
 	game->Start();
